@@ -6,7 +6,7 @@
     --text: #000;
     --text_light: #ffffff9a;
     --text_invert: #ffffff;
-    --text_blue: #5588ff;
+    --text_blue: #367AFF;
     --text_white: #f5f5f5;
 
     --border: #ffffff9a;
@@ -16,7 +16,7 @@
     --bg_light: #ffffff9a;
     --bg_invert: #1d2432;
 
-    --app_blue: #5588ff;
+    --app_blue: #367AFF;
 
     --app_width: min(97vw, 1400px);
 }
@@ -35,21 +35,20 @@
     }
 }
 
-body {
-    background-color: var(--bg);
-    color: var(--text);
-    width: 100%;
-    min-height: 100vh;
-    height: fit-content;
-}
-
 * {
     margin: 0;
     padding: 0;
     border: none;
     box-sizing: border-box;
     background: none;
-    white-space: n;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    width: 100%;
+    min-height: 100vh;
+    height: fit-content;
 }
 
 li {
@@ -70,4 +69,5 @@ a {
 
 button {
     cursor: pointer;
+    white-space: nowrap;
 }
