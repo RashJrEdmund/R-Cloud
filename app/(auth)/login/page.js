@@ -1,17 +1,17 @@
 export async function generateMetadata() { // to dynamically generate metadata
     return {
-        title: 'Profile',
-        description: 'r-cloud profile page',
+        title: 'Login',
+        description: 'r-cloud login page',
         alternates: {
-            canonical: `/profile`
+            canonical: `/login`
         }
     }
 };
 
-export default function Profile() {
+export default function Login() {
     return (
         <main>
-            <h1>Your Profile</h1>
+            <h1>Log In</h1>
         </main>
     )
 }
