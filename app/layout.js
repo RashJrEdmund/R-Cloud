@@ -10,7 +10,6 @@ export const metadata = {
   metadataBase: new URL('http://localhost:3000'),
   keywords: ['r-cloud', 'r cloud', 'could', 'service', 'storage', 'google-drive', 'Roger', 'Rash', 'R'],
   manifest: '/manifest.json',
-  theme_color: '#5588ff',
   openGraph: {
     type: 'website',
     description: 'r-cloud rainkicker web application',
@@ -22,6 +21,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>
+      <head>
+        <meta name='theme-color' content='#5588ff' />
+      </head>
+
       <body className={inter.className}>{children}</body>
     </html>
   );
