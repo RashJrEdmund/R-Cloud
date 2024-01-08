@@ -1,3 +1,8 @@
+/* TODO +=> ========================
+| Implement and initialise firebase |
+| configurations                    |
+================================== */
+
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
