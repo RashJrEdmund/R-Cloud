@@ -10,23 +10,35 @@
     "orientation": "portrait",
     "icons": [
         {
-            "src": "./icon-150x100.png",
+            "src": "./manifest-assets/icon-150x100.png",
             "sizes": "150x100",
             "type": "image/png"
         },
         {
-            "src": "./icon-192x192.png",
+            "src": "./manifest-assets/icon-192x192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any maskable"
         },
         {
-            "src": "./icon-512x512.png",
+            "src": "./manifest-assets/icon-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
         }
     ],
     "shortcuts": [
+        {
+            "name": "Home page",
+            "short_name": "Home",
+            "description": "go to home page",
+            "url": "/home",
+            "icons": [
+                {
+                    "src": "./manifest-assets/shortcut-home.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
         {
             "name": "Login on app",
             "short_name": "Login",
@@ -34,7 +46,7 @@
             "url": "/login",
             "icons": [
                 {
-                    "src": "./icon-150x100.png",
+                    "src": "./manifest-assets/shortcut-login.png",
                     "sizes": "192x192"
                 }
             ]
