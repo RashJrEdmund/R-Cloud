@@ -1,7 +1,8 @@
 import './globals.css';
 import { inter } from './_core/ui/fonts';
+import { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: {
     template: '%s | R-Cloud',
     default: 'R-Cloud',
@@ -18,7 +19,11 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+interface Props {
+  children: React.ReactNode;
+};
+
+export default function RootLayout({ children }: Props) {
   return (
     <html lang='en'>
       <head>

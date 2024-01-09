@@ -1,8 +1,8 @@
-import './landing.css';
-
 import Link from 'next/link';
 
-export default function Landing() {
+interface Props { };
+
+export default function Landing({ }: Props) {
   return (
     <main>
       <h1 className='text-blue-600'>Landing page.</h1>

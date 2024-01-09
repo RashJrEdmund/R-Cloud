@@ -1,6 +1,6 @@
-import '../auth.css';
+import { Metadata } from 'next';
 
-export async function generateMetadata() { // to dynamically generate metadata
+export async function generateMetadata(): Promise<Metadata> { // to dynamically generate metadata
   return {
     title: 'Login',
     description: 'r-cloud login page',
@@ -10,7 +10,9 @@ export async function generateMetadata() { // to dynamically generate metadata
   };
 };
 
-export default function Login() {
+interface Props {};
+
+export default function Login({}: Props) {
   return (
     <main>
       <h1>Log In</h1>
