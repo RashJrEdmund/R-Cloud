@@ -1,6 +1,7 @@
+import { Metadata } from 'next';
 import './profile.css';
 
-export async function generateMetadata() {
+export async function generateMetadata(): Promise<Metadata> {
   // to dynamically generate metadata
   return {
     title: 'Profile',
@@ -11,7 +12,9 @@ export async function generateMetadata() {
   };
 }
 
-export default function Profile() {
+interface Props { };
+
+export default function Profile({ }: Props) {
   return (
     <main>
       <h1>Your Profile</h1>

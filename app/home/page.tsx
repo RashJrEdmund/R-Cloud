@@ -1,6 +1,6 @@
-import './home.css';
+import { Metadata } from 'next';
 
-export async function generateMetadata() {
+export async function generateMetadata(): Promise<Metadata> {
   // to dynamically generate metadata
   return {
     title: 'Home',
@@ -11,7 +11,9 @@ export async function generateMetadata() {
   };
 }
 
-export default function Home() {
+interface Props { };
+
+export default function Home({ }: Props) {
   return (
     <main>
       <h1>Home page</h1>
