@@ -1,13 +1,15 @@
-import './files&folders.css';
+import { Metadata } from 'next';
 
-export async function generateMetadata() { // to dynamically generate metadata
+export async function generateMetadata(): Promise<Metadata> { // to dynamically generate metadata
   return {
     title: 'Files',
     description: 'r-cloud files and folders page',
   };
 };
 
-export default function FilesFolders() {
+interface Props { };
+
+export default function FilesFolders({ }: Props) {
   return (
     <main>
       <h1>FilesFolders page</h1>
