@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import './profile.css';
 
 export async function generateMetadata(): Promise<Metadata> {
   // to dynamically generate metadata
