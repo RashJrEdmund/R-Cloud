@@ -11,12 +11,12 @@ export default function ProfileSection({}: Props) {
   return (
     <StyledProfileSection title='user profile image icon'>
       <Image
-        src='/vercel.svg'
+        src='/user_profile_icon.svg'
         alt='user profile image icon'
         width={50}
         height={50}
       />
-      Roger
+      User
     </StyledProfileSection>
   );
 };

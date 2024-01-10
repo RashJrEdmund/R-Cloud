@@ -57,7 +57,7 @@ const TextTag = styled.span<Props>`
     padding: ${({ padding = '0' }) => padding};
     border: ${({ border }) => border ? `1px solid ${COLORS.border}` : 'none'};
 
-    cursor: ${({ cursor = 'default' }) => cursor};
+    cursor: ${({ cursor = 'text' }) => cursor};
 
     ${({ hover_effect = 'none' }) => createHoverEffect(hover_effect)}
 

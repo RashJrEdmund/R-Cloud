@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { MainTag } from '@/components/atoms';
 
 export async function generateMetadata(): Promise<Metadata> {
   // to dynamically generate metadata
@@ -15,8 +16,8 @@ interface Props { };
 
 export default function Home({ }: Props) {
   return (
-    <main>
+    <MainTag>
       <h1>Home page</h1>
-    </main>
+    </MainTag>
   );
 }

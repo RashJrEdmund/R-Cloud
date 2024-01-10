@@ -9,10 +9,11 @@ const StyledProfileSection = styled.section`
   gap: 7px;
 
   img {
-    border: 1px solid black;
+    border: 1px solid gray;
     border-radius: 100%;
-    width: 30px;
-    height: 30px;
+    object-fit: contain;
+    width: 35px;
+    height: 35px;
   }
 `;
 

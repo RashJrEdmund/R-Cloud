@@ -4,20 +4,20 @@ import { MainTag } from '@/components/atoms';
 export async function generateMetadata(): Promise<Metadata> {
   // to dynamically generate metadata
   return {
-    title: 'Profile',
-    description: 'r-cloud profile page',
+    title: 'Storage Plans',
+    description: 'r-cloud storage plans page',
     alternates: {
-      canonical: '/profile',
+      canonical: '/storage-plans',
     },
   };
 }
 
 interface Props { };
 
-export default function Profile({ }: Props) {
+export default function StoragePlans({ }: Props) {
   return (
     <MainTag>
-      <h1>Your Profile</h1>
+      <h1>Plans</h1>
     </MainTag>
   );
 }

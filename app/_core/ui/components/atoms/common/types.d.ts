@@ -16,7 +16,7 @@ export type FlexDirectionVariants = 'column' | 'row' | 'unset';
 
 export type HoverEffectVariants = 'scale' | 'translate' | 'none';
 
-export type CursorVariants = 'default' | 'pointer';
+export type CursorVariants = 'default' | 'pointer' | 'text';
 
 export interface CommonProps {
     sx?: string;
