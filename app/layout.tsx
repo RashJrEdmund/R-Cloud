@@ -1,6 +1,7 @@
 import './globals.css';
 import { inter } from './_core/ui/fonts';
 import { Metadata } from 'next';
+import { NavBar } from '@/components/molecules';
 
 export const metadata: Metadata = {
   title: {
@@ -30,7 +31,13 @@ export default function RootLayout({ children }: Props) {
         <meta name='theme-color' content='#5588ff' />
       </head>
 
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <NavBar />
+
+        <>
+          {children}
+        </>
+      </body>
     </html>
   );
 }
