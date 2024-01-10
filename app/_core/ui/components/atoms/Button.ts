@@ -13,6 +13,7 @@ const {
 interface Props extends CommonProps {
   no_white_space?: boolean;
   cursor?: CursorVariants;
+  href?: string; // this has no use other than calming down the as 'a' attributes problem
 };
 
 const Button = styled.button<Partial<Props>>`
