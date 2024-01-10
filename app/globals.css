@@ -4,21 +4,26 @@
 
 :root {
     --text: #000;
-    --text_light: #ffffff9a;
+    --text_light: #1a1a1a66;
     --text_invert: #ffffff;
     --text_blue: #367AFF;
+    --text_dark: #000;
     --text_white: #f5f5f5;
 
     --border: #ffffff9a;
     --border_thick: #000;
 
     --bg: #f9f9f9;
-    --bg_light: #ffffff9a;
+    --bg_light: #d9d9d9;
     --bg_invert: #1d2432;
 
+    --app_bg: #f9f9f9;
     --app_blue: #367AFF;
+    ---overlay_gradient: linear-gradient(#367AFF4e, #367AFF4e);
 
     --app_width: min(97vw, 1400px);
+
+    --box_shadow: 0 0 10px #00000079;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -44,11 +49,12 @@
 }
 
 body {
-    background-color: var(--bg);
+    background-color: var(--app_bg);
     color: var(--text);
     width: 100%;
     min-height: 100vh;
     height: fit-content;
+    padding: 3.5rem 0 0;
 }
 
 li {
