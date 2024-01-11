@@ -20,7 +20,7 @@ export const generateFieldColors = (color_type: 'invert' | 'normal') => {
             border: 1px solid ${COLORS.text_invert};
 
             &::placeholder {
-                color: ${COLORS.text_light};
+                color: ${COLORS.text_grayed};
             }
         `;
   } else { // color_type === 'normal';
@@ -29,7 +29,7 @@ export const generateFieldColors = (color_type: 'invert' | 'normal') => {
             border: 1px solid ${COLORS.border};
 
             &::placeholder {
-                color: ${COLORS.text_light};
+                color: ${COLORS.text_grayed};
             }
         `;
   }

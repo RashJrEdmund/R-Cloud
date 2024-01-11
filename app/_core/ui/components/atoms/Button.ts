@@ -17,7 +17,7 @@ interface Props extends CommonProps {
 };
 
 const Button = styled.button<Partial<Props>>`
-  color: ${COLORS.text_light};
+  color: ${COLORS.text_grayed};
   padding: ${({ padding = '4px 15px' }) => padding};
   margin: ${({ margin = '0' }) => margin};
   border-radius: ${({ radius = '4px' }) => radius};

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   openGraph: {
     type: 'website',
-    description: 'r-cloud rainkicker web application',
+    description: 'r-cloud web application',
     siteName: 'R-cloud',
     title: 'R-cloud Web Page',
   },

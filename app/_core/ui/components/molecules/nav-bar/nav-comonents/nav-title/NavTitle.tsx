@@ -2,7 +2,7 @@
 
 import styled from '@emotion/styled';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 interface Props {
 
@@ -21,7 +21,7 @@ export default function NavTitle({ }: Props) {
 
   const pathname = usePathname();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const name = pathname.split('/').pop();
 
     if (name) setNavTitle(name);

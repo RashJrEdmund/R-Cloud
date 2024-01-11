@@ -1,6 +1,6 @@
 interface IColorPalette {
   text: string;
-  text_light: string;
+  text_grayed: string;
   text_invert: string;
   text_blue: string;
   text_dark: string;
@@ -36,7 +36,7 @@ const THEME_PALLETE: {
     // for now, themes as per system.
 
     text: 'var(--text)',
-    text_light: 'var(--text_light)',
+    text_grayed: 'var(--text_grayed)',
     text_invert: 'var(--text_invert)',
     text_blue: 'var(--text_blue)',
     text_dark: 'var(--text_dark)',

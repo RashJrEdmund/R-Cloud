@@ -17,11 +17,12 @@ export default function Illustrations({}: Props) {
             alt={alt}
             height={500}
             width={500}
+            draggable={false}
           />
 
           <TextTag>{description}</TextTag>
         </div>
       ))}
     </StyledIllustrationHolder>
-  )
-}
+  );
+};

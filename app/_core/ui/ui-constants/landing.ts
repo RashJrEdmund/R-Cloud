@@ -12,12 +12,12 @@ interface IIllustrationContent {
 
 export const LANDING_ILLUSTRATION_CONTENT: IIllustrationContent[] = [
   {
-    url: '/save_&_organise_ files.svg',
+    url: '/landing/save_&_organise_ files.svg',
     alt: 'save_&_organise_ files',
     description: 'Save, organise and download your files',
   },
   {
-    url: '/share_files.svg',
+    url: '/landing/share_files.svg',
     alt: 'share files animation',
     description: 'Find and share your files',
   },

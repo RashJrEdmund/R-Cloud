@@ -27,7 +27,7 @@ interface Props extends CommonProps {
 const generateColor = (text: IColor) => {
   switch (text) {
   case 'grayed':
-    return COLORS.text_light;
+    return COLORS.text_grayed;
   case 'invert':
     return COLORS.text_invert;
   case 'success':
