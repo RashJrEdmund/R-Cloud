@@ -16,6 +16,9 @@ const StyledFormWrapper = styled.section`
     ${flex_template}
     flex-direction: column;
     align-items: flex-start;
+    border: 1px solid ${COLORS.border};
+    width: min(100%, 400px);
+    margin: auto;
     /* width: 100%; */
   }
 

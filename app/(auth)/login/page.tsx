@@ -1,5 +1,12 @@
 import { Metadata } from 'next';
-import { Button, MainTag, TextTag } from '@/components/atoms';
+import {
+  Button,
+  MainTag,
+  TextTag
+} from '@/components/atoms';
+import {
+  InputField
+} from '@/components/molecules';
 import { FormWrapper } from '../_components';
 
 export async function generateMetadata(): Promise<Metadata> { // to dynamically generate metadata
@@ -32,6 +39,10 @@ export default function Login({ }: Props) {
           <input type='checkbox' name='keep-me-logged-in' id='keep-me-logged-in' />
           keep me logged in
         </label>
+
+        <input placeholder='password' />
+
+        <InputField />
 
         <Button type='submit' bg='blued' width='100%'>Sign In</Button>
       </FormWrapper>
