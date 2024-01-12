@@ -19,6 +19,9 @@ const withPWA = require('next-pwa')({ // see package https://www.npmjs.com/packa
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   ...withPWA,
+  env: {
+    //
+  }
 };
 
 module.exports = nextConfig;
