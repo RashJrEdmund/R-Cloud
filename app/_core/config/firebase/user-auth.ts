@@ -10,8 +10,25 @@ export const loginWithEmailAndPass = async (email: string, password: string) => 
   try {
     const res = await signInWithEmailAndPassword(auth, email, password);
 
-    console.log(res.user);
-  } catch (error) {
-    //
+    console.log(res);
+
+    return res.user;
+  } catch (error: any) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log({ errorCode, errorMessage, email, password });
+    throw (error as { code: string, message: string });
   };
 };
+
+// export const signUpWithCredentials = async (email: string, password: string) => {
+//   try {
+//     const res = await cr
+
+//     console.log(res);
+
+//     return res.user;
+//   } catch (error) {
+//     //
+//   };
+// };

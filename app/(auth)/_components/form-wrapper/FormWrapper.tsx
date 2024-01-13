@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import Image from 'next/image';
 import StyledFormWrapper from './StyledFormWrapper';
+import { handleFormAction } from '@/core/lib/actions';
 
 interface Props {
   children: React.ReactNode;
@@ -9,9 +10,10 @@ interface Props {
 };
 
 export default function FormWrapper({ children, img_url, formAction }: Props) {
+  // (formData: FormData) => handleFormAction(formData, formAction)}
   return (
     <StyledFormWrapper>
-      <form className='form' action={formAction}>
+      <form className='form' action={(formData: FormData) => handleFormAction(formData, formAction)}>
         {children}
       </form>
 

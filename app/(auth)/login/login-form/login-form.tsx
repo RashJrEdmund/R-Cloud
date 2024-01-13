@@ -6,6 +6,8 @@ import { loginWithEmailAndPass } from '@/_core/config/firebase';
 import { Button, TextTag } from '@/components/atoms';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   //
@@ -16,8 +18,12 @@ interface Props {
 };
 
 export default function LoginForm({ }: Props) {
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
+
   const loginFormAction = (formData: FormData) => {
     console.log(formData);
+    setLoading(true);
 
     const rawData = {
       email: formData.get('email')?.toString(),
@@ -29,11 +35,12 @@ export default function LoginForm({ }: Props) {
     if (!rawData.email?.trim() || !rawData.password?.trim()) return; // toast error;
 
     loginWithEmailAndPass(rawData.email, rawData.password)
-      .then(() => {
-        //
+      .then((user) => {
+        console.log("use ''", user);
+        // if (user) router.push('/home');
       })
       .finally(() => {
-        //
+        setLoading(false);
       });
   };
 
@@ -58,6 +65,7 @@ export default function LoginForm({ }: Props) {
       <InputField
         field_title='Password'
         field_name='password'
+        type='password'
       />
 
       <label htmlFor='keep-me-logged-in' className='keep-me-logged-in'>
@@ -65,7 +73,9 @@ export default function LoginForm({ }: Props) {
         keep me logged in
       </label>
 
-      <Button type='submit' bg='blued' width='100%' padding='7px 0'>Sign In</Button>
+      <Button type='submit' bg='blued' width='100%' padding='7px 0' disabled={loading}>
+        {loading ? 'loading...' : 'Sign In'}
+      </Button>
 
       <FormOrSeperator />
 
@@ -75,7 +85,7 @@ export default function LoginForm({ }: Props) {
       </Button>
 
       <TextTag color_type='grayed' margin='10px auto' sx='align-self: center;'>
-        Need an account?
+        Don&apos;t have an account?
 
         <Link href='/signup'>
           <TextTag color_type='success' cursor='pointer'>Create One</TextTag>

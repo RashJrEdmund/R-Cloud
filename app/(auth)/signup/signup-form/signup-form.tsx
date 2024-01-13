@@ -5,27 +5,21 @@ import { FormWrapper } from '@/(auth)/_components';
 import { Button, TextTag } from '@/components/atoms';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 interface Props {
   //
 };
 
 export default function SignupForm({ }: Props) {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const signupFormAction = (formData: FormData) => {
+    setLoading(true);
     console.log(formData);
+    const rawData = Object.fromEntries(formData.entries());
 
-    const rawData = {
-      email: formData.get('email'),
-      password: formData.get('password'),
-    };
-
-    const rawData2 = Object.fromEntries(formData.entries());
-
-    console.log(formData);
-    console.log(formData.entries());
-    console.log(Object.fromEntries(formData));
-
-    console.log({ rawData, rawData2 });
+    console.log({ rawData });
   };
 
   return (
@@ -63,7 +57,9 @@ export default function SignupForm({ }: Props) {
         field_name='password'
       />
 
-      <Button type='submit' bg='blued' width='100%' padding='7px 0'>Sign Up</Button>
+      <Button type='submit' bg='blued' width='100%' padding='7px 0' disabled={loading}>
+        {loading ? 'loading...' : 'Sign Up'}
+      </Button>
 
       <FormOrSeperator />
 
