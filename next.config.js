@@ -21,6 +21,9 @@ const nextConfig = {
   ...withPWA,
   env: {
     //
+  },
+  images: {
+    // remotePatterns: ['*']
   }
 };
 

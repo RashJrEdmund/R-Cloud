@@ -2,6 +2,7 @@
 
 import { FileCard, FolderCard } from './components';
 import StyledFileFolderDisplay from './styled-file-folder-display';
+import { useDocStore } from '@/store/zustand';
 
 interface Props {
   //
@@ -9,11 +10,20 @@ interface Props {
 
 // map and display cards here
 
-export default function FilesFolderDisplay({}: Props) {
+export default function FilesFolderDisplay({ }: Props) {
+  const { documents } = useDocStore();
+
   return (
     <StyledFileFolderDisplay>
-      <FileCard />
-      <FolderCard />
+      {
+        documents?.map((doc) => (
+          doc.type === 'FOLDER' ? (
+            <FolderCard key={doc.id} doc={doc} />
+          ) : (
+            <FileCard key={doc.id} doc={doc} />
+          )
+        ))
+      }
     </StyledFileFolderDisplay>
   );
 };

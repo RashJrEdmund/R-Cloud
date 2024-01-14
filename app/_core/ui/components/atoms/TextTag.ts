@@ -16,6 +16,7 @@ type IColor = 'grayed' | 'normal' | 'invert' | 'dark' | 'light' | 'success';
 
 interface Props extends CommonProps {
   no_white_space?: boolean;
+  ellipsis?: boolean; // to create ellipsis, works hand in hand with no_white_space
   color_type?: IColor,
   weight?: WeightVaraints;
   size?: SizeVariants;
@@ -50,6 +51,7 @@ const TextTag = styled.span<Props>`
     font-size: ${({ size = '1rem' }) => size}; // 1rem is defualt text size and 2rem is for like h1s
     color: ${({ color_type = 'normal' }) => generateColor(color_type)};
     white-space: ${({ no_white_space = false }) => no_white_space ? 'nowrap' : 'normal'};
+    text-overflow: ${({ ellipsis = false }) => ellipsis ? 'ellipsis' : 'unset'};
 
     ${flex_template}
     gap: ${({ gap = '3px' }) => gap};
