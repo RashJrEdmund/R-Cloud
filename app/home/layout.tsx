@@ -12,12 +12,14 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-interface Props { };
+interface Props {
+  children: React.ReactNode;
+};
 
-export default function Home({ }: Props) {
+export default function Home({ children }: Props) {
   return (
     <MainTag>
-      <h1>Home page</h1>
+      {children}
     </MainTag>
   );
 }

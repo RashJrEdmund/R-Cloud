@@ -6,4 +6,4 @@ export { default as InputField } from '../../../../(auth)/_components/input-fiel
 
 export { default as Streamer } from './loading-streamer/streamer';
 
-export { default as PathWrapper } from './path-wrapper/path-wrapper';
+export { default as FilesFolderDisplay } from './files-folder-display/files-folder-display';

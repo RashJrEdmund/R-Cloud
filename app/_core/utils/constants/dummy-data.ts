@@ -1,4 +1,4 @@
-import { IDocument } from '@/interfaces/entities';
+import type { IDocument } from '@/interfaces/entities';
 
 const userId = '<my user id>';
 

@@ -16,6 +16,12 @@ interface IDocument {
   updatedAt?: Date | string;
 };
 
+interface IUser {
+  id: string;
+  displayName: string;
+}
+
 export type {
   IDocument,
+  IUser,
 };

@@ -2,8 +2,8 @@
 
 import { THEME_PALLETE, flex_template } from '@/core/ui/theme';
 import styled from '@emotion/styled';
-import { createHoverEffect, generateBg } from './common/functions';
-import {
+import { createHoverEffect } from './common/functions';
+import type {
   CommonProps,
   CursorVariants,
   SizeVariants,

@@ -2,7 +2,7 @@
 
 import { THEME_PALLETE } from '@/core/ui/theme';
 import styled from '@emotion/styled';
-import {
+import type {
   CommonProps,
   FLexAlignVariants,
   FlexDirectionVariants,

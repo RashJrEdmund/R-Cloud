@@ -3,7 +3,7 @@
 import { THEME_PALLETE, flex_template } from '@/core/ui/theme';
 import styled from '@emotion/styled';
 import { createHoverEffect, generateBg } from './common/functions';
-import { CommonProps, CursorVariants } from './common/types';
+import type { CommonProps, CursorVariants } from './common/types';
 
 const {
   colors: COLORS,
