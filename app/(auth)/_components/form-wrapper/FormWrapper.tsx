@@ -12,7 +12,7 @@ interface Props {
 export default function FormWrapper({ children, img_url, formAction }: Props) {
   const handleFormAction = (formData: FormData) => {
     // formAction(formData);
-    throw redirect('/home/photos/google/stuff', 'replace'); // TODO +=> TAKE THIS OFF AND IMPLEMENT ACTUALL AUTHENTICATION;
+    throw redirect('/home/photos/google/stuff'); // TODO +=> TAKE THIS OFF AND IMPLEMENT ACTUALL AUTHENTICATION;
   };
 
   return (
