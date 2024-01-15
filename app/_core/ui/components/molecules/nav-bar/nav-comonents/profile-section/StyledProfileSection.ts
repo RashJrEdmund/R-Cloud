@@ -6,14 +6,19 @@ import styled from '@emotion/styled';
 const StyledProfileSection = styled.section`
   width: fit-content;
   ${flex_template}
-  gap: 7px;
+  
+  a {
+    width: fit-content;
+    ${flex_template}
+    gap: 7px;
 
-  img {
-    border: 1px solid gray;
-    border-radius: 100%;
-    object-fit: contain;
-    width: 35px;
-    height: 35px;
+    img {
+      border: 1px solid gray;
+      border-radius: 100%;
+      object-fit: contain;
+      width: 35px;
+      height: 35px;
+    }
   }
 `;
 

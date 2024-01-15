@@ -4,13 +4,13 @@
 
 :root {
     --text: #000;
-    --text_light: #1a1a1a66;
+    --text_grayed: #1a1a1a7a;
     --text_invert: #ffffff;
     --text_blue: #367AFF;
     --text_dark: #000;
     --text_white: #f5f5f5;
 
-    --border: #ffffff9a;
+    --border: #8080807e;
     --border_thick: #000;
 
     --bg: #f9f9f9;
@@ -54,7 +54,7 @@ body {
     width: 100%;
     min-height: 100vh;
     height: fit-content;
-    padding: 3.5rem 0 0;
+    padding: 2.5rem 0 0;
 }
 
 li {

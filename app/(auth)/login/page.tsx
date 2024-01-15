@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
-import { MainTag } from '@/components/atoms';
+import {  MainTag } from '@/components/atoms';
+
+import LoginForm from './login-form/login-form';
 
 export async function generateMetadata(): Promise<Metadata> { // to dynamically generate metadata
   return {
@@ -11,12 +13,12 @@ export async function generateMetadata(): Promise<Metadata> { // to dynamically 
   };
 };
 
-interface Props {};
+interface Props { };
 
-export default function Login({}: Props) {
+export default function Login({ }: Props) {
   return (
-    <MainTag>
-      <h1>Log In</h1>
+    <MainTag justify='center'>
+      <LoginForm />
     </MainTag>
   );
-}
+};

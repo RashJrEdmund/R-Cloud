@@ -2,8 +2,10 @@ export { default as Button } from './Button';
 
 export { default as TextTag } from './TextTag';
 
-export { default as InputField } from './InputField';
+export { default as TextField } from './TextField';
 
 export { default as MainTag } from './MainTag';
 
 export { default as Overlay } from './Overlay';
+
+export { default as TopSectionHolder } from './TopSectionHolder';

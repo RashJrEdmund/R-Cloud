@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
-import { MainTag } from '@/components/atoms';
+import { MainTag} from '@/components/atoms';
+import SignupForm from './signup-form/signup-form';
 
 export async function generateMetadata(): Promise<Metadata> { // to dynamically generate metadata
   return {
@@ -11,12 +12,12 @@ export async function generateMetadata(): Promise<Metadata> { // to dynamically 
   };
 };
 
-interface Props {};
+interface Props { };
 
-export default function Signup({}: Props) {
+export default function Signup({ }: Props) {
   return (
-    <MainTag>
-      <h1>Sign up</h1>
+    <MainTag justify='center'>
+      <SignupForm />
     </MainTag>
   );
 }

@@ -11,17 +11,18 @@ export default function Illustrations({}: Props) {
   return (
     <StyledIllustrationHolder>
       {LANDING_ILLUSTRATION_CONTENT.map(({ url, alt, description}) => (
-        <div className='card' key={alt} title={alt}>
+        <div className='card' key={alt} title={description}>
           <Image
             src={url}
             alt={alt}
             height={500}
             width={500}
+            draggable={false}
           />
 
           <TextTag>{description}</TextTag>
         </div>
       ))}
     </StyledIllustrationHolder>
-  )
-}
+  );
+};

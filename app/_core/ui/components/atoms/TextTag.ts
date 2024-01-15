@@ -2,8 +2,8 @@
 
 import { THEME_PALLETE, flex_template } from '@/core/ui/theme';
 import styled from '@emotion/styled';
-import { createHoverEffect, generateBg } from './common/functions';
-import {
+import { createHoverEffect } from './common/functions';
+import type {
   CommonProps,
   CursorVariants,
   SizeVariants,
@@ -16,6 +16,8 @@ type IColor = 'grayed' | 'normal' | 'invert' | 'dark' | 'light' | 'success';
 
 interface Props extends CommonProps {
   no_white_space?: boolean;
+  ellipsis?: boolean; // to create ellipsis, works hand in hand with no_white_space
+  text_align?: 'center' | 'left' | 'right';
   color_type?: IColor,
   weight?: WeightVaraints;
   size?: SizeVariants;
@@ -27,7 +29,7 @@ interface Props extends CommonProps {
 const generateColor = (text: IColor) => {
   switch (text) {
   case 'grayed':
-    return COLORS.text_light;
+    return COLORS.text_grayed;
   case 'invert':
     return COLORS.text_invert;
   case 'success':
@@ -50,6 +52,8 @@ const TextTag = styled.span<Props>`
     font-size: ${({ size = '1rem' }) => size}; // 1rem is defualt text size and 2rem is for like h1s
     color: ${({ color_type = 'normal' }) => generateColor(color_type)};
     white-space: ${({ no_white_space = false }) => no_white_space ? 'nowrap' : 'normal'};
+    text-overflow: ${({ ellipsis = false }) => ellipsis ? 'ellipsis' : 'unset'};
+    text-align: ${({ text_align = 'center' }) => text_align};
 
     ${flex_template}
     gap: ${({ gap = '3px' }) => gap};

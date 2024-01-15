@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { THEME_PALLETE } from '@/core/ui/theme';
 import styled from '@emotion/styled';

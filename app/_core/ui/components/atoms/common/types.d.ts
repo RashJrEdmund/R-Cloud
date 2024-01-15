@@ -4,7 +4,7 @@ export type BgVariants = 'normal' | 'light' | 'invert' | 'blued' | 'grayed' | 'n
 
 export type FlexJustifyVariants = 'space-around' | 'space-between' | 'space-evenly' | 'start' | 'center' | 'end';
 
-export type SizeVariants =  '0.5rem' | '0.75rem' | '1rem' | '1.25rem' | '1.5rem' | '1.75rem' | '2rem' | '2.25rem' | '2.5rem' | '2.75' | '3rem';
+export type SizeVariants =  '0.5rem' | '0.75rem' | '0.9rem' | '1rem' | '1.25rem' | '1.5rem' | '1.75rem' | '2rem' | '2.25rem' | '2.5rem' | '2.75' | '3rem';
 
 export type WeightVaraints = '400' | '500' | '600' | '700';
 
