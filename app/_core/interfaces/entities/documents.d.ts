@@ -1,3 +1,10 @@
+/* FILE_DESC +=> ====================================
+| database entity type definitions (interfaces) have |
+| been defined here                                  |
+================================================= */
+
+type DocumentType = 'FILE' | 'FOLDER';
+
 interface IDocument {
   id: string;
   userId: string;
@@ -16,11 +23,20 @@ interface IDocument {
   updatedAt?: Date | string;
 };
 
-type DocumentType = 'FILE' | 'FOLDER';
-
 interface IUser {
   id: string;
-  displayName: string;
+  email: string;
+  username: string;
+  date_of_birth: Date | string;
+  phone_number: string;
+  photo_url: string;
+  accessToken: string;
+  metadata: {
+    createdAt: Date | string;
+    creationTime: Date | string;
+    lastLoginAt: Date | string;
+    lastSignInTime: Date | string;
+  }
 }
 
 export type {

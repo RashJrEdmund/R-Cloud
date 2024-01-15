@@ -8,14 +8,14 @@ const StyledFormWrapper = styled.section`
   justify-content: space-between;
   width: fit-content;
   min-width: min(97vw, 1000px);
-  /* gap: 10px; */
+  max-width: 97vw;
 
   .form {
     ${flex_template}
     flex-direction: column;
     align-items: flex-start;
     width: min(100%, 400px);
-    margin: auto;
+    margin: 0 auto;
     gap: 10px;
     /* width: 100%; */
 

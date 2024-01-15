@@ -5,8 +5,8 @@ export default function AuthGuard(Component: React.JSXElementConstructor<React.R
   return async function Guard(props: any) {
     const currentUser = await _onAuthStateChange();
 
-    console.log({ auth_currentuser: currentUser });
-    if (!currentUser) throw redirect('/login');
+    // console.log({ auth_currentuser: currentUser });
+    // if (!currentUser) throw redirect('/login');
 
     return <Component {...props} currentUser={currentUser} />;
   };

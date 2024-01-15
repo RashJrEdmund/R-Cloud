@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import Image from 'next/image';
 import StyledFormWrapper from './StyledFormWrapper';
-import { handleFormAction } from '@/core/lib/actions';
+import { redirect } from 'next/navigation';
 
 interface Props {
   children: React.ReactNode;
@@ -10,10 +10,14 @@ interface Props {
 };
 
 export default function FormWrapper({ children, img_url, formAction }: Props) {
-  // (formData: FormData) => handleFormAction(formData, formAction)}
+  const handleFormAction = (formData: FormData) => {
+    // formAction(formData);
+    throw redirect('/home/photos/google/stuff', 'replace'); // TODO +=> TAKE THIS OFF AND IMPLEMENT ACTUALL AUTHENTICATION;
+  };
+
   return (
     <StyledFormWrapper>
-      <form className='form' action={(formData: FormData) => handleFormAction(formData, formAction)}>
+      <form className='form' action={handleFormAction}>
         {children}
       </form>
 

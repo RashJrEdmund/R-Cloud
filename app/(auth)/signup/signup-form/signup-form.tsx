@@ -31,7 +31,7 @@ export default function SignupForm({ }: Props) {
         Create Account
       </TextTag>
 
-      <TextTag as='p' color_type='grayed'>
+      <TextTag as='p' color_type='grayed' text_align='left'>
         Create an account to get started
       </TextTag>
 

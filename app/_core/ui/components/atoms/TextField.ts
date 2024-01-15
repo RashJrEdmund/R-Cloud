@@ -43,7 +43,7 @@ const TextField = styled.input<Partial<Props>>`
     border-radius: ${({ radius = '10px' }) => radius};
     padding: 5px 10px;
     margin: ${({ margin = '0 2px' }) => margin};
-    width: ${({ width = 'unset' }) => width};
+    width: ${({ width = '100%' }) => width};
     min-height: ${({ min_height = 'unset' }) => min_height};
 
     ${({ sx }) => sx};

@@ -11,7 +11,7 @@ export default function Illustrations({}: Props) {
   return (
     <StyledIllustrationHolder>
       {LANDING_ILLUSTRATION_CONTENT.map(({ url, alt, description}) => (
-        <div className='card' key={alt} title={alt}>
+        <div className='card' key={alt} title={description}>
           <Image
             src={url}
             alt={alt}

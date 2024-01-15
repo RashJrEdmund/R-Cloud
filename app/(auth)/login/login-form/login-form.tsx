@@ -34,14 +34,14 @@ export default function LoginForm({ }: Props) {
 
     if (!rawData.email?.trim() || !rawData.password?.trim()) return; // toast error;
 
-    loginWithEmailAndPass(rawData.email, rawData.password)
-      .then((user) => {
-        console.log("use ''", user);
-        if (user) router.push('/home/photos/google/stuff');
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    // loginWithEmailAndPass(rawData.email, rawData.password)
+    //   .then((user) => {
+    //     console.log("use ''", user);
+    //     if (user) router.push('/home/photos/google/stuff');
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   };
 
   return (
@@ -53,7 +53,7 @@ export default function LoginForm({ }: Props) {
         Log In
       </TextTag>
 
-      <TextTag as='p' color_type='grayed'>
+      <TextTag as='p' color_type='grayed' text_align='left'>
         Please login to continue to your account
       </TextTag>
 

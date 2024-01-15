@@ -60,7 +60,6 @@ export default function InputField({ field_name, type = 'text', field_title = 't
         value={fieldVal}
         type={type}
         name={field_name}
-        width='100%'
         min_height='3rem'
       />
     </StyledInput>
