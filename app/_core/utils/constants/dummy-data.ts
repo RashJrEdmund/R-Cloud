@@ -168,4 +168,20 @@ export const dummyData: IDocument[] = [
     },
     createdAt: new Date().toDateString(),
   },
+  {
+    id: 'uvw',
+    userId: userId,
+    name: 'some song',
+    path: '/Home/Music/Test+Folder',
+    pathIds: '/0/abc/stu',
+    type: 'FILE',
+    contentType: 'audio/mp3',
+    downloadUrl: 'https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg',
+    extension: '.mp3',
+    capacity: {
+      size: '2 Mb',
+      length: null,
+    },
+    createdAt: new Date().toDateString(),
+  },
 ];

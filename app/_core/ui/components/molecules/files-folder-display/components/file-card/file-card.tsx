@@ -13,7 +13,7 @@ interface Props extends ISharedCardProps {
 };
 
 export default function FileCard({ doc: file }: Props) {
-  const imagePreview = useMemo<string>(() => !(file.contentType.includes('image') && file.downloadUrl )? file.downloadUrl : '/icons/text-file-icon.svg', [file.type]);
+  const imagePreview = useMemo<string>(() => (file.contentType.includes('image') && file.downloadUrl )? file.downloadUrl : '/icons/text-file-icon.svg', [file.type]);
 
   return (
     <StyledDisplayCard>
@@ -26,12 +26,16 @@ export default function FileCard({ doc: file }: Props) {
 
       <div className='bottom'>
         <div className='doc_name'>
-          <TextTag title={file.name} weight='500' margin='0' no_white_space>
+          <TextTag title={file.name} weight='500' size='0.9rem' margin='0' no_white_space>
             {shortenText(file.name, FILE_FOLDER_MAX_NAME_LENGTH)}
           </TextTag>
         </div>
 
         <div className='footer'>
+          <TextTag color_type='grayed' size='0.75rem' no_white_space>
+            {file.extension}
+          </TextTag>
+
           <TextTag color_type='grayed' size='0.75rem' no_white_space>
             {file.capacity.size}
           </TextTag>

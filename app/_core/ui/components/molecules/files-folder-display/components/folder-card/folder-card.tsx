@@ -28,7 +28,7 @@ export default function FolderCard({ doc: folder }: Props) {
 
       <div className='bottom'>
         <div className='doc_name'>
-          <TextTag title={folder.name} weight='500' margin='0'>
+          <TextTag title={folder.name} weight='500' size='0.9rem' margin='0'>
             {shortenText(folder.name, FILE_FOLDER_MAX_NAME_LENGTH)}
           </TextTag>
         </div>
@@ -40,6 +40,7 @@ export default function FolderCard({ doc: folder }: Props) {
               'Empty'
             }
           </TextTag>
+
           <TextTag color_type='grayed' size='0.75rem' no_white_space>
             {folderLength > 0 ? folder.capacity.size : null}
           </TextTag>

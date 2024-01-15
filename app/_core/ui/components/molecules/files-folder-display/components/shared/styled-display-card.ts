@@ -7,7 +7,7 @@
 'use client';
 
 import styled from '@emotion/styled';
-import { THEME_PALLETE, flex_template } from '@/_core/ui/theme';
+import { THEME_PALLETE } from '@/_core/ui/theme';
 
 const {
   colors: COLORS,
@@ -24,8 +24,13 @@ export const StyledDisplayCard = styled.div`
   width: 120px;
   height: fit-content;
   min-height: 150px;
-  margin: 10px;
+  margin: 10px auto;
   cursor: pointer;
+  transition: 200ms;
+
+  &:hover {
+    background-color: ${COLORS.bg_light};
+  }
 
   img {
     width: 100%;

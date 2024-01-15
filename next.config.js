@@ -23,8 +23,15 @@ const nextConfig = {
     //
   },
   images: {
-    // remotePatterns: ['*']
-  }
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**', // 'example.com' | TODO +=> configure this to only look up firebase download urls
+        port: '',
+        pathname: '**', // '/account123/**' | TODO +=> configure this to only look up firebase download urls
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;
