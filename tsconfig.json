@@ -20,6 +20,7 @@
     ],
     "paths": {
       "@/components/*": ["./app/_core/ui/components/*"],
+      "@/guards/*": ["./app/_core/ui/guards/*"],
       "@/interfaces/*": ["./app/_core/interfaces/*"],
       "@/store/*": ["./app/_core/store/*"],
       "@/utils/*": ["./app/_core/utils/*"],

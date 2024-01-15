@@ -37,7 +37,7 @@ export default function LoginForm({ }: Props) {
     loginWithEmailAndPass(rawData.email, rawData.password)
       .then((user) => {
         console.log("use ''", user);
-        // if (user) router.push('/home');
+        if (user) router.push('/home/photos/google/stuff');
       })
       .finally(() => {
         setLoading(false);

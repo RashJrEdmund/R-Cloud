@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { MainTag } from '@/components/atoms';
+import { AuthStateWrapper } from '@/guards/index';
 
 export async function generateMetadata(): Promise<Metadata> {
   // to dynamically generate metadata
@@ -10,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
       canonical: '/home',
     },
   };
-}
+};
 
 interface Props {
   children: React.ReactNode;
@@ -19,7 +20,9 @@ interface Props {
 export default function Home({ children }: Props) {
   return (
     <MainTag>
-      {children}
+      <AuthStateWrapper>
+        {children}
+      </AuthStateWrapper>
     </MainTag>
   );
 }

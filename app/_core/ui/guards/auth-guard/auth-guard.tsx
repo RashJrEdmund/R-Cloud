@@ -1,11 +1,13 @@
-'use client';
-
-import { useState } from 'react';
+import { _onAuthStateChange } from '@/core/config/firebase';
+import { redirect } from 'next/navigation';
 
 export default function AuthGuard(Component: React.JSXElementConstructor<React.ReactNode>) {
-  return function Guard(props: any) {
-    const [currentUser, setCurrentUser] = useState<null>(null);
+  return async function Guard(props: any) {
+    const currentUser = await _onAuthStateChange();
 
-    return <Component {...props} currentUser={currentUser}/>;
+    console.log({ auth_currentuser: currentUser });
+    if (!currentUser) throw redirect('/login');
+
+    return <Component {...props} currentUser={currentUser} />;
   };
 };

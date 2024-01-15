@@ -3,7 +3,7 @@
 | and include google providers.        |
 ===================================== */
 
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '.';
 
 export const loginWithEmailAndPass = async (email: string, password: string) => {
@@ -32,3 +32,11 @@ export const loginWithEmailAndPass = async (email: string, password: string) => 
 //     //
 //   };
 // };
+
+export const _onAuthStateChange = async () => {
+  return new Promise((resolve) => {
+    onAuthStateChanged(auth, (user) => {
+      resolve(user);
+    });
+  });
+};

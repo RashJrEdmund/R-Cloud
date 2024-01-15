@@ -7,3 +7,5 @@ export { default as TextField } from './TextField';
 export { default as MainTag } from './MainTag';
 
 export { default as Overlay } from './Overlay';
+
+export { default as TopSectionHolder } from './TopSectionHolder';

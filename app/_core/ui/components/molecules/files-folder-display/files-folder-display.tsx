@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-async-client-component */
 'use client';
 
 import { FileCard, FolderCard } from './components';
@@ -9,10 +8,8 @@ interface Props {
   //
 };
 
-export default async function FilesFolderDisplay({ }: Props) {
+export default function FilesFolderDisplay({ }: Props) {
   const { documents } = useDocStore();
-
-  await new Promise(resolve => setTimeout(resolve, 5000));
 
   return (
     <StyledFileFolderDisplay>

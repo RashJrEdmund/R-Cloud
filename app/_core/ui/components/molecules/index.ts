@@ -7,3 +7,5 @@ export { default as InputField } from '../../../../(auth)/_components/input-fiel
 export { default as Streamer } from './loading-streamer/streamer';
 
 export { default as FilesFolderDisplay } from './files-folder-display/files-folder-display';
+
+export { default as Navigator } from './navigator/navigator';
