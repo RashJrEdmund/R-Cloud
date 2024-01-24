@@ -1,7 +1,7 @@
 {
     "name": "R-Cloud web app",
     "short_name": "R-Cloud",
-    "description": "could storage service app",
+    "description": "could storage service progressive web app",
     "theme_color": "#5588ff",
     "background_color": "#5588ff",
     "start_url": "/",
