@@ -12,6 +12,7 @@ interface IColorPalette {
   bg: string;
   bg_light: string;
   bg_invert: string;
+  border_error: string;
 
   app_bg: string;
   app_blue: string;
@@ -48,6 +49,7 @@ const THEME_PALLETE: {
     bg: 'var(--bg)',
     bg_light: 'var(--bg_light)',
     bg_invert: 'var(--bg_invert)',
+    border_error: 'var(--border_error)',
 
     app_bg: 'var(--app_bg)',
     app_blue: 'var(--app_blue)',

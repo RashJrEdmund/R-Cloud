@@ -12,7 +12,7 @@ import type {
 
 const { colors: COLORS } = THEME_PALLETE;
 
-type IColor = 'grayed' | 'normal' | 'invert' | 'dark' | 'light' | 'success';
+type IColor = 'grayed' | 'normal' | 'invert' | 'dark' | 'light' | 'success' | 'error';
 
 interface Props extends CommonProps {
   no_white_space?: boolean;
@@ -34,6 +34,8 @@ const generateColor = (text: IColor) => {
     return COLORS.text_invert;
   case 'success':
     return COLORS.text_blue;
+  case 'error':
+    return COLORS.border_error;
   case 'light':
     return COLORS.text_white;
   case 'dark':
