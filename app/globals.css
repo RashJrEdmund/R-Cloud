@@ -3,78 +3,82 @@
 @tailwind utilities;
 
 :root {
-    --text: #000;
-    --text_grayed: #1a1a1a7a;
-    --text_invert: #ffffff;
-    --text_blue: #367AFF;
-    --text_dark: #000;
-    --text_white: #f5f5f5;
+  --text: #000;
+  --text_grayed: #1a1a1a7a;
+  --text_invert: #ffffff;
+  --text_blue: #367AFF;
+  --text_dark: #000;
+  --text_white: #f5f5f5;
 
-    --border: #8080807e;
-    --border_thick: #000;
-    --border_error: red;
+  --border: #8080807e;
+  --border_thick: #000;
+  --border_error: red;
 
-    --bg: #f9f9f9;
-    --bg_light: #d9d9d9;
-    --bg_invert: #1d2432;
+  --bg: #f9f9f9;
+  --bg_light: #d9d9d9;
+  --bg_invert: #1d2432;
 
-    --app_bg: #f9f9f9;
-    --app_blue: #367AFF;
-    ---overlay_gradient: linear-gradient(#367AFF4e, #367AFF4e);
+  --app_bg: #f9f9f9;
+  --app_blue: #367AFF;
 
-    --app_width: min(97vw, 1400px);
+  --black: #000;
 
-    --box_shadow: 0 0 10px #00000079;
+  ---overlay_gradient: linear-gradient(#367AFF4e, #367AFF4e);
+  --box_shadow: 0 0 10px #00000079;
+
+  /* DIMENSIONS */
+  --app_width: min(97vw, 1400px);
+  --main_min_height: min(800px, calc(100vh - 100px));
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        /* --text: #000;
-        --text_invert: #ffffff;
+  :root {
+    /* --text: #000;
+    --text_invert: #ffffff;
 
-        --border: gray;
-        --border_thick: #000;
+    --border: gray;
+    --border_thick: #000;
 
-        --bg: #f9f9f9;
-        --bg_light: gray;
-        --bg_invert: #1d2432; */
-    }
+    --bg: #f9f9f9;
+    --bg_light: gray;
+    --bg_invert: #1d2432; */
+  }
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    border: none;
-    box-sizing: border-box;
-    background: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+  background: none;
 }
 
 body {
-    background-color: var(--app_bg);
-    color: var(--text);
-    width: 100%;
-    min-height: 100vh;
-    height: fit-content;
-    padding: 2.5rem 0 0;
+  background-color: var(--app_bg);
+  color: var(--text);
+  width: 100%;
+  min-height: 100vh;
+  height: fit-content;
+  padding: 2.5rem 0 0;
 }
 
 li {
-    list-style: none;
+  list-style: none;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-    outline: none;
+  outline: none;
 }
 
 a {
-    text-decoration: none;
-    color: unset;
-    cursor: pointer;
+  text-decoration: none;
+  color: unset;
+  cursor: pointer;
 }
 
 button {
-    cursor: pointer;
-    white-space: nowrap;
+  cursor: pointer;
+  white-space: nowrap;
 }

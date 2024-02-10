@@ -14,6 +14,8 @@ interface IColorPalette {
   bg_invert: string;
   border_error: string;
 
+  black: string;
+
   app_bg: string;
   app_blue: string;
   overlay_gradient: string;
@@ -21,6 +23,7 @@ interface IColorPalette {
 
 interface IDimensions {
   app_width: string;
+  main_min_height: string;
 }
 
 interface IEffects {
@@ -51,6 +54,8 @@ const THEME_PALLETE: {
     bg_invert: 'var(--bg_invert)',
     border_error: 'var(--border_error)',
 
+    black: 'var(--black)',
+
     app_bg: 'var(--app_bg)',
     app_blue: 'var(--app_blue)',
     overlay_gradient: 'var(--overlay_gradient)',
@@ -58,6 +63,7 @@ const THEME_PALLETE: {
 
   dimensions: {
     app_width: 'var(--app_width)',
+    main_min_height: 'var(--main_min_height)',
   },
 
   effects: {

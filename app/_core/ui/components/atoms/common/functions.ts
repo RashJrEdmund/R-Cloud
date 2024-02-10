@@ -9,23 +9,28 @@ const { colors: COLORS } = THEME_PALLETE;
 const generateBg = (bg: BgVariants) => {
   if (bg === 'grayed') {
     return css`
-        background-color: ${COLORS.bg_light};
-        color: ${COLORS.text};
+      background-color: ${COLORS.bg_light};
+      color: ${COLORS.text};
     `;
   } else if (bg === 'light') {
     return css`
-        background-color: ${COLORS.bg_light};
-        color: ${COLORS.text_dark};
+      background-color: ${COLORS.bg_light};
+      color: ${COLORS.text_dark};
     `;
   } else if (bg === 'invert') {
     return css`
-        background-color: ${COLORS.bg_invert};
-        color: ${COLORS.text_invert};
+      background-color: ${COLORS.bg_invert};
+      color: ${COLORS.text_invert};
     `;
   } else if (bg === 'blued') {
     return css`
         background-color: ${COLORS.app_blue};
         color: ${COLORS.text_white};
+    `;
+  } else if (bg === 'black') {
+    return css`
+      background-color: ${COLORS.black};
+      color: ${COLORS.text_white};
     `;
   } else if (bg === 'normal') { // bg === 'normal';
     return css`

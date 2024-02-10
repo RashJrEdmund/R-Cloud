@@ -8,6 +8,7 @@ import type {
   FlexDirectionVariants,
   FlexJustifyVariants
 } from './common/types';
+
 import { createHoverEffect, generateBg } from './common/functions';
 
 const {
@@ -23,6 +24,7 @@ interface Props extends CommonProps {
 }
 
 const MainTag = styled.main<Props>`
+  visibility: ${({ visibility = 'visible' }) => visibility};
   display: flex;
   align-items: ${({ align = 'center' }) => align};
   justify-content: ${({ justify = 'start' }) => justify};
@@ -31,7 +33,23 @@ const MainTag = styled.main<Props>`
 
   width: ${({ width = DIMENSIONS.app_width }) => width};
   min-width: ${({ min_width = 'none' }) => min_width};
-  min-height: min(800px, calc(100vh - 100px));
+  max-width: ${({ max_width = 'none' }) => max_width};
+
+  height: ${({ height = 'fit-content' }) => height};
+  min-height: ${DIMENSIONS.main_min_height};
+  max-height: ${({ max_height = 'none' }) => max_height};
+
+  overflow-x: ${({ over_flow_x }) => over_flow_x ? 'auto' : 'unset'};
+  overflow-y: ${({ over_flow_y }) => over_flow_y ? 'auto' : 'unset'};
+
+  // positioning
+  position: ${({ position = 'unset' }) => position};
+  top: ${({ top = 'unset' }) => top};
+  right: ${({ right = 'unset' }) => right};
+  bottom: ${({ bottom = 'unset' }) => bottom};
+  left: ${({ left = 'unset' }) => left};
+  transform: ${({ transform = 'unset' }) => transform};
+  z-index: ${({ z_index = 'unset' }) => z_index};
 
   margin: ${({ margin = '0 auto' }) => margin};
   padding: ${({ padding = '2rem 0' }) => padding};
