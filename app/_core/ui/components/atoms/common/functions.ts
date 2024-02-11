@@ -1,46 +1,66 @@
 'use client';
 
-import { THEME_PALLETE } from '@/core/ui/theme';
+import { THEME_PALETTE } from '@/core/ui/theme';
 import { css } from '@emotion/react';
-import { BgVariants, HoverEffectVariants } from './types';
+import {
+  BgVariants,
+  HoverEffectVariants
+} from './types';
 
-const { colors: COLORS } = THEME_PALLETE;
+const {
+  colors: COLORS,
+} = THEME_PALETTE;
 
 const generateBg = (bg: BgVariants) => {
   if (bg === 'grayed') {
     return css`
-        background-color: ${COLORS.bg_light};
-        color: ${COLORS.text};
+      background-color: ${COLORS.bg_grayed};
+      color: ${COLORS.text};
     `;
   } else if (bg === 'light') {
     return css`
-        background-color: ${COLORS.bg_light};
-        color: ${COLORS.text_dark};
+      background-color: ${COLORS.bg_light};
+      color: ${COLORS.text_dark};
     `;
   } else if (bg === 'invert') {
     return css`
-        background-color: ${COLORS.bg_invert};
-        color: ${COLORS.text_invert};
+      background-color: ${COLORS.bg_invert};
+      color: ${COLORS.text_invert};
     `;
   } else if (bg === 'blued') {
     return css`
-        background-color: ${COLORS.app_blue};
-        color: ${COLORS.text_white};
+      background-color: ${COLORS.app_blue};
+      color: ${COLORS.text_white};
+    `;
+  } else if (bg === 'white') {
+    return css`
+      background-color: ${COLORS.white};
+      color: ${COLORS.text_dark};
+    `;
+  } else if (bg === 'black') {
+    return css`
+      background-color: ${COLORS.black};
+      color: ${COLORS.text_white};
     `;
   } else if (bg === 'normal') { // bg === 'normal';
     return css`
-        background-color: ${COLORS.bg};
-        color: ${COLORS.text_invert};
+      background-color: ${COLORS.bg};
+      color: ${COLORS.text};
     `;
-  } else { // bg === 'none';
+  } else if (bg === 'none') { // bg === 'none';
     return css`
-        background: none;
-        color: ${COLORS.text};
+      background: none;
+      color: ${COLORS.text};
+    `;
+  } else {
+    return css`
+      background-color: inherit;
+      color: ${COLORS.text};
     `;
   }
 };
 
-/* CSS UPDOWN ANIMATION */
+/* CSS UP-DOWN ANIMATION */
 
 const createUpDownAnimation = (animate: boolean) => {
   if (!animate) return '';
@@ -49,18 +69,20 @@ const createUpDownAnimation = (animate: boolean) => {
     -webkit-animation: MoveUpDown 1700ms linear infinite;
 
     @-webkit-keyframes MoveUpDown {
-        0% {
-            transform: translateY(0);
-        }
-        50% {
-            transform: translateY(10px);
-        }
-        100% {
-            transform: translateY(-1px);
-        }
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(10px);
+      }
+      100% {
+        transform: translateY(-1px);
+      }
     }
   `;
 };
+
+/* ANIMATIONS */
 
 const createLeftRightAnimation = (animate: boolean) => {
   if (!animate) return '';
@@ -69,15 +91,15 @@ const createLeftRightAnimation = (animate: boolean) => {
     -webkit-animation: MoveUpDown 1700ms linear infinite;
 
     @-webkit-keyframes MoveUpDown {
-        0% {
-            transform: translate(0);
-        }
-        50% {
-            transform: translate(10px);
-        }
-        100% {
-            transform: translate(-1px);
-        }
+      0% {
+        transform: translate(0);
+      }
+      50% {
+        transform: translate(10px);
+      }
+      100% {
+        transform: translate(-1px);
+      }
     }
   `;
 };
@@ -105,7 +127,7 @@ const createHoverEffect = (hover_effect: HoverEffectVariants) => {
   }
 };
 
-/* GRID TEMPLATE COLUMS */
+/* GRID TEMPLATE COLUMNS */
 
 export {
   generateBg,

@@ -1,6 +1,7 @@
 'use client';
 
-import { FormOrSeperator, InputField } from '@/(auth)/_components';
+import { FormOrSeparator } from '@/(auth)/_components';
+import { InputField } from '@/components/molecules';
 import { FormWrapper } from '@/(auth)/_components';
 import { Button, TextTag } from '@/components/atoms';
 import Image from 'next/image';
@@ -11,10 +12,10 @@ interface Props {
   //
 };
 
-export default function SignupForm({ }: Props) {
+export default function SignUpForm({ }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const signupFormAction = (formData: FormData) => {
+  const signUpFormAction = (formData: FormData) => {
     setLoading(true);
     console.log(formData);
     const rawData = Object.fromEntries(formData.entries());
@@ -25,7 +26,7 @@ export default function SignupForm({ }: Props) {
   return (
     <FormWrapper
       img_url='signup-img.svg'
-      formAction={signupFormAction}
+      formAction={signUpFormAction}
     >
       <TextTag as='h1' size='2rem' weight='600'>
         Create Account
@@ -57,11 +58,16 @@ export default function SignupForm({ }: Props) {
         field_name='password'
       />
 
+      <InputField
+        field_title='Confirm password'
+        field_name='confirm_password'
+      />
+
       <Button type='submit' bg='blued' width='100%' padding='7px 0' disabled={loading}>
         {loading ? 'loading...' : 'Sign Up'}
       </Button>
 
-      <FormOrSeperator />
+      <FormOrSeparator />
 
       <Button type='button' bg='light' width='100%' padding='7px 0'>
         Continue in with Google

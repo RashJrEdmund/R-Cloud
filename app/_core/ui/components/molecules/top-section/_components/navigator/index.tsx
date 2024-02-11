@@ -1,19 +1,11 @@
 'use client';
 
-import { TextTag } from '@/components/atoms';
-import { flex_template } from '@/core/ui/theme';
-import styled from '@emotion/styled';
+import { DivCard, TextTag } from '@/components/atoms';
 import { useRouter } from 'next/navigation';
 
 interface Props {
   //
 };
-
-const StyledNavigator = styled.div`
-  align-self: start;
-  ${flex_template};
-  gap: 1rem;
-`;
 
 export default function Navigator({}: Props) {
   const router = useRouter();
@@ -27,7 +19,10 @@ export default function Navigator({}: Props) {
   };
 
   return (
-    <StyledNavigator>
+    <DivCard
+      align_self='start'
+      gap='1rem'
+    >
       <TextTag
         cursor='pointer'
         no_white_space
@@ -43,6 +38,6 @@ export default function Navigator({}: Props) {
       >
         -&gt;
       </TextTag>
-    </StyledNavigator>
+    </DivCard>
   );
 };

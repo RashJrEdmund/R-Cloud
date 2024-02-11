@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import { MainTag, TopSectionHolder } from '@/components/atoms';
-import { Navigator } from '@/components/molecules';
+import { MainTag } from '@/components/atoms';
+import { TopSection } from '@/components/molecules';
 
 export async function generateMetadata(): Promise<Metadata> {
   // to dynamically generate metadata
@@ -18,9 +18,7 @@ interface Props { };
 export default function Profile({ }: Props) {
   return (
     <MainTag>
-      <TopSectionHolder>
-        <Navigator />
-      </TopSectionHolder>
+      <TopSection hide_search />
 
       <h1>Your Profile</h1>
     </MainTag>

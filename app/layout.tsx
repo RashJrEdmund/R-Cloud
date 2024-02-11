@@ -9,14 +9,24 @@ export const metadata: Metadata = {
     default: 'R-Cloud',
   },
   description: 'could storage service app',
-  metadataBase: new URL('http://localhost:3000'),
+  metadataBase: new URL('https://r-cloud.vercel.app'),
   keywords: ['r-cloud', 'r cloud', 'could', 'service', 'storage', 'google-drive', 'Roger', 'Rash', 'R'],
   manifest: '/manifest.json',
+  authors: [
+    {
+      url: 'https://twitter.com/orashus',
+      name: 'Rash Edmund'
+    },
+    {
+      url: 'https://twitter.com/orashus',
+      name: 'Roger'
+    }
+  ],
   openGraph: {
     type: 'website',
-    description: 'r-cloud web application',
+    description: 'cloud storage progressive web application',
     siteName: 'R-cloud',
-    title: 'R-cloud Web Page',
+    title: 'R-cloud',
   },
 };
 

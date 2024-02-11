@@ -1,5 +1,4 @@
-import { Button, TextTag } from '@/components/atoms';
-import StyledCtaHolder from './StyledCtaHolder';
+import { Button, DivCard } from '@/components/atoms';
 import { CTA_CONTENT } from '@/core/ui/ui-constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -9,7 +8,10 @@ interface Props {
 
 export default function CtaButtons({ }: Props) {
   return (
-    <StyledCtaHolder>
+    <DivCard
+      margin='5rem auto auto'
+      gap='1rem'
+    >
       {CTA_CONTENT.map(({ text, bt_bg, title, url, icon }) => (
         <Button
           as='a'
@@ -22,8 +24,9 @@ export default function CtaButtons({ }: Props) {
           min_width='140px'
         >
           {text}
+          {/* <FontAwesomeIcon icon={icon} /> */}
         </Button>
       ))}
-    </StyledCtaHolder>
+    </DivCard>
   );
 };

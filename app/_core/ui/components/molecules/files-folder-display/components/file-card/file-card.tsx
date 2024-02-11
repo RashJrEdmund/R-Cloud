@@ -3,7 +3,7 @@ import {
   ISharedCardProps // type
 } from '../shared';
 import Image from 'next/image';
-import { TextTag } from '@/components/atoms';
+import { DivCard, TextTag } from '@/components/atoms';
 import { useMemo } from 'react';
 import { shortenText } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
@@ -24,14 +24,14 @@ export default function FileCard({ doc: file }: Props) {
         height={60}
       />
 
-      <div className='bottom'>
-        <div className='doc_name'>
+      <DivCard flex_dir='column' align='start'>
+        <DivCard margin='5px 0 0'>
           <TextTag title={file.name} weight='500' size='0.9rem' margin='0' no_white_space>
             {shortenText(file.name, FILE_FOLDER_MAX_NAME_LENGTH)}
           </TextTag>
-        </div>
+        </DivCard>
 
-        <div className='footer'>
+        <DivCard  width='100%' margin='10px 0 0' gap='5px'>
           <TextTag color_type='grayed' size='0.75rem' no_white_space>
             {file.extension}
           </TextTag>
@@ -39,8 +39,8 @@ export default function FileCard({ doc: file }: Props) {
           <TextTag color_type='grayed' size='0.75rem' no_white_space>
             {file.capacity.size}
           </TextTag>
-        </div>
-      </div>
+        </DivCard>
+      </DivCard>
     </StyledDisplayCard>
   );
 };

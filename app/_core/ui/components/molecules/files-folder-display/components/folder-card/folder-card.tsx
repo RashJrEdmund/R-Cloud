@@ -5,7 +5,7 @@ import {
   ISharedCardProps // type
 } from '../shared';
 import Image from 'next/image';
-import { TextTag } from '@/_core/ui/components/atoms';
+import { DivCard, TextTag } from '@/_core/ui/components/atoms';
 import { useMemo } from 'react';
 import { shortenText } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
@@ -26,14 +26,14 @@ export default function FolderCard({ doc: folder }: Props) {
         height={100}
       />
 
-      <div className='bottom'>
-        <div className='doc_name'>
+      <DivCard flex_dir='column' align='start'>
+        <DivCard margin='5px 0 0'>
           <TextTag title={folder.name} weight='500' size='0.9rem' margin='0'>
             {shortenText(folder.name, FILE_FOLDER_MAX_NAME_LENGTH)}
           </TextTag>
-        </div>
+        </DivCard>
 
-        <div className='footer'>
+        <DivCard justify='start' width='100%' margin='10px 0 0' gap='5px'>
           <TextTag color_type='grayed' size='0.75rem' no_white_space>
             {folderLength > 0 ?
               (folderLength + ` file${folderLength > 1 ? 's' : ''}`) :
@@ -44,8 +44,8 @@ export default function FolderCard({ doc: folder }: Props) {
           <TextTag color_type='grayed' size='0.75rem' no_white_space>
             {folderLength > 0 ? folder.capacity.size : null}
           </TextTag>
-        </div>
-      </div>
+        </DivCard>
+      </DivCard>
     </StyledDisplayCard>
   );
 };

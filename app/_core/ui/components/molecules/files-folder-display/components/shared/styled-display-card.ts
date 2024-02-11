@@ -7,11 +7,11 @@
 'use client';
 
 import styled from '@emotion/styled';
-import { THEME_PALLETE } from '@/_core/ui/theme';
+import { THEME_PALETTE } from '@/_core/ui/theme';
 
 const {
   colors: COLORS,
-} = THEME_PALLETE;
+} = THEME_PALETTE;
 
 export const StyledDisplayCard = styled.div`
   display: flex;
@@ -36,24 +36,5 @@ export const StyledDisplayCard = styled.div`
     width: 100%;
     min-width: 100%;
     max-height: 75px;
-  }
-  
-  .bottom {
-    .doc_name {
-      width: 100%;
-      display: flex;
-      justify-content: start;
-      margin: 5px 0 0;
-    }
-
-    .footer {
-      width: 100%;
-      display: flex;
-      align-items: start;
-      justify-content: start;
-      flex-wrap: nowrap;
-      gap: 5px;
-      margin: 10px 0 0;
-    }
   }
 `;

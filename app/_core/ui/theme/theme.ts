@@ -11,7 +11,12 @@ interface IColorPalette {
 
   bg: string;
   bg_light: string;
+  bg_grayed: string;
   bg_invert: string;
+  border_error: string;
+
+  black: string;
+  white: string;
 
   app_bg: string;
   app_blue: string;
@@ -19,14 +24,16 @@ interface IColorPalette {
 }
 
 interface IDimensions {
-  app_width: string;
+  primary_app_width: string;
+  secondary_app_width: string;
+  main_min_height: string;
 }
 
 interface IEffects {
   box_shadow: string;
 }
 
-const THEME_PALLETE: {
+const THEME_PALETTE: {
   colors: IColorPalette,
   dimensions: IDimensions,
   effects: IEffects,
@@ -47,7 +54,12 @@ const THEME_PALLETE: {
 
     bg: 'var(--bg)',
     bg_light: 'var(--bg_light)',
+    bg_grayed: 'var(--bg_grayed)',
     bg_invert: 'var(--bg_invert)',
+    border_error: 'var(--border_error)',
+
+    black: 'var(--black)',
+    white: 'var(--white)',
 
     app_bg: 'var(--app_bg)',
     app_blue: 'var(--app_blue)',
@@ -55,7 +67,9 @@ const THEME_PALLETE: {
   },
 
   dimensions: {
-    app_width: 'var(--app_width)',
+    primary_app_width: 'var(--primary_app_width)',
+    secondary_app_width: 'var(--secondary_app_width)',
+    main_min_height: 'var(--main_min_height)',
   },
 
   effects: {
@@ -68,5 +82,5 @@ export type {
 };
 
 export {
-  THEME_PALLETE,
+  THEME_PALETTE,
 };

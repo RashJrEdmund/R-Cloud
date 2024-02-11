@@ -1,6 +1,6 @@
 'use client';
 
-import { THEME_PALLETE } from '@/core/ui/theme';
+import { THEME_PALETTE } from '@/core/ui/theme';
 import styled from '@emotion/styled';
 import type {
   CommonProps,
@@ -8,13 +8,14 @@ import type {
   FlexDirectionVariants,
   FlexJustifyVariants
 } from './common/types';
+
 import { createHoverEffect, generateBg } from './common/functions';
 
 const {
   colors: COLORS,
   dimensions: DIMENSIONS,
   effects: EFFECTS,
-} = THEME_PALLETE;
+} = THEME_PALETTE;
 
 interface Props extends CommonProps {
   align?: FLexAlignVariants;
@@ -23,15 +24,32 @@ interface Props extends CommonProps {
 }
 
 const MainTag = styled.main<Props>`
+  visibility: ${({ visibility = 'visible' }) => visibility};
   display: flex;
   align-items: ${({ align = 'center' }) => align};
   justify-content: ${({ justify = 'start' }) => justify};
   flex-direction: ${({ flex_dir = 'column' }) => flex_dir};
   gap: ${({ gap = 'unset' }) => gap};
 
-  width: ${({ width = DIMENSIONS.app_width }) => width};
+  width: ${({ width = DIMENSIONS.primary_app_width }) => width};
   min-width: ${({ min_width = 'none' }) => min_width};
-  min-height: min(800px, calc(100vh - 100px));
+  max-width: ${({ max_width = 'none' }) => max_width};
+
+  height: ${({ height = 'fit-content' }) => height};
+  min-height: ${DIMENSIONS.main_min_height};
+  max-height: ${({ max_height = 'none' }) => max_height};
+
+  overflow-x: ${({ over_flow_x }) => over_flow_x ? 'auto' : 'unset'};
+  overflow-y: ${({ over_flow_y }) => over_flow_y ? 'auto' : 'unset'};
+
+  // positioning
+  position: ${({ position = 'unset' }) => position};
+  top: ${({ top = 'unset' }) => top};
+  right: ${({ right = 'unset' }) => right};
+  bottom: ${({ bottom = 'unset' }) => bottom};
+  left: ${({ left = 'unset' }) => left};
+  transform: ${({ transform = 'unset' }) => transform};
+  z-index: ${({ z_index = 'unset' }) => z_index};
 
   margin: ${({ margin = '0 auto' }) => margin};
   padding: ${({ padding = '2rem 0' }) => padding};

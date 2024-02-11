@@ -1,6 +1,6 @@
 'use client';
 
-import { THEME_PALLETE, flex_template } from '@/core/ui/theme';
+import { THEME_PALETTE, flex_template } from '@/core/ui/theme';
 import styled from '@emotion/styled';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +10,7 @@ interface Props {
   //
 };
 
-const { colors: COLORS } = THEME_PALLETE;
+const { colors: COLORS } = THEME_PALETTE;
 
 const StyledStreamer = styled.div`
   position: fixed;
