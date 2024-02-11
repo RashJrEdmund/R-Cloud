@@ -9,7 +9,7 @@ const { colors: COLORS } = THEME_PALLETE;
 const generateBg = (bg: BgVariants) => {
   if (bg === 'grayed') {
     return css`
-      background-color: ${COLORS.bg_light};
+      background-color: ${COLORS.bg_grayed};
       color: ${COLORS.text};
     `;
   } else if (bg === 'light') {
@@ -24,8 +24,13 @@ const generateBg = (bg: BgVariants) => {
     `;
   } else if (bg === 'blued') {
     return css`
-        background-color: ${COLORS.app_blue};
-        color: ${COLORS.text_white};
+      background-color: ${COLORS.app_blue};
+      color: ${COLORS.text_white};
+    `;
+  } else if (bg === 'white') {
+    return css`
+      background-color: ${COLORS.white};
+      color: ${COLORS.text_dark};
     `;
   } else if (bg === 'black') {
     return css`
@@ -34,13 +39,18 @@ const generateBg = (bg: BgVariants) => {
     `;
   } else if (bg === 'normal') { // bg === 'normal';
     return css`
-        background-color: ${COLORS.bg};
-        color: ${COLORS.text_invert};
+      background-color: ${COLORS.bg};
+      color: ${COLORS.text};
     `;
-  } else { // bg === 'none';
+  } else if (bg === 'none') { // bg === 'none';
     return css`
-        background: none;
-        color: ${COLORS.text};
+      background: none;
+      color: ${COLORS.text};
+    `;
+  } else {
+    return css`
+      background-color: inherit;
+      color: ${COLORS.text};
     `;
   }
 };
@@ -89,24 +99,24 @@ const createLeftRightAnimation = (animate: boolean) => {
 
 const createHoverEffect = (hover_effect: HoverEffectVariants) => {
   switch (hover_effect) {
-  case 'translate':
-    return css`
+    case 'translate':
+      return css`
       transition: 300ms;
 
       &:hover {
           transform: translateY(-10px);
       }
     `;
-  case 'scale':
-    return css`
+    case 'scale':
+      return css`
       transition: 300ms;
 
       &:hover {
           transform: scale(1.15);
       }
     `;
-  default: // hover_effect = 'none'
-    return '';
+    default: // hover_effect = 'none'
+      return '';
   }
 };
 

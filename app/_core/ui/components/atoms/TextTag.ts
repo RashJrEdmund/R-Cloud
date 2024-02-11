@@ -12,7 +12,7 @@ import type {
 
 const { colors: COLORS } = THEME_PALLETE;
 
-type IColor = 'grayed' | 'normal' | 'invert' | 'dark' | 'light' | 'success' | 'error';
+type IColor = 'inherit' | 'grayed' | 'normal' | 'invert' | 'dark' | 'light' | 'success' | 'error';
 
 interface Props extends CommonProps {
   no_white_space?: boolean;
@@ -28,20 +28,22 @@ interface Props extends CommonProps {
 
 const generateColor = (text: IColor) => {
   switch (text) {
-  case 'grayed':
-    return COLORS.text_grayed;
-  case 'invert':
-    return COLORS.text_invert;
-  case 'success':
-    return COLORS.text_blue;
-  case 'error':
-    return COLORS.border_error;
-  case 'light':
-    return COLORS.text_white;
-  case 'dark':
-    return COLORS.text_dark;
-  default:
-    return COLORS.text;
+    case 'grayed':
+      return COLORS.text_grayed;
+    case 'invert':
+      return COLORS.text_invert;
+    case 'success':
+      return COLORS.text_blue;
+    case 'error':
+      return COLORS.border_error;
+    case 'light':
+      return COLORS.text_white;
+    case 'dark':
+      return COLORS.text_dark;
+    case 'normal':
+      return COLORS.text;
+    default: // text inherit
+      return 'inherit';
   }
 };
 
@@ -49,14 +51,17 @@ const TextTag = styled.span<Props>`
   visibility: ${({ visibility = 'visible' }) => visibility};
   width: ${({ width = 'fit-content' }) => width};
   min-width: ${({ min_width = 'unset' }) => min_width};
-  max-width: ${({ max_width = 'none' }) => max_width};
+  max-width: ${({ max_width = 'unset' }) => max_width};
 
   height: ${({ height = 'fit-content' }) => height};
   min-height: ${({ min_height = 'unset' }) => min_height};
   max-height: ${({ max_height = 'none' }) => max_height};
 
-  overflow-x: ${({ over_flow_x }) => over_flow_x ? 'auto' : 'unset'};
-  overflow-y: ${({ over_flow_y }) => over_flow_y ? 'auto' : 'unset'};
+  overflow-x: ${({ over_flow_x = 'unset', ellipsis = false }) => {
+    if (ellipsis && over_flow_x === 'unset') return 'hidden';
+    return over_flow_x;
+  }};
+  overflow-y: ${({ over_flow_y = 'unset' }) => over_flow_y};
 
   // positioning
   position: ${({ position = 'unset' }) => position};
@@ -69,8 +74,8 @@ const TextTag = styled.span<Props>`
 
   font-weight: ${({ weight = '400' }) => weight}; // 400 is defualt and normal font-weight, 700 is bold
   font-size: ${({ size = '1rem' }) => size}; // 1rem is defualt text size and 2rem is for like h1s
-  color: ${({ color_type = 'normal' }) => generateColor(color_type)};
-  white-space: ${({ no_white_space = false }) => no_white_space ? 'nowrap' : 'normal'};
+  color: ${({ color_type = 'inherit' }) => generateColor(color_type)};
+  white-space: ${({ no_white_space = false, ellipsis = false }) => (no_white_space || ellipsis) ? 'nowrap' : 'normal'};
   text-overflow: ${({ ellipsis = false }) => ellipsis ? 'ellipsis' : 'unset'};
   text-align: ${({ text_align = 'center' }) => text_align};
 

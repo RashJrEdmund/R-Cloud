@@ -22,6 +22,8 @@ const StyledInput = styled.fieldset`
   width: 100%;
   height: fit-content;
   margin: 10px 0;
+  border: 1px solid ${COLORS.bg_light};
+  border-radius: 8px;
 
   position: relative;
 
@@ -51,7 +53,7 @@ const StyledInput = styled.fieldset`
   }
 `;
 
-export default function InputField({ field_name, error = 'null', type = 'text', field_title = 'title', leave_active = false }: Props) {
+export default function InputField({ field_name, error = null, type = 'text', field_title = 'title', leave_active = false }: Props) {
   const [active, setActive] = useState<boolean>(leave_active);
   const [fieldVal, setFieldVal] = useState<string>('');
 
@@ -68,13 +70,17 @@ export default function InputField({ field_name, error = 'null', type = 'text', 
         {field_title}
       </TextTag>
 
-      <TextTag
-        className='error-message'
-        color_type='error'
-        cursor='text'
-      >
-        {error}
-      </TextTag>
+      {
+        error ? (
+          <TextTag
+            className='error-message'
+            color_type='error'
+            cursor='text'
+          >
+            {error}
+          </TextTag>
+        ) : null
+      }
 
       <TextField
         ref={inputRef as LegacyRef<HTMLInputElement>}
@@ -84,11 +90,10 @@ export default function InputField({ field_name, error = 'null', type = 'text', 
         onChange={(e: ChangeEvent<any>) => setFieldVal(e.target.value)}
         value={fieldVal}
         type={type}
-        color_type='invert'
+        color_type='no_border'
         name={field_name}
         min_height='2.7rem'
         width='100%'
-        // error={error}
       />
     </StyledInput>
   );

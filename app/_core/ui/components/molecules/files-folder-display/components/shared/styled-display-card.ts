@@ -37,23 +37,4 @@ export const StyledDisplayCard = styled.div`
     min-width: 100%;
     max-height: 75px;
   }
-  
-  .bottom {
-    .doc_name {
-      width: 100%;
-      display: flex;
-      justify-content: start;
-      margin: 5px 0 0;
-    }
-
-    .footer {
-      width: 100%;
-      display: flex;
-      align-items: start;
-      justify-content: start;
-      flex-wrap: nowrap;
-      gap: 5px;
-      margin: 10px 0 0;
-    }
-  }
 `;

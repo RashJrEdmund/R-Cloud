@@ -7,7 +7,7 @@ interface Props {
   //
 };
 
-export default function FilesFolderDisplayPage({}: Props) {
+export default function FilesFolderDisplayPage({ }: Props) {
   return (
     <>
       {/* TODO +=> ADD SEARCH BAR COMPONENT AND NAVIGATOR HERE. */}

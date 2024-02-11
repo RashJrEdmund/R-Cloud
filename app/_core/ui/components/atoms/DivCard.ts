@@ -38,7 +38,7 @@ interface Props extends CommonProps {
 const DivCard = styled.div<Props>`
   visibility: ${({ visibility = 'visible' }) => visibility};
   display: flex;
-  justify-content: ${({ justify = 'space-between' }) => justify};
+  justify-content: ${({ justify = 'center' }) => justify};
   align-items: ${({ align = 'center' }) => align};
   align-self: ${({ align_self = 'unset' }) => align_self};
   justify-self: ${({ justify_self = 'unset' }) => justify_self};
@@ -61,7 +61,7 @@ const DivCard = styled.div<Props>`
   transform: ${({ transform = 'unset' }) => transform};
   z-index: ${({ z_index = 'unset' }) => z_index};
 
-  cursor: ${({ cursor = 'default' }) => cursor};
+  cursor: ${({ cursor = 'inherit' }) => cursor};
 
   outline: none;
   width: ${({ width = 'fit-content' }) => width};
@@ -75,7 +75,7 @@ const DivCard = styled.div<Props>`
   overflow-x: ${({ over_flow_x }) => over_flow_x ? 'auto' : 'unset'};
   overflow-y: ${({ over_flow_y }) => over_flow_y ? 'auto' : 'unset'};
 
-  ${({ bg = 'normal' }) => generateBg(bg)}
+  ${({ bg = 'inherit' }) => generateBg(bg)}
 
   ${({ animate_up_down = false }) => createUpDownAnimation(animate_up_down)}
 

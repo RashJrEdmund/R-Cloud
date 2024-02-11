@@ -1,6 +1,6 @@
 /* THIS FILE KEEPS HOLD OF INTERFACES/TYPES THAT'RE COMMON BETWEEN ATOMS */
 
-export type BgVariants = 'normal' | 'light' | 'invert' | 'blued' | 'grayed' | 'black' | 'none';
+export type BgVariants = 'inherit' | 'normal' | 'light' | 'invert' | 'blued' | 'grayed' | 'black' | 'white' | 'none';
 
 export type FlexJustifyVariants = 'space-around' | 'space-between' | 'space-evenly' | 'start' | 'center' | 'end';
 
@@ -22,13 +22,15 @@ export type HoverEffectVariants = 'scale' | 'translate' | 'none';
 
 export type CursorVariants = 'default' | 'pointer' | 'text' | 'inherit' | 'not-allowed';
 
+export type OverFlowVariants = 'auto' | 'hidden' | 'scroll' | 'visible' | 'unset' | 'inherit';
+
 export interface CommonProps {
     sx?: string;
     padding?: string;
     margin?: string;
     shadow_effect?: boolean;
-    over_flow_x?: boolean; // !
-    over_flow_y?: boolean; // !
+    over_flow_x?: OverFlowVariants; // !
+    over_flow_y?: OverFlowVariants; // !
     border?: boolean;
     radius?: string;
     width?: string;
