@@ -1,5 +1,5 @@
 import { _onAuthStateChange } from '@/core/config/firebase';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function AuthGuard(Component: React.JSXElementConstructor<React.ReactNode>) {
   return async function Guard(props: any) {

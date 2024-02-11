@@ -2,16 +2,18 @@
 
 import styled from '@emotion/styled';
 import { TextField, TextTag } from '@/components/atoms';
-import { THEME_PALLETE, flex_template } from '@/core/ui/theme';
-import { ChangeEvent, LegacyRef, useRef, useState } from 'react';
+import { THEME_PALETTE, flex_template } from '@/core/ui/theme';
+import { ChangeEvent, ChangeEventHandler, LegacyRef, useRef, useState } from 'react';
 
 const {
   colors: COLORS,
-} = THEME_PALLETE;
+} = THEME_PALETTE;
 
 interface Props {
   field_title: string;
   field_name: string;
+  value?: string;
+  onValueChange?: ChangeEventHandler<HTMLInputElement>;
   leave_active?: boolean;
   error?: string | null;
   type?: 'text' | 'password' | 'email' | 'date';
@@ -53,11 +55,28 @@ const StyledInput = styled.fieldset`
   }
 `;
 
-export default function InputField({ field_name, error = null, type = 'text', field_title = 'title', leave_active = false }: Props) {
+export default function InputField({
+  field_name,
+  value,
+  onValueChange,
+  error = null,
+  type = 'text',
+  field_title = 'title',
+  leave_active = false,
+}: Props) {
   const [active, setActive] = useState<boolean>(leave_active);
   const [fieldVal, setFieldVal] = useState<string>('');
 
   const inputRef = useRef<HTMLInputElement>(); // is of type MutableRefObject<HTMLInputElement>;
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (onValueChange) {
+      onValueChange(e); // if there's a change event handler passed, it will work instead of component's local setFieldVal function
+      return;
+    };
+
+    setFieldVal(e.target.value);
+  };
 
   return (
     <StyledInput>
@@ -87,8 +106,8 @@ export default function InputField({ field_name, error = null, type = 'text', fi
         onFocus={() => setActive(true)}
         onBlur={() => (!fieldVal?.trim() && !leave_active) ? setActive(false) : null}
 
-        onChange={(e: ChangeEvent<any>) => setFieldVal(e.target.value)}
-        value={fieldVal}
+        onChange={handleInputChange}
+        value={value ?? fieldVal}
         type={type}
         color_type='no_border'
         name={field_name}

@@ -1,19 +1,19 @@
 'use client';
 
-import { THEME_PALLETE, flex_template } from '@/core/ui/theme';
+import { THEME_PALETTE, flex_template } from '@/core/ui/theme';
 import styled from '@emotion/styled';
 import { createHoverEffect, generateBg } from './common/functions';
-import type { CommonProps, CursorVariants, SizeVariants, WeightVaraints } from './common/types';
+import type { CommonProps, CursorVariants, SizeVariants, WeightVariants } from './common/types';
 
 const {
   colors: COLORS,
   effects: EFFECTS,
-} = THEME_PALLETE;
+} = THEME_PALETTE;
 
 interface Props extends CommonProps {
   no_white_space?: boolean;
   cursor?: CursorVariants;
-  weight?: WeightVaraints;
+  weight?: WeightVariants;
   size?: SizeVariants;
   href?: string; // this has no use other than calming down the as 'a' attributes problem
   disabled?: boolean;

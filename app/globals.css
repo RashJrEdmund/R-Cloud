@@ -29,7 +29,8 @@
   --box_shadow: 0 0 10px #00000079;
 
   /* DIMENSIONS */
-  --app_width: min(97vw, 1400px);
+  --primary_app_width: min(97vw, 1400px);
+  --secondary_app_width: min(100%, 1000px);
   --main_min_height: min(800px, calc(100vh - 100px));
 }
 
@@ -61,7 +62,7 @@ body {
   width: 100%;
   min-height: 100vh;
   height: fit-content;
-  padding: 2.5rem 0 0;
+  padding: 1.5rem 0 0;
 }
 
 li {

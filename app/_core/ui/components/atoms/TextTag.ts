@@ -1,16 +1,16 @@
 'use client';
 
-import { THEME_PALLETE, flex_template } from '@/core/ui/theme';
+import { THEME_PALETTE, flex_template } from '@/core/ui/theme';
 import styled from '@emotion/styled';
 import { createHoverEffect } from './common/functions';
 import type {
   CommonProps,
   CursorVariants,
   SizeVariants,
-  WeightVaraints
+  WeightVariants
 } from './common/types';
 
-const { colors: COLORS } = THEME_PALLETE;
+const { colors: COLORS } = THEME_PALETTE;
 
 type IColor = 'inherit' | 'grayed' | 'normal' | 'invert' | 'dark' | 'light' | 'success' | 'error';
 
@@ -19,7 +19,7 @@ interface Props extends CommonProps {
   ellipsis?: boolean; // to create ellipsis, works hand in hand with no_white_space
   text_align?: 'center' | 'left' | 'right';
   color_type?: IColor,
-  weight?: WeightVaraints;
+  weight?: WeightVariants;
   size?: SizeVariants;
   cursor?: CursorVariants;
   media_color?: IColor; // for switching colors on media querries

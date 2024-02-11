@@ -1,6 +1,6 @@
 'use client';
 
-import { THEME_PALLETE } from '@/core/ui/theme';
+import { THEME_PALETTE } from '@/core/ui/theme';
 import styled from '@emotion/styled';
 import {
   generateBg,
@@ -21,7 +21,7 @@ import type {
 const {
   colors: COLORS,
   effects: EFFECTS,
-} = THEME_PALLETE;
+} = THEME_PALETTE;
 
 interface Props extends CommonProps {
   animate_up_down?: boolean;

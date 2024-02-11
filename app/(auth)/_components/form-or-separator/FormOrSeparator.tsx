@@ -7,16 +7,16 @@ interface Props {
   //
 };
 
-const StyledFormOrSeperator = styled.section`
+const StyledFormOrSeparator = styled.section`
   ${flex_template};
   width: 100%;
   gap: 5px;
   margin: 10px auto;
 `;
 
-export default function FormOrSeperator({ }: Props) {
+export default function FormOrSeparator({ }: Props) {
   return (
-    <StyledFormOrSeperator>
+    <StyledFormOrSeparator>
       <svg xmlns='http://www.w3.org/2000/svg' width='182' height='1' viewBox='0 0 182 1' fill='none'>
         <path d='M182 0.5H0.5' stroke='#D9D9D9' />
       </svg>
@@ -24,6 +24,6 @@ export default function FormOrSeperator({ }: Props) {
       <svg xmlns='http://www.w3.org/2000/svg' width='182' height='1' viewBox='0 0 182 1' fill='none'>
         <path d='M182 0.5H0.5' stroke='#D9D9D9' />
       </svg>
-    </StyledFormOrSeperator>
+    </StyledFormOrSeparator>
   );
 };

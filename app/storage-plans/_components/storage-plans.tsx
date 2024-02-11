@@ -6,7 +6,10 @@ export default function PlanDisplay({ }: Props) {
   // TODO +=> Query storage plans from db.
 
   return (
-    <>
+    <DivCard
+      width='100%'
+      flex_dir='column'
+    >
       <TextTag
         as='h2'
         weight='600'
@@ -16,6 +19,6 @@ export default function PlanDisplay({ }: Props) {
       <DivCard bg='light' width='100%' min_height='min(600px, 70vh)'>
         storage-plans
       </DivCard>
-    </>
+    </DivCard>
   );
 };

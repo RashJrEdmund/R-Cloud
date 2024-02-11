@@ -1,10 +1,10 @@
 'use client';
 
-import { THEME_PALLETE } from '@/core/ui/theme';
+import { THEME_PALETTE } from '@/core/ui/theme';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-const { colors: COLORS } = THEME_PALLETE;
+const { colors: COLORS } = THEME_PALETTE;
 
 interface Props {
   sx?: string; // for overiding styles

@@ -3,8 +3,14 @@
 | and include google providers.        |
 ===================================== */
 
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from 'firebase/auth';
 import { auth } from '.';
+import { IUser } from '@/interfaces/entities';
 
 export const loginWithEmailAndPass = async (email: string, password: string) => {
   try {
@@ -21,17 +27,24 @@ export const loginWithEmailAndPass = async (email: string, password: string) => 
   };
 };
 
-// export const signUpWithCredentials = async (email: string, password: string) => {
-//   try {
-//     const res = await cr
+export const signUpWithCredentials = async (email: string, password: string, update: Partial<IUser>) => {
+  try {
+    const res = await createUserWithEmailAndPassword(auth, email, password);
 
-//     console.log(res);
+    if (res) {
+      await updateProfile(res.user, {
+        displayName: update.username,
+        date_of_birth: update.date_of_birth,
+      } as any);
+    }
 
-//     return res.user;
-//   } catch (error) {
-//     //
-//   };
-// };
+    console.log(res);
+
+    return res.user;
+  } catch (error) {
+    //
+  };
+};
 
 export const _onAuthStateChange = async () => {
   return new Promise((resolve) => {

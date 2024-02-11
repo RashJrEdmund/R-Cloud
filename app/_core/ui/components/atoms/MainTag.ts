@@ -1,6 +1,6 @@
 'use client';
 
-import { THEME_PALLETE } from '@/core/ui/theme';
+import { THEME_PALETTE } from '@/core/ui/theme';
 import styled from '@emotion/styled';
 import type {
   CommonProps,
@@ -15,7 +15,7 @@ const {
   colors: COLORS,
   dimensions: DIMENSIONS,
   effects: EFFECTS,
-} = THEME_PALLETE;
+} = THEME_PALETTE;
 
 interface Props extends CommonProps {
   align?: FLexAlignVariants;
@@ -31,7 +31,7 @@ const MainTag = styled.main<Props>`
   flex-direction: ${({ flex_dir = 'column' }) => flex_dir};
   gap: ${({ gap = 'unset' }) => gap};
 
-  width: ${({ width = DIMENSIONS.app_width }) => width};
+  width: ${({ width = DIMENSIONS.primary_app_width }) => width};
   min-width: ${({ min_width = 'none' }) => min_width};
   max-width: ${({ max_width = 'none' }) => max_width};
 

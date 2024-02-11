@@ -2,8 +2,8 @@
 
 import { MainTag } from '@/components/atoms';
 import { PathWrapper } from '@/_core/ui/guards';
-import { FilesFolderDisplayPage } from '../../_components';
 import type { IDocument } from '@/interfaces/entities';
+import { FilesFolderDisplayPage } from '@/home/_components';
 
 interface Props {
   content: IDocument[];

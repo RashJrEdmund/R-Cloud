@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import { MainTag, TopSectionHolder } from '@/components/atoms';
-import { Navigator } from '@/components/molecules';
+import { MainTag } from '@/components/atoms';
+import { TopSection } from '@/components/molecules';
 import PlanDisplay from './_components/storage-plans';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,9 +19,7 @@ interface Props { };
 export default function StoragePlans({ }: Props) {
   return (
     <MainTag>
-      <TopSectionHolder>
-        <Navigator />
-      </TopSectionHolder>
+      <TopSection />
 
       <PlanDisplay />
     </MainTag>

@@ -1,6 +1,6 @@
 'use client';
 
-import { THEME_PALLETE } from '@/core/ui/theme';
+import { THEME_PALETTE } from '@/core/ui/theme';
 import styled from '@emotion/styled';
 import type { CommonProps } from './common/types';
 
@@ -8,7 +8,7 @@ interface Props extends CommonProps {
   show: boolean;
 }
 
-const { colors: COLORS } = THEME_PALLETE;
+const { colors: COLORS } = THEME_PALETTE;
 
 const Overlay = styled.div<Props>`
   visibility: ${({ visibility = 'visible' }) => visibility};

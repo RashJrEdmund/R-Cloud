@@ -24,7 +24,8 @@ interface IColorPalette {
 }
 
 interface IDimensions {
-  app_width: string;
+  primary_app_width: string;
+  secondary_app_width: string;
   main_min_height: string;
 }
 
@@ -32,7 +33,7 @@ interface IEffects {
   box_shadow: string;
 }
 
-const THEME_PALLETE: {
+const THEME_PALETTE: {
   colors: IColorPalette,
   dimensions: IDimensions,
   effects: IEffects,
@@ -66,7 +67,8 @@ const THEME_PALLETE: {
   },
 
   dimensions: {
-    app_width: 'var(--app_width)',
+    primary_app_width: 'var(--primary_app_width)',
+    secondary_app_width: 'var(--secondary_app_width)',
     main_min_height: 'var(--main_min_height)',
   },
 
@@ -80,5 +82,5 @@ export type {
 };
 
 export {
-  THEME_PALLETE,
+  THEME_PALETTE,
 };

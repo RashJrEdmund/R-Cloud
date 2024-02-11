@@ -1,7 +1,8 @@
 'use client';
 
-import { FormOrSeperator, InputField } from '@/(auth)/_components';
+import { FormOrSeparator } from '@/(auth)/_components';
 import { FormWrapper } from '@/(auth)/_components';
+import { InputField } from '@/components/molecules';
 import { loginWithEmailAndPass } from '@/_core/config/firebase';
 import { Button, TextTag } from '@/components/atoms';
 import Image from 'next/image';
@@ -77,7 +78,7 @@ export default function LoginForm({ }: Props) {
         {loading ? 'loading...' : 'Sign In'}
       </Button>
 
-      <FormOrSeperator />
+      <FormOrSeparator />
 
       <Button type='button' bg='light' width='100%' padding='7px 0'>
         Sign in with Google
