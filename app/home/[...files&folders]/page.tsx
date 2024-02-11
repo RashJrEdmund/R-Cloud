@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import FilesFoldersPage from './_page/files-&-folders';
+import { FilesFolderDisplayPage } from '../_components';
 
 export async function generateMetadata(): Promise<Metadata> { // to dynamically generate metadata
   return {
@@ -11,6 +11,5 @@ export async function generateMetadata(): Promise<Metadata> { // to dynamically 
 interface Props { };
 
 export default function FilesFolders({ }: Props) {
-  return <FilesFoldersPage />;
-}
-
+  return <FilesFolderDisplayPage />;
+};

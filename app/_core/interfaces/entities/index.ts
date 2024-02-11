@@ -1,1 +1,1 @@
-export * from './documents.d';
+export type * from './documents.d';

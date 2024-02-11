@@ -12,7 +12,7 @@ const TopSectionHolder = styled.section`
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  margin: 1rem auto 2rem;
+  margin: 1rem auto;
   width: ${DIMENSIONS.secondary_app_width};
   height: fit-content;
 `;

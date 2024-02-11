@@ -8,7 +8,6 @@ const {
 } = THEME_PALETTE;
 
 const StyledFileFolderDisplay = styled.section`
-  /* background-color: gray; */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   row-gap: 0;
@@ -16,7 +15,6 @@ const StyledFileFolderDisplay = styled.section`
   justify-content: flex-start;
   width: ${DIMENSIONS.secondary_app_width};
   height: fit-content;
-  /* min-height: 80vh; */
 `;
 
 export default StyledFileFolderDisplay;

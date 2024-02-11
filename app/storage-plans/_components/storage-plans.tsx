@@ -1,4 +1,7 @@
 import { DivCard, TextTag } from '@/components/atoms';
+import { STORAGE_PLANS } from '@/core/ui/ui-constants';
+import StyledStoragePlanDisplay from './styled-storage-plan-display';
+import { StoragePlan } from '@/components/molecules';
 
 interface Props { };
 
@@ -10,15 +13,28 @@ export default function PlanDisplay({ }: Props) {
       width='100%'
       flex_dir='column'
     >
-      <TextTag
-        as='h2'
-        weight='600'
-        margin='10px auto 1rem'
-      >Plans and Pricing</TextTag>
 
-      <DivCard bg='light' width='100%' min_height='min(600px, 70vh)'>
-        storage-plans
+      <DivCard
+        as='section'
+        margin='0 auto 2rem'
+      >
+        <TextTag as='h2'>
+          <TextTag weight='600' size='1.25rem' color_type='success'>
+            R-Cloud
+          </TextTag>
+          <TextTag weight='600' size='1.25rem'>
+            Plans and pricing
+          </TextTag>
+        </TextTag>
       </DivCard>
+
+      <StyledStoragePlanDisplay>
+        {
+          STORAGE_PLANS.map((plan) => (
+            <StoragePlan key={plan.label} plan={plan} />
+          ))
+        }
+      </StyledStoragePlanDisplay>
     </DivCard>
   );
 };

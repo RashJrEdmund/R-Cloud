@@ -8,6 +8,7 @@ export default function Landing({ }: Props) {
     <MainTag justify='center'>
       <DivCard
         as='section'
+        margin='2rem auto 0'
       >
         <TextTag as='h1'>
           <TextTag weight='600' size='1.25rem'>

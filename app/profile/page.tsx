@@ -18,7 +18,7 @@ interface Props { };
 export default function Profile({ }: Props) {
   return (
     <MainTag>
-      <TopSection />
+      <TopSection hide_search />
 
       <h1>Your Profile</h1>
     </MainTag>

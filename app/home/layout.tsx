@@ -20,7 +20,7 @@ interface Props {
 export default function Home({ children }: Props) {
   return (
     <MainTag>
-      <AuthStateWrapper>
+      <AuthStateWrapper> {/* TODO +=> WORK ON OR REMOVE THIS AUTH STATE GUARD. INSTEAD CREATE A LOOSE AUTHGUARD AND A STRICT AUTHGUARD */}
         {children}
       </AuthStateWrapper>
     </MainTag>

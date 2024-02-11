@@ -1,18 +1,20 @@
 'use client';
 
+import { MouseEventHandler, useRef, useState } from 'react';
 import { DivCard } from '@/components/atoms';
 import { FileCard, FolderCard } from './components';
 import StyledFileFolderDisplay from './styled-file-folder-display';
 import { useDocStore } from '@/store/zustand';
-import { MouseEventHandler, useRef, useState } from 'react';
 import { ContextMenu } from '@/components/modals';
 import { IModalWrapperRef } from '@/components/modals/generics';
+import { PathWrapper } from '@/guards/index';
+import type { IDocument } from '@/interfaces/entities';
 
 interface Props {
-  //
+  content: IDocument[]; // from path wrapper
 };
 
-export default function FilesFolderDisplay({ }: Props) {
+function FilesFolderDisplay({ }: Props) {
   const [contextMenuCoordinates, setContextMenuCoordinates] = useState<{ top: string; left: string; }>({ top: '', left: '' });
   const { documents } = useDocStore();
   const contextMenuRef = useRef<IModalWrapperRef>(null);
@@ -36,7 +38,7 @@ export default function FilesFolderDisplay({ }: Props) {
       />
 
       <DivCard
-        bg='light'
+        // bg='light'
         width='100%'
         flex_wrap='wrap'
         align='start'
@@ -58,3 +60,5 @@ export default function FilesFolderDisplay({ }: Props) {
     </>
   );
 };
+
+export default PathWrapper(FilesFolderDisplay);

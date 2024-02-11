@@ -39,8 +39,24 @@ interface IUser {
   }
 }
 
+type StoragePlanLabels = 'SIGMA' | 'OMEGA' | 'ZETA' | 'GAMMA' | 'BETA' | 'ALPHA';
+
+interface IStoragePlan {
+  id?: string;
+  label: StoragePlanLabels;
+  icon_url: string;
+  capacity: string;
+  rate: string;
+  is_free: boolean;
+  is_current_plan: boolean;
+}
+
 export type {
   IDocument,
   IUser,
   DocumentType,
+
+  // storage plan
+  IStoragePlan,
+  StoragePlanLabels
 };

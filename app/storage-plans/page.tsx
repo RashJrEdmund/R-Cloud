@@ -19,7 +19,7 @@ interface Props { };
 export default function StoragePlans({ }: Props) {
   return (
     <MainTag>
-      <TopSection />
+      <TopSection hide_search />
 
       <PlanDisplay />
     </MainTag>

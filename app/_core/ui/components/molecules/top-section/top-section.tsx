@@ -11,10 +11,12 @@ import { useRef } from 'react';
 import { IModalWrapperRef } from '@/components/modals/generics';
 
 interface Props {
-  //
+  hide_search?: boolean;
 };
 
-export default function TopSection({ }: Props) {
+export default function TopSection({
+  hide_search = false,
+}: Props) {
   const contextMenuRef = useRef<IModalWrapperRef>(null);
 
   const toggleModal = () => {
@@ -30,19 +32,23 @@ export default function TopSection({ }: Props) {
     <TopSectionHolder>
       <Navigator />
 
-      <DivCard gap='1rem'>
-        <Search />
-        {/* TODO +=> BUILD MORE MODAL DROP DOWN AND ACTUAL MODAL */}
+      {hide_search ? null :
+        (
+          <DivCard gap='1rem'>
+            <Search />
+            {/* TODO +=> BUILD MORE MODAL DROP DOWN AND ACTUAL MODAL */}
 
-        <DivCard position='relative'>
-          <TextTag cursor='pointer' onClick={toggleModal}>
-            <FontAwesomeIcon icon={faEllipsisVertical} />
-            More
-          </TextTag>
+            <DivCard position='relative'>
+              <TextTag cursor='pointer' onClick={toggleModal}>
+                <FontAwesomeIcon icon={faEllipsisVertical} />
+                More
+              </TextTag>
 
-          <ContextMenu top='-30px' left='-30px' ref={contextMenuRef} />
-        </DivCard>
-      </DivCard>
+              <ContextMenu top='-30px' left='-30px' ref={contextMenuRef} />
+            </DivCard>
+          </DivCard>
+        )
+      }
     </TopSectionHolder>
   );
 };

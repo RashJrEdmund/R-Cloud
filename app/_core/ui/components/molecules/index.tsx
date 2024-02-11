@@ -9,3 +9,5 @@ export { default as Streamer } from './loading-streamer/streamer';
 export { default as FilesFolderDisplay } from './files-folder-display/files-folder-display';
 
 export { default as TopSection } from './top-section/top-section';
+
+export { default as StoragePlan } from './storage-plan/storage-plan';
