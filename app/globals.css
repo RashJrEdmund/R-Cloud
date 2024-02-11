@@ -16,7 +16,7 @@
 
   --bg: #f9f9f9;
   --bg_light: #d9d9d9;
-  --bg_grayed: #59575784;
+  --bg_grayed: #a6a5a5;
   --bg_invert: #1d2432;
 
   --app_bg: #f9f9f9;
@@ -26,7 +26,8 @@
   --white: #ffffff;
 
   ---overlay_gradient: linear-gradient(#367AFF4e, #367AFF4e);
-  --box_shadow: 0 0 10px #00000079;
+  /* --box_shadow: 0 0 10px #00000079; */
+  --box_shadow: 0 0 10px red;
 
   /* DIMENSIONS */
   --primary_app_width: min(97vw, 1400px);
@@ -84,4 +85,8 @@ a {
 button {
   cursor: pointer;
   white-space: nowrap;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

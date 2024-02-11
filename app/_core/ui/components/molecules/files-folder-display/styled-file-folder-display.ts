@@ -8,7 +8,7 @@ const {
 } = THEME_PALETTE;
 
 const StyledFileFolderDisplay = styled.section`
-  background-color: gray;
+  /* background-color: gray; */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   row-gap: 0;
