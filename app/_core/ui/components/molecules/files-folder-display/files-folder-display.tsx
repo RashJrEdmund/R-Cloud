@@ -10,7 +10,7 @@ import { IModalWrapperRef } from '@/components/modals/generics';
 import type { IDocument } from '@/interfaces/entities';
 
 interface Props {
-  content: IDocument[]; // from path wrapper
+  content?: IDocument[]; // from path wrapper
 };
 
 export default function FilesFolderDisplay({ }: Props) {
