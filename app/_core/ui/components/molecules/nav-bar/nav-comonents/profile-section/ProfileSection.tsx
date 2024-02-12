@@ -5,6 +5,7 @@ import StyledProfileSection from './StyledProfileSection';
 import Link from 'next/link';
 import { useUserStore } from '@/store/zustand';
 import { useMemo } from 'react';
+import { TextTag } from '@/components/atoms';
 
 interface Props {
 
@@ -18,16 +19,30 @@ export default function ProfileSection({ }: Props) {
   }, [currentUser]);
 
   return (
-    <StyledProfileSection title='user profile image icon'>
-      <Link href='/login'>
-        <Image
-          src={profile_url}
-          alt='user profile image icon'
-          width={50}
-          height={50}
-        />
-        Login
-      </Link>
-    </StyledProfileSection>
+    !currentUser ? (
+      <StyledProfileSection title='you are currently not logged in'>
+        <Link href='/login'>
+          <Image
+            src={profile_url}
+            alt='you are currently not logged in'
+            width={50}
+            height={50}
+          />
+          <TextTag>Login</TextTag>
+        </Link>
+      </StyledProfileSection>
+    ) : (
+      <StyledProfileSection title={`logged in as ${currentUser.username}`}>
+        <Link href='/profile'>
+          <Image
+            src={profile_url}
+            alt='user profile image icon'
+            width={50}
+            height={50}
+          />
+          <TextTag>{currentUser.username}</TextTag>
+        </Link>
+      </StyledProfileSection>
+    )
   );
 };

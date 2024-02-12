@@ -9,10 +9,11 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from 'firebase/auth';
+import type { Unsubscribe, User, } from 'firebase/auth';
 import { auth } from '.';
 import { IUser } from '@/interfaces/entities';
 
-export const loginWithEmailAndPass = async (email: string, password: string) => {
+const loginWithEmailAndPass = async (email: string, password: string) => {
   try {
     const res = await signInWithEmailAndPassword(auth, email, password);
 
@@ -27,14 +28,14 @@ export const loginWithEmailAndPass = async (email: string, password: string) => 
   };
 };
 
-export const signUpWithCredentials = async (email: string, password: string, update: Partial<IUser>) => {
+const signUpWithCredentials = async (email: string, password: string, other_credentials: Partial<IUser>) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
 
     if (res) {
       await updateProfile(res.user, {
-        displayName: update.username,
-        date_of_birth: update.date_of_birth,
+        displayName: other_credentials.username,
+        date_of_birth: other_credentials.date_of_birth,
       } as any);
     }
 
@@ -46,10 +47,16 @@ export const signUpWithCredentials = async (email: string, password: string, upd
   };
 };
 
-export const _onAuthStateChange = async () => {
-  return new Promise((resolve) => {
-    onAuthStateChanged(auth, (user) => {
-      resolve(user);
+const _onAuthStateChange = async () => {
+  return new Promise<{ user: User | null, unsubscribe: Unsubscribe }>((resolve) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      resolve({ user, unsubscribe });
     });
   });
+};
+
+export {
+  loginWithEmailAndPass,
+  signUpWithCredentials,
+  _onAuthStateChange,
 };

@@ -1,5 +1,10 @@
 'use client';
 
+/* FILE_DESC +=> ====================================
+| Meant to read current dynamic route and fetch data |
+| for the parent folder                              |
+========================================//==========*/
+
 import type { IDocument } from '@/interfaces/entities';
 
 export default function PathWrapper(Component: React.JSXElementConstructor<any>) {

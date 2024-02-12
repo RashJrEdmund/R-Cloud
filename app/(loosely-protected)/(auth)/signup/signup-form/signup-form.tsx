@@ -1,12 +1,16 @@
 'use client';
 
-import { FormOrSeparator } from '@/(auth)/_components';
+import { FormOrSeparator } from '@/(loosely-protected)/(auth)/_components';
 import { InputField } from '@/components/molecules';
-import { FormWrapper } from '@/(auth)/_components';
+import { FormWrapper } from '@/(loosely-protected)/(auth)/_components';
 import { Button, TextTag } from '@/components/atoms';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { validateCreateAccountForm } from '@/core/services/form-validations';
+import { signUpWithCredentials } from '@/core/config/firebase';
+import { useRouter } from 'next/navigation';
+import type { IFieldErrors } from '@/core/services/form-validations/form-interfaces';
 
 interface Props {
   //
@@ -14,13 +18,37 @@ interface Props {
 
 export default function SignUpForm({ }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
+  const [errors, setErrors] = useState<IFieldErrors | null>(null);
+  const router = useRouter();
 
   const signUpFormAction = (formData: FormData) => {
     setLoading(true);
-    console.log(formData);
-    const rawData = Object.fromEntries(formData.entries());
+    setErrors(null);
 
-    console.log({ rawData });
+    const rawData = Object.fromEntries(formData.entries());
+    rawData.date_of_birth = new Date(rawData?.date_of_birth as any || '') as any; // ensuring date is in date format
+
+    const validation = validateCreateAccountForm(rawData as { [key: string]: string });
+
+    if (validation.errors) {
+      setErrors(validation.errors);
+      setLoading(false);
+      return;
+    }
+
+    // API CALL.
+    signUpWithCredentials(
+      validation.data?.email || '',
+      validation.data?.password || '',
+      validation.data as any
+    ).then((user) => {
+      router.push('/home');
+    }).catch(er => {
+      //
+    }).finally(() => {
+      setLoading(false);
+    });
+
   };
 
   return (
@@ -38,12 +66,14 @@ export default function SignUpForm({ }: Props) {
 
       <InputField
         field_title='Your Name'
-        field_name='name'
+        field_name='username'
+        error={errors?.username}
       />
 
       <InputField
         field_title='Date of Birth'
-        field_name='date-of-birth'
+        field_name='date_of_birth'
+        error={errors?.date_of_birth as string}
         type='date'
         leave_active
       />
@@ -51,16 +81,19 @@ export default function SignUpForm({ }: Props) {
       <InputField
         field_title='Email'
         field_name='email'
+        error={errors?.email}
       />
 
       <InputField
         field_title='Password'
         field_name='password'
+        error={errors?.password}
       />
 
       <InputField
         field_title='Confirm password'
         field_name='confirm_password'
+        error={errors?.confirm_password}
       />
 
       <Button type='submit' bg='blued' width='100%' padding='7px 0' disabled={loading}>

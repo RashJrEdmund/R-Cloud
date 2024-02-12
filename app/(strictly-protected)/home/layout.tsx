@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { MainTag } from '@/components/atoms';
-import { AuthStateWrapper } from '@/guards/index';
+import { StrictAuthGuard } from '@/guards/index'; //r-cloud.vercel.app
 
 export async function generateMetadata(): Promise<Metadata> {
   // to dynamically generate metadata
@@ -20,9 +20,9 @@ interface Props {
 export default function Home({ children }: Props) {
   return (
     <MainTag>
-      <AuthStateWrapper> {/* TODO +=> WORK ON OR REMOVE THIS AUTH STATE GUARD. INSTEAD CREATE A LOOSE AUTHGUARD AND A STRICT AUTHGUARD */}
+      <StrictAuthGuard> {/* TODO +=> WORK ON OR REMOVE THIS AUTH STATE GUARD. INSTEAD CREATE A LOOSE AUTHGUARD AND A STRICT AUTHGUARD */}
         {children}
-      </AuthStateWrapper>
+      </StrictAuthGuard>
     </MainTag>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
-import { FormOrSeparator } from '@/(auth)/_components';
-import { FormWrapper } from '@/(auth)/_components';
+import { FormOrSeparator } from '@/(loosely-protected)/(auth)/_components';
+import { FormWrapper } from '@/(loosely-protected)/(auth)/_components';
 import { InputField } from '@/components/molecules';
 import { loginWithEmailAndPass } from '@/_core/config/firebase';
 import { Button, TextTag } from '@/components/atoms';
@@ -9,6 +9,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { validateLoginForm } from '@/core/services/form-validations';
+import type { IFieldErrors } from '@/core/services/form-validations/form-interfaces';
 
 interface Props {
   //
@@ -20,29 +22,35 @@ interface Props {
 
 export default function LoginForm({ }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
+  const [errors, setErrors] = useState<IFieldErrors | null>(null);
   const router = useRouter();
 
   const loginFormAction = (formData: FormData) => {
     console.log(formData);
     setLoading(true);
+    setErrors(null);
 
-    const rawData = {
-      email: formData.get('email')?.toString(),
-      password: formData.get('password')?.toString(),
+    const rawData: { [key: string]: string } = {
+      email: formData.get('email')?.toString() || '',
+      password: formData.get('password')?.toString() || '',
     };
 
-    console.log({ rawData });
+    const validation = validateLoginForm(rawData);
 
-    if (!rawData.email?.trim() || !rawData.password?.trim()) return; // toast error;
+    if (validation.errors) {
+      setErrors(validation.errors);
+      setLoading(false);
+      return;
+    }
 
-    // loginWithEmailAndPass(rawData.email, rawData.password)
-    //   .then((user) => {
-    //     console.log("use ''", user);
-    //     if (user) router.push('/home/photos/google/stuff');
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
+    // API CALL.
+    loginWithEmailAndPass(rawData.email, rawData.password)
+      .then((user) => {
+        router.push('/home');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (

@@ -27,6 +27,7 @@ interface IUser {
   id: string;
   email: string;
   username: string;
+  displayName?: string;
   date_of_birth: Date | string;
   phone_number: string;
   photo_url: string;
