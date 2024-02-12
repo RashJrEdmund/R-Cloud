@@ -8,9 +8,11 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   updateProfile,
+
+  signInWithPopup,
 } from 'firebase/auth';
 import type { Unsubscribe, User, } from 'firebase/auth';
-import { auth } from '.';
+import { auth, googleProvider } from '..';
 import { IUser } from '@/interfaces/entities';
 
 const loginWithEmailAndPass = async (email: string, password: string) => {
@@ -43,6 +45,12 @@ const signUpWithCredentials = async (email: string, password: string, other_cred
   };
 };
 
+const signInOrUpWithGooglePopup = async () => {
+  return signInWithPopup(auth, googleProvider).then(({ user, providerId, operationType }) => {
+    return user;
+  });
+};
+
 const _onAuthStateChange = async () => {
   return new Promise<{ user: User | null, unsubscribe: Unsubscribe }>((resolve) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -55,4 +63,6 @@ export {
   loginWithEmailAndPass,
   signUpWithCredentials,
   _onAuthStateChange,
+
+  signInOrUpWithGooglePopup,
 };

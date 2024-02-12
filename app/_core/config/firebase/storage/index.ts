@@ -4,7 +4,7 @@
 ===================================== */
 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { auth, storage } from '.';
+import { auth, storage } from '..';
 import { updateProfile } from 'firebase/auth';
 
 const baseStorageRef = ref(storage, 'users');

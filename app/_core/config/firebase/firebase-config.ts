@@ -4,7 +4,7 @@
 ================================== */
 
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { GoogleAuthProvider, getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
@@ -26,3 +26,11 @@ export const auth = getAuth(app);
 export const storage = getStorage(app);
 
 export const fireStore = getFirestore(app);
+
+// auth providers
+
+export const googleProvider = new GoogleAuthProvider();
+
+googleProvider.setCustomParameters({
+  'login_hint': 'user@example.com',
+});

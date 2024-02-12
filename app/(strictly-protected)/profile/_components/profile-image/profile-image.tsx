@@ -101,7 +101,13 @@ export default function ProfileImage({ }: Props) {
 
       {preview ? (
         <DivCard gap='10px'>
-          <Button bg='blued' margin='5px 0 0' disabled={loading} onClick={handleFileUpload}>
+          <Button
+            bg='blued'
+            margin='5px 0 0'
+            disabled={loading}
+            onClick={handleFileUpload}
+            cursor={loading ? 'not-allowed' : 'pointer'}
+          >
             {loading ? 'uploading...' : 'done'}
           </Button>
 
