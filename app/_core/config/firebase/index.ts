@@ -2,4 +2,4 @@ export * from './firebase-config';
 
 export * from './user-auth';
 
-// export * from './storage';
+export * from './storage';

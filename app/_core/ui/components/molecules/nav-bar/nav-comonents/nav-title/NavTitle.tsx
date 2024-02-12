@@ -1,7 +1,9 @@
 'use client';
 
+import { TextTag } from '@/components/atoms';
+import { useUserStore } from '@/store/zustand';
 import styled from '@emotion/styled';
-import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { useLayoutEffect, useState } from 'react';
 
 interface Props {
@@ -9,7 +11,7 @@ interface Props {
 };
 
 const StyledNavTitle = styled.section`
-  position: absolute; // sive nav-bar itself has position relative;
+  position: absolute; // side nav-bar itself has position relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -17,21 +19,25 @@ const StyledNavTitle = styled.section`
 `;
 
 export default function NavTitle({ }: Props) {
-  const [navTitle, setNavTitle] = useState('...');
+  const [navProperties, setNavProperties] = useState<{
+    route_name: string;
+    route_url: string
+  }>({ route_name: '...', route_url: '' });
 
-  const pathname = usePathname();
+  const { currentUser } = useUserStore();
 
   useLayoutEffect(() => {
-    const name = pathname.split('/').pop();
-
-    if (name) setNavTitle(name);
-    else setNavTitle('R-Cloud');
-
-  }, [pathname]);
+    if (currentUser) setNavProperties({ route_name: 'Home', route_url: '/home' });
+    else setNavProperties({ route_name: 'R-Cloud', route_url: '/' });
+  }, [currentUser]);
 
   return (
     <StyledNavTitle>
-      {navTitle}
+      <TextTag>
+        <Link href={navProperties.route_url}>
+          {navProperties.route_name}
+        </Link>
+      </TextTag>
     </StyledNavTitle>
   );
 };

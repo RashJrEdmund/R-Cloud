@@ -7,14 +7,13 @@ import StyledFileFolderDisplay from './styled-file-folder-display';
 import { useDocStore } from '@/store/zustand';
 import { ContextMenu } from '@/components/modals';
 import { IModalWrapperRef } from '@/components/modals/generics';
-import { PathWrapper } from '@/guards/index';
 import type { IDocument } from '@/interfaces/entities';
 
 interface Props {
-  content: IDocument[]; // from path wrapper
+  content?: IDocument[]; // from path wrapper
 };
 
-function FilesFolderDisplay({ }: Props) {
+export default function FilesFolderDisplay({ }: Props) {
   const [contextMenuCoordinates, setContextMenuCoordinates] = useState<{ top: string; left: string; }>({ top: '', left: '' });
   const { documents } = useDocStore();
   const contextMenuRef = useRef<IModalWrapperRef>(null);
@@ -60,5 +59,3 @@ function FilesFolderDisplay({ }: Props) {
     </>
   );
 };
-
-export default PathWrapper(FilesFolderDisplay);
