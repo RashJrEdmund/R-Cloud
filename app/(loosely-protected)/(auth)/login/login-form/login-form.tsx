@@ -100,7 +100,14 @@ export default function LoginForm({ }: Props) {
         keep me logged in
       </label>
 
-      <Button type='submit' bg='blued' width='100%' padding='7px 0' disabled={loading}>
+      <Button
+        type='submit'
+        bg='blued'
+        width='100%'
+        padding='7px 0'
+        disabled={loading}
+        cursor={loading ? 'not-allowed' : 'pointer'}
+      >
         {loading ? 'loading...' : 'Sign In'}
       </Button>
 

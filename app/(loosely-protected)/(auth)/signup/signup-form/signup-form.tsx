@@ -114,7 +114,14 @@ export default function SignUpForm({ }: Props) {
         error={errors?.confirm_password}
       />
 
-      <Button type='submit' bg='blued' width='100%' padding='7px 0' disabled={loading}>
+      <Button
+        type='submit'
+        bg='blued'
+        width='100%'
+        padding='7px 0'
+        cursor={loading ? 'not-allowed' : 'pointer'}
+        disabled={loading}
+      >
         {loading ? 'loading...' : 'Sign Up'}
       </Button>
 
