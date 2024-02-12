@@ -1,6 +1,6 @@
 /* THIS FILE KEEPS HOLD OF INTERFACES/TYPES THAT'RE COMMON BETWEEN ATOMS */
 
-export type BgVariants = 'inherit' | 'normal' | 'light' | 'invert' | 'blued' | 'grayed' | 'black' | 'white' | 'none';
+export type BgVariants = 'inherit' | 'normal' | 'light' | 'invert' | 'blued' | 'grayed' | 'black' | 'white' | 'error' | 'none';
 
 export type FlexJustifyVariants = 'space-around' | 'space-between' | 'space-evenly' | 'start' | 'center' | 'end';
 

@@ -26,7 +26,6 @@ export default function LoginForm({ }: Props) {
   const router = useRouter();
 
   const loginFormAction = (formData: FormData) => {
-    console.log(formData);
     setLoading(true);
     setErrors(null);
 

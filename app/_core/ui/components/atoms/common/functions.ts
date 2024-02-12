@@ -42,6 +42,11 @@ const generateBg = (bg: BgVariants) => {
       background-color: ${COLORS.black};
       color: ${COLORS.text_white};
     `;
+  } else if (bg === 'error') {
+    return css`
+      border: 1px solid ${COLORS.border_error};
+      color: ${COLORS.text};
+    `;
   } else if (bg === 'normal') { // bg === 'normal';
     return css`
       background-color: ${COLORS.bg};
@@ -106,24 +111,24 @@ const createLeftRightAnimation = (animate: boolean) => {
 
 const createHoverEffect = (hover_effect: HoverEffectVariants) => {
   switch (hover_effect) {
-  case 'translate':
-    return css`
+    case 'translate':
+      return css`
       transition: 300ms;
 
       &:hover {
           transform: translateY(-10px);
       }
     `;
-  case 'scale':
-    return css`
+    case 'scale':
+      return css`
       transition: 300ms;
 
       &:hover {
           transform: scale(1.15);
       }
     `;
-  default: // hover_effect = 'none'
-    return '';
+    default: // hover_effect = 'none'
+      return '';
   }
 };
 

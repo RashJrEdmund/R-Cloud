@@ -17,13 +17,11 @@ const loginWithEmailAndPass = async (email: string, password: string) => {
   try {
     const res = await signInWithEmailAndPassword(auth, email, password);
 
-    console.log(res);
-
     return res.user;
   } catch (error: any) {
     const errorCode = error.code;
     const errorMessage = error.message;
-    console.log({ errorCode, errorMessage, email, password });
+    // console.log({ errorCode, errorMessage, email, password });
     throw (error as { code: string, message: string });
   };
 };
@@ -38,8 +36,6 @@ const signUpWithCredentials = async (email: string, password: string, other_cred
         date_of_birth: other_credentials.date_of_birth,
       } as any);
     }
-
-    console.log(res);
 
     return res.user;
   } catch (error) {
