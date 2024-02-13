@@ -43,7 +43,7 @@ export default function ProfileImage({ }: Props) {
     if (!file || !currentUser) return;
     setLoading(true);
 
-    updateProfileImage(file, currentUser.id)
+    updateProfileImage(file, { user_id: currentUser.id, email: currentUser.email })
       .then((url) => {
         currentUser.photo_url = url;
         const user: { [key: string]: any } = { ...(currentUser || {}) };

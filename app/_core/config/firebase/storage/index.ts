@@ -9,10 +9,15 @@ import { updateProfile } from 'firebase/auth';
 
 const baseStorageRef = ref(storage, 'users');
 
-const getHomeStorageRef = (user_id: string, path: string) => ref(baseStorageRef, `${user_id}/files/` + path);
+interface userPathCred {
+  email: string;
+  user_id: string;
+};
 
-const updateProfileImage = async (file: File, user_id: string) => {
-  const storageRef = getHomeStorageRef(user_id, '/profile_url'); // +=> ref(storage, `users/${user_id}/files/profile_url`);
+const getHomeStorageRef = (userPathCred: userPathCred, path: string) => ref(baseStorageRef, `${userPathCred.user_id + '-' + userPathCred.email}/files/` + path);
+
+const updateProfileImage = async (file: File, userPathCred: userPathCred) => {
+  const storageRef = getHomeStorageRef(userPathCred, '/profile_url'); // +=> ref(storage, `users/${user_id}-{email}/files/profile_url`);
 
   return uploadBytes(storageRef, file)
     .then(async (snapshot) => {
