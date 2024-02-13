@@ -60,7 +60,6 @@ export default function SignUpForm({ }: Props) {
     }).finally(() => {
       setLoading(false);
     });
-
   };
 
   return (
