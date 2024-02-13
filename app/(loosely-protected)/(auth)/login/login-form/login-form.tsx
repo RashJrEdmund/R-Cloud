@@ -3,11 +3,11 @@
 import { FormOrSeparator } from '@/(loosely-protected)/(auth)/_components';
 import { FormWrapper } from '@/(loosely-protected)/(auth)/_components';
 import { InputField } from '@/components/molecules';
-import { loginWithEmailAndPass } from '@/_core/config/firebase';
+import { loginWithEmailAndPass, signInOrUpWithGooglePopup } from '@/_core/config/firebase';
 import { Button, TextTag } from '@/components/atoms';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { validateLoginForm } from '@/core/services/form-validations';
 import type { IFieldErrors } from '@/core/services/form-validations/form-interfaces';
@@ -16,18 +16,24 @@ interface Props {
   //
 };
 
-interface Props {
-  //
-};
-
 export default function LoginForm({ }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<IFieldErrors | null>(null);
+  const [formStatus, setFormStatus] = useState<{ status: number, message: string } | null>(null);
   const router = useRouter();
+
+  const handleGoogleLogin: MouseEventHandler<HTMLButtonElement> = () => {
+    signInOrUpWithGooglePopup()
+      .then((user) => {
+        setFormStatus({ status: 200, message: `welcome back ${user?.displayName || user?.email?.split('@').shift() || 'user'}` });
+        router.push('/home');
+      });
+  };
 
   const loginFormAction = (formData: FormData) => {
     setLoading(true);
     setErrors(null);
+    setFormStatus(null);
 
     const rawData: { [key: string]: string } = {
       email: formData.get('email')?.toString() || '',
@@ -37,6 +43,7 @@ export default function LoginForm({ }: Props) {
     const validation = validateLoginForm(rawData);
 
     if (validation.errors) {
+      setFormStatus({ status: 401, message: validation.message || '' });
       setErrors(validation.errors);
       setLoading(false);
       return;
@@ -45,7 +52,11 @@ export default function LoginForm({ }: Props) {
     // API CALL.
     loginWithEmailAndPass(rawData.email, rawData.password)
       .then((user) => {
+        setFormStatus({ status: 200, message: `welcome back ${user?.displayName || user?.email?.split('@').shift() || 'user'}` });
         router.push('/home');
+      })
+      .catch(() => {
+        setFormStatus({ status: 401, message: 'Could not log in to account. Try again or use another method' });
       })
       .finally(() => {
         setLoading(false);
@@ -65,15 +76,23 @@ export default function LoginForm({ }: Props) {
         Please login to continue to your account
       </TextTag>
 
+      {formStatus ? (
+        <TextTag as='p' color_type={formStatus.status === 200 ? 'success' : 'error'} text_align='left' size='0.9rem'>
+          {formStatus.message}
+        </TextTag>
+      ) : null}
+
       <InputField
         field_title='Email'
         field_name='email'
+        error={errors?.email}
       />
 
       <InputField
         field_title='Password'
         field_name='password'
         type='password'
+        error={errors?.password}
       />
 
       <label htmlFor='keep-me-logged-in' className='keep-me-logged-in'>
@@ -81,13 +100,20 @@ export default function LoginForm({ }: Props) {
         keep me logged in
       </label>
 
-      <Button type='submit' bg='blued' width='100%' padding='7px 0' disabled={loading}>
+      <Button
+        type='submit'
+        bg='blued'
+        width='100%'
+        padding='7px 0'
+        disabled={loading}
+        cursor={loading ? 'not-allowed' : 'pointer'}
+      >
         {loading ? 'loading...' : 'Sign In'}
       </Button>
 
       <FormOrSeparator />
 
-      <Button type='button' bg='light' width='100%' padding='7px 0'>
+      <Button type='button' bg='light' width='100%' padding='7px 0' onClick={handleGoogleLogin}>
         Sign in with Google
         <Image src='/icons/google-icon.svg' alt='google icon' height={25} width={25} />
       </Button>

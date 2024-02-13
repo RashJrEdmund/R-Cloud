@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 const StyledProfileSection = styled.section`
   width: fit-content;
   ${flex_template}
+  position: relative; // to help profile dropdown component;
   
   a {
     width: fit-content;
