@@ -14,10 +14,10 @@ interface userPathCred {
   user_id: string;
 };
 
-const getHomeStorageRef = (userPathCred: userPathCred, path: string) => ref(baseStorageRef, `${userPathCred.user_id + '-' + userPathCred.email}/files/` + path);
+const createUserStorageRef = (userPathCred: userPathCred, path: string) => ref(baseStorageRef, `${userPathCred.user_id + '-' + userPathCred.email}` + path); // +=> ref(storage, `users/${user_id}-{email}/{path}`);
 
 const updateProfileImage = async (file: File, userPathCred: userPathCred) => {
-  const storageRef = getHomeStorageRef(userPathCred, '/profile_url'); // +=> ref(storage, `users/${user_id}-{email}/files/profile_url`);
+  const storageRef = createUserStorageRef(userPathCred, '/assets'); // +=> ref(storage, `users/${user_id}-{email}/assets`);
 
   return uploadBytes(storageRef, file)
     .then(async (snapshot) => {
@@ -33,6 +33,43 @@ const updateProfileImage = async (file: File, userPathCred: userPathCred) => {
     });
 };
 
+const uploadFile = async (file: File, userPathCred: userPathCred) => {
+  const storageRef = createUserStorageRef(userPathCred, '/home/'); // +=> ref(storage, `users/${user_id}-{email}/home/`);
+
+  return uploadBytes(storageRef, file)
+    .then(async (snapshot) => {
+      const url = await getDownloadURL(snapshot.ref); // snapshot.ref is same as storageRef above
+
+      if (auth.currentUser) {
+        await updateProfile(auth.currentUser, {
+          photoURL: url,
+        });
+      }
+
+      return url;
+    });
+};
+
+const uploadFiles = async (file: File[], userPathCred: userPathCred) => {
+  const storageRef = createUserStorageRef(userPathCred, '/home/');
+
+  // return uploadBytes(storageRef, file)
+  //   .then(async (snapshot) => {
+  //     const url = await getDownloadURL(snapshot.ref); // snapshot.ref is same as storageRef above
+
+  //     if (auth.currentUser) {
+  //       await updateProfile(auth.currentUser, {
+  //         photoURL: url,
+  //       });
+  //     }
+
+  //     return url;
+  //   });
+};
+
 export {
   updateProfileImage,
+
+  uploadFile,
+  uploadFiles
 };
