@@ -53,7 +53,7 @@ export default function SignUpForm({ }: Props) {
       validation.data?.password || '',
       validation.data as any
     ).then((user) => {
-      setFormStatus({ status: 200, message: `welcome back ${user?.displayName || user?.email?.split('@').shift() || 'user'}` });
+      setFormStatus({ status: 200, message: `welcome to r-cloud, ${user?.displayName || user?.email?.split('@').shift() || 'new user'}` });
       router.push('/home');
     }).catch(er => {
       setFormStatus({ status: 401, message: 'Could not create account. Try again or use another method' });
