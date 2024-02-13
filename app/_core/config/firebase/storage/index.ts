@@ -11,8 +11,10 @@ const baseStorageRef = ref(storage, 'users');
 
 const createUserStorageRef = (email: string, path: string) => ref(baseStorageRef, `${email}` + path); // +=> ref(storage, `users/${email}/{path}`);
 
+const getFileName = (file: File) => file.name + '-' + Date.now() + file.type.split('/').pop();
+
 const updateProfileImage = async (file: File, email: string) => {
-  const storageRef = createUserStorageRef(email, '/assets/'); // +=> ref(storage, `users/${email}/assets/`);
+  const storageRef = createUserStorageRef(email, '/assets/profile_url'); // +=> ref(storage, `users/${email}/assets/profile_url`);
 
   return uploadBytes(storageRef, file)
     .then(async (snapshot) => {
@@ -29,7 +31,8 @@ const updateProfileImage = async (file: File, email: string) => {
 };
 
 const uploadFile = async (file: File, email: string) => {
-  const storageRef = createUserStorageRef(email, '/home/'); // +=> ref(storage, `users/${email}/home/`);
+  const filename = getFileName(file); // to get the extension
+  const storageRef = createUserStorageRef(email, `/home/${filename}`); // +=> ref(storage, `users/${email}/home/${filename}`);
 
   return uploadBytes(storageRef, file)
     .then(async (snapshot) => {
