@@ -2,18 +2,38 @@
 
 import { Button, DivCard, TextTag } from '@/components/atoms';
 import { useUserStore } from '@/store/zustand';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import StyledProfileDisplay from './styled-profile-display';
 import { ProfileImage } from '..';
+import { useRouter } from 'next/navigation';
+import { logOut } from '@/core/config/firebase';
 
 interface Props {
   //
 };
 
 export default function ProfileDisplay({ }: Props) {
-  const { currentUser } = useUserStore();
+  const { currentUser, setCurrentUser } = useUserStore();
+
+  const [logOutState, setLogOutState] = useState<{ isLoading: boolean; message: string } | null>(null);
+
+  const router = useRouter();
 
   const LastLogin = useMemo(() => new Date((currentUser?.metadata?.lastSignInTime as any)).toDateString(), [currentUser]);
+
+  const handleLogOut = () => {
+    setLogOutState({
+      isLoading: true,
+      message: 'Login out'
+    });
+
+    logOut().then(() => {
+      setCurrentUser(null);
+      router.replace('/');
+    }).finally(() => {
+      setLogOutState(null);
+    });
+  };
 
   return (
     <StyledProfileDisplay>
@@ -72,7 +92,14 @@ export default function ProfileDisplay({ }: Props) {
       </DivCard>
 
       <DivCard width='100%' align='start' justify='start'>
-        <Button bg='black'>Log out</Button>
+        <Button
+          bg='black'
+          disabled={logOutState?.isLoading}
+          cursor={logOutState?.isLoading ? 'not-allowed' : 'pointer'}
+          onClick={handleLogOut}
+        >
+          {logOutState?.isLoading ? logOutState?.message : 'Log out'}
+        </Button>
       </DivCard>
     </StyledProfileDisplay>
   );

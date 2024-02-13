@@ -1,10 +1,15 @@
 'use client';
 
-import { flex_template } from '@/core/ui/theme';
+import { THEME_PALETTE, flex_template } from '@/core/ui/theme';
 import styled from '@emotion/styled';
 
+const {
+  colors: COLORS,
+  dimensions: DIMENSIONS,
+} = THEME_PALETTE;
+
 const StyledNavBar = styled.nav`
-  background-color: #ffffff;
+  background-color: ${COLORS.white};
   position: fixed;
   top: 0;
   left: 0;
@@ -13,7 +18,7 @@ const StyledNavBar = styled.nav`
   height: fit-content;
 
  .nav_holder {
-    width: var(--primary_app_width);
+    width: ${DIMENSIONS.primary_app_width};
     margin: 0 auto;
     padding: 10px 1rem;
     ${flex_template}

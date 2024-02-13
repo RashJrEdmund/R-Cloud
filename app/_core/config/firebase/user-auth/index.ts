@@ -10,6 +10,8 @@ import {
   updateProfile,
 
   signInWithPopup,
+
+  signOut,
 } from 'firebase/auth';
 import type { Unsubscribe, User, } from 'firebase/auth';
 import { auth, googleProvider } from '..';
@@ -59,10 +61,14 @@ const _onAuthStateChange = async () => {
   });
 };
 
+const logOut = async () => signOut(auth);
+
 export {
   loginWithEmailAndPass,
   signUpWithCredentials,
   _onAuthStateChange,
 
   signInOrUpWithGooglePopup,
+
+  logOut,
 };

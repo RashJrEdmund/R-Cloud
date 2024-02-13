@@ -94,6 +94,7 @@ export default function ProfileImage({ }: Props) {
             alt={`image of ${currentUser?.username}`}
             width={17}
             height={17}
+            draggable={false}
           />
           upload image
         </TextTag>
