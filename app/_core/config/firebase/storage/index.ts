@@ -1,5 +1,5 @@
 /* TODO +=> ===========================
-| Implement storage logic here., i.e |
+| Implement storage logic here., i.e   |
 | file upload.                         |
 ===================================== */
 
@@ -9,15 +9,10 @@ import { updateProfile } from 'firebase/auth';
 
 const baseStorageRef = ref(storage, 'users');
 
-interface userPathCred {
-  email: string;
-  user_id: string;
-};
+const createUserStorageRef = (email: string, path: string) => ref(baseStorageRef, `${email}` + path); // +=> ref(storage, `users/${email}/{path}`);
 
-const createUserStorageRef = (userPathCred: userPathCred, path: string) => ref(baseStorageRef, `${userPathCred.user_id + '-' + userPathCred.email}` + path); // +=> ref(storage, `users/${user_id}-{email}/{path}`);
-
-const updateProfileImage = async (file: File, userPathCred: userPathCred) => {
-  const storageRef = createUserStorageRef(userPathCred, '/assets'); // +=> ref(storage, `users/${user_id}-{email}/assets`);
+const updateProfileImage = async (file: File, email: string) => {
+  const storageRef = createUserStorageRef(email, '/assets/'); // +=> ref(storage, `users/${email}/assets/`);
 
   return uploadBytes(storageRef, file)
     .then(async (snapshot) => {
@@ -33,8 +28,8 @@ const updateProfileImage = async (file: File, userPathCred: userPathCred) => {
     });
 };
 
-const uploadFile = async (file: File, userPathCred: userPathCred) => {
-  const storageRef = createUserStorageRef(userPathCred, '/home/'); // +=> ref(storage, `users/${user_id}-{email}/home/`);
+const uploadFile = async (file: File, email: string) => {
+  const storageRef = createUserStorageRef(email, '/home/'); // +=> ref(storage, `users/${email}/home/`);
 
   return uploadBytes(storageRef, file)
     .then(async (snapshot) => {
@@ -50,8 +45,8 @@ const uploadFile = async (file: File, userPathCred: userPathCred) => {
     });
 };
 
-const uploadFiles = async (file: File[], userPathCred: userPathCred) => {
-  const storageRef = createUserStorageRef(userPathCred, '/home/');
+const uploadFiles = async (file: File[], email: string) => {
+  const storageRef = createUserStorageRef(email, '/home/');
 
   // return uploadBytes(storageRef, file)
   //   .then(async (snapshot) => {
