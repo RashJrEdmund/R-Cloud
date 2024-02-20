@@ -22,7 +22,7 @@ export default function FolderCard({ doc: folder }: Props) {
 
   const handleOpen = () => {
     console.log(pathname);
-    router.push('/' + folder.id);
+    router.push('/home/' + folder.id);
   };
 
   return (

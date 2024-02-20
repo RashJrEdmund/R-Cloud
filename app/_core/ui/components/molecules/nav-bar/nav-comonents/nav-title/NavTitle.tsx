@@ -16,6 +16,19 @@ const StyledNavTitle = styled.section`
   left: 50%;
   transform: translate(-50%, -50%);
   text-transform: capitalize;
+
+  span {
+    a {
+      max-width: 100px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+   display: none; 
+  }
 `;
 
 export default function NavTitle({ }: Props) {
