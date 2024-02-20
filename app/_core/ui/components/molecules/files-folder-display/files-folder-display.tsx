@@ -37,7 +37,7 @@ export default function FilesFolderDisplay({ }: Props) {
       />
 
       <DivCard
-        // bg='light'
+        bg='light'
         width='100%'
         flex_wrap='wrap'
         align='start'

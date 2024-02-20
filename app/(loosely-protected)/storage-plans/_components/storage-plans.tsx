@@ -13,7 +13,6 @@ export default function PlanDisplay({ }: Props) {
       width='100%'
       flex_dir='column'
     >
-
       <DivCard
         as='section'
         margin='0 auto 2rem'

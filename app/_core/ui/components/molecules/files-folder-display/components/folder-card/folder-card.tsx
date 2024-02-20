@@ -7,6 +7,7 @@ import {
 import Image from 'next/image';
 import { DivCard, TextTag } from '@/_core/ui/components/atoms';
 import { useMemo } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { shortenText } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
 
@@ -15,10 +16,19 @@ interface Props extends ISharedCardProps {
 };
 
 export default function FolderCard({ doc: folder }: Props) {
+  const router = useRouter();
   const folderLength = useMemo(() => Number(folder?.capacity?.length), [folder?.capacity?.length]);
+  const pathname = usePathname();
+
+  const handleOpen = () => {
+    console.log(pathname);
+    router.push('/' + folder.id);
+  };
 
   return (
-    <StyledDisplayCard>
+    <StyledDisplayCard
+      onDoubleClick={handleOpen}
+    >
       <Image
         src='/icons/folder-icon.svg'
         alt='file icon'
