@@ -21,7 +21,7 @@ export default function FolderCard({ doc: folder }: Props) {
   const pathname = usePathname();
 
   const handleOpen = () => {
-    console.log(pathname);
+    // console.log(pathname);
     router.push('/home/' + folder.id);
   };
 
