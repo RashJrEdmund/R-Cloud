@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEventHandler, useRef, useState } from 'react';
+import { DragEventHandler, MouseEventHandler, useRef, useState } from 'react';
 import { DivCard } from '@/components/atoms';
 import { FileCard, FolderCard } from './components';
 import StyledFileFolderDisplay from './styled-file-folder-display';
@@ -28,6 +28,14 @@ export default function FilesFolderDisplay({ }: Props) {
     });
   };
 
+  const handleDragOver: DragEventHandler = (e)=> {
+    e.preventDefault();
+  };
+
+  const handleDragEnd: DragEventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <>
       <ContextMenu
@@ -43,6 +51,8 @@ export default function FilesFolderDisplay({ }: Props) {
         align='start'
         min_height='80vh'
         onContextMenu={handleContextMenu}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
       >
         <StyledFileFolderDisplay>
           {
