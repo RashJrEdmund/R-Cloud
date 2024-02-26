@@ -28,8 +28,28 @@ export default function FilesFolderDisplay({ }: Props) {
     });
   };
 
+  const handleDragStart: DragEventHandler = (e) => {
+    e.preventDefault();
+  };
+
   const handleDragOver: DragEventHandler = (e)=> {
     e.preventDefault();
+  };
+
+  const handleDrop: DragEventHandler = (e) => {
+    e.preventDefault();
+
+    const files = e.dataTransfer.files;
+
+    const items = e.dataTransfer.items;
+
+    for (let i = 0; i < files.length; i ++) {
+      const file = files[i];
+
+      console.log(file.size);
+    };
+
+    console.log(files, items);
   };
 
   const handleDragEnd: DragEventHandler = (e) => {
@@ -51,7 +71,10 @@ export default function FilesFolderDisplay({ }: Props) {
         align='start'
         min_height='80vh'
         onContextMenu={handleContextMenu}
+
+        onDragStart={handleDragStart}
         onDragOver={handleDragOver}
+        onDrop={handleDrop}
         onDragEnd={handleDragEnd}
       >
         <StyledFileFolderDisplay>

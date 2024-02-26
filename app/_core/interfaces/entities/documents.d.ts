@@ -40,6 +40,19 @@ interface IUser {
   }
 }
 
+interface IUserProfile {
+  id?: string;
+  email: string;
+  date_of_birth: Date | string;
+  phone_number: string;
+  plan: {
+    id: string;
+    is_free: boolean;
+    total_capacity: string;
+    used_space: string;
+  };
+};
+
 type StoragePlanLabels = 'SIGMA' | 'OMEGA' | 'ZETA' | 'GAMMA' | 'BETA' | 'ALPHA';
 
 interface IStoragePlan {
@@ -55,6 +68,7 @@ interface IStoragePlan {
 export type {
   IDocument,
   IUser,
+  IUserProfile,
   DocumentType,
 
   // storage plan
