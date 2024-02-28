@@ -9,7 +9,6 @@ const STORAGE_PLANS: IStoragePlan[] = [
     capacity: '1.5 GB',
     rate: '0 XAF / Month',
     is_free: true,
-    is_current_plan: true,
   },
   {
     label: 'OMEGA',
@@ -17,7 +16,6 @@ const STORAGE_PLANS: IStoragePlan[] = [
     capacity: '15 GB',
     rate: '500 XAF / Month',
     is_free: false,
-    is_current_plan: false,
   },
   {
     label: 'ZETA',
@@ -25,7 +23,6 @@ const STORAGE_PLANS: IStoragePlan[] = [
     capacity: '40 GB',
     rate: '1000 XAF / Month',
     is_free: false,
-    is_current_plan: false,
   },
   {
     label: 'GAMMA',
@@ -33,7 +30,6 @@ const STORAGE_PLANS: IStoragePlan[] = [
     capacity: '85 GB',
     rate: '1500 XAF / Month',
     is_free: false,
-    is_current_plan: false,
   },
   {
     label: 'BETA',
@@ -41,7 +37,6 @@ const STORAGE_PLANS: IStoragePlan[] = [
     capacity: '190 GB',
     rate: '2000 XAF / Month',
     is_free: false,
-    is_current_plan: false,
   },
   {
     label: 'ALPHA',
@@ -49,7 +44,6 @@ const STORAGE_PLANS: IStoragePlan[] = [
     capacity: '400 GB',
     rate: '2500 XAF / Month',
     is_free: false,
-    is_current_plan: false,
   },
 ];
 

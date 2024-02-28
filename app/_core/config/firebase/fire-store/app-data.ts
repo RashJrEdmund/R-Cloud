@@ -1,11 +1,13 @@
 import { collection, getDocs } from 'firebase/firestore';
 import { fireStore } from '..';
 
-const getStoragePlans = async () => {
-  const collectionRef = collection(fireStore, 'storage-plans');
+import type { QuerySnapshot } from 'firebase/firestore';
+import type { IStoragePlan } from '@/interfaces/entities';
 
-  return getDocs(collectionRef)
-    .then((snapshot) => snapshot);
+const getStoragePlans = async (): Promise<QuerySnapshot<IStoragePlan>> => {
+  const doc_path = collection(fireStore, 'storage-plans');
+
+  return getDocs(doc_path) as Promise<QuerySnapshot<IStoragePlan>>;
 };
 
 export {

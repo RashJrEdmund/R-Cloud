@@ -46,7 +46,7 @@ export default function StoragePlan({ plan }: Props) {
 
       <DivCard width='100%' flex_dir='column' gap='10px'>
         <TextTag size='2rem' weight='600'>
-          {plan.capacity}
+          {plan.capacity} GB
         </TextTag>
 
         <TextTag size='0.9rem'>
@@ -56,11 +56,11 @@ export default function StoragePlan({ plan }: Props) {
 
       <Button
         width='100%'
-        bg={plan.is_current_plan ? 'black' : 'blued'}
+        bg={plan.is_free ? 'black' : 'blued'}
         title={'subscribe to plan: ' + plan.label}
         padding='10px'
       >
-        {plan.is_current_plan ? 'Current Plan' : 'Buy Plan'}
+        {plan.is_free ? 'Current Plan' : 'Buy Plan'}
       </Button>
     </DivCard>
   );

@@ -62,7 +62,6 @@ interface IStoragePlan {
   capacity: string;
   rate: string;
   is_free: boolean;
-  is_current_plan: boolean;
 }
 
 export type {

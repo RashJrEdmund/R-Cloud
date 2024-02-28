@@ -1,12 +1,26 @@
 import { DivCard, TextTag } from '@/components/atoms';
-import { STORAGE_PLANS } from '@/core/ui/ui-constants';
 import StyledStoragePlanDisplay from './styled-storage-plan-display';
 import { StoragePlan } from '@/components/molecules';
+import { getStoragePlans } from '@/core/config/firebase/fire-store/app-data';
+import type { IStoragePlan } from '@/interfaces/entities';
 
 interface Props { };
 
-export default function PlanDisplay({ }: Props) {
+export default async function PlanDisplay({ }: Props) {
   // TODO +=> Query storage plans from db.
+
+  const STORAGE_PLANS: Array<IStoragePlan> = [];
+
+  await getStoragePlans()
+    .then((snapShot) => {
+      snapShot.forEach((doc) => {
+        STORAGE_PLANS.push(doc.data());
+      });
+    }).then(() => {
+      if (STORAGE_PLANS.length <= 0) return;
+
+      STORAGE_PLANS.sort(({capacity: a}, {capacity: z}) => +a - +z);
+    });
 
   return (
     <DivCard
@@ -29,7 +43,7 @@ export default function PlanDisplay({ }: Props) {
 
       <StyledStoragePlanDisplay>
         {
-          STORAGE_PLANS.map((plan) => (
+          STORAGE_PLANS?.map((plan) => (
             <StoragePlan key={plan.label} plan={plan} />
           ))
         }
