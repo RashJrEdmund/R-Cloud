@@ -13,7 +13,7 @@ interface Props extends ISharedCardProps {
 };
 
 export default function FileCard({ doc: file }: Props) {
-  const imagePreview = useMemo<string>(() => (file.contentType.includes('image') && file.downloadUrl )? file.downloadUrl : '/icons/text-file-icon.svg', [file.type]);
+  const imagePreview = useMemo<string>(() => (file.content_type.includes('image') && file.download_url )? file.download_url : '/icons/text-file-icon.svg', [file.type]);
 
   return (
     <StyledDisplayCard>

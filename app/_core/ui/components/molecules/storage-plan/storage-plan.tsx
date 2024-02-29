@@ -1,5 +1,6 @@
 import { Button, DivCard, TextTag } from '@/components/atoms';
 import type { IStoragePlan } from '@/interfaces/entities';
+import { getSize } from '@/utils/helpers';
 import Image from 'next/image';
 
 interface Props {
@@ -46,7 +47,7 @@ export default function StoragePlan({ plan }: Props) {
 
       <DivCard width='100%' flex_dir='column' gap='10px'>
         <TextTag size='2rem' weight='600'>
-          {plan.capacity} GB
+          {getSize(plan.capacity, 'Gb')}
         </TextTag>
 
         <TextTag size='0.9rem'>

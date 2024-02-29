@@ -6,11 +6,13 @@ import { FormWrapper } from '@/(loosely-protected)/(auth)/_components';
 import { Button, TextTag } from '@/components/atoms';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MouseEventHandler, useState } from 'react';
+import { useState } from 'react';
 import { validateCreateAccountForm } from '@/core/services/form-validations';
 import { signInOrUpWithGooglePopup, signUpWithCredentials } from '@/core/config/firebase';
 import { useRouter } from 'next/navigation';
+import type { MouseEventHandler } from 'react';
 import type { IFieldErrors } from '@/core/services/form-validations/form-interfaces';
+import type { IUserProfile } from '@/interfaces/entities';
 
 interface Props {
   //
@@ -53,8 +55,23 @@ export default function SignUpForm({ }: Props) {
       validation.data?.password || '',
       validation.data as any
     ).then((user) => {
+      console.log(validation.data, user);
+
+      const userProfile: Partial<IUserProfile> = {
+        id: user?.uid || '',
+        email: user?.email || '',
+        date_of_birth: validation.data?.date_of_birth,
+        // phone_number: validation.data?.phone_number, // TODO +=> ADD phone_number: data0
+        plan: {
+          id: '0',
+          is_free: true,
+          total_capacity: 1536,
+          used_space: 0,
+        },
+      };
+
       setFormStatus({ status: 200, message: `welcome to r-cloud, ${user?.displayName || user?.email?.split('@').shift() || 'new user'}` });
-      router.push('/home');
+      // router.push('/home');
     }).catch(er => {
       setFormStatus({ status: 401, message: 'Could not create account. Try again or use another method' });
     }).finally(() => {

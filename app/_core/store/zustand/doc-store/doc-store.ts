@@ -1,4 +1,4 @@
-import { dummyData } from '@/utils/constants';
+import { dummyData } from '@/core/ui/ui-constants';
 import { create } from 'zustand';
 import { IDocStore } from '../../interfaces';
 
