@@ -12,10 +12,39 @@ import {
 } from './components';
 
 import type { IDocument } from '@/interfaces/entities';
+import type { ContextMenuContent } from '@/interfaces/app';
 
 interface Props {
   content?: IDocument[]; // from path wrapper
 };
+
+const MAIN_CONTEXT_MENU_CONTENT: ContextMenuContent[] = [
+  {
+    text: 'New Folder',
+    icon_url: '/icons/modal-icons/new-folder-icon.svg',
+    action: () => null,
+  },
+  // {
+  //   text: 'Open Folder',
+  //   icon_url: '/icons/modal-icons/open-folder-icon.svg',
+  //   action: () => null,
+  // },
+  {
+    text: 'Upload File',
+    icon_url: '/icons/modal-icons/upload-icon.svg',
+    action: () => null,
+  },
+  // {
+  //   text: 'Rename Folder',
+  //   icon_url: '/icons/modal-icons/rename-icon.svg',
+  //   action: () => null,
+  // },
+  // {
+  //   text: 'Delete Folder',
+  //   icon_url: '/icons/modal-icons/delete-icon.svg',
+  //   action: () => null,
+  // }
+];
 
 export default function FilesFolderDisplay({ }: Props) {
   const [contextMenuCoordinates, setContextMenuCoordinates] = useState<{ top: string; left: string; }>({ top: '', left: '' });
@@ -25,6 +54,7 @@ export default function FilesFolderDisplay({ }: Props) {
 
   const handleContextMenu: MouseEventHandler = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     contextMenuRef?.current?.open();
 
     setContextMenuCoordinates({
@@ -65,6 +95,7 @@ export default function FilesFolderDisplay({ }: Props) {
     <>
       <ContextMenu
         ref={contextMenuRef}
+        content={MAIN_CONTEXT_MENU_CONTENT}
         top={contextMenuCoordinates.top}
         left={contextMenuCoordinates.left}
       />

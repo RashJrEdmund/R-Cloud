@@ -1,9 +1,12 @@
-import type { IUser } from '@/interfaces/entities';
+/* eslint-disable no-unused-vars */
+import type { IUser, IUserProfile } from '@/interfaces/entities';
 
 interface IUserStore {
   currentUser: IUser | null;
-  // eslint-disable-next-line no-unused-vars
   setCurrentUser: (currentUser: IUser | null) => void;
+
+  userProfile: IUserProfile | null;
+  setUserProfile: (profile: IUserProfile) => void;
 };
 
 export type {

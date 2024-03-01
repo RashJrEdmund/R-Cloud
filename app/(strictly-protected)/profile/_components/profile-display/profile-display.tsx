@@ -2,20 +2,22 @@
 
 import { Button, DivCard, TextTag } from '@/components/atoms';
 import { useUserStore } from '@/store/zustand';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import StyledProfileDisplay from './styled-profile-display';
 import { ProfileImage } from '..';
 import { useRouter } from 'next/navigation';
 import { logOut } from '@/core/config/firebase';
+import { getUserProfile } from '@/core/config/firebase/fire-store';
 
 interface Props {
   //
 };
 
 export default function ProfileDisplay({ }: Props) {
-  const { currentUser, setCurrentUser } = useUserStore();
+  const { currentUser, setCurrentUser, userProfile, setUserProfile } = useUserStore();
 
   const [logOutState, setLogOutState] = useState<{ isLoading: boolean; message: string } | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const router = useRouter();
 
@@ -34,6 +36,19 @@ export default function ProfileDisplay({ }: Props) {
       setLogOutState(null);
     });
   };
+
+  useEffect(() => {
+    if (!currentUser) return;
+    getUserProfile(currentUser.email)
+      .then(res => {
+        if (!res.exists()) return;
+
+        const profile = res.data();
+        setUserProfile(profile);
+      })
+      .catch(() => router.push('/home'))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <StyledProfileDisplay>
@@ -56,6 +71,10 @@ export default function ProfileDisplay({ }: Props) {
           </TextTag>
         </TextTag>
       </DivCard>
+
+      <pre>
+        {JSON.stringify(userProfile, null, 4)}
+      </pre>
 
       <DivCard width='100%' flex_dir='column' align='start' justify='start'>
         <TextTag size='0.9rem'>

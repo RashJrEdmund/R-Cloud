@@ -58,6 +58,7 @@ export default function RelativeModal({ // generic modal
       gap='10px'
       radius={radius}
       min_width='min(97vw, 200px)'
+      min_height='170px'
       sx={sx}
       tabIndex={1}
       ref={modalRef}

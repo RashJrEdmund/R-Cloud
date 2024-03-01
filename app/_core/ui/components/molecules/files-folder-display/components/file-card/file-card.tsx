@@ -61,13 +61,13 @@ function ListFileCard({ doc: file }: Props) {
       <Image
         src={imagePreview}
         alt='file icon'
-        width={22}
-        height={22}
+        width={25}
+        height={25}
       />
 
       <DivCard margin='0 0 0 10px'>
         <TextTag title={file.name} weight='500' size='0.9rem' margin='0' no_white_space>
-          {shortenText(file.name, FILE_FOLDER_MAX_NAME_LENGTH)}
+          {shortenText(file.name, FILE_FOLDER_MAX_NAME_LENGTH + 14)}
         </TextTag>
 
         <DivCard justify='start' width='100%' gap='5px'>

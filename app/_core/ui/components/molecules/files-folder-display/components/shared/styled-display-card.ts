@@ -37,4 +37,9 @@ export const StyledDisplayCard = styled.div`
     min-width: 100%;
     max-height: 75px;
   }
+
+  @media only screen and (max-width: 650px) {
+    width: 110px;
+    overflow: hidden;
+  }
 `;
