@@ -4,13 +4,13 @@
 ================================//========= */
 
 import type { IDocument, DocumentType, IStorageUnit } from '@/interfaces/entities';
-import { createUserDocPath } from './utils';
+import { createUserCollectionPath } from './utils';
 import { addDoc } from 'firebase/firestore';
 
 const createFileDoc = async (email: string, document: IDocument) => {
-  const docPath = createUserDocPath(email, '/home');
+  const collection_path = createUserCollectionPath(email, '/home');
 
-  const docRef = await addDoc(docPath, document);
+  const docRef = await addDoc(collection_path, document);
 
   return docRef;
 };

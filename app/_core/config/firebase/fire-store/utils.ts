@@ -3,11 +3,14 @@
 | here.                                    |
 ================================//======= */
 
-import { collection } from 'firebase/firestore';
+import { collection, doc } from 'firebase/firestore';
 import { fireStore } from '..';
 
-const createUserDocPath = (email: string, _path: string) => collection(fireStore, `users/${email}` + _path);
+const createUserCollectionPath = (email: string, _path: string) => collection(fireStore, `users/${email}` + _path);
+
+const createUserDocPath = (email: string, _path: string) => doc(fireStore, `users/${email}` + _path);
 
 export {
+  createUserCollectionPath,
   createUserDocPath,
 };

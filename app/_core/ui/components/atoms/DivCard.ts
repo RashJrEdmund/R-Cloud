@@ -49,7 +49,7 @@ const DivCard = styled.div<Props>`
   margin: ${({ margin = '0' }) => margin};
   box-shadow: ${({ shadow_effect }) => shadow_effect ? EFFECTS.box_shadow : 'none'};
   flex-direction: ${({ flex_dir = 'unset' }) => flex_dir};
-  border: ${({ border }) => border ? `1px solid ${COLORS.border}` : 'none'};
+  border: ${({ border }) => border ? `0.5px solid ${COLORS.border}` : 'none'};
   border-radius: ${({ radius = '0' }) => radius};
 
   // positioning

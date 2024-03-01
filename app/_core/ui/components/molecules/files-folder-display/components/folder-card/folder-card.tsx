@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { DivCard, TextTag } from '@/_core/ui/components/atoms';
 import { useMemo } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { shortenText } from '@/utils/helpers';
+import { shortenText, getSize } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
 
 interface Props extends ISharedCardProps {
@@ -52,7 +52,7 @@ export default function FolderCard({ doc: folder }: Props) {
           </TextTag>
 
           <TextTag color_type='grayed' size='0.75rem' no_white_space>
-            {folderLength > 0 ? folder.capacity.size : null}
+            {folderLength > 0 ? getSize(folder.capacity.size) : null}
           </TextTag>
         </DivCard>
       </DivCard>

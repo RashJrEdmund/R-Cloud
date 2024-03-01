@@ -37,8 +37,7 @@ const signUpWithCredentials = async (email: string, password: string, other_cred
     if (res) {
       await updateProfile(res.user, {
         displayName: other_credentials.username,
-        date_of_birth: other_credentials.date_of_birth,
-      } as any);
+      });
     }
 
     return res.user;

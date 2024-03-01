@@ -5,7 +5,7 @@ import {
 import Image from 'next/image';
 import { DivCard, TextTag } from '@/components/atoms';
 import { useMemo } from 'react';
-import { shortenText } from '@/utils/helpers';
+import { getSize, shortenText } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
 
 interface Props extends ISharedCardProps {
@@ -37,7 +37,7 @@ export default function FileCard({ doc: file }: Props) {
           </TextTag>
 
           <TextTag color_type='grayed' size='0.75rem' no_white_space>
-            {file.capacity.size}
+            {getSize(file.capacity.size)}
           </TextTag>
         </DivCard>
       </DivCard>

@@ -54,6 +54,7 @@ interface IUserProfile {
     id: string;
     is_free: boolean;
     total_capacity: number;
+    unit: IStorageUnit;
     used_space: number;
   };
 };
@@ -63,6 +64,7 @@ interface IStoragePlan {
   label: StoragePlanLabels;
   icon_url: string;
   capacity: number;
+  unit: IStorageUnit;
   rate: string;
   is_free: boolean;
 }

@@ -20,7 +20,3 @@ export {
   getStoragePlans,
   getOneStoragePlan,
 };
-
-getOneStoragePlan().then(res => {
-  console.log(res, res.data());
-});
