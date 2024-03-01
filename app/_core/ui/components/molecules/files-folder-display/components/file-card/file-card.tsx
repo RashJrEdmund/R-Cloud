@@ -12,8 +12,14 @@ interface Props extends ISharedCardProps {
   //
 };
 
-export default function FileCard({ doc: file }: Props) {
-  const imagePreview = useMemo<string>(() => (file.content_type.includes('image') && file.download_url )? file.download_url : '/icons/text-file-icon.svg', [file.type]);
+function GridFileCard({ doc: file }: Props) {
+  const imagePreview = useMemo<string>(() => {
+    if (file.content_type.includes('image') && file.download_url) {
+      return file.download_url;
+    }
+
+    return '/icons/text-file-icon.svg';
+  }, [file.type]);
 
   return (
     <StyledDisplayCard>
@@ -31,7 +37,7 @@ export default function FileCard({ doc: file }: Props) {
           </TextTag>
         </DivCard>
 
-        <DivCard  width='100%' margin='10px 0 0' gap='5px'>
+        <DivCard width='100%' margin='10px 0 0' gap='5px'>
           <TextTag color_type='grayed' size='0.75rem' no_white_space>
             {file.extension}
           </TextTag>
@@ -43,4 +49,42 @@ export default function FileCard({ doc: file }: Props) {
       </DivCard>
     </StyledDisplayCard>
   );
+};
+
+function ListFileCard({ doc: file }: Props) {
+  const imagePreview = useMemo<string>(() => {
+    return '/icons/text-file-icon.svg';
+  }, []);
+
+  return (
+    <DivCard width='100%' flex_wrap='nowrap' justify='start' padding='8px' className='card'>
+      <Image
+        src={imagePreview}
+        alt='file icon'
+        width={22}
+        height={22}
+      />
+
+      <DivCard margin='0 0 0 10px'>
+        <TextTag title={file.name} weight='500' size='0.9rem' margin='0' no_white_space>
+          {shortenText(file.name, FILE_FOLDER_MAX_NAME_LENGTH)}
+        </TextTag>
+
+        <DivCard justify='start' width='100%' gap='5px'>
+          <TextTag color_type='grayed' size='0.75rem' no_white_space>
+            {file.extension}
+          </TextTag>
+
+          <TextTag color_type='grayed' size='0.75rem' no_white_space>
+            {getSize(file.capacity.size)}
+          </TextTag>
+        </DivCard>
+      </DivCard>
+    </DivCard>
+  );
+};
+
+export {
+  GridFileCard,
+  ListFileCard,
 };

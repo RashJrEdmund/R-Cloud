@@ -1,4 +1,4 @@
-type DisplayLayout = 'GRID' | 'COLUMN';
+type DisplayLayout = 'GRID' | 'LIST';
 
 export type {
   DisplayLayout,

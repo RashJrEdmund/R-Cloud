@@ -1,9 +1,8 @@
 'use client';
 
 import { DivCard, TextTag } from '@/components/atoms';
-import Navigator from './_components/navigator';
-import Search from './_components/search';
 import TopSectionHolder from './top-section-holder';
+import { Navigator, Search, DisplayLayout } from './_components';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ContextMenu } from '@/components/modals';
@@ -36,7 +35,8 @@ export default function TopSection({
         (
           <DivCard gap='1rem'>
             <Search />
-            {/* TODO +=> BUILD MORE MODAL DROP DOWN AND ACTUAL MODAL */}
+
+            <DisplayLayout />
 
             <DivCard position='relative'>
               <TextTag cursor='pointer' onClick={toggleModal}>
