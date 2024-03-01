@@ -28,10 +28,10 @@ const StyledFileFolderDisplay = styled.section`
     flex-direction: column;
 
     .card {
-      border-top: 0.5px solid gray;
+      border-top: 0.5px solid ${COLORS.bg_light};
 
       &:nth-of-type(2n) {
-        background-color: ${COLORS.bg_grayed};
+        background-color: ${COLORS.bg_light};
       }
     }
   }

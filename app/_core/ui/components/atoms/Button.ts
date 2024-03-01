@@ -61,6 +61,10 @@ const Button = styled.button<Partial<Props>>`
   ${({ hover_effect = 'none' }) => createHoverEffect(hover_effect)}
 
   ${({ sx = '' }) => sx};
+
+  @media only screen and (max-width: 650px) {
+    ${({ media_sx = '' }) => media_sx}
+  }
 `;
 
 export default Button;

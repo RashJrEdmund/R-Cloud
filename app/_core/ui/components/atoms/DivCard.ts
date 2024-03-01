@@ -86,6 +86,10 @@ const DivCard = styled.div<Props>`
   &::-webkit-scrollbar {
     display: none;
   }
+
+  @media only screen and (max-width: 650px) {
+    ${({ media_sx = '' }) => media_sx}
+  }
 `;
 
 export default DivCard;
