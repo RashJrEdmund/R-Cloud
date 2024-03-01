@@ -29,8 +29,9 @@ const StyledFileFolderDisplay = styled.section`
 
     .card {
       border-top: 0.5px solid ${COLORS.bg_light};
+      transition: background 200ms;
 
-      &:nth-of-type(2n) {
+      &:hover {
         background-color: ${COLORS.bg_light};
       }
     }

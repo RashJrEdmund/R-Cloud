@@ -81,7 +81,7 @@ function _GridFileCard({ doc: file, imagePreview, fileRef, handleOpen }: ICardCo
 function _ListFileCard({ doc: file, imagePreview, fileRef, handleOpen }: ICardComponentProps) {
 
   return (
-    <DivCard width='100%' flex_wrap='nowrap' justify='start' padding='8px' className='card'
+    <DivCard width='100%' flex_wrap='nowrap' justify='start' padding='12px 10px' className='card'
       ref={fileRef as any} onDoubleClick={handleOpen}
     >
       <Image
@@ -124,7 +124,7 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
     const { displayLayout } = useAppStore();
 
     const imagePreview = useMemo<string>(() => {
-      if (displayLayout === 'GRID') return '/icons/text-file-icon.svg';
+      if (displayLayout === 'LIST') return '/icons/text-file-icon.svg';
 
       if (file.content_type.includes('image') && file.download_url) {
         return file.download_url;
@@ -156,7 +156,7 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
 
       return () => {
         fileRef.current?.removeEventListener('contextmenu', handleContextMenu, false);
-      }
+      };
     }, []);
 
     return (

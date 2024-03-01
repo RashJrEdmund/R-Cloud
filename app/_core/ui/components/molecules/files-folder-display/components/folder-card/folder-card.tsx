@@ -47,13 +47,6 @@ const FOLDER_CONTEXT_MENU_CONTENT: ContextMenuContent[] = [
 ];
 
 function _GridFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: ICardComponentProps) {
-  // const router = useRouter();
-  // const folderLength = useMemo(() => Number(folder?.capacity?.length), [folder?.capacity?.length]);
-
-  // const handleOpen = () => {
-  //   // console.log(pathname);
-  //   router.push('/home?folder=' + folder.id);
-  // };
 
   return (
     <StyledDisplayCard ref={folderRef as any}
@@ -91,39 +84,10 @@ function _GridFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: I
 };
 
 function _ListFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: ICardComponentProps) {
-  // const router = useRouter();
-  // const folderLength = useMemo(() => Number(folder?.capacity?.length), [folder?.capacity?.length]);
-  // const folderRef = useRef<HTMLDivElement>();
-
-  // const { setContextContent, setContextCoordinates, contextMenuRef } = useFilesFolderDisplayContext();
-
-  // const handleOpen = () => {
-  //   router.push('/home?folder=' + folder.id);
-  // };
-
-  // const handleContextMenu = (e: MouseEvent) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-
-  //   setContextContent(FOLDER_CONTEXT_MENU_CONTENT);
-  //   setContextCoordinates({ top: e.clientY + 'px', left: e.clientX + 'px' });
-
-  //   contextMenuRef.current?.open();
-  // };
-
-  // useEffect(() => {
-  //   if (!folderRef.current) return;
-
-  //   folderRef.current.addEventListener('contextmenu', handleContextMenu, false);
-
-  //   return () => {
-  //     folderRef.current?.removeEventListener('contextmenu', handleContextMenu, false);
-  //   }
-  // }, []);
 
   return (
     <>
-      <DivCard ref={folderRef as any} width='100%' flex_wrap='nowrap' justify='start' padding='8px' className='card'
+      <DivCard ref={folderRef as any} width='100%' flex_wrap='nowrap' justify='start' padding='12px 10px' className='card'
         onDoubleClick={handleOpen}
       >
         <Image
@@ -192,7 +156,7 @@ function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Elemen
 
       return () => {
         folderRef.current?.removeEventListener('contextmenu', handleContextMenu, false);
-      }
+      };
     }, []);
 
     return (
