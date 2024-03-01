@@ -41,7 +41,7 @@ function ContextMenu(
     <RelativeModal
       showModal={showModal}
       setShowModal={setShowModal}
-      position='absolute'
+      position='absolute' // no parent has position relative
       top={top}
       left={left}
     >

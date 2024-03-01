@@ -17,9 +17,9 @@ export default function useContextMenu({ content, top = '0', left = '0' }: Props
   ContextMenu: (props: { children?: React.ReactNode }) => JSX.Element;
 
   contextMenuRef: RefObject<IModalWrapperRef>;
-  setContextMenuCoordinates: React.Dispatch<React.SetStateAction<{ top: string; left: string; }>>
+  setContextCoordinates: React.Dispatch<React.SetStateAction<{ top: string; left: string; }>>
 } {
-  const [contextMenuCoordinates, setContextMenuCoordinates] = useState<{ top: string; left: string; }>({ top, left });
+  const [contextCoordinates, setContextCoordinates] = useState<{ top: string; left: string; }>({ top, left });
   const contextMenuRef = useRef<IModalWrapperRef>(null);
 
   function MenuComponent({ children = null }: { children?: React.ReactNode }) {
@@ -27,8 +27,8 @@ export default function useContextMenu({ content, top = '0', left = '0' }: Props
       <ContextMenu
         ref={contextMenuRef}
         content={content}
-        top={contextMenuCoordinates.top}
-        left={contextMenuCoordinates.left}
+        top={contextCoordinates.top}
+        left={contextCoordinates.left}
       >
         {children}
       </ContextMenu>
@@ -40,6 +40,6 @@ export default function useContextMenu({ content, top = '0', left = '0' }: Props
 
     contextMenuRef,
 
-    setContextMenuCoordinates,
+    setContextCoordinates,
   };
 };
