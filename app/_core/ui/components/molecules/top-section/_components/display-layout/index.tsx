@@ -12,7 +12,7 @@ export default function DisplayLayout({ }: Props) {
   const { displayLayout, setDisplayLayout } = useAppStore();
 
   return (
-    <DivCard border radius='8px'>
+    <DivCard border radius='10px'>
       <DivCard radius='8px 0 0 8px' padding='4px 5px' cursor='pointer'
         bg={displayLayout === 'GRID' ? 'grayed' : 'none'}
       >

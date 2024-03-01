@@ -3,44 +3,23 @@ import { RelativeModal } from '../generics';
 import type { IModalWrapperRef } from '../generics';
 import { TextTag } from '@/components/atoms';
 import Image from 'next/image';
-
-const CONTEXT_MENU_CONTENT: { text: string; icon_url: string; action: Function; }[] = [
-  {
-    text: 'New Folder',
-    icon_url: '/icons/modal-icons/new-folder-icon.svg',
-    action: () => null,
-  },
-  {
-    text: 'Open Folder',
-    icon_url: '/icons/modal-icons/open-folder-icon.svg',
-    action: () => null,
-  },
-  {
-    text: 'Upload File',
-    icon_url: '/icons/modal-icons/upload-icon.svg',
-    action: () => null,
-  },
-  {
-    text: 'Rename Folder',
-    icon_url: '/icons/modal-icons/rename-icon.svg',
-    action: () => null,
-  },
-  {
-    text: 'Delete Folder',
-    icon_url: '/icons/modal-icons/delete-icon.svg',
-    action: () => null,
-  }
-];
+import type { ContextMenuContent } from '@/interfaces/app';
 
 interface Props {
+  content: ContextMenuContent[];
   top: string;
   left: string;
+
+  children?: React.ReactNode | null;
 };
 
 function ContextMenu(
   {
+    content,
     top = '50%',
     left = '50%',
+
+    children = null,
   }: Props,
   _ref: ForwardedRef<IModalWrapperRef>
 ) {
@@ -62,11 +41,13 @@ function ContextMenu(
     <RelativeModal
       showModal={showModal}
       setShowModal={setShowModal}
-      position='absolute'
+      position='absolute' // no parent has position relative
       top={top}
       left={left}
     >
-      {CONTEXT_MENU_CONTENT.map(({ text, icon_url, action }) => (
+      {children}
+
+      {content.map(({ text, icon_url, action }) => (
         <TextTag key={text} no_white_space cursor='pointer' onClick={() => action()}>
           <Image
             src={icon_url}

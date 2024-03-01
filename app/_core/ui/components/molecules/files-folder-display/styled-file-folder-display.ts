@@ -1,7 +1,7 @@
 'use client';
 
 import styled from '@emotion/styled';
-import { THEME_PALETTE, flex_template } from '@/core/ui/theme';
+import { THEME_PALETTE } from '@/core/ui/theme';
 
 const {
   colors: COLORS,
@@ -29,10 +29,17 @@ const StyledFileFolderDisplay = styled.section`
 
     .card {
       border-top: 0.5px solid ${COLORS.bg_light};
+      transition: background 200ms;
 
-      &:nth-of-type(2n) {
+      &:hover {
         background-color: ${COLORS.bg_light};
       }
+    }
+  }
+
+  @media only screen and (max-width: 650px) {
+    &.grid-layout {
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
     }
   }
 `;
