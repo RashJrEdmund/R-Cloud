@@ -7,9 +7,10 @@ import { loginWithEmailAndPass, signInOrUpWithGooglePopup } from '@/_core/config
 import { Button, TextTag } from '@/components/atoms';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MouseEventHandler, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { validateLoginForm } from '@/core/services/form-validations';
+import type { MouseEventHandler } from 'react';
 import type { IFieldErrors } from '@/core/services/form-validations/form-interfaces';
 
 interface Props {

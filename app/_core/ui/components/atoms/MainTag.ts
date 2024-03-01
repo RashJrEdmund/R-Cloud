@@ -61,6 +61,10 @@ const MainTag = styled.main<Props>`
   ${({ bg = 'none' }) => generateBg(bg)}
 
   ${({ sx }) => sx};
+
+  @media only screen and (max-width: 650px) {
+    ${({ media_sx = '' }) => media_sx}
+  }
 `;
 
 export default MainTag;

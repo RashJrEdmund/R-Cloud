@@ -3,7 +3,7 @@
 | component in both home/ and home/[...id] routes.    |
 | decided to wrap both in a common holder and call    |
 | the holder                                          |
-======================================//=============*/
+=======================================//============*/
 
 import { FilesFolderDisplay, TopSection } from '@/components/molecules';
 

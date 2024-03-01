@@ -27,6 +27,10 @@ export default function ProfileDropDown({ showDropDown, setShowDropDown }: Props
   const DROP_DOWN_CONTENT = useMemo(() => {
     return [
       {
+        action: () => router.push('/home'),
+        text: 'Home',
+      },
+      {
         action: () => router.push('/profile'),
         text: 'My Profile',
       },
@@ -49,6 +53,7 @@ export default function ProfileDropDown({ showDropDown, setShowDropDown }: Props
 
   return showDropDown ? (
     <DivCard
+      border
       tabIndex={5} // to make it focusable
       ref={dropDownRef as LegacyRef<HTMLDivElement>}
       bg='white'

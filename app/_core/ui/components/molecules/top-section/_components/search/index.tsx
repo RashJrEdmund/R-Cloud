@@ -23,7 +23,7 @@ export default function Search({ }: Props) {
   };
 
   return (
-    <DivCard as='search'>
+    <DivCard as='search' media_sx='display: none;'>
       <DivCard
         as='form'
         width='min(250px, 97vw)'

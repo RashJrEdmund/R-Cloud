@@ -4,7 +4,7 @@ export type BgVariants = 'inherit' | 'normal' | 'light' | 'invert' | 'blued' | '
 
 export type FlexJustifyVariants = 'space-around' | 'space-between' | 'space-evenly' | 'start' | 'center' | 'end';
 
-export type SizeVariants =  'unset' | 'inherit' | '0.5rem' | '0.75rem' | '0.9rem' | '1rem' | '1.25rem' | '1.5rem' | '1.75rem' | '2rem' | '2.25rem' | '2.5rem' | '2.75' | '3rem';
+export type SizeVariants = 'unset' | 'inherit' | '0.5rem' | '0.75rem' | '0.9rem' | '1rem' | '1.25rem' | '1.5rem' | '1.75rem' | '2rem' | '2.25rem' | '2.5rem' | '2.75' | '3rem';
 
 export type WeightVariants = '400' | '500' | '600' | '700';
 
@@ -25,7 +25,7 @@ export type CursorVariants = 'default' | 'pointer' | 'text' | 'inherit' | 'not-a
 export type OverFlowVariants = 'auto' | 'hidden' | 'scroll' | 'visible' | 'unset' | 'inherit';
 
 export interface CommonProps {
-    sx?: string;
+    sx?: string; media_sx?: string;// media screen 650px
     padding?: string;
     margin?: string;
     shadow_effect?: boolean;

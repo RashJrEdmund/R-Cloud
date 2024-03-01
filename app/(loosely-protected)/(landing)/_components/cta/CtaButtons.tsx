@@ -1,6 +1,7 @@
 import { Button, DivCard } from '@/components/atoms';
 import { CTA_CONTENT } from '@/core/ui/ui-constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/link';
 
 interface Props {
   //
@@ -14,7 +15,7 @@ export default function CtaButtons({ }: Props) {
     >
       {CTA_CONTENT.map(({ text, bt_bg, title, url, icon }) => (
         <Button
-          as='a'
+          as={Link}
           href={url}
           key={text}
           no_white_space

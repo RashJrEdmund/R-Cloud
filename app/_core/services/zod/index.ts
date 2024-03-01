@@ -19,8 +19,8 @@ const ZAuthFormSchema = z.object({
   date_of_birth: z.date({
     required_error: 'Please select a date and time',
     invalid_type_error: 'Set a valid date!',
-  }).min(new Date('1900-01-01'), { message: 'Too old' })
-    .max(new Date(), { message: 'Too young!' })
+  }).min(new Date('1900-01-01'), { message: 'you seem to be too old' })
+    .max(new Date(), { message: 'You seem to be too young!' })
 });
 
 export {

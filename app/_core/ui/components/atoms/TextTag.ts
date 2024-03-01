@@ -96,6 +96,10 @@ const TextTag = styled.span<Props>`
     color: ${({ media_color, color_type }) => generateColor(media_color ?? color_type ?? 'normal')};
     font-size: ${({ media_size, size }) => (media_size ?? size ?? '1rem')}; // 1rem is defualt text size and 2rem is for like h1s
   }
+
+  @media only screen and (max-width: 650px) {
+    ${({ media_sx = '' }) => media_sx}
+  }
 `;
 
 export default TextTag;

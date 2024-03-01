@@ -47,7 +47,7 @@ export const generateFieldColors = (color_type: 'invert' | 'normal' | 'no_border
   }
 };
 
-const TextField = styled.input<Partial<Props>>`
+const TextField = styled.input<Props>`
     ${({ color_type = 'normal' }) => generateFieldColors(color_type)}
 
     border-radius: ${({ radius = '10px' }) => radius};
