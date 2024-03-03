@@ -55,7 +55,7 @@ export default function FilesFolderDisplay({ }: Props) {
     });
   };
 
-  // DRAG_DROP_STARTS_HERE!
+  // DRAG_DROP_HANDLERS_STARTS_HERE!
 
   const handleDragStart: DragEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
@@ -77,11 +77,10 @@ export default function FilesFolderDisplay({ }: Props) {
     e.preventDefault();
   };
 
-  // DRAG_DROP_ENDS_HERE!
+  // DRAG_DROP_HANDLERS_ENDS_HERE!
 
   const handleFileUploadInputFieldData = useCallback<(e: Event) => void>((e: Event) => {
     const files = (e.target as HTMLInputElement).files;
-    // const items = (e.dat)
     if (!files) return;
     handleUploadFiles(files);
   }, []);
