@@ -25,10 +25,14 @@ interface Props extends CommonProps {
 
 const MainTag = styled.main<Props>`
   visibility: ${({ visibility = 'visible' }) => visibility};
+
+  // alignment
   display: flex;
   align-items: ${({ align = 'center' }) => align};
   justify-content: ${({ justify = 'start' }) => justify};
   flex-direction: ${({ flex_dir = 'column' }) => flex_dir};
+  flex: ${({ flex = 'unset' }) => flex};
+
   gap: ${({ gap = 'unset' }) => gap};
 
   width: ${({ width = DIMENSIONS.primary_app_width }) => width};

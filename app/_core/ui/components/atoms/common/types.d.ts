@@ -12,7 +12,7 @@ export type FLexAlignVariants = 'center' | 'start' | 'end';
 
 export type PositionVariants = 'absolute' | 'relative' | 'fixed' | 'unset';
 
-export type FlexDirectionVariants = 'column' | 'row' | 'unset';
+export type FlexDirectionVariants = 'column' | 'row' | 'column-reverse' | 'row-reverse' | 'unset';
 
 export type FlexWrapVariants = 'wrap' | 'nowrap' | 'unset';
 
@@ -52,4 +52,7 @@ export interface CommonProps {
     left?: string;
     transform?: string;
     z_index?: string;
+
+    // alignment !
+    flex?: string; // short-hand for up to 3 flex properties. flex-grow, flex-shrink and flex-basis.
 };

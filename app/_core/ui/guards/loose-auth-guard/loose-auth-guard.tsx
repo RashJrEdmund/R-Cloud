@@ -13,7 +13,7 @@ import type { IUser } from '@/interfaces/entities';
 import { Streamer } from '@/components/molecules';
 import { useUserStore } from '@/store/zustand';
 
-export default function LooseAuthGuard(Component: React.JSXElementConstructor<React.ReactNode>) {
+export default function LooseAuthGuard(Component: (...props: any[]) => JSX.Element) {
   return function Guard(props: any) {
     const [loading, setLoading] = useState<boolean>(true);
     const [current_user, set_current_user] = useState<IUser | null>(null);

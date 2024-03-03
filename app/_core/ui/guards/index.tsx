@@ -1,5 +1,5 @@
 /* TODO +=> ==========================================
-|   will wrie import and export all page guards here |
+|   will write import and export all page guards here |
 ===================================================== */
 
 export { default as LooseAuthGuard } from './loose-auth-guard/loose-auth-guard';

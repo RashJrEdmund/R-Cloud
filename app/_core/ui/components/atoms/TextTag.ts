@@ -28,22 +28,22 @@ interface Props extends CommonProps {
 
 const generateColor = (text: IColor) => {
   switch (text) {
-    case 'grayed':
-      return COLORS.text_grayed;
-    case 'invert':
-      return COLORS.text_invert;
-    case 'success':
-      return COLORS.text_blue;
-    case 'error':
-      return COLORS.border_error;
-    case 'light':
-      return COLORS.text_white;
-    case 'dark':
-      return COLORS.text_dark;
-    case 'normal':
-      return COLORS.text;
-    default: // text inherit
-      return 'inherit';
+  case 'grayed':
+    return COLORS.text_grayed;
+  case 'invert':
+    return COLORS.text_invert;
+  case 'success':
+    return COLORS.text_blue;
+  case 'error':
+    return COLORS.border_error;
+  case 'light':
+    return COLORS.text_white;
+  case 'dark':
+    return COLORS.text_dark;
+  case 'normal':
+    return COLORS.text;
+  default: // text inherit
+    return 'inherit';
   }
 };
 
@@ -63,6 +63,9 @@ const TextTag = styled.span<Props>`
   }};
   overflow-y: ${({ over_flow_y = 'unset' }) => over_flow_y};
 
+  // alignment
+  flex: ${({ flex = 'unset' }) => flex};
+
   // positioning
   position: ${({ position = 'unset' }) => position};
   top: ${({ top = 'unset' }) => top};
@@ -72,8 +75,8 @@ const TextTag = styled.span<Props>`
   transform: ${({ transform = 'unset' }) => transform};
   z-index: ${({ z_index = 'unset' }) => z_index};
 
-  font-weight: ${({ weight = '400' }) => weight}; // 400 is defualt and normal font-weight, 700 is bold
-  font-size: ${({ size = '1rem' }) => size}; // 1rem is defualt text size and 2rem is for like h1s
+  font-weight: ${({ weight = '400' }) => weight}; // 400 is default and normal font-weight, 700 is bold
+  font-size: ${({ size = '1rem' }) => size}; // 1rem is default text size and 2rem is for like h1s
   color: ${({ color_type = 'inherit' }) => generateColor(color_type)};
   white-space: ${({ no_white_space = false, ellipsis = false }) => (no_white_space || ellipsis) ? 'nowrap' : 'normal'};
   text-overflow: ${({ ellipsis = false }) => ellipsis ? 'ellipsis' : 'unset'};
@@ -94,7 +97,7 @@ const TextTag = styled.span<Props>`
 
   @media only screen and (max-width: 900px) {
     color: ${({ media_color, color_type }) => generateColor(media_color ?? color_type ?? 'normal')};
-    font-size: ${({ media_size, size }) => (media_size ?? size ?? '1rem')}; // 1rem is defualt text size and 2rem is for like h1s
+    font-size: ${({ media_size, size }) => (media_size ?? size ?? '1rem')}; // 1rem is default text size and 2rem is for like h1s
   }
 
   @media only screen and (max-width: 650px) {

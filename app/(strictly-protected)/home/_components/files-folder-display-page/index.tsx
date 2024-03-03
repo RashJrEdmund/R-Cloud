@@ -17,6 +17,12 @@ interface Props {
 export default function FilesFolderDisplayPage({ }: Props) {
   return (
     <>
+      {/* INPUT_DES +=> ===========================================================
+      | This is a special input field. The one used to open the select file dialog |
+      | in the FilesFolderDisplay component                                        |
+      ================================================================//=========*/}
+      <input hidden multiple type='file' id='file-upload-field' />
+
       <TopSection />
 
       <FilesFolderDisplayContextProvider>

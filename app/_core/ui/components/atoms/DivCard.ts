@@ -37,18 +37,21 @@ interface Props extends CommonProps {
 
 const DivCard = styled.div<Props>`
   visibility: ${({ visibility = 'visible' }) => visibility};
+
+  // alignment
   display: flex;
   justify-content: ${({ justify = 'center' }) => justify};
   align-items: ${({ align = 'center' }) => align};
   align-self: ${({ align_self = 'unset' }) => align_self};
   justify-self: ${({ justify_self = 'unset' }) => justify_self};
   flex-wrap: ${({ flex_wrap = 'unset' }) => flex_wrap};
+  flex-direction: ${({ flex_dir = 'unset' }) => flex_dir};
+  flex: ${({ flex = 'unset' }) => flex};
 
   gap: ${({ gap = 'unset' }) => gap};
   padding: ${({ padding = '0' }) => padding};
   margin: ${({ margin = '0' }) => margin};
   box-shadow: ${({ shadow_effect }) => shadow_effect ? EFFECTS.box_shadow : 'none'};
-  flex-direction: ${({ flex_dir = 'unset' }) => flex_dir};
   border: ${({ border }) => border ? `0.5px solid ${COLORS.border}` : 'none'};
   border-radius: ${({ radius = '0' }) => radius};
 
