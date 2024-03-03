@@ -22,7 +22,7 @@ export default function FilesFolderDisplayPage({ }: Props) {
       | FilesFolderDisplay component, and open/activated by the openFileUploadDialog utility    |
       | function in app/_core/utils/helpers/. It's changeEvent is handled by the useEffect in   |
       | FilesFolderDisplay component in app/_core/ui/components/molecules/files-folder-display  |
-      | which inturn calls the handleUploadFiles function in FilesFolderDisplayContext          |
+      | which inturn calls the readyUploadModal function in FilesFolderDisplayContext           |
       =========================================================================//=============*/}
       <input hidden multiple type='file' id='file-upload-field' />
 

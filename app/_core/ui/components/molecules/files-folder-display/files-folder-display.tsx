@@ -9,11 +9,11 @@ import {
   GridFileCard, GridFolderCard,
   ListFileCard, ListFolderCard
 } from './components';
+import { openFileUploadDialog } from '@/utils/helpers';
 
 import type { DragEventHandler, MouseEventHandler } from 'react';
 import type { IDocument } from '@/interfaces/entities';
 import type { ContextMenuContent } from '@/interfaces/app';
-import { openFileUploadDialog } from '@/utils/helpers';
 
 interface Props {
   content?: IDocument[]; // from path wrapper
@@ -39,7 +39,7 @@ export default function FilesFolderDisplay({ }: Props) {
     contextMenuRef,
     setContextCoordinates,
     setContextContent,
-    handleUploadFiles,
+    readyUploadModal,
   } = useFilesFolderDisplayContext();
 
   const handleContextMenu: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -70,7 +70,7 @@ export default function FilesFolderDisplay({ }: Props) {
 
     const { files, items } = e.dataTransfer;
 
-    handleUploadFiles(files, items);
+    readyUploadModal(files, items);
   };
 
   const handleDragEnd: DragEventHandler<HTMLDivElement> = (e) => {
@@ -82,7 +82,7 @@ export default function FilesFolderDisplay({ }: Props) {
   const handleFileUploadInputFieldData = useCallback<(e: Event) => void>((e: Event) => {
     const files = (e.target as HTMLInputElement).files;
     if (!files) return;
-    handleUploadFiles(files);
+    readyUploadModal(files);
   }, []);
 
   useEffect(() => {
@@ -90,50 +90,51 @@ export default function FilesFolderDisplay({ }: Props) {
 
     if (!fileUploadField) return;
 
-    fileUploadField.addEventListener('input', handleFileUploadInputFieldData, false);
+    fileUploadField.addEventListener('change', handleFileUploadInputFieldData, false);
 
     return () => {
-      fileUploadField.removeEventListener('input', handleFileUploadInputFieldData, false);
+      fileUploadField.removeEventListener('change', handleFileUploadInputFieldData, false);
     };
   }, [handleFileUploadInputFieldData]);
 
   return (
-    <DivCard
-      bg='light'
-      width='100%'
-      flex_wrap='wrap'
-      align='start'
-      min_height='80vh'
-      onContextMenu={handleContextMenu}
+    <>
+      <DivCard
+        width='100%'
+        flex_wrap='wrap'
+        align='start'
+        min_height='80vh'
+        onContextMenu={handleContextMenu}
 
-      onDragStart={handleDragStart}
-      onDragOver={handleDragOver}
-      onDrop={handleDrop}
-      onDragEnd={handleDragEnd}
-    >
-      <StyledFileFolderDisplay
-        className={displayLayout.toLowerCase() + '-layout'} // e.g grid-layout or list-layout
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        onDragEnd={handleDragEnd}
       >
-        {
-          displayLayout === 'GRID' ? (
-            documents?.map((doc) => (
-              doc.type === 'FOLDER' ? (
-                <GridFolderCard key={doc.id} doc={doc} />
-              ) : (
-                <GridFileCard key={doc.id} doc={doc} />
-              )
-            ))
-          ) : (
-            documents?.map((doc) => (
-              doc.type === 'FOLDER' ? (
-                <ListFolderCard key={doc.id} doc={doc} />
-              ) : (
-                <ListFileCard key={doc.id} doc={doc} />
-              )
-            ))
-          )
-        }
-      </StyledFileFolderDisplay>
-    </DivCard>
+        <StyledFileFolderDisplay
+          className={displayLayout.toLowerCase() + '-layout'} // e.g grid-layout or list-layout
+        >
+          {
+            displayLayout === 'GRID' ? (
+              documents?.map((doc) => (
+                doc.type === 'FOLDER' ? (
+                  <GridFolderCard key={doc.id} doc={doc} />
+                ) : (
+                  <GridFileCard key={doc.id} doc={doc} />
+                )
+              ))
+            ) : (
+              documents?.map((doc) => (
+                doc.type === 'FOLDER' ? (
+                  <ListFolderCard key={doc.id} doc={doc} />
+                ) : (
+                  <ListFileCard key={doc.id} doc={doc} />
+                )
+              ))
+            )
+          }
+        </StyledFileFolderDisplay>
+      </DivCard>
+    </>
   );
 };

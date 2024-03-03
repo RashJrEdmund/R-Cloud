@@ -6,7 +6,8 @@ import Image from 'next/image';
 import { DivCard, TextTag } from '@/_core/ui/components/atoms';
 import { useMemo, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { shortenText, getSize } from '@/utils/helpers';
+import { shortenText } from '@/utils/helpers';
+import { getSize } from '@/utils/file-utils';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
 import { useFilesFolderDisplayContext } from '@/store/context';
 

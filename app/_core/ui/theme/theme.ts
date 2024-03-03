@@ -39,7 +39,7 @@ const THEME_PALETTE: {
   effects: IEffects,
 } = {
   colors: {
-    // Static color pallete references variables in the globals.css file
+    // Static color palette references variables in the globals.css file
     // for now, themes as per system.
 
     text: 'var(--text)',

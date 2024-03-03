@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 
-import type { DisplayLayout } from '@/interfaces/app';
+import type { IDisplayLayout } from '@/interfaces/app';
 
 interface IAppStore {
-  displayLayout: DisplayLayout;
+  displayLayout: IDisplayLayout;
 
-  setDisplayLayout: (layout_type: DisplayLayout) => void;
+  setDisplayLayout: (layout_type: IDisplayLayout) => void;
 };
 
 export type {

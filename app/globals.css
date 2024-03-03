@@ -25,7 +25,8 @@
   --black: #000;
   --white: #ffffff;
 
-  ---overlay_gradient: linear-gradient(#367AFF4e, #367AFF4e);
+  /* ---overlay_gradient: linear-gradient(#3679ffab, #3679ffab, #3679ffab); */
+  --overlay_gradient: #0505059b;
   /* --box_shadow: 0 0 10px #00000079; */
   --box_shadow: 0 0 10px red;
 

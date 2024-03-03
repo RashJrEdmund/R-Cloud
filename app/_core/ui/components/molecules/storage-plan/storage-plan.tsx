@@ -1,6 +1,6 @@
 import { Button, DivCard, TextTag } from '@/components/atoms';
 import type { IStoragePlan } from '@/interfaces/entities';
-import { getSize } from '@/utils/helpers';
+import { getSize } from '@/utils/file-utils';
 import Image from 'next/image';
 
 interface Props {
