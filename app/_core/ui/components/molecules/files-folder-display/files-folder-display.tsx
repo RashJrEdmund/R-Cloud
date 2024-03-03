@@ -1,6 +1,6 @@
 'use client';
 
-import { DragEventHandler, MouseEventHandler, useRef, useState } from 'react';
+import { useEffect, useCallback } from 'react';
 import { DivCard } from '@/components/atoms';
 import StyledFileFolderDisplay from './styled-file-folder-display';
 import { useDocStore, useAppStore } from '@/store/zustand';
@@ -10,8 +10,10 @@ import {
   ListFileCard, ListFolderCard
 } from './components';
 
+import type { DragEventHandler, MouseEventHandler } from 'react';
 import type { IDocument } from '@/interfaces/entities';
 import type { ContextMenuContent } from '@/interfaces/app';
+import { openFileUploadDialog } from '@/utils/helpers';
 
 interface Props {
   content?: IDocument[]; // from path wrapper
@@ -24,16 +26,21 @@ const MAIN_CONTEXT_MENU_CONTENT: ContextMenuContent[] = [
     action: () => null,
   },
   {
-    text: 'Upload File',
+    text: 'Upload File(s)',
     icon_url: '/icons/modal-icons/upload-icon.svg',
-    action: () => null,
+    action: openFileUploadDialog,
   },
 ];
 
 export default function FilesFolderDisplay({ }: Props) {
   const { documents } = useDocStore();
   const { displayLayout } = useAppStore();
-  const { contextMenuRef, setContextCoordinates, setContextContent } = useFilesFolderDisplayContext();
+  const {
+    contextMenuRef,
+    setContextCoordinates,
+    setContextContent,
+    handleUploadFiles,
+  } = useFilesFolderDisplayContext();
 
   const handleContextMenu: MouseEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
@@ -48,33 +55,48 @@ export default function FilesFolderDisplay({ }: Props) {
     });
   };
 
-  const handleDragStart: DragEventHandler<HTMLDivElement>  = (e) => {
+  // DRAG_DROP_STARTS_HERE!
+
+  const handleDragStart: DragEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
   };
 
-  const handleDragOver: DragEventHandler<HTMLDivElement>  = (e) => {
+  const handleDragOver: DragEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
   };
 
-  const handleDrop: DragEventHandler<HTMLDivElement>  = (e) => {
+  const handleDrop: DragEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
 
-    const files = e.dataTransfer.files;
+    const { files, items } = e.dataTransfer;
 
-    const items = e.dataTransfer.items;
+    handleUploadFiles(files, items);
+  };
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+  const handleDragEnd: DragEventHandler<HTMLDivElement> = (e) => {
+    e.preventDefault();
+  };
 
-      console.log(file.size);
+  // DRAG_DROP_ENDS_HERE!
+
+  const handleFileUploadInputFieldData = useCallback<(e: Event) => void>((e: Event) => {
+    const files = (e.target as HTMLInputElement).files;
+    // const items = (e.dat)
+    if (!files) return;
+    handleUploadFiles(files);
+  }, []);
+
+  useEffect(() => {
+    const fileUploadField = document.querySelector<HTMLInputElement>('#file-upload-field');
+
+    if (!fileUploadField) return;
+
+    fileUploadField.addEventListener('input', handleFileUploadInputFieldData, false);
+
+    return () => {
+      fileUploadField.removeEventListener('input', handleFileUploadInputFieldData, false);
     };
-
-    console.log(files, items);
-  };
-
-  const handleDragEnd: DragEventHandler<HTMLDivElement>  = (e) => {
-    e.preventDefault();
-  };
+  }, [handleFileUploadInputFieldData]);
 
   return (
     <DivCard

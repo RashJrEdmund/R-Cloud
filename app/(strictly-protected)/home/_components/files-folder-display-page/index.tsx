@@ -17,10 +17,13 @@ interface Props {
 export default function FilesFolderDisplayPage({ }: Props) {
   return (
     <>
-      {/* INPUT_DES +=> ===========================================================
-      | This is a special input field. The one used to open the select file dialog |
-      | in the FilesFolderDisplay component                                        |
-      ================================================================//=========*/}
+      {/* INPUT_DES +=> ========================================================================
+      | This is a special input field. The one used to open the select file dialog in the       |
+      | FilesFolderDisplay component, and open/activated by the openFileUploadDialog utility    |
+      | function in app/_core/utils/helpers/. It's changeEvent is handled by the useEffect in   |
+      | FilesFolderDisplay component in app/_core/ui/components/molecules/files-folder-display  |
+      | which inturn calls the handleUploadFiles function in FilesFolderDisplayContext          |
+      =========================================================================//=============*/}
       <input hidden multiple type='file' id='file-upload-field' />
 
       <TopSection />

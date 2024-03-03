@@ -19,6 +19,8 @@ interface IFilesFolderDisplayContext {
   setContextContent: Dispatch<SetStateAction<ContextMenuContent[]>>;
 
   contextMenuRef: RefObject<IModalWrapperRef>;
+
+  handleUploadFiles: (files: FileList, items?: DataTransferItemList) => void;
 };
 
 const FilesFolderDisplayContext = createContext<IFilesFolderDisplayContext | null>(null);
@@ -29,10 +31,21 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
 
   const contextMenuRef = useRef<IModalWrapperRef>(null);
 
-  const contextValue = useMemo(() => ({
+  const handleUploadFiles = (files: FileList, items?: DataTransferItemList) => {
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      console.log(file.size);
+    };
+
+    console.log(files, items);
+  };
+
+  const contextValue = useMemo<IFilesFolderDisplayContext>(() => ({
     setContextCoordinates,
     setContextContent,
     contextMenuRef,
+    handleUploadFiles,
   }), []);
 
   return (
