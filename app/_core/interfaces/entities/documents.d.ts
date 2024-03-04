@@ -5,7 +5,7 @@
 
 type DocumentType = 'FILE' | 'FOLDER';
 
-type IStorageUnit = 'Bytes' | 'Kb' | 'Mb' | 'Gb' | 'Tb';
+type IStorageUnit = 'Bytes' | 'Kb' | 'Mb' | 'Gb' | 'Tb' | 'Pb';
 
 type StoragePlanLabels = 'SIGMA' | 'OMEGA' | 'ZETA' | 'GAMMA' | 'BETA' | 'ALPHA';
 

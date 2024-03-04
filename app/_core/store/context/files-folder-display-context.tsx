@@ -1,13 +1,13 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, useMemo, useRef } from 'react';
+import { createContext, useContext, useState, useMemo, useRef } from 'react';
 
 import type { Dispatch, SetStateAction, RefObject } from 'react';
 import { AppModalWrapper, type IModalWrapperRef } from '@/components/modals/generics';
 import type { ContextMenuContent } from '@/interfaces/app';
 
 import { ContextMenu } from '@/components/modals';
-import { Button, DivCard, TextTag } from '@/components/atoms';
+import { TextTag } from '@/components/atoms';
 import { getSizeFromBytes } from '@/utils/file-utils';
 
 interface IContextCoordinates {
@@ -94,7 +94,7 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
           </TextTag>
 
           <TextTag>
-            Total upload size <TextTag color_type='success'>{getSizeFromBytes(uploadDetails?.total_size ?? 0)}</TextTag>
+            Total upload size <TextTag color_type='success'>{getSizeFromBytes(Number(uploadDetails?.total_size ?? 0)).merged}</TextTag>
           </TextTag>
         </AppModalWrapper>
 

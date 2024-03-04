@@ -11,32 +11,34 @@ const isFile = (item: DataTransferItem) => {
 
 const getFileName = (file: File) => file.name + '-' + Date.now() + file.type.split('/').pop();
 
-const getSizeFromBytes = (file_size: number, unit_or_index: number = 0): string => {
-  let final_size = file_size;
-  let final_index = unit_or_index;
-
-  while (final_size >= 1024 && STORAGE_UNIT_LIST[final_index + 1]) {
-    final_size /= 1024;
-    final_index += 1;
-  };
-
-  return final_size + ' ' + STORAGE_UNIT_LIST[final_index];
-};
-
 const getSize = (file_size: number, unit: IStorageUnit = 'Mb'): string => {
   return file_size + ' ' + unit;
 };
 
-const formatBytes = (bytes, decimals = 2) => {
-  if (!+bytes) return '0 Bytes'
+const getSizeFromBytes = (bytes: number, _decimals: number = 2): {
+  size: number;
+  units: string;
+  merged: string;
+} => {
+  if (bytes <= 0 || isNaN(bytes)) return {
+    size: 0,
+    units: STORAGE_UNIT_LIST[0],
+    merged: 0 + ' ' + STORAGE_UNIT_LIST[0],
+  };
 
-  const k = 1024
-  const dm = decimals < 0 ? 0 : decimals
-  const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+  const k = 1024;
+  const dm = _decimals < 0 ? 0 : _decimals;
 
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+  const size: number = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
+
+  const units: string = STORAGE_UNIT_LIST[i];
+  return {
+    size,
+    units,
+    merged: size + ' ' + units
+  };
 };
 
 export {
@@ -45,6 +47,6 @@ export {
 
   getFileName,
 
-  getSizeFromBytes,
   getSize,
+  getSizeFromBytes,
 };
