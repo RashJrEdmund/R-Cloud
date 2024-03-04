@@ -9,6 +9,7 @@
 
 import { FilesFolderDisplay, TopSection } from '@/components/molecules';
 import { PathWrapper } from '@/guards/index';
+import { MainTag } from '@/components/atoms';
 import { FilesFolderDisplayContextProvider } from '@/store/context';
 
 interface Props {
@@ -17,7 +18,7 @@ interface Props {
 
 export default function FilesFolderDisplayPage({ }: Props) {
   return (
-    <>
+    <MainTag>
       {/* INPUT_DES +=> ========================================================================
       | This is a special input field. The one used to open the select file dialog in the       |
       | FilesFolderDisplay component, and open/activated by the openFileUploadDialog utility    |
@@ -34,6 +35,6 @@ export default function FilesFolderDisplayPage({ }: Props) {
           <FilesFolderDisplay />
         </FilesFolderDisplayContextProvider>
       </PathWrapper>
-    </>
+    </MainTag>
   );
 };

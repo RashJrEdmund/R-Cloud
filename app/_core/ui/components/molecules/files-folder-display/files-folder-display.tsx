@@ -99,6 +99,7 @@ export default function FilesFolderDisplay({ }: Props) {
   return (
     <>
       <DivCard
+        bg='light'
         width='100%'
         flex_wrap='wrap'
         align='start'

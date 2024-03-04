@@ -14,11 +14,11 @@ export default function NotFound({ }: Props) {
         Page Not Found
       </TextTag>
 
-      <Link href='/'> {/* TODO +=> Add replace functionality to this link */}
-        <Button bg='black' padding='10px 15px'>
-          Go Home
-        </Button>
-      </Link>
+      <Button as={Link} href='/' bg='black' padding='10px 15px'
+        replace // replace attribute is for the Link. like router.replace('/path');
+      > 
+        Go Back
+      </Button>
     </MainTag>
   );
 };
