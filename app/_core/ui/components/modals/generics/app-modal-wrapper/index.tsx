@@ -183,7 +183,7 @@ function AppModalWrapper(
           min_width='min(97vw, 400px)'
           min_height='180px'
         >
-          {use_base_btns_instead && (
+          {!use_base_btns_instead && (
             <TextTag size='1.25rem' cursor='pointer' onClick={() => {
               if (cancelAction) {
                 cancelAction();

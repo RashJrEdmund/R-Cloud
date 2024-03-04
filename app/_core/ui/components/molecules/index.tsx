@@ -11,3 +11,5 @@ export { default as FilesFolderDisplay } from './files-folder-display/files-fold
 export { default as TopSection } from './top-section/top-section';
 
 export { default as StoragePlan } from './storage-plan/storage-plan';
+
+export { default as ProgressBar } from './progress-bar/progress-bar';

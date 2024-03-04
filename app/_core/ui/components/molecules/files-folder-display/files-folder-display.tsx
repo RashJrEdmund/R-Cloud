@@ -12,11 +12,10 @@ import {
 import { openFileUploadDialog } from '@/utils/helpers';
 
 import type { DragEventHandler, MouseEventHandler } from 'react';
-import type { IDocument } from '@/interfaces/entities';
 import type { ContextMenuContent } from '@/interfaces/app';
 
 interface Props {
-  content?: IDocument[]; // from path wrapper
+  //
 };
 
 const MAIN_CONTEXT_MENU_CONTENT: ContextMenuContent[] = [

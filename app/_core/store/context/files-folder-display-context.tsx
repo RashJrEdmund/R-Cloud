@@ -65,8 +65,6 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
     setUploadDetails({ total_size, count: file_arr.length });
 
     modalRef.current?.open();
-
-    console.log(files, items);
   };
 
   const uploadFiles = async () => {
@@ -78,9 +76,9 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
       for (let i = 0; i < selectedFiles.length; i++) {
         const file = selectedFiles[i];
         setCurrentUploadIndx(i);
-        const res = await uploadFile(file, currentUser.email, (progress) => setProgress({ [i]: progress }));
+        const url = await uploadFile(file, currentUser.email, (progress) => setProgress({ [i]: progress }));
 
-        console.log(res);
+        console.log(url);
       }
 
     } catch (error) {
@@ -91,9 +89,9 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
     };
   };
 
-  useEffect(() => {
-    if (progress) console.log('progress changing', progress);
-  }, [progress]);
+  // useEffect(() => {
+  //   if (progress) console.log('progress changing', progress);
+  // }, [progress]);
 
   const contextValue = useMemo<IFilesFolderDisplayContext>(() => ({
     setContextCoordinates,

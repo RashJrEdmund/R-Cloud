@@ -8,6 +8,7 @@
 =======================================//============*/
 
 import { FilesFolderDisplay, TopSection } from '@/components/molecules';
+import { PathWrapper } from '@/guards/index';
 import { FilesFolderDisplayContextProvider } from '@/store/context';
 
 interface Props {
@@ -28,9 +29,11 @@ export default function FilesFolderDisplayPage({ }: Props) {
 
       <TopSection />
 
-      <FilesFolderDisplayContextProvider>
-        <FilesFolderDisplay />
-      </FilesFolderDisplayContextProvider>
+      <PathWrapper> {/* IT'S HERE DOCUMENTS ARE FETCHED AS PARAMS CHANGE */}
+        <FilesFolderDisplayContextProvider>
+          <FilesFolderDisplay />
+        </FilesFolderDisplayContextProvider>
+      </PathWrapper>
     </>
   );
 };

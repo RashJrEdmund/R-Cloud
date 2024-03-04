@@ -1,5 +1,6 @@
 import { AppModalWrapper } from '@/components/modals/generics';
 import { TextTag, DivCard } from '@/components/atoms';
+import { ProgressBar } from '@/components/molecules';
 import { getSizeFromBytes } from '@/utils/file-utils';
 
 import type { MutableRefObject } from 'react';
@@ -67,17 +68,7 @@ export default function UploadModal({
 
           {
             progress[currentUploadIndx] ? (
-              <DivCard bg='grayed' width='100%' height='20px' radius='8px' position='relative'>
-                <DivCard
-                  width={progress[currentUploadIndx].toFixed(1) + '%'} /* eg 90% */
-                  height='100%'
-                  position='absolute'
-                  left='0'
-                  top='0'
-                  radius='10px'
-                  bg='blued'
-                />
-              </DivCard>
+              <ProgressBar progress_in_percentage={+progress[currentUploadIndx].toFixed(1)} />
             ) : null
           }
         </DivCard>
