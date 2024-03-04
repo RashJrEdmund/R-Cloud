@@ -20,11 +20,23 @@ const getSizeFromBytes = (file_size: number, unit_or_index: number = 0): string 
     final_index += 1;
   };
 
-  return final_size + ' ' + final_index;
+  return final_size + ' ' + STORAGE_UNIT_LIST[final_index];
 };
 
 const getSize = (file_size: number, unit: IStorageUnit = 'Mb'): string => {
   return file_size + ' ' + unit;
+};
+
+const formatBytes = (bytes, decimals = 2) => {
+  if (!+bytes) return '0 Bytes'
+
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 };
 
 export {

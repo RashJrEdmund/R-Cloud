@@ -1,16 +1,17 @@
 'use client';
 
-import { StyledDisplayCard } from '../shared';
-import type { ISharedCardProps } from '../shared';
-import Image from 'next/image';
-import { DivCard, TextTag } from '@/components/atoms';
 import { useMemo, useRef, useEffect } from 'react';
-import { getSize, openFileUploadDialog, shortenText } from '@/utils/helpers';
+import { StyledDisplayCard } from '../shared';
+import { DivCard, TextTag } from '@/components/atoms';
+import {openFileUploadDialog, shortenText } from '@/utils/helpers';
+import { getSize} from '@/utils/file-utils';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
 import { useFilesFolderDisplayContext } from '@/store/context';
+import Image from 'next/image';
 
 import type { MouseEventHandler, MutableRefObject } from 'react';
 import type { ContextMenuContent } from '@/interfaces/app';
+import type { ISharedCardProps } from '../shared';
 import { useAppStore } from '@/store/zustand';
 
 interface Props extends ISharedCardProps {
