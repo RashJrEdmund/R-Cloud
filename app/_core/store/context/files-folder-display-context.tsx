@@ -1,14 +1,13 @@
 'use client';
 
-import { createContext, useContext, useState, useMemo, useRef } from 'react';
+import { createContext, useContext, useState, useMemo, useRef, useEffect } from 'react';
+import { ContextMenu, UploadModal } from '@/components/modals';
+import { uploadFile } from '@/core/config/firebase';
+import { useUserStore } from '../zustand';
 
 import type { Dispatch, SetStateAction, RefObject } from 'react';
-import { AppModalWrapper, type IModalWrapperRef } from '@/components/modals/generics';
+import type { IModalWrapperRef } from '@/components/modals/generics';
 import type { ContextMenuContent } from '@/interfaces/app';
-
-import { ContextMenu } from '@/components/modals';
-import { TextTag } from '@/components/atoms';
-import { getSizeFromBytes } from '@/utils/file-utils';
 
 interface IContextCoordinates {
   top: string;
@@ -38,10 +37,20 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [uploadDetails, setUploadDetails] = useState<IUploadDetails | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [progress, setProgress] = useState<{ [key: number]: number } | null>(null);
+  const [currentUploadIndx, setCurrentUploadIndx] = useState<number>(0);
+  const { currentUser } = useUserStore();
 
   const contextMenuRef = useRef<IModalWrapperRef>(null);
 
   const modalRef = useRef<IModalWrapperRef>();
+
+  const closeModal = () => {
+    modalRef.current?.close();
+    setSelectedFiles([]);
+    setUploadDetails(null);
+    setProgress(null);
+  };
 
   const readyUploadModal = (files: FileList, items?: DataTransferItemList) => {
     const file_arr = [];
@@ -60,15 +69,31 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
     console.log(files, items);
   };
 
-  const uploadFiles = () => {
-    // firebase stuff.
+  const uploadFiles = async () => {
+    if (!currentUser) return;
+
+    try {
+      setIsLoading(true);
+
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const file = selectedFiles[i];
+        setCurrentUploadIndx(i);
+        const res = await uploadFile(file, currentUser.email, (progress) => setProgress({ [i]: progress }));
+
+        console.log(res);
+      }
+
+    } catch (error) {
+
+    } finally {
+      setIsLoading(false);
+      closeModal();
+    };
   };
 
-  const closeModal = () => {
-    modalRef.current?.close();
-    setSelectedFiles([]);
-    setUploadDetails(null);
-  };
+  useEffect(() => {
+    if (progress) console.log('progress changing', progress);
+  }, [progress]);
 
   const contextValue = useMemo<IFilesFolderDisplayContext>(() => ({
     setContextCoordinates,
@@ -80,23 +105,16 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
   return (
     <FilesFolderDisplayContext.Provider value={contextValue}>
       <>
-        <AppModalWrapper ref={modalRef as any}
-          use_base_btns_instead
+        <UploadModal
+          modalRef={modalRef}
           isLoading={isLoading}
-          cancelAction={closeModal}
-          confirmAction={uploadFiles}
-        >
-          <TextTag>
-            You&apos;ve selected
-            <TextTag color_type='success'>
-              {selectedFiles.length} file{selectedFiles.length > 0 ? 's' : ''}
-            </TextTag>
-          </TextTag>
-
-          <TextTag>
-            Total upload size <TextTag color_type='success'>{getSizeFromBytes(Number(uploadDetails?.total_size ?? 0)).merged}</TextTag>
-          </TextTag>
-        </AppModalWrapper>
+          closeModal={closeModal}
+          uploadFiles={uploadFiles}
+          selectedFiles={selectedFiles}
+          uploadDetails={uploadDetails}
+          progress={progress}
+          currentUploadIndx={currentUploadIndx}
+        />
 
         <ContextMenu
           ref={contextMenuRef}

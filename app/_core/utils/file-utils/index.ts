@@ -9,7 +9,14 @@ const isFile = (item: DataTransferItem) => {
   return item.kind === 'file' && item.webkitGetAsEntry()?.isFile;
 };
 
-const getFileName = (file: File) => file.name + '-' + Date.now() + file.type.split('/').pop();
+const getFileName = (file: File) => {
+  const name_arr = file.name.split('.');
+
+  const extension = name_arr.pop() || file.type.split('/').pop() || 'unknown'; // for unknown files
+  const name = name_arr.join('.');
+
+  return name + '-' + Date.now() + '.' + extension;
+};
 
 const getSize = (file_size: number, unit: IStorageUnit = 'Mb'): string => {
   return file_size + ' ' + unit;
