@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useCallback } from 'react';
-import { DivCard } from '@/components/atoms';
+import { DivCard, TextTag } from '@/components/atoms';
 import StyledFileFolderDisplay from './styled-file-folder-display';
 import { useDocStore, useAppStore } from '@/store/zustand';
 import { useFilesFolderDisplayContext } from '@/store/context';
@@ -99,7 +99,6 @@ export default function FilesFolderDisplay({ }: Props) {
   return (
     <>
       <DivCard
-        bg='light'
         width='100%'
         flex_wrap='wrap'
         align='start'
@@ -111,29 +110,37 @@ export default function FilesFolderDisplay({ }: Props) {
         onDrop={handleDrop}
         onDragEnd={handleDragEnd}
       >
-        <StyledFileFolderDisplay
-          className={displayLayout.toLowerCase() + '-layout'} // e.g grid-layout or list-layout
-        >
-          {
-            displayLayout === 'GRID' ? (
-              documents?.map((doc) => (
-                doc.type === 'FOLDER' ? (
-                  <GridFolderCard key={doc.id} doc={doc} />
-                ) : (
-                  <GridFileCard key={doc.id} doc={doc} />
-                )
-              ))
-            ) : (
-              documents?.map((doc) => (
-                doc.type === 'FOLDER' ? (
-                  <ListFolderCard key={doc.id} doc={doc} />
-                ) : (
-                  <ListFileCard key={doc.id} doc={doc} />
-                )
-              ))
-            )
-          }
-        </StyledFileFolderDisplay>
+        {(documents && documents.length > 0) ? (
+          <StyledFileFolderDisplay
+            className={displayLayout.toLowerCase() + '-layout'} // e.g grid-layout or list-layout
+          >
+            {
+              displayLayout === 'GRID' ? (
+                documents.map((doc) => (
+                  doc.type === 'FOLDER' ? (
+                    <GridFolderCard key={doc.id} doc={doc} />
+                  ) : (
+                    <GridFileCard key={doc.id} doc={doc} />
+                  )
+                ))
+              ) : (
+                documents.map((doc) => (
+                  doc.type === 'FOLDER' ? (
+                    <ListFolderCard key={doc.id} doc={doc} />
+                  ) : (
+                    <ListFileCard key={doc.id} doc={doc} />
+                  )
+                ))
+              )
+            }
+          </StyledFileFolderDisplay>
+        ) : (
+          <DivCard bg='light' width='100%' min_height='60vh'>
+            <TextTag as='h3' weight='600' size='2rem' color_type='light'>
+              Folder Is Empty
+            </TextTag>
+          </DivCard>
+        )}
       </DivCard>
     </>
   );

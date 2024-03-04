@@ -14,6 +14,7 @@ import { Streamer } from '@/components/molecules';
 import { dummyData } from '../../ui-constants';
 
 import type { IDocument } from '@/interfaces/entities';
+import { listFolderFiles } from '@/core/config/firebase/fire-store';
 
 interface Props {
   children: React.ReactNode;
@@ -28,17 +29,29 @@ export default function PathWrapper({ children }: Props) {
 
   // const content: IDocument[] = [];
 
-  const fetchDocuments = useCallback(async () => {
-    if (params.folder_id) {
+  const fetchDocuments = useCallback(async (folder_id: string) => {
+    listFolderFiles(currentUser?.email || '', folder_id)
+      .then(res => {
+        if (res.empty) {
+          console.log(res.docs);
+          setDocuments(null);
+          return;
+        };
 
-      return;
-    }
+        const data: IDocument[] = [];
 
-    setDocuments(dummyData);
+        res.forEach((doc) => {
+          const _: IDocument = { ...doc.data(), id: doc.id, metadata: doc.metadata } as IDocument;
+          data.push(_);
+        });
+
+        setDocuments(data);
+        console.log(data);
+      });
   }, []);
 
   useEffect(() => {
-    fetchDocuments()
+    fetchDocuments(params.folder_id || 'home')
       .finally(() => {
         setLoading(false);
       });

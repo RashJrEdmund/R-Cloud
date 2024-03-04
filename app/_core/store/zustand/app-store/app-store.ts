@@ -1,5 +1,5 @@
-import { IAppStore } from '@/store/interfaces';
 import { create } from 'zustand';
+import type { IAppStore } from '@/store/interfaces';
 
 const useAppStore = create<IAppStore>((set) => {
   return {

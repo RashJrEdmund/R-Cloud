@@ -12,7 +12,7 @@ const isFile = (item: DataTransferItem) => {
 const getFileName = (file: File) => {
   const name_arr = file.name.split('.');
 
-  const extension = name_arr.pop() || file.type.split('/').pop() || 'unknown'; // for unknown files
+  const extension = file.type.split('/').pop() || name_arr.pop() || '';
   const name = name_arr.join('.');
 
   return name + '-' + Date.now() + '.' + extension;

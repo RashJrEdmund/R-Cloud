@@ -57,6 +57,7 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
     let total_size = 0;
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
+      if (!file.type) continue;
       file_arr.push(file);
       total_size += file.size;
     };
@@ -79,6 +80,7 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
         const url = await uploadFile(file, currentUser.email, (progress) => setProgress({ [i]: progress }));
 
         console.log(url);
+        console.log(file);
       }
 
     } catch (error) {

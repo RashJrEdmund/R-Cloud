@@ -33,7 +33,7 @@ type ISetProgress = (progress: number) => void;
 
 const uploadFile = async (file: File, email: string, setProgress?: ISetProgress): Promise<string> => {
   const filename = getFileName(file); // to get the extension
-  const storageRef = createUserStorageRef(email, `/home/${filename}`); // +=> ref(storage, `users/${email}/home/${filename}`);
+  const storageRef = createUserStorageRef(email, `/r-drive/${filename}`); // +=> ref(storage, `users/${email}/r-drive/${filename}`);
 
   const uploadTask = uploadBytesResumable(storageRef, file);
 

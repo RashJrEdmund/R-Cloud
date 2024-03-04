@@ -132,7 +132,7 @@ function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Elemen
     const { setContextContent, setContextCoordinates, contextMenuRef } = useFilesFolderDisplayContext();
 
     const handleOpen = () => {
-      router.push('/home?folder=' + folder.id);
+      router.push('home/folders/' + folder.id);
     };
 
     const handleContextMenu = (e: MouseEvent) => {
