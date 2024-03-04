@@ -19,7 +19,7 @@ interface Props { };
 export default function Profile({ }: Props) {
   return (
     <MainTag>
-      <TopSection hide_search />
+      <TopSection hide_search_section />
 
       <ProfileDisplay />
     </MainTag>

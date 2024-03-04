@@ -29,7 +29,7 @@ export default LooseAuthGuard(
         {children}
       </>
     );
-  } as any
+  } as () => JSX.Element // it actually is of type () => JSX.Element | undefined;
 );
 
 /*
@@ -41,5 +41,5 @@ function RootLayoutWrapper({ children }: Props) {
   );
 };
 
-export default LooseAuthGuard(RootLayoutWrapper as any);
+export default LooseAuthGuard(RootLayoutWrapper);
 */

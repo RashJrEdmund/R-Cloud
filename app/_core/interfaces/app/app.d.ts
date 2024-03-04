@@ -1,4 +1,4 @@
-type DisplayLayout = 'GRID' | 'LIST';
+type IDisplayLayout = 'GRID' | 'LIST';
 
 interface ContextMenuContent {
   text: string;
@@ -7,7 +7,7 @@ interface ContextMenuContent {
 };
 
 export type {
-  DisplayLayout,
+  IDisplayLayout,
 
   ContextMenuContent,
 };

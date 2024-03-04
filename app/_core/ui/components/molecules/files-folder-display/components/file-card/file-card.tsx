@@ -1,16 +1,17 @@
 'use client';
 
-import { StyledDisplayCard } from '../shared';
-import type { ISharedCardProps } from '../shared';
-import Image from 'next/image';
-import { DivCard, TextTag } from '@/components/atoms';
 import { useMemo, useRef, useEffect } from 'react';
-import { getSize, shortenText } from '@/utils/helpers';
+import { StyledDisplayCard } from '../shared';
+import { DivCard, TextTag } from '@/components/atoms';
+import {openFileUploadDialog, shortenText } from '@/utils/helpers';
+import { getSize} from '@/utils/file-utils';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
 import { useFilesFolderDisplayContext } from '@/store/context';
+import Image from 'next/image';
 
 import type { MouseEventHandler, MutableRefObject } from 'react';
 import type { ContextMenuContent } from '@/interfaces/app';
+import type { ISharedCardProps } from '../shared';
 import { useAppStore } from '@/store/zustand';
 
 interface Props extends ISharedCardProps {
@@ -32,7 +33,7 @@ const FILE_CONTEXT_MENU_CONTENT: ContextMenuContent[] = [
   {
     text: 'Upload File',
     icon_url: '/icons/modal-icons/upload-icon.svg',
-    action: () => null,
+    action: openFileUploadDialog,
   },
   {
     text: 'Copy File',
@@ -113,11 +114,11 @@ function _ListFileCard({ doc: file, imagePreview, fileRef, handleOpen }: ICardCo
 // HOC STARTS HERES
 
 function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element) {
-  /* FUNC_DESC +=> =======================================================
-  | Could not bring myself to copying the same logic and using in both   |
-  | components so i built a high order component to handle all necessary |
-  | computation, and then pass down props                                |
-  ======================================================//==============*/
+  /* FUNC_DESC +=> ===================================================================
+  | Could not bring myself to copying the same logic and using in both variations of |
+  | the FileCard components so i built this high order component to handle all the   |
+  | necessary computation, and then pass down props to each variation                |
+  ================================================================//================*/
   return function Card({ doc: file }: Props) {
     const fileRef = useRef<HTMLDivElement>();
 

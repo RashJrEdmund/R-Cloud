@@ -1,5 +1,5 @@
 /* TODO +=> ========================
-| Implement and initialise firebase |
+| Implement and initialize firebase |
 | configurations                    |
 ================================== */
 

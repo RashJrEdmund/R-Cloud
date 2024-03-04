@@ -6,7 +6,8 @@ import Image from 'next/image';
 import { DivCard, TextTag } from '@/_core/ui/components/atoms';
 import { useMemo, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { shortenText, getSize } from '@/utils/helpers';
+import { shortenText } from '@/utils/helpers';
+import { getSize } from '@/utils/file-utils';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
 import { useFilesFolderDisplayContext } from '@/store/context';
 
@@ -29,11 +30,6 @@ const FOLDER_CONTEXT_MENU_CONTENT: ContextMenuContent[] = [
     icon_url: '/icons/modal-icons/open-folder-icon.svg',
     action: () => null,
   },
-  // {
-  //   text: 'Upload File',
-  //   icon_url: '/icons/modal-icons/upload-icon.svg',
-  //   action: () => null,
-  // },
   {
     text: 'Rename Folder',
     icon_url: '/icons/modal-icons/rename-icon.svg',
@@ -123,11 +119,11 @@ function _ListFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: I
 // HOC STARTS HERES
 
 function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element) {
-  /* FUNC_DESC +=> =======================================================
-  | Could not bring myself to copying the same logic and using in both   |
-  | components so i built a high order component to handle all necessary |
-  | computation, and then pass down props                                |
-  ======================================================//==============*/
+  /* FUNC_DESC +=> ===================================================================
+  | Could not bring myself to copying the same logic and using in both variations of |
+  | the FolderCard components so i built this high order component to handle all the |
+  | necessary computation, and then pass down props to each variation                |
+  ================================================================//================*/
   return function Card({ doc: folder }: Props) {
     const router = useRouter();
     const folderLength = useMemo(() => Number(folder?.capacity?.length), [folder?.capacity?.length]);

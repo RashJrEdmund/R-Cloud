@@ -28,8 +28,8 @@ const Button = styled.button<Partial<Props>>`
   box-shadow: ${({ shadow_effect }) => shadow_effect ? EFFECTS.box_shadow : 'none'};
   border: ${({ border }) => border ? `1px solid ${COLORS.border}` : 'none'};
   white-space: ${({ no_white_space = false }) => no_white_space ? 'nowrap' : 'normal'};
-  font-weight: ${({ weight = '400' }) => weight}; // 400 is defualt and normal font-weight, 700 is bold
-  font-size: ${({ size = 'inherit' }) => size}; // 400 is defualt and normal font-weight, 700 is bold
+  font-weight: ${({ weight = '400' }) => weight}; // 400 is default and normal font-weight, 700 is bold
+  font-size: ${({ size = 'inherit' }) => size}; // 400 is default and normal font-weight, 700 is bold
 
   width: ${({ width = 'fit-content' }) => width};
   min-width: ${({ min_width = 'unset' }) => min_width};
@@ -41,6 +41,9 @@ const Button = styled.button<Partial<Props>>`
 
   overflow-x: ${({ over_flow_x }) => over_flow_x ? 'auto' : 'unset'};
   overflow-y: ${({ over_flow_y }) => over_flow_y ? 'auto' : 'unset'};
+
+  // alignment
+  flex: ${({ flex = 'unset' }) => flex};
 
   // positioning
   position: ${({ position = 'unset' }) => position};

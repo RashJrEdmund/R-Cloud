@@ -20,4 +20,4 @@ function Layout({ children }: Props) {
   );
 };
 
-export default LooseAuthGuard(Layout as any);
+export default LooseAuthGuard(Layout);

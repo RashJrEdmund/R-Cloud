@@ -1,8 +1,11 @@
 'use client';
 
+import { useEffect, useLayoutEffect } from 'react';
 import { DivCard } from '@/components/atoms';
 import { useAppStore } from '@/store/zustand';
 import Image from 'next/image';
+import { CLIENT_STORAGE } from '@/core/lib';
+import type { IDisplayLayout } from '@/interfaces/app';
 
 interface Props {
   //
@@ -10,6 +13,29 @@ interface Props {
 
 export default function DisplayLayout({ }: Props) {
   const { displayLayout, setDisplayLayout } = useAppStore();
+
+  useLayoutEffect(() => {
+    const localStorage = new CLIENT_STORAGE('local');
+
+    const layout_type = localStorage.get<IDisplayLayout>('layout_type', { isString: true });
+
+    if (['GRID', 'LIST'].includes(layout_type)) {
+      if (layout_type === displayLayout) return;
+
+      setDisplayLayout(layout_type);
+      return;
+    }
+  }, []);
+
+  useEffect(() => {
+    const localStorage = new CLIENT_STORAGE('local');
+
+    const layout_type = localStorage.get<IDisplayLayout>('layout_type', { isString: true });
+
+    if (['GRID', 'LIST'].includes(layout_type) && layout_type === displayLayout) return;
+
+    localStorage.save('layout_type', displayLayout, { isString: true });
+  }, [displayLayout]);
 
   return (
     <DivCard border radius='10px'>
