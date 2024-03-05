@@ -126,7 +126,7 @@ export default function FilesFolderDisplay({ }: Props) {
               </StyledFileFolderDisplay>
             ) : (
               <DivCard width='100%' min_height='60vh'>
-                <TextTag as='h3' weight='600' size='2rem' color_type='light'>
+                <TextTag as='h3' weight='600' size='2rem' color_type='grayed'>
                   Folder Is Empty
                 </TextTag>
               </DivCard>
