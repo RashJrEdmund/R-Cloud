@@ -10,7 +10,7 @@
 import { FilesFolderDisplay, TopSection } from '@/components/molecules';
 import { PathWrapper } from '@/guards/index';
 import { MainTag } from '@/components/atoms';
-import { FilesFolderDisplayContextProvider } from '@/store/context';
+import { ModalContextProvider, ContextMenuContextProvider } from '@/store/context';
 
 interface Props {
   //
@@ -28,12 +28,14 @@ export default function FilesFolderDisplayPage({ }: Props) {
       =========================================================================//=============*/}
       <input hidden multiple type='file' id='file-upload-field' />
 
-      <TopSection />
-
       <PathWrapper> {/* IT'S HERE DOCUMENTS ARE FETCHED AS PARAMS CHANGE */}
-        <FilesFolderDisplayContextProvider>
-          <FilesFolderDisplay />
-        </FilesFolderDisplayContextProvider>
+        <ModalContextProvider>
+          <ContextMenuContextProvider>
+            <TopSection />
+
+            <FilesFolderDisplay />
+          </ContextMenuContextProvider>
+        </ModalContextProvider>
       </PathWrapper>
     </MainTag>
   );

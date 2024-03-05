@@ -7,7 +7,7 @@ import type { MutableRefObject } from 'react';
 import type { IModalWrapperRef } from '@/components/modals/generics';
 
 interface Props {
-  modalRef: MutableRefObject<IModalWrapperRef | undefined>; isLoading: boolean;
+  uploadModalRef: MutableRefObject<IModalWrapperRef | undefined>; isLoading: boolean;
 
   selectedFiles: File[];
   uploadDetails: {
@@ -24,7 +24,7 @@ interface Props {
 };
 
 export default function UploadModal({
-  modalRef, isLoading,
+  uploadModalRef, isLoading,
   selectedFiles,
 
   uploadDetails,
@@ -37,7 +37,7 @@ export default function UploadModal({
   ;
 
   return (
-    <AppModalWrapper ref={modalRef as any}
+    <AppModalWrapper ref={uploadModalRef as any}
       use_base_btns_instead
       isLoading={isLoading}
       cancelAction={closeModal}

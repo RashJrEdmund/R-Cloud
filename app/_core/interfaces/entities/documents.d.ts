@@ -17,7 +17,7 @@ interface IDocument {
   name: string;
   parent_id: string; // Id of parent folder should default to 0 for files/root under root.
   type: DocumentType;
-  content_type: string; // eg. image/png, image/jpg, video/mp4 etc or null for when it's folders
+  content_type: string | null; // eg. image/png, image/jpg, video/mp4 etc or null for when it's folders
   download_url: string | null; // null when it's folders
   extension: string | null; // file extension for when it's files;
   capacity: {

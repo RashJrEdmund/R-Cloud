@@ -4,42 +4,30 @@ import { useEffect, useCallback } from 'react';
 import { DivCard, TextTag } from '@/components/atoms';
 import StyledFileFolderDisplay from './styled-file-folder-display';
 import { useDocStore, useAppStore } from '@/store/zustand';
-import { useFilesFolderDisplayContext } from '@/store/context';
+import { useContextMenuContext, useModalContext } from '@/store/context';
 import {
   GridFileCard, GridFolderCard,
   ListFileCard, ListFolderCard
 } from './components';
-import { openFileUploadDialog } from '@/utils/helpers';
 
 import type { DragEventHandler, MouseEventHandler } from 'react';
-import type { ContextMenuContent } from '@/interfaces/app';
 
 interface Props {
   //
 };
 
-const MAIN_CONTEXT_MENU_CONTENT: ContextMenuContent[] = [
-  {
-    text: 'New Folder',
-    icon_url: '/icons/modal-icons/new-folder-icon.svg',
-    action: () => null,
-  },
-  {
-    text: 'Upload File(s)',
-    icon_url: '/icons/modal-icons/upload-icon.svg',
-    action: openFileUploadDialog,
-  },
-];
-
 export default function FilesFolderDisplay({ }: Props) {
   const { documents } = useDocStore();
   const { displayLayout } = useAppStore();
+
+  const { readyUploadModal } = useModalContext();
+
   const {
-    contextMenuRef,
     setContextCoordinates,
     setContextContent,
-    readyUploadModal,
-  } = useFilesFolderDisplayContext();
+    MAIN_CONTEXT_MENU_CONTENT,
+    contextMenuRef
+  } = useContextMenuContext();
 
   const handleContextMenu: MouseEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();

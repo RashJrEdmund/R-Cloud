@@ -1,43 +1,34 @@
 'use client';
 
-import { createContext, useContext, useState, useMemo, useRef } from 'react';
-import { ContextMenu, UploadModal } from '@/components/modals';
+/* FILE_DESC +=> ====================================================================
+| This file provides all data and modals needed in the FilesFolderDisplay component |
+| in app/_core/ui/components/files-folder-display/files-folder-display.tsx          |
+=====================================================================//============*/
+
+import { createContext, useContext, useState, useMemo, useCallback, useRef } from 'react';
+import { NewFolderModal, UploadModal } from '@/components/modals';
 import { uploadFile } from '@/core/config/firebase';
 import { useUserStore } from '../zustand';
 import { createFileDoc } from '@/core/config/firebase/fire-store';
 import { getFileName, getSizeFromBytes } from '@/utils/file-utils';
 
-import type { Dispatch, SetStateAction, RefObject } from 'react';
 import type { IModalWrapperRef } from '@/components/modals/generics';
-import type { ContextMenuContent } from '@/interfaces/app';
 import type { IDocument } from '@/interfaces/entities';
 import { useParams } from 'next/navigation';
-
-interface IContextCoordinates {
-  top: string;
-  left: string;
-}
 
 interface IUploadDetails {
   total_size: number;
   count: number
 }
 
-interface IFilesFolderDisplayContext {
-  setContextCoordinates: Dispatch<SetStateAction<IContextCoordinates>>;
-
-  setContextContent: Dispatch<SetStateAction<ContextMenuContent[]>>;
-
-  contextMenuRef: RefObject<IModalWrapperRef>;
-
+interface IModalContext {
   readyUploadModal: (files: FileList, items?: DataTransferItemList) => void;
+  openNewFolderModal: () => void;
 };
 
-const FilesFolderDisplayContext = createContext<IFilesFolderDisplayContext | null>(null);
+const ModalContext = createContext<IModalContext | null>(null);
 
-const FilesFolderDisplayContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [contextCoordinates, setContextCoordinates] = useState<IContextCoordinates>({ top: '0', left: '0' });
-  const [contextContent, setContextContent] = useState<ContextMenuContent[]>([]);
+const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [uploadDetails, setUploadDetails] = useState<IUploadDetails | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -45,16 +36,20 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
   const [currentUploadIndx, setCurrentUploadIndx] = useState<number>(0);
   const { currentUser } = useUserStore();
 
-  const contextMenuRef = useRef<IModalWrapperRef>(null);
-  const modalRef = useRef<IModalWrapperRef>();
+  const folderModalRef = useRef<IModalWrapperRef>();
+  const uploadModalRef = useRef<IModalWrapperRef>();
 
   const params = useParams<{ folder_id: string }>();
 
-  const closeModal = () => {
-    modalRef.current?.close();
+  const closeUploadModal = () => {
+    uploadModalRef.current?.close();
     setSelectedFiles([]);
     setUploadDetails(null);
     setProgress(null);
+  };
+
+  const openNewFolderModal = () => {
+    folderModalRef.current?.open();
   };
 
   const readyUploadModal = (files: FileList, items?: DataTransferItemList) => {
@@ -70,10 +65,10 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
     setSelectedFiles(file_arr);
     setUploadDetails({ total_size, count: file_arr.length });
 
-    modalRef.current?.open();
+    uploadModalRef.current?.open();
   };
 
-  const uploadFiles = async () => {
+  const uploadFiles = useCallback(async () => {
     if (!currentUser) return;
 
     try {
@@ -108,28 +103,26 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
 
     } finally {
       setIsLoading(false);
-      closeModal();
+      closeUploadModal();
     };
-  };
+  }, []);
 
   // useEffect(() => {
   //   if (progress) console.log('progress changing', progress);
   // }, [progress]);
 
-  const contextValue = useMemo<IFilesFolderDisplayContext>(() => ({
-    setContextCoordinates,
-    setContextContent,
-    contextMenuRef,
+  const contextValue = useMemo<IModalContext>(() => ({
     readyUploadModal,
+    openNewFolderModal,
   }), []);
 
   return (
-    <FilesFolderDisplayContext.Provider value={contextValue}>
+    <ModalContext.Provider value={contextValue}>
       <>
         <UploadModal
-          modalRef={modalRef}
+          uploadModalRef={uploadModalRef}
           isLoading={isLoading}
-          closeModal={closeModal}
+          closeModal={closeUploadModal}
           uploadFiles={uploadFiles}
           selectedFiles={selectedFiles}
           uploadDetails={uploadDetails}
@@ -137,22 +130,19 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
           currentUploadIndx={currentUploadIndx}
         />
 
-        <ContextMenu
-          ref={contextMenuRef}
-          content={contextContent}
-          top={contextCoordinates.top}
-          left={contextCoordinates.left}
+        <NewFolderModal
+          folderModalRef={folderModalRef}
         />
 
         {children}
       </>
-    </FilesFolderDisplayContext.Provider>
+    </ModalContext.Provider>
   );
 };
 
-const useFilesFolderDisplayContext = (): IFilesFolderDisplayContext => useContext(FilesFolderDisplayContext) as IFilesFolderDisplayContext;
+const useModalContext = (): IModalContext => useContext(ModalContext) as IModalContext;
 
 export {
-  FilesFolderDisplayContextProvider,
-  useFilesFolderDisplayContext,
+  ModalContextProvider,
+  useModalContext,
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 import { DivCard, TextTag } from '@/components/atoms';
 import { ContextMenu } from '@/components/modals';
 import { openFileUploadDialog } from '@/utils/helpers';
@@ -14,19 +14,6 @@ interface Props {
   //
 };
 
-const MORE_CONTEXT_MENU_CONTENT: ContextMenuContent[] = [
-  {
-    text: 'New Folder',
-    icon_url: '/icons/modal-icons/new-folder-icon.svg',
-    action: () => null,
-  },
-  {
-    text: 'Upload File(s)',
-    icon_url: '/icons/modal-icons/upload-icon.svg',
-    action: openFileUploadDialog,
-  },
-];
-
 export default function MoreSection({ }: Props) {
   const contextMenuRef = useRef<IModalWrapperRef>(null);
 
@@ -38,6 +25,20 @@ export default function MoreSection({ }: Props) {
       contextMenuRef?.current?.open();
     }
   };
+
+  const MORE_CONTEXT_MENU_CONTENT: ContextMenuContent[] = useMemo(() => [
+    {
+      text: 'New Folder',
+      icon_url: '/icons/modal-icons/new-folder-icon.svg',
+      action: () => null,
+    },
+    {
+      text: 'Upload File(s)',
+      icon_url: '/icons/modal-icons/upload-icon.svg',
+      action: openFileUploadDialog,
+    },
+  ], []);
+
   return (
     <DivCard position='relative'> {/* This relative positioning is for the ContextMenu */}
       <TextTag cursor='pointer' onClick={toggleModal}>

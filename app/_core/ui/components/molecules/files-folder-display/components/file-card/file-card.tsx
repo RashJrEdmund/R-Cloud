@@ -5,13 +5,13 @@ import { StyledDisplayCard } from '../shared';
 import { DivCard, TextTag } from '@/components/atoms';
 import { openFileUploadDialog, shortenText } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
-import { useFilesFolderDisplayContext } from '@/store/context';
+import { useContextMenuContext } from '@/store/context';
+import { useAppStore } from '@/store/zustand';
 import Image from 'next/image';
 
 import type { MouseEventHandler, MutableRefObject } from 'react';
-import type { ContextMenuContent } from '@/interfaces/app';
 import type { ISharedCardProps } from '../shared';
-import { useAppStore } from '@/store/zustand';
+import type { ContextMenuContent } from '@/interfaces/app';
 
 interface Props extends ISharedCardProps {
   //
@@ -22,29 +22,6 @@ interface ICardComponentProps extends Props { // doc: IDocument already exists a
   imagePreview: { img: string, isCustom?: boolean }; // This helps to know weather or not to add the object-fit: cover; css style.
   fileRef: MutableRefObject<HTMLDivElement | undefined>;
 };
-
-const FILE_CONTEXT_MENU_CONTENT: ContextMenuContent[] = [
-  {
-    text: 'Open File',
-    icon_url: '/icons/modal-icons/open-folder-icon.svg',
-    action: () => null,
-  },
-  {
-    text: 'Upload File',
-    icon_url: '/icons/modal-icons/upload-icon.svg',
-    action: openFileUploadDialog,
-  },
-  {
-    text: 'Copy File',
-    icon_url: '/icons/modal-icons/rename-icon.svg',
-    action: () => null,
-  },
-  {
-    text: 'Delete File',
-    icon_url: '/icons/modal-icons/delete-icon.svg',
-    action: () => null,
-  }
-];
 
 function _GridFileCard({ doc: file, imagePreview, fileRef, handleOpen }: ICardComponentProps) {
 
@@ -124,17 +101,44 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
 
     const { displayLayout } = useAppStore();
 
+    const {
+      setContextCoordinates,
+      setContextContent,
+      contextMenuRef
+    } = useContextMenuContext();
+
+    const FILE_CONTEXT_MENU_CONTENT: ContextMenuContent[] = [
+      {
+        text: 'Open File',
+        icon_url: '/icons/modal-icons/open-folder-icon.svg',
+        action: () => null,
+      },
+      {
+        text: 'Upload File',
+        icon_url: '/icons/modal-icons/upload-icon.svg',
+        action: openFileUploadDialog,
+      },
+      {
+        text: 'Copy File',
+        icon_url: '/icons/modal-icons/rename-icon.svg',
+        action: () => null,
+      },
+      {
+        text: 'Delete File',
+        icon_url: '/icons/modal-icons/delete-icon.svg',
+        action: () => null,
+      }
+    ];
+
     const imagePreview = useMemo<{ img: string, isCustom?: boolean }>(() => {
       if (displayLayout === 'LIST') return { img: '/icons/text-file-icon.svg' };
 
-      if (file.content_type.includes('image') && file.download_url) {
+      if (file.content_type?.includes('image') && file.download_url) {
         return { img: file.download_url, isCustom: true };
       }
 
       return { img: '/icons/text-file-icon.svg' };
     }, [file.type, displayLayout]);
-
-    const { setContextContent, setContextCoordinates, contextMenuRef } = useFilesFolderDisplayContext();
 
     const handleOpen: MouseEventHandler<HTMLDivElement> = () => {
       // router.push('/home?file=' + folder.id);
