@@ -1,8 +1,8 @@
 'use client';
 
 import { TextTag } from '@/components/atoms';
-import { BreadCrumbs } from '..';
 import {
+  BreadCrumbs,
   NavTitle,
   ProfileSection,
   StyledNavBar

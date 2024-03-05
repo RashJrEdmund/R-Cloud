@@ -21,6 +21,12 @@ const StyledProfileSection = styled.section`
       height: 35px;
     }
   }
+
+  @media only screen and (max-width: 950px) {
+    .user-name {
+      display: none;
+    }
+  }
 `;
 
 export default StyledProfileSection;

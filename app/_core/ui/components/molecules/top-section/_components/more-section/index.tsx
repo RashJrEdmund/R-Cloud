@@ -1,9 +1,9 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState, MouseEventHandler } from 'react';
 import { DivCard, TextTag } from '@/components/atoms';
 import { ContextMenu } from '@/components/modals';
-import { openFileUploadDialog } from '@/utils/helpers';
+import { getResponsiveContextMenuPosition, openFileUploadDialog } from '@/utils/helpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,12 +16,15 @@ interface Props {
 
 export default function MoreSection({ }: Props) {
   const contextMenuRef = useRef<IModalWrapperRef>(null);
+  const [coordinates, setCoordinates] = useState<{ top: string, left: string }>({ top: '-10px', left: '-10px' });
 
-  const toggleModal = () => {
+  const toggleModal: MouseEventHandler<HTMLSpanElement> = (e) => {
     // contextMenuRef
+    const xyCoord = getResponsiveContextMenuPosition(e as any as MouseEvent);
     if (contextMenuRef?.current?.isOpen) {
       contextMenuRef.current.close();
     } else {
+      setCoordinates({ top: '-10px', left: (-1 * xyCoord.extra_x || 10) + 'px' });
       contextMenuRef?.current?.open();
     }
   };
@@ -46,7 +49,7 @@ export default function MoreSection({ }: Props) {
         More
       </TextTag>
 
-      <ContextMenu top='-10px' left='-10px' ref={contextMenuRef} content={MORE_CONTEXT_MENU_CONTENT} />
+      <ContextMenu top={coordinates.top} left={coordinates.left} ref={contextMenuRef} content={MORE_CONTEXT_MENU_CONTENT} />
     </DivCard>
   );
 };

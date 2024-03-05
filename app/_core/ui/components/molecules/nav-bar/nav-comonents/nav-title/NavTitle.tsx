@@ -1,6 +1,6 @@
 'use client';
 
-import { TextTag } from '@/components/atoms';
+import { TextTag, Button } from '@/components/atoms';
 import { useUserStore } from '@/store/zustand';
 import styled from '@emotion/styled';
 import Link from 'next/link';
@@ -25,10 +25,6 @@ const StyledNavTitle = styled.section`
       text-overflow: ellipsis;
     }
   }
-
-  @media only screen and (max-width: 600px) {
-   display: none; 
-  }
 `;
 
 export default function NavTitle({ }: Props) {
@@ -46,11 +42,9 @@ export default function NavTitle({ }: Props) {
 
   return (
     <StyledNavTitle>
-      <TextTag>
-        <Link href={navProperties.route_url}>
-          {navProperties.route_name}
-        </Link>
-      </TextTag>
+      <Button as={Link} href={navProperties.route_url} bg='white'>
+        {navProperties.route_name}
+      </Button>
     </StyledNavTitle>
   );
 };

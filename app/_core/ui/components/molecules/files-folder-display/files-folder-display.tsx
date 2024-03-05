@@ -7,8 +7,9 @@ import { useDocStore, useAppStore } from '@/store/zustand';
 import { useContextMenuContext, useModalContext } from '@/store/context';
 import {
   GridFileCard, GridFolderCard,
-  ListFileCard, ListFolderCard
+  ListFileCard, ListFolderCard,
 } from './components';
+import { getResponsiveContextMenuPosition } from '@/utils/helpers';
 
 import type { DragEventHandler, MouseEventHandler } from 'react';
 
@@ -32,14 +33,13 @@ export default function FilesFolderDisplay({ }: Props) {
   const handleContextMenu: MouseEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    contextMenuRef?.current?.open();
+
+    const coordinates = getResponsiveContextMenuPosition(e as any as MouseEvent);
+    setContextCoordinates({ top: coordinates.y + 'px', left: coordinates.x + 'px' });
 
     setContextContent(MAIN_CONTEXT_MENU_CONTENT);
 
-    setContextCoordinates({
-      top: e.clientY + 'px',
-      left: e.clientX + 'px',
-    });
+    contextMenuRef?.current?.open();
   };
 
   // DRAG_DROP_HANDLERS_STARTS_HERE!

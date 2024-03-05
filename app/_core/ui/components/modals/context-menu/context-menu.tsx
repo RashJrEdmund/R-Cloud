@@ -33,7 +33,7 @@ function ContextMenu(
       close() {
         setShowModal(false);
       },
-      isOpen: showModal
+      isOpen: showModal,
     };
   }, [showModal]);
 

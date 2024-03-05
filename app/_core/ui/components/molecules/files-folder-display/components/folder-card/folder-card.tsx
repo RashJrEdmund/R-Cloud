@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { DivCard, TextTag } from '@/_core/ui/components/atoms';
 import { useMemo, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { shortenText } from '@/utils/helpers';
+import { getResponsiveContextMenuPosition, shortenText } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
 import { useContextMenuContext } from '@/store/context';
 
@@ -116,6 +116,10 @@ function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Elemen
       contextMenuRef
     } = useContextMenuContext();
 
+    const handleOpen = () => {
+      router.push('/home/root/' + folder.id);
+    };
+
     const FOLDER_CONTEXT_MENU_CONTENT: ContextMenuContent[] = useMemo(() => [
       {
         text: 'Open Folder',
@@ -134,16 +138,14 @@ function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Elemen
       }
     ], []);
 
-    const handleOpen = () => {
-      router.push('/home/root/' + folder.id);
-    };
-
     const handleContextMenu = (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
 
+      const coordinates = getResponsiveContextMenuPosition(e);
+      setContextCoordinates({ top: coordinates.y + 'px', left: coordinates.x + 'px' });
+
       setContextContent(FOLDER_CONTEXT_MENU_CONTENT);
-      setContextCoordinates({ top: e.clientY + 'px', left: e.clientX + 'px' });
 
       contextMenuRef.current?.open();
     };
