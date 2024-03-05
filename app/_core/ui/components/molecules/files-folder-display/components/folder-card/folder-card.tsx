@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { DivCard, TextTag } from '@/_core/ui/components/atoms';
 import { useMemo, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { getResponsiveContextMenuPosition, shortenText } from '@/utils/helpers';
+import { getResponsiveMenuPosition, shortenText } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
 import { useContextMenuContext } from '@/store/context';
 
@@ -142,7 +142,7 @@ function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Elemen
       e.preventDefault();
       e.stopPropagation();
 
-      const coordinates = getResponsiveContextMenuPosition(e);
+      const coordinates = getResponsiveMenuPosition(e);
       setContextCoordinates({ top: coordinates.y + 'px', left: coordinates.x + 'px' });
 
       setContextContent(FOLDER_CONTEXT_MENU_CONTENT);

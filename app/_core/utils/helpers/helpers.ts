@@ -22,7 +22,7 @@ const openFileUploadDialog = () => {
   fileUploadField.click();
 };
 
-const getResponsiveContextMenuPosition = (e: MouseEvent, component_approximates?: { height?: number, width?: number }) => {
+const getResponsiveMenuPosition = (e: MouseEvent, component_approximates?: { height?: number, width?: number }) => {
   const x = e.clientX;
   const y = e.clientY;
 
@@ -58,5 +58,5 @@ export {
   shortenText,
 
   openFileUploadDialog,
-  getResponsiveContextMenuPosition,
+  getResponsiveMenuPosition,
 };

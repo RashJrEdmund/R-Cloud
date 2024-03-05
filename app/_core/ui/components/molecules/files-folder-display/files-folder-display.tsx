@@ -9,7 +9,7 @@ import {
   GridFileCard, GridFolderCard,
   ListFileCard, ListFolderCard,
 } from './components';
-import { getResponsiveContextMenuPosition } from '@/utils/helpers';
+import { getResponsiveMenuPosition } from '@/utils/helpers';
 
 import type { DragEventHandler, MouseEventHandler } from 'react';
 
@@ -34,7 +34,7 @@ export default function FilesFolderDisplay({ }: Props) {
     e.preventDefault();
     e.stopPropagation();
 
-    const coordinates = getResponsiveContextMenuPosition(e as any as MouseEvent);
+    const coordinates = getResponsiveMenuPosition(e as any as MouseEvent);
     setContextCoordinates({ top: coordinates.y + 'px', left: coordinates.x + 'px' });
 
     setContextContent(MAIN_CONTEXT_MENU_CONTENT);

@@ -45,7 +45,6 @@ export default function PathWrapper({ children }: Props) {
         });
 
         setDocuments(data);
-        console.log(data);
       });
   }, []);
 

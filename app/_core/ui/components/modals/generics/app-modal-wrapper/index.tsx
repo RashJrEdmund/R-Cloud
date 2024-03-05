@@ -50,7 +50,6 @@ function AppModalWrapper(
       open() {
         setShowModal(true);
         dialogRef.current?.showModal();
-        console.log('opening dialog');
       },
       close() {
         dialogRef.current?.close();

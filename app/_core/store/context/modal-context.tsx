@@ -100,12 +100,12 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
     } catch (error) {
-
+      console.warn(error);
     } finally {
       setIsLoading(false);
       closeUploadModal();
     };
-  }, []);
+  }, [currentUser, params.folder_id, selectedFiles]);
 
   // useEffect(() => {
   //   if (progress) console.log('progress changing', progress);

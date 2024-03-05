@@ -3,7 +3,7 @@
 import { useRef, useMemo, useState, MouseEventHandler } from 'react';
 import { DivCard, TextTag } from '@/components/atoms';
 import { ContextMenu } from '@/components/modals';
-import { getResponsiveContextMenuPosition, openFileUploadDialog } from '@/utils/helpers';
+import { getResponsiveMenuPosition, openFileUploadDialog } from '@/utils/helpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 
@@ -20,7 +20,7 @@ export default function MoreSection({ }: Props) {
 
   const toggleModal: MouseEventHandler<HTMLSpanElement> = (e) => {
     // contextMenuRef
-    const xyCoord = getResponsiveContextMenuPosition(e as any as MouseEvent);
+    const xyCoord = getResponsiveMenuPosition(e as any as MouseEvent);
     if (contextMenuRef?.current?.isOpen) {
       contextMenuRef.current.close();
     } else {

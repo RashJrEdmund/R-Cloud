@@ -3,7 +3,7 @@
 import { useMemo, useRef, useEffect } from 'react';
 import { StyledDisplayCard } from '../shared';
 import { DivCard, TextTag } from '@/components/atoms';
-import { getResponsiveContextMenuPosition, openFileUploadDialog, shortenText } from '@/utils/helpers';
+import { getResponsiveMenuPosition, openFileUploadDialog, shortenText } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
 import { useContextMenuContext } from '@/store/context';
 import { useAppStore } from '@/store/zustand';
@@ -148,7 +148,7 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
       e.preventDefault();
       e.stopPropagation();
 
-      const coordinates = getResponsiveContextMenuPosition(e);
+      const coordinates = getResponsiveMenuPosition(e);
       setContextCoordinates({ top: coordinates.y + 'px', left: coordinates.x + 'px' });
 
       setContextContent(FILE_CONTEXT_MENU_CONTENT);

@@ -7,7 +7,7 @@ import { useUserStore } from '@/store/zustand';
 import { useMemo, useState } from 'react';
 import { TextTag } from '@/components/atoms';
 import { ProfileDropDown } from './drop-down';
-import { getResponsiveContextMenuPosition } from '@/utils/helpers';
+import { getResponsiveMenuPosition } from '@/utils/helpers';
 
 import type { MouseEventHandler } from 'react';
 
@@ -27,7 +27,7 @@ export default function ProfileSection({ }: Props) {
   const openDropDown: MouseEventHandler<HTMLSpanElement> = (e) => {
     setShowDropDown(true);
 
-    const xyCoord = getResponsiveContextMenuPosition(e as any as MouseEvent, { width: 150 }); // 150 px is min_width of drop-down component
+    const xyCoord = getResponsiveMenuPosition(e as any as MouseEvent, { width: 150 }); // 150 px is min_width of drop-down component
 
     setCoordinates(prev => ({ ...prev, left: (-1 * xyCoord.extra_x || 10) + 'px' }));
   };
