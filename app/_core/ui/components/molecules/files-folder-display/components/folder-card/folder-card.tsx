@@ -7,7 +7,6 @@ import { DivCard, TextTag } from '@/_core/ui/components/atoms';
 import { useMemo, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { shortenText } from '@/utils/helpers';
-import { getSize } from '@/utils/file-utils';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
 import { useFilesFolderDisplayContext } from '@/store/context';
 
@@ -71,7 +70,7 @@ function _GridFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: I
           </TextTag>
 
           <TextTag color_type='grayed' size='0.75rem' no_white_space>
-            {folderLength > 0 ? getSize(folder.capacity.size) : null}
+            {folderLength > 0 ? folder.capacity.size : null}
           </TextTag>
         </DivCard>
       </DivCard>
@@ -107,7 +106,7 @@ function _ListFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: I
             </TextTag>
 
             <TextTag color_type='grayed' size='0.75rem' no_white_space>
-              {folderLength > 0 ? getSize(folder.capacity.size) : null}
+              {folderLength > 0 ? folder.capacity.size : null}
             </TextTag>
           </DivCard>
         </DivCard>
@@ -132,7 +131,7 @@ function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Elemen
     const { setContextContent, setContextCoordinates, contextMenuRef } = useFilesFolderDisplayContext();
 
     const handleOpen = () => {
-      router.push('home/folders/' + folder.id);
+      router.push('home/root/' + folder.id);
     };
 
     const handleContextMenu = (e: MouseEvent) => {

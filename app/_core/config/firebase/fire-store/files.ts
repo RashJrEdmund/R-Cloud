@@ -3,8 +3,8 @@
 |, i.e documents and collections.            |
 ================================//========= */
 
-import { createUserCollectionPath } from './utils';
-import { addDoc, getDocs, query, where } from 'firebase/firestore';
+import { createUserCollectionPath, createUserDocPath } from './utils';
+import { addDoc, setDoc, getDocs, query, where } from 'firebase/firestore';
 
 import type { IDocument, DocumentType, IStorageUnit } from '@/interfaces/entities';
 import type { QuerySnapshot } from 'firebase/firestore';

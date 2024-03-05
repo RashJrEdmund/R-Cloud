@@ -55,7 +55,7 @@
             "name": "Files & Folders",
             "short_name": "Files & Folders",
             "description": "go to files and folder page",
-            "url": "/home/folders",
+            "url": "/home/root",
             "icons": [
                 {
                     "src": "./manifest-assets/shortcut-home.png",

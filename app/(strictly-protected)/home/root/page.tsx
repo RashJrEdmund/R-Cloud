@@ -3,10 +3,10 @@ import { FilesFolderDisplayPage } from './_components';
 
 export async function generateMetadata(): Promise<Metadata> { // to dynamically generate metadata
   return {
-    title: 'Files & Folders',
-    description: 'r-cloud base folders',
+    title: 'Root',
+    description: 'r-cloud base root directory',
     alternates: {
-      canonical: '/home/folders',
+      canonical: '/home/root',
     },
   };
 };

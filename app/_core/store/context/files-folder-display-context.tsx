@@ -1,13 +1,17 @@
 'use client';
 
-import { createContext, useContext, useState, useMemo, useRef, useEffect } from 'react';
+import { createContext, useContext, useState, useMemo, useRef } from 'react';
 import { ContextMenu, UploadModal } from '@/components/modals';
 import { uploadFile } from '@/core/config/firebase';
 import { useUserStore } from '../zustand';
+import { createFileDoc } from '@/core/config/firebase/fire-store';
+import { getFileName, getSizeFromBytes } from '@/utils/file-utils';
 
 import type { Dispatch, SetStateAction, RefObject } from 'react';
 import type { IModalWrapperRef } from '@/components/modals/generics';
 import type { ContextMenuContent } from '@/interfaces/app';
+import type { IDocument } from '@/interfaces/entities';
+import { useParams } from 'next/navigation';
 
 interface IContextCoordinates {
   top: string;
@@ -42,8 +46,9 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
   const { currentUser } = useUserStore();
 
   const contextMenuRef = useRef<IModalWrapperRef>(null);
-
   const modalRef = useRef<IModalWrapperRef>();
+
+  const params = useParams<{ folder_id: string }>();
 
   const closeModal = () => {
     modalRef.current?.close();
@@ -79,8 +84,24 @@ const FilesFolderDisplayContextProvider = ({ children }: { children: React.React
         setCurrentUploadIndx(i);
         const url = await uploadFile(file, currentUser.email, (progress) => setProgress({ [i]: progress }));
 
-        console.log(url);
-        console.log(file);
+        const document: Omit<IDocument, 'id'> = {
+          download_url: url,
+          user_id: currentUser.id,
+          name: getFileName(file, { without_extension: true }),
+          parent_id: params.folder_id || 'root',
+          type: 'FILE',
+          content_type: file.type,
+          extension: getFileName(file, { only_extension: true }),
+          capacity: {
+            size: getSizeFromBytes(file.size).merged,
+            bytes: file.size,
+            length: null,
+          },
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        };
+
+        await createFileDoc(currentUser.email, document as IDocument);
       }
 
     } catch (error) {

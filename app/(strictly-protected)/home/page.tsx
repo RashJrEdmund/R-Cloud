@@ -43,7 +43,7 @@ export default function Home({ }: Props) {
             <ProgressBar progress_in_percentage={25} show_usage_colors width='min(100%, 400px)' height='25px' />
           </DivCard>
 
-          <Button as={Link} href='/home/folders' bg='blued'>
+          <Button as={Link} href='/home/root' bg='blued'>
             Open Drive
           </Button>
         </DivCard>

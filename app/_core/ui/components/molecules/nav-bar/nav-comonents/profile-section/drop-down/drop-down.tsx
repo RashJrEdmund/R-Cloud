@@ -31,8 +31,8 @@ export default function ProfileDropDown({ showDropDown, setShowDropDown }: Props
         text: 'Home',
       },
       {
-        action: () => router.push('/home/folders'),
-        text: 'Folders',
+        action: () => router.push('/home/root'),
+        text: 'Root',
       },
       {
         action: () => router.push('/profile'),

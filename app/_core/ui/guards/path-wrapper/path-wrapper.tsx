@@ -33,8 +33,7 @@ export default function PathWrapper({ children }: Props) {
     listFolderFiles(currentUser?.email || '', folder_id)
       .then(res => {
         if (res.empty) {
-          console.log(res.docs);
-          setDocuments(null);
+          setDocuments([]);
           return;
         };
 
@@ -51,12 +50,12 @@ export default function PathWrapper({ children }: Props) {
   }, []);
 
   useEffect(() => {
-    fetchDocuments(params.folder_id || 'home')
+    fetchDocuments(params.folder_id || 'root')
       .finally(() => {
         setLoading(false);
       });
 
-    // fetch default home/folders data. i.e data from supposed root director
+    // fetch default home/root data. i.e data from supposed root director
   }, [params]);
 
   if (loading) return <Streamer />;

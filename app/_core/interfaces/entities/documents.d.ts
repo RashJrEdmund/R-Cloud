@@ -15,13 +15,14 @@ interface IDocument {
   id: string;
   user_id: string;
   name: string;
-  parent_id: string; // Id of parent folder should default to 0 for files/folders under root.
+  parent_id: string; // Id of parent folder should default to 0 for files/root under root.
   type: DocumentType;
   content_type: string; // eg. image/png, image/jpg, video/mp4 etc or null for when it's folders
   download_url: string | null; // null when it's folders
   extension: string | null; // file extension for when it's files;
   capacity: {
-    size: number; // size in Mbs or Gbs
+    size: string; // size in Mbs or Gbs
+    bytes: number; // actual bytes
     length: string | number | null; // number of items if it's a folder or null if it's a file
   };
   createdAt?: Date | string;
