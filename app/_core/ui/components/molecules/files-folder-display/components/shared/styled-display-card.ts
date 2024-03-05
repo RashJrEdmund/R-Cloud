@@ -36,6 +36,10 @@ export const StyledDisplayCard = styled.div`
     width: 100%;
     min-width: 100%;
     max-height: 75px;
+
+    &.custom_img {
+      object-fit: cover;
+    }
   }
 
   @media only screen and (max-width: 650px) {

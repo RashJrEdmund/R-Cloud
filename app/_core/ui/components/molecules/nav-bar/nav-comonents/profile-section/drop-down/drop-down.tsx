@@ -10,9 +10,13 @@ import type { LegacyRef } from 'react';
 interface Props {
   showDropDown: boolean;
   setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>;
+  coordinates: {
+    top: string;
+    left: string;
+  }
 };
 
-export default function ProfileDropDown({ showDropDown, setShowDropDown }: Props) {
+export default function ProfileDropDown({ showDropDown, setShowDropDown, coordinates }: Props) {
   const { setCurrentUser } = useUserStore();
   const dropDownRef = useRef<HTMLDivElement>();
   const router = useRouter();
@@ -29,6 +33,10 @@ export default function ProfileDropDown({ showDropDown, setShowDropDown }: Props
       {
         action: () => router.push('/home'),
         text: 'Home',
+      },
+      {
+        action: () => router.push('/home/root'),
+        text: 'Root',
       },
       {
         action: () => router.push('/profile'),
@@ -58,13 +66,14 @@ export default function ProfileDropDown({ showDropDown, setShowDropDown }: Props
       ref={dropDownRef as LegacyRef<HTMLDivElement>}
       bg='white'
       position='absolute' // parent component has position absolute.
-      top='calc(100% + 1rem)'
-      left='0'
+      top={coordinates.top}
+      left={coordinates.left}
       padding='1rem 1rem 10px 10px'
       gap='1rem'
       flex_dir='column'
       align='start'
       radius='8px'
+      min_width='150px'
       onBlur={() => setShowDropDown(false)}
     >
       {DROP_DOWN_CONTENT.map(({ text, action }) => (

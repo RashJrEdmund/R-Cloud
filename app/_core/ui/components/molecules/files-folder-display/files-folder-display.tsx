@@ -1,58 +1,45 @@
 'use client';
 
 import { useEffect, useCallback } from 'react';
-import { DivCard } from '@/components/atoms';
+import { DivCard, TextTag } from '@/components/atoms';
 import StyledFileFolderDisplay from './styled-file-folder-display';
 import { useDocStore, useAppStore } from '@/store/zustand';
-import { useFilesFolderDisplayContext } from '@/store/context';
+import { useContextMenuContext, useModalContext } from '@/store/context';
 import {
   GridFileCard, GridFolderCard,
-  ListFileCard, ListFolderCard
+  ListFileCard, ListFolderCard,
 } from './components';
-import { openFileUploadDialog } from '@/utils/helpers';
+import { getResponsiveMenuPosition } from '@/utils/helpers';
 
 import type { DragEventHandler, MouseEventHandler } from 'react';
-import type { IDocument } from '@/interfaces/entities';
-import type { ContextMenuContent } from '@/interfaces/app';
 
 interface Props {
-  content?: IDocument[]; // from path wrapper
+  //
 };
-
-const MAIN_CONTEXT_MENU_CONTENT: ContextMenuContent[] = [
-  {
-    text: 'New Folder',
-    icon_url: '/icons/modal-icons/new-folder-icon.svg',
-    action: () => null,
-  },
-  {
-    text: 'Upload File(s)',
-    icon_url: '/icons/modal-icons/upload-icon.svg',
-    action: openFileUploadDialog,
-  },
-];
 
 export default function FilesFolderDisplay({ }: Props) {
   const { documents } = useDocStore();
   const { displayLayout } = useAppStore();
+
+  const { readyUploadModal } = useModalContext();
+
   const {
-    contextMenuRef,
     setContextCoordinates,
     setContextContent,
-    readyUploadModal,
-  } = useFilesFolderDisplayContext();
+    MAIN_CONTEXT_MENU_CONTENT,
+    contextMenuRef
+  } = useContextMenuContext();
 
   const handleContextMenu: MouseEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    contextMenuRef?.current?.open();
+
+    const coordinates = getResponsiveMenuPosition(e as any as MouseEvent);
+    setContextCoordinates({ top: coordinates.y + 'px', left: coordinates.x + 'px' });
 
     setContextContent(MAIN_CONTEXT_MENU_CONTENT);
 
-    setContextCoordinates({
-      top: e.clientY + 'px',
-      left: e.clientX + 'px',
-    });
+    contextMenuRef?.current?.open();
   };
 
   // DRAG_DROP_HANDLERS_STARTS_HERE!
@@ -111,29 +98,41 @@ export default function FilesFolderDisplay({ }: Props) {
         onDrop={handleDrop}
         onDragEnd={handleDragEnd}
       >
-        <StyledFileFolderDisplay
-          className={displayLayout.toLowerCase() + '-layout'} // e.g grid-layout or list-layout
-        >
-          {
-            displayLayout === 'GRID' ? (
-              documents?.map((doc) => (
-                doc.type === 'FOLDER' ? (
-                  <GridFolderCard key={doc.id} doc={doc} />
-                ) : (
-                  <GridFileCard key={doc.id} doc={doc} />
-                )
-              ))
+        {
+          documents ? (
+            (documents.length > 0) ? (
+              <StyledFileFolderDisplay
+                className={displayLayout.toLowerCase() + '-layout'} // e.g grid-layout or list-layout
+              >
+                {
+                  displayLayout === 'GRID' ? (
+                    documents.map((doc) => (
+                      doc.type === 'FOLDER' ? (
+                        <GridFolderCard key={doc.id} doc={doc} />
+                      ) : (
+                        <GridFileCard key={doc.id} doc={doc} />
+                      )
+                    ))
+                  ) : (
+                    documents.map((doc) => (
+                      doc.type === 'FOLDER' ? (
+                        <ListFolderCard key={doc.id} doc={doc} />
+                      ) : (
+                        <ListFileCard key={doc.id} doc={doc} />
+                      )
+                    ))
+                  )
+                }
+              </StyledFileFolderDisplay>
             ) : (
-              documents?.map((doc) => (
-                doc.type === 'FOLDER' ? (
-                  <ListFolderCard key={doc.id} doc={doc} />
-                ) : (
-                  <ListFileCard key={doc.id} doc={doc} />
-                )
-              ))
+              <DivCard width='100%' min_height='60vh'>
+                <TextTag as='h3' weight='600' size='2rem' color_type='grayed'>
+                  Folder Is Empty
+                </TextTag>
+              </DivCard>
             )
-          }
-        </StyledFileFolderDisplay>
+          ) : null
+        }
       </DivCard>
     </>
   );

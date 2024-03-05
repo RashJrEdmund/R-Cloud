@@ -28,6 +28,18 @@
     ],
     "shortcuts": [
         {
+            "name": "Login to app",
+            "short_name": "Login",
+            "description": "go to login page",
+            "url": "/login",
+            "icons": [
+                {
+                    "src": "./manifest-assets/shortcut-login.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
             "name": "Home page",
             "short_name": "Home",
             "description": "go to home page",
@@ -40,13 +52,25 @@
             ]
         },
         {
-            "name": "Login on app",
-            "short_name": "Login",
-            "description": "go to login page",
-            "url": "/login",
+            "name": "Files & Folders",
+            "short_name": "Files & Folders",
+            "description": "go to files and folder page",
+            "url": "/home/root",
             "icons": [
                 {
-                    "src": "./manifest-assets/shortcut-login.png",
+                    "src": "./manifest-assets/shortcut-home.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Storage Plans",
+            "short_name": "Plans",
+            "description": "go to storage plans page",
+            "url": "/storage-plans",
+            "icons": [
+                {
+                    "src": "./manifest-assets/shortcut-home.png",
                     "sizes": "192x192"
                 }
             ]

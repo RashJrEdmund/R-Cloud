@@ -3,16 +3,15 @@
 import { useMemo, useRef, useEffect } from 'react';
 import { StyledDisplayCard } from '../shared';
 import { DivCard, TextTag } from '@/components/atoms';
-import {openFileUploadDialog, shortenText } from '@/utils/helpers';
-import { getSize} from '@/utils/file-utils';
+import { getResponsiveMenuPosition, openFileUploadDialog, shortenText } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
-import { useFilesFolderDisplayContext } from '@/store/context';
+import { useContextMenuContext } from '@/store/context';
+import { useAppStore } from '@/store/zustand';
 import Image from 'next/image';
 
 import type { MouseEventHandler, MutableRefObject } from 'react';
-import type { ContextMenuContent } from '@/interfaces/app';
 import type { ISharedCardProps } from '../shared';
-import { useAppStore } from '@/store/zustand';
+import type { ContextMenuContent } from '@/interfaces/app';
 
 interface Props extends ISharedCardProps {
   //
@@ -20,39 +19,17 @@ interface Props extends ISharedCardProps {
 
 interface ICardComponentProps extends Props { // doc: IDocument already exists as type here.
   handleOpen: MouseEventHandler<HTMLDivElement>;
-  imagePreview: string;
+  imagePreview: { img: string, isCustom?: boolean }; // This helps to know weather or not to add the object-fit: cover; css style.
   fileRef: MutableRefObject<HTMLDivElement | undefined>;
 };
-
-const FILE_CONTEXT_MENU_CONTENT: ContextMenuContent[] = [
-  {
-    text: 'Open File',
-    icon_url: '/icons/modal-icons/open-folder-icon.svg',
-    action: () => null,
-  },
-  {
-    text: 'Upload File',
-    icon_url: '/icons/modal-icons/upload-icon.svg',
-    action: openFileUploadDialog,
-  },
-  {
-    text: 'Copy File',
-    icon_url: '/icons/modal-icons/rename-icon.svg',
-    action: () => null,
-  },
-  {
-    text: 'Delete File',
-    icon_url: '/icons/modal-icons/delete-icon.svg',
-    action: () => null,
-  }
-];
 
 function _GridFileCard({ doc: file, imagePreview, fileRef, handleOpen }: ICardComponentProps) {
 
   return (
     <StyledDisplayCard ref={fileRef as any} onDoubleClick={handleOpen}>
       <Image
-        src={imagePreview}
+        src={imagePreview.img}
+        className={imagePreview?.isCustom ? 'custom_img' : ''}
         alt='file icon'
         width={60}
         height={60}
@@ -71,7 +48,7 @@ function _GridFileCard({ doc: file, imagePreview, fileRef, handleOpen }: ICardCo
           </TextTag>
 
           <TextTag color_type='grayed' size='0.75rem' no_white_space>
-            {getSize(file.capacity.size)}
+            {file.capacity.size}
           </TextTag>
         </DivCard>
       </DivCard>
@@ -86,7 +63,7 @@ function _ListFileCard({ doc: file, imagePreview, fileRef, handleOpen }: ICardCo
       ref={fileRef as any} onDoubleClick={handleOpen}
     >
       <Image
-        src={imagePreview}
+        src={imagePreview.img}
         alt='file icon'
         width={25}
         height={25}
@@ -103,7 +80,7 @@ function _ListFileCard({ doc: file, imagePreview, fileRef, handleOpen }: ICardCo
           </TextTag>
 
           <TextTag color_type='grayed' size='0.75rem' no_white_space>
-            {getSize(file.capacity.size)}
+            {file.capacity.size}
           </TextTag>
         </DivCard>
       </DivCard>
@@ -124,17 +101,44 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
 
     const { displayLayout } = useAppStore();
 
-    const imagePreview = useMemo<string>(() => {
-      if (displayLayout === 'LIST') return '/icons/text-file-icon.svg';
+    const {
+      setContextCoordinates,
+      setContextContent,
+      contextMenuRef
+    } = useContextMenuContext();
 
-      if (file.content_type.includes('image') && file.download_url) {
-        return file.download_url;
+    const FILE_CONTEXT_MENU_CONTENT: ContextMenuContent[] = [
+      {
+        text: 'Open File',
+        icon_url: '/icons/modal-icons/open-folder-icon.svg',
+        action: () => null,
+      },
+      {
+        text: 'Upload File',
+        icon_url: '/icons/modal-icons/upload-icon.svg',
+        action: openFileUploadDialog,
+      },
+      {
+        text: 'Copy File',
+        icon_url: '/icons/modal-icons/rename-icon.svg',
+        action: () => null,
+      },
+      {
+        text: 'Delete File',
+        icon_url: '/icons/modal-icons/delete-icon.svg',
+        action: () => null,
+      }
+    ];
+
+    const imagePreview = useMemo<{ img: string, isCustom?: boolean }>(() => {
+      if (displayLayout === 'LIST') return { img: '/icons/text-file-icon.svg' };
+
+      if (file.content_type?.includes('image') && file.download_url) {
+        return { img: file.download_url, isCustom: true };
       }
 
-      return '/icons/text-file-icon.svg';
+      return { img: '/icons/text-file-icon.svg' };
     }, [file.type, displayLayout]);
-
-    const { setContextContent, setContextCoordinates, contextMenuRef } = useFilesFolderDisplayContext();
 
     const handleOpen: MouseEventHandler<HTMLDivElement> = () => {
       // router.push('/home?file=' + folder.id);
@@ -144,8 +148,10 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
       e.preventDefault();
       e.stopPropagation();
 
+      const coordinates = getResponsiveMenuPosition(e);
+      setContextCoordinates({ top: coordinates.y + 'px', left: coordinates.x + 'px' });
+
       setContextContent(FILE_CONTEXT_MENU_CONTENT);
-      setContextCoordinates({ top: e.clientY + 'px', left: e.clientX + 'px' });
 
       contextMenuRef.current?.open();
     };

@@ -22,8 +22,41 @@ const openFileUploadDialog = () => {
   fileUploadField.click();
 };
 
+const getResponsiveMenuPosition = (e: MouseEvent, component_approximates?: { height?: number, width?: number }) => {
+  const x = e.clientX;
+  const y = e.clientY;
+
+  const menu_width = component_approximates?.width || 220; // approximate
+  const menu_height = component_approximates?.height || 240; // approximates
+
+  const screen_width = window.innerWidth;
+  const screen_height = window.innerHeight;
+
+  const coordinates = {
+    x: 0,
+    y: 0,
+    extra_x: 0, // how much extra space was added to x axi before causing overflow
+    extra_y: 0 // how much extra space was added to y axi before causing overflow
+  };
+
+  if (x + menu_width > screen_width) {
+    coordinates.x = screen_width - menu_width;
+    coordinates.extra_x = (x + menu_width) - screen_width;
+  } else coordinates.x = x;
+
+  if (y + menu_height > screen_height) {
+    coordinates.y = screen_height - menu_height;
+    coordinates.extra_y = (y + menu_height) - screen_height;
+  } else coordinates.y = y;
+
+  // console.log({ x, y, menu_height, menu_width, screen_height, screen_width, coordinates });
+
+  return coordinates;
+};
+
 export {
   shortenText,
 
   openFileUploadDialog,
+  getResponsiveMenuPosition,
 };

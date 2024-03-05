@@ -15,8 +15,11 @@ interface Props extends CommonProps {
   cursor?: CursorVariants;
   weight?: WeightVariants;
   size?: SizeVariants;
-  href?: string; // this has no use other than calming down the as 'a' attributes problem
   disabled?: boolean;
+
+  // LINK TAG PROPERTIES
+  replace?: boolean;
+  href?: string; // this has no use other than calming down the as 'a' attributes problem
 };
 
 const Button = styled.button<Partial<Props>>`

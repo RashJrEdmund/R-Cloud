@@ -1,6 +1,11 @@
 import { IStorageUnit } from '@/interfaces/entities';
 import { STORAGE_UNIT_LIST } from '../constants';
 
+interface FileNameOptions {
+  without_extension?: boolean;
+  only_extension?: boolean;
+};
+
 const isDirectory = (item: DataTransferItem) => {
   return item.kind === 'file' && item.webkitGetAsEntry()?.isDirectory;
 };
@@ -9,7 +14,18 @@ const isFile = (item: DataTransferItem) => {
   return item.kind === 'file' && item.webkitGetAsEntry()?.isFile;
 };
 
-const getFileName = (file: File) => file.name + '-' + Date.now() + file.type.split('/').pop();
+const getFileName = (file: File, options?: FileNameOptions) => {
+  const name_arr = file.name.split('.');
+
+  const extension = file.type.split('/').pop() || name_arr.pop() || '';
+  const name = name_arr.join('.');
+
+  if (options?.without_extension) return name;
+
+  if (options?.only_extension) return '.' + extension;
+
+  return name + '-' + Date.now() + '.' + extension;
+};
 
 const getSize = (file_size: number, unit: IStorageUnit = 'Mb'): string => {
   return file_size + ' ' + unit;

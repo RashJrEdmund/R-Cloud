@@ -13,6 +13,10 @@ interface Props {
 const StyledBreadCrumbs = styled.div`
   ${flex_template};
   gap: 0;
+
+  @media only screen and (max-width: 950px) {
+    display: none; 
+  }
 `;
 
 export default function BreadCrumbs({ }: Props) {

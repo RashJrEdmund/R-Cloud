@@ -6,10 +6,9 @@ import Image from 'next/image';
 import { DivCard, TextTag } from '@/_core/ui/components/atoms';
 import { useMemo, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { shortenText } from '@/utils/helpers';
-import { getSize } from '@/utils/file-utils';
+import { getResponsiveMenuPosition, shortenText } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
-import { useFilesFolderDisplayContext } from '@/store/context';
+import { useContextMenuContext } from '@/store/context';
 
 import type { MutableRefObject, MouseEventHandler } from 'react';
 import type { ContextMenuContent } from '@/interfaces/app';
@@ -23,24 +22,6 @@ interface ICardComponentProps extends Props { // doc: IDocument already exists a
   folderRef: MutableRefObject<HTMLDivElement | undefined>;
   folderLength: number;
 };
-
-const FOLDER_CONTEXT_MENU_CONTENT: ContextMenuContent[] = [
-  {
-    text: 'Open Folder',
-    icon_url: '/icons/modal-icons/open-folder-icon.svg',
-    action: () => null,
-  },
-  {
-    text: 'Rename Folder',
-    icon_url: '/icons/modal-icons/rename-icon.svg',
-    action: () => null,
-  },
-  {
-    text: 'Delete Folder',
-    icon_url: '/icons/modal-icons/delete-icon.svg',
-    action: () => null,
-  }
-];
 
 function _GridFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: ICardComponentProps) {
 
@@ -71,7 +52,7 @@ function _GridFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: I
           </TextTag>
 
           <TextTag color_type='grayed' size='0.75rem' no_white_space>
-            {folderLength > 0 ? getSize(folder.capacity.size) : null}
+            {folderLength > 0 ? folder.capacity.size : null}
           </TextTag>
         </DivCard>
       </DivCard>
@@ -107,7 +88,7 @@ function _ListFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: I
             </TextTag>
 
             <TextTag color_type='grayed' size='0.75rem' no_white_space>
-              {folderLength > 0 ? getSize(folder.capacity.size) : null}
+              {folderLength > 0 ? folder.capacity.size : null}
             </TextTag>
           </DivCard>
         </DivCard>
@@ -129,18 +110,42 @@ function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Elemen
     const folderLength = useMemo(() => Number(folder?.capacity?.length), [folder?.capacity?.length]);
     const folderRef = useRef<HTMLDivElement>();
 
-    const { setContextContent, setContextCoordinates, contextMenuRef } = useFilesFolderDisplayContext();
+    const {
+      setContextCoordinates,
+      setContextContent,
+      contextMenuRef
+    } = useContextMenuContext();
 
     const handleOpen = () => {
-      router.push('/home?folder=' + folder.id);
+      router.push('/home/root/' + folder.id);
     };
+
+    const FOLDER_CONTEXT_MENU_CONTENT: ContextMenuContent[] = useMemo(() => [
+      {
+        text: 'Open Folder',
+        icon_url: '/icons/modal-icons/open-folder-icon.svg',
+        action: handleOpen,
+      },
+      {
+        text: 'Rename Folder',
+        icon_url: '/icons/modal-icons/rename-icon.svg',
+        action: () => null,
+      },
+      {
+        text: 'Delete Folder',
+        icon_url: '/icons/modal-icons/delete-icon.svg',
+        action: () => null,
+      }
+    ], []);
 
     const handleContextMenu = (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
 
+      const coordinates = getResponsiveMenuPosition(e);
+      setContextCoordinates({ top: coordinates.y + 'px', left: coordinates.x + 'px' });
+
       setContextContent(FOLDER_CONTEXT_MENU_CONTENT);
-      setContextCoordinates({ top: e.clientY + 'px', left: e.clientX + 'px' });
 
       contextMenuRef.current?.open();
     };

@@ -62,6 +62,7 @@ export default function RelativeModal({ // generic modal
       sx={sx}
       tabIndex={1}
       ref={modalRef}
+      id='relative-modal' // used by the getResponsivePosition function to get component's height and width
       onBlur={() => setShowModal(false)}
     >
       <TextTag size='1.25rem' cursor='pointer' margin='0 0 0.5rem' onClick={() => setShowModal(false)}>
