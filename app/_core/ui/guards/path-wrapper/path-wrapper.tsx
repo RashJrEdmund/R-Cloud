@@ -53,7 +53,7 @@ export default function PathWrapper({ children }: Props) {
         setLoading(false);
       });
 
-    // fetch default home/root data. i.e data from supposed root director
+    // fetch default r-drive/root data. i.e data from supposed root director
     return () => {
       setDocuments(null);
     };

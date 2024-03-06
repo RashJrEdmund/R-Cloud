@@ -32,7 +32,7 @@ export default function SignUpForm({ }: Props) {
           setFormStatus,
         });
 
-        router.push('/home');
+        router.push('/r-drive');
       });
   };
 
@@ -60,7 +60,7 @@ export default function SignUpForm({ }: Props) {
       validation.data as any
     ).then(async (user) => {
       await handleCreateUserProfile(user, validation?.data as { [key: string]: string }, { setFormStatus });
-      router.push('/home');
+      router.push('/r-drive');
     })
       .catch(er => {
         setFormStatus({ status: 401, message: 'Could not create account. Try again or use another method' });

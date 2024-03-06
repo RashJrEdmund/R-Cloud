@@ -7,17 +7,17 @@ import Image from 'next/image';
 export async function generateMetadata(): Promise<Metadata> {
   // to dynamically generate metadata
   return {
-    title: 'Home',
-    description: 'r-cloud home page',
+    title: 'r-drive',
+    description: 'r-cloud drive page',
     alternates: {
-      canonical: '/home',
+      canonical: '/r-drive',
     },
   };
 }
 
 interface Props { };
 
-export default function Home({ }: Props) {
+export default function RDrive({ }: Props) {
   return (
     <MainTag>
       <TopSection hide_search_section />
@@ -43,7 +43,7 @@ export default function Home({ }: Props) {
             <ProgressBar progress_in_percentage={25} show_usage_colors width='min(100%, 400px)' height='25px' />
           </DivCard>
 
-          <Button as={Link} href='/home/root' bg='blued'>
+          <Button as={Link} href='/r-drive/root' bg='blued'>
             Open Drive
           </Button>
         </DivCard>

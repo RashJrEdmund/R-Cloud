@@ -72,6 +72,7 @@ export default function ProfileImage({ }: Props) {
         <Image
           src={preview || profileUrl}
           alt={`image of ${currentUser?.username}`}
+          draggable={false}
           width={250}
           height={250}
         />

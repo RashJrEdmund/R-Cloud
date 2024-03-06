@@ -36,13 +36,13 @@ export default function NavTitle({ }: Props) {
   const { currentUser } = useUserStore();
 
   useLayoutEffect(() => {
-    if (currentUser) setNavProperties({ route_name: 'Home', route_url: '/home' });
+    if (currentUser) setNavProperties({ route_name: 'R-Drive', route_url: '/r-drive' });
     else setNavProperties({ route_name: 'R-Cloud', route_url: '/' });
   }, [currentUser]);
 
   return (
     <StyledNavTitle>
-      <Button as={Link} href={navProperties.route_url} bg='white'>
+      <Button as={Link} href={navProperties.route_url} bg='white' no_white_space>
         {navProperties.route_name}
       </Button>
     </StyledNavTitle>

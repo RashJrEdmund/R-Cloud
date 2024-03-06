@@ -12,9 +12,9 @@ interface IIllustrationContent {
 
 export const LANDING_ILLUSTRATION_CONTENT: IIllustrationContent[] = [
   {
-    url: '/landing/save_&_organise_ files.svg',
-    alt: 'save & organise files illustration',
-    description: 'Save, organise and download your files',
+    url: '/landing/save_&_organize_ files.svg',
+    alt: 'save & organize files illustration',
+    description: 'Save, organize and download your files',
   },
   {
     url: '/landing/share_files.svg',
@@ -31,9 +31,9 @@ export const CTA_CONTENT: {
   icon: IconDefinition;
 }[] = [
   {
-    title: 'go to home',
+    title: 'go to r-drive',
     text: 'My R-Cloud',
-    url: '/home',
+    url: '/r-drive',
     bt_bg: 'blued',
     icon: faArrowRight,
   },

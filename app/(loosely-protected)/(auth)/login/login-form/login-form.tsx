@@ -36,7 +36,7 @@ export default function LoginForm({ }: Props) {
           setFormStatus({ status: 200, message: `welcome back ${user?.displayName || user?.email?.split('@').shift() || 'user'}` });
         }
 
-        router.push('/home');
+        router.push('/r-drive');
       });
   };
 
@@ -63,7 +63,7 @@ export default function LoginForm({ }: Props) {
     loginWithEmailAndPass(rawData.email, rawData.password)
       .then((user) => {
         setFormStatus({ status: 200, message: `welcome back ${user?.displayName || user?.email?.split('@').shift() || 'user'}` });
-        router.push('/home');
+        router.push('/r-drive');
       })
       .catch(() => {
         setFormStatus({ status: 401, message: 'Could not log in to account. Try again or use another method' });

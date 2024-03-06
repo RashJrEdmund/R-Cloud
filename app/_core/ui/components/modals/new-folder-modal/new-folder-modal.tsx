@@ -83,6 +83,7 @@ export default function NewFolderModal({
         </TextTag>
 
         <InputField
+          leave_active
           field_title='Folder name'
           field_name='folder-name'
           value={folderName}

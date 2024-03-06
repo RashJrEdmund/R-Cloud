@@ -46,7 +46,7 @@ function _GridFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: I
         <DivCard justify='start' width='100%' margin='10px 0 0' gap='5px'>
           <TextTag color_type='grayed' size='0.75rem' no_white_space>
             {folderLength > 0 ?
-              (folderLength + ` file${folderLength > 1 ? 's' : ''}`) :
+              (folderLength + ` item${folderLength > 1 ? 's' : ''}`) :
               'Empty'
             }
           </TextTag>
@@ -64,7 +64,7 @@ function _ListFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: I
 
   return (
     <>
-      <DivCard ref={folderRef as any} width='100%' flex_wrap='nowrap' justify='start' padding='12px 10px' className='card'
+      <DivCard ref={folderRef as any} width='100%' flex_wrap='nowrap' justify='start' padding='12px 10px' cursor='pointer' className='card'
         onDoubleClick={handleOpen}
       >
         <Image
@@ -82,7 +82,7 @@ function _ListFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: I
           <DivCard justify='start' width='100%' gap='5px'>
             <TextTag color_type='grayed' size='0.75rem' no_white_space>
               {folderLength > 0 ?
-                (folderLength + ` file${folderLength > 1 ? 's' : ''}`) :
+                (folderLength + ` item${folderLength > 1 ? 's' : ''}`) :
                 'Empty'
               }
             </TextTag>
@@ -117,7 +117,7 @@ function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Elemen
     } = useContextMenuContext();
 
     const handleOpen = () => {
-      router.push('/home/root/' + folder.id);
+      router.push('/r-drive/root/' + folder.id);
     };
 
     const FOLDER_CONTEXT_MENU_CONTENT: ContextMenuContent[] = useMemo(() => [
@@ -129,6 +129,11 @@ function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Elemen
       {
         text: 'Rename Folder',
         icon_url: '/icons/modal-icons/rename-icon.svg',
+        action: () => null,
+      },
+      {
+        text: 'Select Folder',
+        icon_url: '/icons/modal-icons/select-file-icon.svg',
         action: () => null,
       },
       {

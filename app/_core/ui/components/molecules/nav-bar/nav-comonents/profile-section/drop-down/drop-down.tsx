@@ -33,11 +33,11 @@ export default function ProfileDropDown({ showDropDown, setShowDropDown, coordin
   const DROP_DOWN_CONTENT = useMemo(() => {
     return [
       {
-        action: () => router.push('/home'),
-        text: 'Home',
+        action: () => router.push('/r-drive'),
+        text: 'R-Drive',
       },
       {
-        action: () => router.push('/home/root'),
+        action: () => router.push('/r-drive/root'),
         text: 'Root',
       },
       {
