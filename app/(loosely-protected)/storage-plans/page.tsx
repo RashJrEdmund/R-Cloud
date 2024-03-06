@@ -4,7 +4,7 @@ import { TopSection } from '@/components/molecules';
 import PlanDisplay from './_components/storage-plans';
 
 export async function generateMetadata(): Promise<Metadata> {
-  // to dynamically generate metadata
+  // to dynamically generate metadata3
   return {
     title: 'Storage Plans',
     description: 'r-cloud storage plans page',

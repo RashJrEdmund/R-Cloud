@@ -4,13 +4,13 @@ import { useState } from 'react';
 import { AppModalWrapper } from '@/components/modals/generics';
 import { TextTag, DivCard } from '@/components/atoms';
 import { InputField } from '@/components/molecules';
-import { useUserStore } from '@/store/zustand';
+import { useDocStore, useUserStore } from '@/store/zustand';
+import { useParams } from 'next/navigation';
+import { createFileDoc } from '@/core/config/firebase/fire-store';
 
 import type { MutableRefObject, FormEventHandler } from 'react';
 import type { IModalWrapperRef } from '@/components/modals/generics';
 import type { IDocument } from '@/interfaces/entities';
-import { useParams } from 'next/navigation';
-import { createFileDoc } from '@/core/config/firebase/fire-store';
 
 interface Props {
   folderModalRef: MutableRefObject<IModalWrapperRef | undefined>;
@@ -21,6 +21,7 @@ export default function NewFolderModal({
 }: Props) {
   const [folderName, setFolderName] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { toggleRefetchPath } = useDocStore();
 
   const { currentUser } = useUserStore();
 
@@ -35,28 +36,34 @@ export default function NewFolderModal({
     e.preventDefault();
 
     if (!folderName.trim() || !currentUser) return;
-    setIsLoading(true);
+    try {
+      setIsLoading(true);
 
-    const new_folder: Omit<IDocument, 'id'> = {
-      user_id: currentUser.id,
-      name: folderName,
-      parent_id: params.folder_id || 'root',
-      type: 'FOLDER',
-      content_type: null,
-      download_url: null,
-      extension: null,
-      capacity: {
-        size: '0 Bytes',
-        bytes: 0,
-        length: 0,
-      },
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+      const new_folder: Omit<IDocument, 'id'> = {
+        user_id: currentUser.id,
+        name: folderName,
+        parent_id: params.folder_id || 'root',
+        type: 'FOLDER',
+        content_type: null,
+        download_url: null,
+        extension: null,
+        capacity: {
+          size: '0 Bytes',
+          bytes: 0,
+          length: 0,
+        },
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
 
-    await createFileDoc(currentUser.email, new_folder as IDocument);
+      await createFileDoc(currentUser.email, new_folder as IDocument);
 
-    folderModalRef.current?.close();
+    } catch (error) {
+      // console.warn(error);
+    } finally {
+      folderModalRef.current?.close();
+      toggleRefetchPath();
+    }
   };
 
   return (
@@ -76,6 +83,7 @@ export default function NewFolderModal({
         </TextTag>
 
         <InputField
+          leave_active
           field_title='Folder name'
           field_name='folder-name'
           value={folderName}

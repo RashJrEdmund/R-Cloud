@@ -47,7 +47,7 @@ export default function StoragePlan({ plan }: Props) {
 
       <DivCard width='100%' flex_dir='column' gap='10px'>
         <TextTag size='2rem' weight='600'>
-          {getSize(plan.capacity, plan.unit)}
+          {plan.capacity}
         </TextTag>
 
         <TextTag size='0.9rem'>

@@ -23,7 +23,7 @@ interface IDocument {
   capacity: {
     size: string; // size in Mbs or Gbs
     bytes: number; // actual bytes
-    length: string | number | null; // number of items if it's a folder or null if it's a file
+    length: number | null; // number of items if it's a folder or null if it's a file
   };
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -51,11 +51,7 @@ interface IUserProfile {
   email: string;
   date_of_birth: Date | string;
   phone_number: string;
-  plan: {
-    id: string;
-    is_free: boolean;
-    total_capacity: number;
-    unit: IStorageUnit;
+  plan: IStoragePlan & {
     used_space: number;
   };
 };
@@ -64,8 +60,8 @@ interface IStoragePlan {
   id?: string;
   label: StoragePlanLabels;
   icon_url: string;
-  capacity: number;
-  unit: IStorageUnit;
+  capacity: string; // eg 1.5 Gb
+  bytes: number; // eg 1610612736 in bytes
   rate: string;
   is_free: boolean;
 }

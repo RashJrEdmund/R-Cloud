@@ -59,7 +59,7 @@ function _GridFileCard({ doc: file, imagePreview, fileRef, handleOpen }: ICardCo
 function _ListFileCard({ doc: file, imagePreview, fileRef, handleOpen }: ICardComponentProps) {
 
   return (
-    <DivCard width='100%' flex_wrap='nowrap' justify='start' padding='12px 10px' className='card'
+    <DivCard width='100%' flex_wrap='nowrap' justify='start' padding='12px 10px' cursor='pointer' className='card'
       ref={fileRef as any} onDoubleClick={handleOpen}
     >
       <Image
@@ -114,9 +114,19 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
         action: () => null,
       },
       {
-        text: 'Upload File',
+        text: 'Rename File',
+        icon_url: '/icons/modal-icons/rename-icon.svg',
+        action: () => null,
+      },
+      {
+        text: 'New File',
         icon_url: '/icons/modal-icons/upload-icon.svg',
         action: openFileUploadDialog,
+      },
+      {
+        text: 'Select File',
+        icon_url: '/icons/modal-icons/select-file-icon.svg',
+        action: () => null,
       },
       {
         text: 'Copy File',
@@ -131,7 +141,13 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
     ];
 
     const imagePreview = useMemo<{ img: string, isCustom?: boolean }>(() => {
-      if (displayLayout === 'LIST') return { img: '/icons/text-file-icon.svg' };
+      if (displayLayout === 'LIST') {
+        if (file.content_type?.includes('image')) {
+          return { img: '/icons/image-file-icon.svg' };
+        }
+
+        return { img: '/icons/text-file-icon.svg' };
+      }
 
       if (file.content_type?.includes('image') && file.download_url) {
         return { img: file.download_url, isCustom: true };
@@ -141,7 +157,7 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
     }, [file.type, displayLayout]);
 
     const handleOpen: MouseEventHandler<HTMLDivElement> = () => {
-      // router.push('/home?file=' + folder.id);
+      // router.push('/r-drive?file=' + folder.id);
     };
 
     const handleContextMenu = (e: MouseEvent) => {

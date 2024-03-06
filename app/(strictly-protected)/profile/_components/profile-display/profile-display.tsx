@@ -8,6 +8,8 @@ import { ProfileImage } from '..';
 import { useRouter } from 'next/navigation';
 import { logOut } from '@/core/config/firebase';
 import { getUserProfile } from '@/core/config/firebase/fire-store';
+import { calculatePercentage } from '@/utils/helpers';
+import { ProgressBar } from '@/components/molecules';
 
 interface Props {
   //
@@ -46,7 +48,7 @@ export default function ProfileDisplay({ }: Props) {
         const profile = res.data();
         setUserProfile(profile);
       })
-      .catch(() => router.push('/home'))
+      .catch(() => router.push('/r-drive'))
       .finally(() => setLoading(false));
   }, []);
 
@@ -55,26 +57,66 @@ export default function ProfileDisplay({ }: Props) {
       <ProfileImage />
 
       <DivCard width='100%' flex_wrap='wrap' justify='start' gap='1rem'>
-        <TextTag size='0.9rem' no_white_space>
-          Logged In as:
+        {(!loading || currentUser)? (
+          <>
+            <TextTag size='0.9rem' no_white_space>
+              Logged In as:
 
-          <TextTag color_type='success'>
-            {currentUser?.username}
-          </TextTag>
-        </TextTag>
+              <TextTag color_type='success'>
+                {currentUser?.username}
+              </TextTag>
+            </TextTag>
 
-        <TextTag size='0.9rem' no_white_space>
-          Current Plan
+            <TextTag size='0.9rem' no_white_space>
+              Current Plan
 
-          <TextTag color_type='success'>
-            1 Gb at 0 XAF / Month (Free Tier)
-          </TextTag>
-        </TextTag>
+              <TextTag color_type='success'>
+                {userProfile?.plan.label}
+              </TextTag>
+            </TextTag>
+
+            <DivCard width='100%' flex_dir='row' align='start' justify='start' gap='7px'>
+              <TextTag size='0.9rem' no_white_space>
+                Plan Capacity
+              </TextTag>
+
+              <DivCard flex_wrap='wrap' justify='start'>
+                <TextTag no_white_space color_type='success'>
+                  {userProfile?.plan.capacity} at
+                </TextTag>
+
+                <TextTag no_white_space color_type='success'>
+                  {userProfile?.plan.rate}
+                  ({userProfile?.plan.is_free ? 'Free' : 'Paid'} Tier)
+                </TextTag>
+              </DivCard>
+            </DivCard>
+          </>
+        ) : (
+          <TextTag no_white_space>getting profile...</TextTag>
+        )}
       </DivCard>
 
-      <pre>
+      {/* <pre>
         {JSON.stringify(userProfile, null, 4)}
-      </pre>
+      </pre> */}
+
+      {userProfile && (
+        <DivCard width='100%' flex_dir='column' align='start' justify='start'>
+          <TextTag size='0.9rem'>
+            Used space
+
+            <TextTag color_type='success'>
+              {calculatePercentage(userProfile?.plan.used_space, userProfile?.plan.bytes).merged}
+            </TextTag>
+          </TextTag>
+
+          <ProgressBar
+            show_usage_colors
+            progress_in_percentage={calculatePercentage(userProfile?.plan.used_space, userProfile?.plan.bytes).ans}
+          />
+        </DivCard>
+      )}
 
       <DivCard width='100%' flex_dir='column' align='start' justify='start'>
         <TextTag size='0.9rem'>

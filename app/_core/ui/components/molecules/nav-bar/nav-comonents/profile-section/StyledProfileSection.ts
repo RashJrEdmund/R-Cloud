@@ -16,7 +16,7 @@ const StyledProfileSection = styled.section`
     img {
       border: 1px solid gray;
       border-radius: 100%;
-      object-fit: contain;
+      object-fit: cover;
       width: 35px;
       height: 35px;
     }

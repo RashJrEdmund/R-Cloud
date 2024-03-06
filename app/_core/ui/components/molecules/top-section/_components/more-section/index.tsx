@@ -6,6 +6,7 @@ import { ContextMenu } from '@/components/modals';
 import { getResponsiveMenuPosition, openFileUploadDialog } from '@/utils/helpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { useModalContext } from '@/store/context';
 
 import type { IModalWrapperRef } from '@/components/modals/generics';
 import type { ContextMenuContent } from '@/interfaces/app';
@@ -17,6 +18,8 @@ interface Props {
 export default function MoreSection({ }: Props) {
   const contextMenuRef = useRef<IModalWrapperRef>(null);
   const [coordinates, setCoordinates] = useState<{ top: string, left: string }>({ top: '-10px', left: '-10px' });
+
+  const { openNewFolderModal } = useModalContext();
 
   const toggleModal: MouseEventHandler<HTMLSpanElement> = (e) => {
     // contextMenuRef
@@ -33,12 +36,17 @@ export default function MoreSection({ }: Props) {
     {
       text: 'New Folder',
       icon_url: '/icons/modal-icons/new-folder-icon.svg',
-      action: () => null,
+      action: openNewFolderModal,
     },
     {
       text: 'Upload File(s)',
       icon_url: '/icons/modal-icons/upload-icon.svg',
       action: openFileUploadDialog,
+    },
+    {
+      text: 'Start Selection',
+      icon_url: '/icons/modal-icons/select-file-icon.svg',
+      action: () => null,
     },
   ], []);
 

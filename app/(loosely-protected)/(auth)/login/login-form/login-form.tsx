@@ -9,6 +9,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { handleCreateUserProfile } from '../../auth-helpers';
+
 import { validateLoginForm } from '@/core/services/form-validations';
 import type { MouseEventHandler } from 'react';
 import type { IFieldErrors } from '@/core/services/form-validations/form-interfaces';
@@ -25,9 +27,16 @@ export default function LoginForm({ }: Props) {
 
   const handleGoogleLogin: MouseEventHandler<HTMLButtonElement> = () => {
     signInOrUpWithGooglePopup()
-      .then((user) => {
-        setFormStatus({ status: 200, message: `welcome back ${user?.displayName || user?.email?.split('@').shift() || 'user'}` });
-        router.push('/home');
+      .then(async (res) => {
+        const user = res?.user;
+        const tokenRes = (res as any)._tokenResponse;
+        if (tokenRes.isNewUser) {
+          await handleCreateUserProfile(user, null, { setFormStatus });
+        } else {
+          setFormStatus({ status: 200, message: `welcome back ${user?.displayName || user?.email?.split('@').shift() || 'user'}` });
+        }
+
+        router.push('/r-drive');
       });
   };
 
@@ -54,7 +63,7 @@ export default function LoginForm({ }: Props) {
     loginWithEmailAndPass(rawData.email, rawData.password)
       .then((user) => {
         setFormStatus({ status: 200, message: `welcome back ${user?.displayName || user?.email?.split('@').shift() || 'user'}` });
-        router.push('/home');
+        router.push('/r-drive');
       })
       .catch(() => {
         setFormStatus({ status: 401, message: 'Could not log in to account. Try again or use another method' });

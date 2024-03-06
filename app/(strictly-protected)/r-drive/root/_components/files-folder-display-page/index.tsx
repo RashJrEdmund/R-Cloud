@@ -2,7 +2,7 @@
 
 /* FILE_PURPOSE +=> ==================================
 | Just didn't want to repeat rendering <TopSection /> |
-| component in both home/ and home/[...id] routes.    |
+| component in the routes r-drive/ and r-drive/[...id]|
 | decided to wrap both in a common holder and call    |
 | the holder                                          |
 =======================================//============*/

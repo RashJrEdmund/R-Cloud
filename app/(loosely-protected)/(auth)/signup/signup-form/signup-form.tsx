@@ -10,12 +10,10 @@ import { useState } from 'react';
 import { validateCreateAccountForm } from '@/core/services/form-validations';
 import { signInOrUpWithGooglePopup, signUpWithCredentials } from '@/core/config/firebase';
 import { useRouter } from 'next/navigation';
-import { createUserProfile, getOneStoragePlan } from '@/core/config/firebase/fire-store';
+import { handleCreateUserProfile } from '../../auth-helpers';
 
 import type { MouseEventHandler } from 'react';
 import type { IFieldErrors } from '@/core/services/form-validations/form-interfaces';
-import type { IUserProfile } from '@/interfaces/entities';
-import type { User } from 'firebase/auth';
 
 interface Props {
   //
@@ -27,38 +25,15 @@ export default function SignUpForm({ }: Props) {
   const [formStatus, setFormStatus] = useState<{ status: number, message: string } | null>(null);
   const router = useRouter();
 
-  const handleCreateUserProfile = async (user: User | undefined, extra_data: { [key: string]: string } | null = null) => {
-    const res = await getOneStoragePlan('0'); // 0 is Id of default storage plan;
-
-    if (!res.exists()) return;
-
-    setFormStatus({ status: 200, message: 'Account created, setting up user profile...' });
-
-    const plan = res.data();
-
-    const userProfile: IUserProfile = {
-      id: user?.uid || '',
-      email: user?.email || '',
-      date_of_birth: extra_data?.date_of_birth || '',
-      phone_number: '', // extra_data?.phone_number, // TODO +=> ADD phone_number: extra_data
-      plan: {
-        id: res.id,
-        is_free: plan.is_free,
-        total_capacity: plan.capacity,
-        unit: plan.unit,
-        used_space: 0,
-      },
-    };
-
-    await createUserProfile(userProfile);
-
-    setFormStatus({ status: 200, message: `welcome to r-cloud, ${user?.displayName || user?.email?.split('@').shift() || 'new user'}` });
-    router.push('/home');
-  };
-
   const handleGoogleSignUp: MouseEventHandler<HTMLButtonElement> = () => {
     signInOrUpWithGooglePopup()
-      .then(handleCreateUserProfile); // passes 1 parameter. user: User.
+      .then(async (res) => {
+        await handleCreateUserProfile(res?.user, null, {
+          setFormStatus,
+        });
+
+        router.push('/r-drive');
+      });
   };
 
   const signUpFormAction = (formData: FormData) => {
@@ -83,7 +58,10 @@ export default function SignUpForm({ }: Props) {
       validation.data?.email || '',
       validation.data?.password || '',
       validation.data as any
-    ).then((user) => handleCreateUserProfile(user, validation?.data as { [key: string]: string }))
+    ).then(async (user) => {
+      await handleCreateUserProfile(user, validation?.data as { [key: string]: string }, { setFormStatus });
+      router.push('/r-drive');
+    })
       .catch(er => {
         setFormStatus({ status: 401, message: 'Could not create account. Try again or use another method' });
       }).finally(() => {

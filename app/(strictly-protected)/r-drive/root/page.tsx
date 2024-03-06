@@ -6,7 +6,7 @@ export async function generateMetadata(): Promise<Metadata> { // to dynamically 
     title: 'Root',
     description: 'r-cloud base root directory',
     alternates: {
-      canonical: '/home/root',
+      canonical: '/r-drive/root',
     },
   };
 };

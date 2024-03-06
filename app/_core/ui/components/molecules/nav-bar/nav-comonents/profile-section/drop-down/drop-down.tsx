@@ -2,7 +2,7 @@
 
 import { DivCard, TextTag } from '@/components/atoms';
 import { logOut } from '@/core/config/firebase';
-import { useUserStore } from '@/store/zustand';
+import { useDocStore, useUserStore } from '@/store/zustand';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef } from 'react';
 import type { LegacyRef } from 'react';
@@ -18,12 +18,14 @@ interface Props {
 
 export default function ProfileDropDown({ showDropDown, setShowDropDown, coordinates }: Props) {
   const { setCurrentUser } = useUserStore();
+  const { setDocuments } = useDocStore();
   const dropDownRef = useRef<HTMLDivElement>();
   const router = useRouter();
 
   const handleLogOut = () => {
     logOut().then(() => {
       setCurrentUser(null);
+      setDocuments(null);
       router.replace('/');
     });
   };
@@ -31,11 +33,11 @@ export default function ProfileDropDown({ showDropDown, setShowDropDown, coordin
   const DROP_DOWN_CONTENT = useMemo(() => {
     return [
       {
-        action: () => router.push('/home'),
-        text: 'Home',
+        action: () => router.push('/r-drive'),
+        text: 'R-Drive',
       },
       {
-        action: () => router.push('/home/root'),
+        action: () => router.push('/r-drive/root'),
         text: 'Root',
       },
       {

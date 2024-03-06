@@ -6,9 +6,15 @@
 import { collection, doc } from 'firebase/firestore';
 import { fireStore } from '..';
 
-const createUserCollectionPath = (email: string, _path: string) => collection(fireStore, `users/${email}` + _path);
+import type { DocumentData, CollectionReference, DocumentReference } from 'firebase/firestore';
 
-const createUserDocPath = (email: string, _path: string) => doc(fireStore, `users/${email}` + _path);
+const createUserCollectionPath = <T = DocumentData>(email: string, _path: string) => {
+  return collection(fireStore, `users/${email}` + _path) as CollectionReference<T>;
+};
+
+const createUserDocPath = <T = DocumentData>(email: string, _path: string) => {
+  return doc(fireStore, `users/${email}` + _path) as DocumentReference<T>;
+};
 
 export {
   createUserCollectionPath,

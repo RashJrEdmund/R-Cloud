@@ -40,13 +40,13 @@
             ]
         },
         {
-            "name": "Home page",
-            "short_name": "Home",
-            "description": "go to home page",
-            "url": "/home",
+            "name": "R-Drive",
+            "short_name": "R-Drive",
+            "description": "go to drive page",
+            "url": "/r-drive",
             "icons": [
                 {
-                    "src": "./manifest-assets/shortcut-home.png",
+                    "src": "./manifest-assets/shortcut-r-drive.png",
                     "sizes": "192x192"
                 }
             ]
@@ -55,10 +55,10 @@
             "name": "Files & Folders",
             "short_name": "Files & Folders",
             "description": "go to files and folder page",
-            "url": "/home/root",
+            "url": "/r-drive/root",
             "icons": [
                 {
-                    "src": "./manifest-assets/shortcut-home.png",
+                    "src": "./manifest-assets/shortcut-r-drive.png",
                     "sizes": "192x192"
                 }
             ]
@@ -70,7 +70,7 @@
             "url": "/storage-plans",
             "icons": [
                 {
-                    "src": "./manifest-assets/shortcut-home.png",
+                    "src": "./manifest-assets/shortcut-r-drive.png",
                     "sizes": "192x192"
                 }
             ]
