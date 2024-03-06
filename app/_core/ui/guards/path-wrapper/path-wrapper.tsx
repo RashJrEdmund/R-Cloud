@@ -11,7 +11,6 @@ import { useDocStore, useUserStore } from '@/store/zustand';
 
 import { useParams } from 'next/navigation';
 import { Streamer } from '@/components/molecules';
-import { dummyData } from '../../ui-constants';
 
 import type { IDocument } from '@/interfaces/entities';
 import { listFolderFiles } from '@/core/config/firebase/fire-store';
@@ -25,7 +24,7 @@ export default function PathWrapper({ children }: Props) {
   const params = useParams<{ folder_id: string }>();
 
   const { currentUser } = useUserStore();
-  const { setDocuments } = useDocStore();
+  const { setDocuments, refetchPath } = useDocStore();
 
   // const content: IDocument[] = [];
 
@@ -55,7 +54,10 @@ export default function PathWrapper({ children }: Props) {
       });
 
     // fetch default home/root data. i.e data from supposed root director
-  }, [params]);
+    return () => {
+      setDocuments(null);
+    };
+  }, [params, refetchPath]);
 
   if (loading) return <Streamer />;
 

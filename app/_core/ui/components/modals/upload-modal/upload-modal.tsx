@@ -34,7 +34,6 @@ export default function UploadModal({
   closeModal,
   uploadFiles,
 }: Props) {
-  ;
 
   return (
     <AppModalWrapper ref={uploadModalRef as any}

@@ -4,5 +4,11 @@ import type { IDocStore } from '../../interfaces';
 
 export const useDocStore = create<IDocStore>(set => ({
   documents: null,
-  setDocuments: (documents) => set({ documents })
+  setDocuments: (documents) => set({ documents }),
+
+  refetchPath: false,
+  toggleRefetchPath: () => set((prev) => ({
+    ...prev,
+    refetchPath: !prev.refetchPath,
+  })),
 }));

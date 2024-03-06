@@ -27,8 +27,7 @@
 
   /* ---overlay_gradient: linear-gradient(#3679ffab, #3679ffab, #3679ffab); */
   --overlay_gradient: #0505059b;
-  /* --box_shadow: 0 0 10px #00000079; */
-  --box_shadow: 0 0 10px red;
+  --box_shadow: 0 0 10px #00000079;
 
   /* DIMENSIONS */
   --primary_app_width: min(97vw, 1400px);

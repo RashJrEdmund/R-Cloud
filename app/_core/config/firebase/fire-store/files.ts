@@ -4,10 +4,13 @@
 ================================//========= */
 
 import { createUserCollectionPath, createUserDocPath } from './utils';
-import { addDoc, setDoc, getDocs, query, where } from 'firebase/firestore';
+import { addDoc, setDoc, getDocs, query, where, getAggregateFromServer, sum, getDoc } from 'firebase/firestore';
+import { getSizeFromBytes } from '@/utils/file-utils';
 
-import type { IDocument, DocumentType, IStorageUnit } from '@/interfaces/entities';
-import type { QuerySnapshot } from 'firebase/firestore';
+import type { IDocument, IStorageUnit } from '@/interfaces/entities';
+import type { AggregateField, AggregateQuerySnapshot, QuerySnapshot } from 'firebase/firestore';
+
+// CREATE REQUESTS
 
 const createFileDoc = async (email: string, document: IDocument) => {
   const collection_path = createUserCollectionPath(email, '/r-drive'); // +=> collection(fireStore, `users/${email}/r-drive`);
@@ -16,6 +19,48 @@ const createFileDoc = async (email: string, document: IDocument) => {
 
   return docRef;
 };
+
+const updateFileDoc = async (email: string, doc_id: string, document: Partial<IDocument>) => {
+  const document_path = createUserDocPath<IDocument>(email, '/r-drive/' + doc_id);
+
+  return setDoc(document_path,
+    { ...document },
+    { merge: true } // merge true so as to create if doesn't exist of only update specified fields if exits;
+  );
+};
+
+// UPDATE REQUESTS
+
+const updateFolderSize = async (email: string, doc_id: string, updates: { bytes: number, length: number }) => {
+  try {
+    const document_path = createUserDocPath<IDocument>(email, '/r-drive/' + doc_id);
+
+    const folder = await getDoc(document_path);
+
+    if (!folder.exists()) {
+      throw new Error('FOLDER DOES NOT EXIST');
+    }
+
+    const prev = folder.data();
+
+    const new_bytes = prev.capacity.bytes + updates.bytes;
+
+    const _update_capacity = {
+      bytes: new_bytes,
+      length: Number(prev.capacity.length) + Number(updates.length),
+      size: getSizeFromBytes(new_bytes, 1).merged,
+    }
+
+    return setDoc(document_path,
+      { capacity: _update_capacity }, // document here looks like { capacity: {...}} bcs of the type Pick<IDocument, 'capacity'>
+      { merge: true } // merge true so as to create if doesn't exist of only update specified fields if exits;
+    );
+  } catch (error) {
+    throw error;
+  }
+};
+
+// READ REQUESTS
 
 const listFolderFiles = async (email: string, folder_id: string): Promise<QuerySnapshot<IDocument>> => {
   const collection_path = createUserCollectionPath(email, '/r-drive');
@@ -28,7 +73,24 @@ const listFolderFiles = async (email: string, folder_id: string): Promise<QueryS
   return getDocs(fileQuery) as Promise<QuerySnapshot<IDocument>>;
 };
 
+const getTotalUsedSize = async (email: string): Promise<AggregateQuerySnapshot<{
+  total_bytes: AggregateField<number>;
+}>> => {
+  const collection_path = createUserCollectionPath(email, '/r-drive');
+
+  const snapShot = await getAggregateFromServer(collection_path, {
+    total_bytes: sum('capacity.bytes'),
+  });
+
+  console.log(snapShot.data());
+  return snapShot;
+};
+
 export {
   createFileDoc,
+  updateFileDoc,
+  updateFolderSize,
+
   listFolderFiles,
+  getTotalUsedSize,
 };

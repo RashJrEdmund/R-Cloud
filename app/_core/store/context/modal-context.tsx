@@ -8,13 +8,13 @@
 import { createContext, useContext, useState, useMemo, useCallback, useRef } from 'react';
 import { NewFolderModal, UploadModal } from '@/components/modals';
 import { uploadFile } from '@/core/config/firebase';
-import { useUserStore } from '../zustand';
-import { createFileDoc } from '@/core/config/firebase/fire-store';
+import { useDocStore, useUserStore } from '../zustand';
+import { createFileDoc, updateFolderSize } from '@/core/config/firebase/fire-store';
 import { getFileName, getSizeFromBytes } from '@/utils/file-utils';
+import { useParams } from 'next/navigation';
 
 import type { IModalWrapperRef } from '@/components/modals/generics';
 import type { IDocument } from '@/interfaces/entities';
-import { useParams } from 'next/navigation';
 
 interface IUploadDetails {
   total_size: number;
@@ -35,6 +35,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [progress, setProgress] = useState<{ [key: number]: number } | null>(null);
   const [currentUploadIndx, setCurrentUploadIndx] = useState<number>(0);
   const { currentUser } = useUserStore();
+  const { toggleRefetchPath } = useDocStore();
 
   const folderModalRef = useRef<IModalWrapperRef>();
   const uploadModalRef = useRef<IModalWrapperRef>();
@@ -74,8 +75,11 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       setIsLoading(true);
 
+      const completed = { bytes: 0, length: 0 }; // to keep track of successfully completed uploads;
+
       for (let i = 0; i < selectedFiles.length; i++) {
         const file = selectedFiles[i];
+
         setCurrentUploadIndx(i);
         const url = await uploadFile(file, currentUser.email, (progress) => setProgress({ [i]: progress }));
 
@@ -97,13 +101,20 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
         };
 
         await createFileDoc(currentUser.email, document as IDocument);
+        completed.bytes += file.size;
+        completed.length += 1;
+      }
+
+      if (params.folder_id) {
+        await updateFolderSize(currentUser.email, params.folder_id, completed);
       }
 
     } catch (error) {
-      console.warn(error);
+      // console.warn(error);
     } finally {
       setIsLoading(false);
       closeUploadModal();
+      toggleRefetchPath();
     };
   }, [currentUser, params.folder_id, selectedFiles]);
 

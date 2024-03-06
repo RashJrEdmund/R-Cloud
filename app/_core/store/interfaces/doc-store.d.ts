@@ -4,6 +4,10 @@ interface IDocStore {
   documents: IDocument[] | null;
   // eslint-disable-next-line no-unused-vars
   setDocuments: (documents: IDocument[] | null) => void;
+
+  refetchPath: boolean;
+
+  toggleRefetchPath: () => void;
 };
 
 export type {
