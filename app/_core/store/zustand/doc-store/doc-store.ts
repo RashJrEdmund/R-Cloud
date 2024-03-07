@@ -6,6 +6,9 @@ export const useDocStore = create<IDocStore>(set => ({
   documents: null,
   setDocuments: (documents) => set({ documents }),
 
+  currentFolder: 'root',
+  setCurrentFolder: (currentFolder) => set({ currentFolder }),
+
   refetchPath: false,
   toggleRefetchPath: () => set((prev) => ({
     ...prev,

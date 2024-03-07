@@ -9,11 +9,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useDocStore, useUserStore } from '@/store/zustand';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { Streamer } from '@/components/molecules';
 
 import type { IDocument } from '@/interfaces/entities';
-import { listFolderFiles } from '@/core/config/firebase/fire-store';
+import { getOneDocument, listFolderFiles } from '@/core/config/firebase/fire-store';
+import type { DocumentSnapshot } from 'firebase/firestore';
 
 interface Props {
   children: React.ReactNode;
@@ -21,14 +22,27 @@ interface Props {
 
 export default function PathWrapper({ children }: Props) {
   const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
   const params = useParams<{ folder_id: string }>();
 
   const { currentUser } = useUserStore();
-  const { setDocuments, refetchPath } = useDocStore();
+  const { setDocuments, refetchPath, setCurrentFolder } = useDocStore();
 
   // const content: IDocument[] = [];
 
   const fetchDocuments = useCallback(async (folder_id: string) => {
+    let folder: DocumentSnapshot<IDocument> | null = null;
+
+    if (params.folder_id) {
+      folder = await getOneDocument(currentUser?.email || '', params.folder_id);
+    }
+
+    if (folder && !folder.exists()) {
+      return router.replace('/r-drive/root');
+    };
+
+    if (folder?.exists()) setCurrentFolder({ ...folder.data(), id: folder.id });
+
     listFolderFiles(currentUser?.email || '', folder_id)
       .then(res => {
         if (res.empty) {

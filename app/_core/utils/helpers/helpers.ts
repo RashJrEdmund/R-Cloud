@@ -3,9 +3,9 @@
 ================================================ */
 
 const shortenText = (text: string, max_length: number): string => {
-  const isLong = text.length >= max_length + 1;
+  const isLong = text.length > max_length;
 
-  return isLong ? text.substring(0, max_length).trim() + '...' : text;
+  return isLong ? text.substring(0, max_length - 3).trim() + '...' : text;
 };
 
 const calculatePercentage = (a: number, b: number): { ans: number, merged: string } => {
