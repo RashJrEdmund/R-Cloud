@@ -43,7 +43,7 @@ export default function BreadCrumbs({ }: Props) {
 
       if (i > 1 && arr_crumbs[i - 1] && (arr_crumbs[i - 1] === 'root') && currentFolder !== 'root') {
         if (currentFolder.parent_id !== 'root') {
-          // meaning you are in a sub-directory that's not immediately under root dir.
+          // meaning you are in a sub-directory that's not immediately under root dir
           add_trails = true;
         }
 
