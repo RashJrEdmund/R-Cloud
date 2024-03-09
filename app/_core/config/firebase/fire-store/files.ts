@@ -7,7 +7,7 @@ import { createUserCollectionPath, createUserDocPath } from './utils';
 import { addDoc, setDoc, getDocs, query, where, getAggregateFromServer, sum, getDoc } from 'firebase/firestore';
 import { getSizeFromBytes } from '@/utils/file-utils';
 
-import type { IDocument, IStorageUnit } from '@/interfaces/entities';
+import type { IDocument } from '@/interfaces/entities';
 import type { AggregateField, AggregateQuerySnapshot, QuerySnapshot } from 'firebase/firestore';
 
 // READ REQUESTS
