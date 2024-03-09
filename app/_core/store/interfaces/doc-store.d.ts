@@ -5,8 +5,11 @@ interface IDocStore {
   // eslint-disable-next-line no-unused-vars
   setDocuments: (documents: IDocument[] | null) => void;
 
-  refetchPath: boolean;
+  currentFolder: IDocument | 'root';
+  // eslint-disable-next-line no-unused-vars
+  setCurrentFolder: (documents: IDocument | 'root') => void;
 
+  refetchPath: boolean;
   toggleRefetchPath: () => void;
 };
 

@@ -18,7 +18,7 @@ interface Props {
 };
 
 export default function FilesFolderDisplay({ }: Props) {
-  const { documents } = useDocStore();
+  const { documents, currentFolder } = useDocStore();
   const { displayLayout } = useAppStore();
 
   const { readyUploadModal } = useModalContext();
@@ -87,9 +87,10 @@ export default function FilesFolderDisplay({ }: Props) {
   return (
     <>
       <DivCard
+        // bg='light'
         width='100%'
-        flex_wrap='wrap'
-        align='start'
+        flex_dir='column'
+        justify='start'
         min_height='80vh'
         onContextMenu={handleContextMenu}
 
@@ -98,6 +99,9 @@ export default function FilesFolderDisplay({ }: Props) {
         onDrop={handleDrop}
         onDragEnd={handleDragEnd}
       >
+        <TextTag color_type='grayed' sx='word-break: break-all;'>
+          {currentFolder === 'root' ? 'root' : currentFolder.name}
+        </TextTag>
         {
           documents ? (
             (documents.length > 0) ? (

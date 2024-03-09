@@ -7,8 +7,46 @@ import { createUserCollectionPath, createUserDocPath } from './utils';
 import { addDoc, setDoc, getDocs, query, where, getAggregateFromServer, sum, getDoc } from 'firebase/firestore';
 import { getSizeFromBytes } from '@/utils/file-utils';
 
-import type { IDocument, IStorageUnit } from '@/interfaces/entities';
+import type { IDocument } from '@/interfaces/entities';
 import type { AggregateField, AggregateQuerySnapshot, QuerySnapshot } from 'firebase/firestore';
+
+// READ REQUESTS
+
+const getOneDocument = async (email: string, doc_id: string) => {
+  const document_path = createUserDocPath<IDocument>(email, '/r-drive/' + doc_id);
+
+  return getDoc(document_path);
+};
+
+const listFolderFiles = async (email: string, folder_id: string): Promise<QuerySnapshot<IDocument>> => {
+  const collection_path = createUserCollectionPath(email, '/r-drive');
+
+  const fileQuery = query(
+    collection_path,
+    where('parent_id', '==', folder_id),
+  );
+
+  return getDocs(fileQuery) as Promise<QuerySnapshot<IDocument>>;
+};
+
+const getTotalUsedSize = async (email: string): Promise<AggregateQuerySnapshot<{
+  total_bytes: AggregateField<number>;
+}>> => {
+  const collection_path = createUserCollectionPath<IDocument>(email, '/r-drive');
+
+  const q = query(
+    collection_path,
+    where('type', '==', 'FILE'),
+  );
+
+  const snapShot = (await getAggregateFromServer(q, {
+    total_bytes: sum('capacity.bytes'),
+  })) as AggregateQuerySnapshot<{
+    total_bytes: AggregateField<number>;
+  }>;
+
+  return snapShot;
+};
 
 // CREATE REQUESTS
 
@@ -31,9 +69,9 @@ const updateFileDoc = async (email: string, doc_id: string, document: Partial<ID
 
 // UPDATE REQUESTS
 
-const updateFolderSize = async (email: string, doc_id: string, updates: { bytes: number, length: number }) => {
+const updateFolderSize = async (email: string, folder_id: string, updates: { bytes: number, length: number }) => {
   try {
-    const document_path = createUserDocPath<IDocument>(email, '/r-drive/' + doc_id);
+    const document_path = createUserDocPath<IDocument>(email, '/r-drive/' + folder_id);
 
     const folder = await getDoc(document_path);
 
@@ -49,7 +87,7 @@ const updateFolderSize = async (email: string, doc_id: string, updates: { bytes:
       bytes: new_bytes,
       length: Number(prev.capacity.length) + Number(updates.length),
       size: getSizeFromBytes(new_bytes, 1).merged,
-    }
+    };
 
     return setDoc(document_path,
       { capacity: _update_capacity }, // document here looks like { capacity: {...}} bcs of the type Pick<IDocument, 'capacity'>
@@ -60,37 +98,12 @@ const updateFolderSize = async (email: string, doc_id: string, updates: { bytes:
   }
 };
 
-// READ REQUESTS
-
-const listFolderFiles = async (email: string, folder_id: string): Promise<QuerySnapshot<IDocument>> => {
-  const collection_path = createUserCollectionPath(email, '/r-drive');
-
-  const fileQuery = query(
-    collection_path,
-    where('parent_id', '==', folder_id),
-  );
-
-  return getDocs(fileQuery) as Promise<QuerySnapshot<IDocument>>;
-};
-
-const getTotalUsedSize = async (email: string): Promise<AggregateQuerySnapshot<{
-  total_bytes: AggregateField<number>;
-}>> => {
-  const collection_path = createUserCollectionPath(email, '/r-drive');
-
-  const snapShot = await getAggregateFromServer(collection_path, {
-    total_bytes: sum('capacity.bytes'),
-  });
-
-  console.log(snapShot.data());
-  return snapShot;
-};
-
 export {
+  getOneDocument,
+  listFolderFiles,
+  getTotalUsedSize,
+
   createFileDoc,
   updateFileDoc,
   updateFolderSize,
-
-  listFolderFiles,
-  getTotalUsedSize,
 };

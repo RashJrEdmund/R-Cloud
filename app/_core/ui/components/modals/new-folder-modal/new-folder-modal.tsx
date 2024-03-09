@@ -6,7 +6,7 @@ import { TextTag, DivCard } from '@/components/atoms';
 import { InputField } from '@/components/molecules';
 import { useDocStore, useUserStore } from '@/store/zustand';
 import { useParams } from 'next/navigation';
-import { createFileDoc } from '@/core/config/firebase/fire-store';
+import { createFileDoc, updateFolderSize } from '@/core/config/firebase/fire-store';
 
 import type { MutableRefObject, FormEventHandler } from 'react';
 import type { IModalWrapperRef } from '@/components/modals/generics';
@@ -57,6 +57,10 @@ export default function NewFolderModal({
       };
 
       await createFileDoc(currentUser.email, new_folder as IDocument);
+
+      if (params.folder_id) {
+        await updateFolderSize(currentUser.email, params.folder_id, { bytes: 0, length: 1 });
+      }
 
     } catch (error) {
       // console.warn(error);
