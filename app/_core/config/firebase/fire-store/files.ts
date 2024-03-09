@@ -87,7 +87,7 @@ const updateFolderSize = async (email: string, folder_id: string, updates: { byt
       bytes: new_bytes,
       length: Number(prev.capacity.length) + Number(updates.length),
       size: getSizeFromBytes(new_bytes, 1).merged,
-    }
+    };
 
     return setDoc(document_path,
       { capacity: _update_capacity }, // document here looks like { capacity: {...}} bcs of the type Pick<IDocument, 'capacity'>
