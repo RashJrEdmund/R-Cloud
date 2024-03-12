@@ -14,7 +14,7 @@ import type { ISharedCardProps } from '../shared';
 import type { ContextMenuContent } from '@/interfaces/app';
 
 interface Props extends ISharedCardProps {
-  // PROPS
+  //
 };
 
 interface ICardComponentProps extends Props { // doc: IDocument already exists as type here.
