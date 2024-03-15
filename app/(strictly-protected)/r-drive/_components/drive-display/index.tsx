@@ -5,19 +5,31 @@ import { Button, DivCard, TextTag } from '@/components/atoms';
 import { ProgressBar } from '@/components/molecules';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getTotalUsedSize } from '@/core/config/firebase/fire-store';
+import { getTotalUsedSize, getUserProfile } from '@/core/config/firebase/fire-store';
 import { useUserStore } from '@/store/zustand';
+import { calculatePercentage } from '@/utils/helpers';
 
 interface Props { };
 
 export default function DriveDisplay({ }: Props) {
-  const { currentUser } = useUserStore();
+  const { currentUser, userProfile, setUserProfile } = useUserStore();
 
   useEffect(() => {
-    getTotalUsedSize(currentUser?.email || '').then((res) => {
-      console.log(res);
-      console.log('data', res.data());
-    });
+    if (!currentUser) return;
+
+    getUserProfile(currentUser.email)
+      .then(res => {
+        if (!res.exists()) return;
+        setUserProfile(res.data());
+
+        console.log(res.data());
+      })
+      .finally(() => { });
+
+    // getTotalUsedSize(currentUser?.email || '').then((res) => {
+    //   console.log(res);
+    //   console.log('data', res.data());
+    // });
   }, []);
 
   return (
@@ -36,7 +48,16 @@ export default function DriveDisplay({ }: Props) {
             used space
           </TextTag>
 
-          <ProgressBar progress_in_percentage={25} show_usage_colors width='min(100%, 400px)' height='25px' />
+          {
+            userProfile ? (
+              <ProgressBar
+                show_usage_colors
+                progress_in_percentage={+calculatePercentage(userProfile?.plan.used_bytes, userProfile?.plan.bytes).ans.toFixed(2)}
+                width='min(100%, 400px)'
+                height='25px'
+              />
+            ) : null
+          }
         </DivCard>
 
         <Button as={Link} href='/r-drive/root' bg='blued'>

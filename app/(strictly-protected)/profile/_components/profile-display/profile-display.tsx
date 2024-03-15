@@ -52,6 +52,8 @@ export default function ProfileDisplay({ }: Props) {
       .finally(() => setLoading(false));
   }, []);
 
+  // console.log('user bytes', userProfile && calculatePercentage(userProfile?.plan.used_bytes, userProfile?.plan.bytes));
+
   return (
     <StyledProfileDisplay>
       <ProfileImage />
@@ -107,13 +109,13 @@ export default function ProfileDisplay({ }: Props) {
             Used space
 
             <TextTag color_type='success'>
-              {calculatePercentage(userProfile?.plan.used_bytes, userProfile?.plan.bytes).merged}
+              {calculatePercentage(userProfile?.plan.used_bytes, userProfile?.plan.bytes).ans.toFixed(2)} %
             </TextTag>
           </TextTag>
 
           <ProgressBar
             show_usage_colors
-            progress_in_percentage={calculatePercentage(userProfile?.plan.used_bytes, userProfile?.plan.bytes).ans}
+            progress_in_percentage={+calculatePercentage(userProfile?.plan.used_bytes, userProfile?.plan.bytes).ans.toFixed(2)}
             width='min(100%, 500px)'
           />
         </DivCard>
