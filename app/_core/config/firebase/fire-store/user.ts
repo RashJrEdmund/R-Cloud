@@ -30,15 +30,32 @@ const createUserProfile = async (user: IUserProfile) => {
   return docRef;
 };
 
-const updateUsedSpace = async (email: string, used_space: number) => {
-  // const doc_path = createUserDocPath<IUserProfile>(email || '', '/profile/me');
+const updateUsedSpace = async (email: string, used_bytes: number) => {
+  try {
+    const profile_path = createUserDocPath<IUserProfile>(email, '/profile/me');
 
-  // // const { ...userData } = user;
-  // const docRef = await setDoc(doc_path, { // addDoc doesn't allow customIds, setDoc does
-  //   'plan?.used_space': used_space,
-  // }, { merge: true }); // so as to update if exits or create if not exits;
+    const profile = await getDoc(profile_path);
 
-  // return docRef;
+    if (!profile.exists()) {
+      throw new Error('PROFILE DOES NOT EXIST');
+    };
+
+    const _profile = profile.data();
+
+    const new_used_bytes = Number(_profile.plan.used_bytes) + used_bytes;
+    // console.log({ _profile, new_used_bytes });
+
+    return setDoc(profile_path,
+      {
+        plan: {
+          used_bytes: new_used_bytes
+        }
+      },
+      { merge: true } // merge true so as to create if doesn't exist of only update specified fields if exits;
+    );
+  } catch (error) {
+    throw error;
+  }
 };
 
 const updateUserAccountSettings = async (email: string, settings: { [k: string]: string }) => {

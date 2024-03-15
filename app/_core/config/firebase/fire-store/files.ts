@@ -77,7 +77,7 @@ const updateFolderSize = async (email: string, folder_id: string, updates: { byt
 
     if (!folder.exists()) {
       throw new Error('FOLDER DOES NOT EXIST');
-    }
+    };
 
     const prev = folder.data();
 

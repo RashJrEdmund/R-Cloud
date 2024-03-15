@@ -46,14 +46,16 @@ interface IUser {
   }
 }
 
+interface IUserPlan extends IStoragePlan {
+  used_bytes: number
+};
+
 interface IUserProfile {
   id: string;
   email: string;
   date_of_birth: Date | string;
   phone_number: string;
-  plan: IStoragePlan & {
-    used_space: number;
-  };
+  plan: IUserPlan;
 };
 
 interface IStoragePlan {
@@ -72,6 +74,7 @@ export type {
   StoragePlanIds,
 
   IUser,
+  IUserPlan,
   IUserProfile,
   DocumentType,
 

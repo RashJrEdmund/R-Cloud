@@ -6,7 +6,7 @@ import { DriveDisplay } from './_components';
 export async function generateMetadata(): Promise<Metadata> { // to dynamically generate metadata
   return {
     title: 'R-Drive',
-    description: 'r-cloud base root directory',
+    description: 'user drive page',
     alternates: {
       canonical: '/r-drive/',
     },
