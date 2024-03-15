@@ -33,7 +33,7 @@ const handleCreateUserProfile: IHandleCreateUserProfile = async (user, extra_dat
     plan: {
       id: res.id,
       ...plan,
-      used_space: 0,
+      used_bytes: 0,
     },
   };
 

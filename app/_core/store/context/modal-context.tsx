@@ -9,7 +9,7 @@ import { createContext, useContext, useState, useMemo, useCallback, useRef } fro
 import { NewFolderModal, UploadModal } from '@/components/modals';
 import { uploadFile } from '@/core/config/firebase';
 import { useDocStore, useUserStore } from '../zustand';
-import { createFileDoc, updateFolderSize } from '@/core/config/firebase/fire-store';
+import { createFileDoc, updateFolderSize, updateUsedSpace } from '@/core/config/firebase/fire-store';
 import { getFileName, getSizeFromBytes } from '@/utils/file-utils';
 import { useParams } from 'next/navigation';
 
@@ -109,6 +109,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
         await updateFolderSize(currentUser.email, params.folder_id, completed);
       }
 
+      await updateUsedSpace(currentUser.email, completed.bytes);
     } catch (error) {
       // console.warn(error);
     } finally {

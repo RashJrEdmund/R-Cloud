@@ -107,13 +107,14 @@ export default function ProfileDisplay({ }: Props) {
             Used space
 
             <TextTag color_type='success'>
-              {calculatePercentage(userProfile?.plan.used_space, userProfile?.plan.bytes).merged}
+              {calculatePercentage(userProfile?.plan.used_bytes, userProfile?.plan.bytes).merged}
             </TextTag>
           </TextTag>
 
           <ProgressBar
             show_usage_colors
-            progress_in_percentage={calculatePercentage(userProfile?.plan.used_space, userProfile?.plan.bytes).ans}
+            progress_in_percentage={calculatePercentage(userProfile?.plan.used_bytes, userProfile?.plan.bytes).ans}
+            width='min(100%, 500px)'
           />
         </DivCard>
       )}
