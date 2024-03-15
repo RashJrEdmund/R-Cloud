@@ -8,7 +8,7 @@ import { ProfileImage } from '..';
 import { useRouter } from 'next/navigation';
 import { logOut } from '@/core/config/firebase';
 import { getUserProfile } from '@/core/config/firebase/fire-store';
-import { calculatePercentage } from '@/utils/helpers';
+import { calculatePercentage, getUsedSpaceVisualRepresentation } from '@/utils/helpers';
 import { ProgressBar } from '@/components/molecules';
 
 interface Props {
@@ -24,6 +24,8 @@ export default function ProfileDisplay({ }: Props) {
   const router = useRouter();
 
   const LastLogin = useMemo(() => new Date((currentUser?.metadata?.lastSignInTime as any)).toDateString(), [currentUser]);
+
+  const usedSpaceVisualRep = useMemo<number>(() => getUsedSpaceVisualRepresentation(userProfile), [userProfile]);
 
   const handleLogOut = () => {
     setLogOutState({
@@ -115,7 +117,7 @@ export default function ProfileDisplay({ }: Props) {
 
           <ProgressBar
             show_usage_colors
-            progress_in_percentage={+calculatePercentage(userProfile?.plan.used_bytes, userProfile?.plan.bytes).ans.toFixed(2)}
+            progress_in_percentage={usedSpaceVisualRep}
             width='min(100%, 500px)'
           />
         </DivCard>
