@@ -35,6 +35,10 @@ export default function UploadModal({
   uploadFiles,
 }: Props) {
 
+  console.clear();
+
+  console.log(selectedFiles)
+
   return (
     <AppModalWrapper ref={uploadModalRef as any}
       use_base_btns_instead
