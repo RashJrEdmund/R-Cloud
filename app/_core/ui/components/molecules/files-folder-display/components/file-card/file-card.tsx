@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useRef, useEffect } from 'react';
+import { useMemo, useRef, useEffect, useState } from 'react';
 import { StyledDisplayCard } from '../shared';
 import { DivCard, TextTag } from '@/components/atoms';
 import { getResponsiveMenuPosition, openFileUploadDialog, shortenText } from '@/utils/helpers';
@@ -24,12 +24,16 @@ interface ICardComponentProps extends Props { // doc: IDocument already exists a
 };
 
 function _GridFileCard({ doc: file, imagePreview, fileRef, handleOpen }: ICardComponentProps) {
+  const [backupImage, setBackupImage] = useState<string | null>('');
 
   return (
     <StyledDisplayCard ref={fileRef as any} onDoubleClick={handleOpen}>
       <Image
-        src={imagePreview.img}
+        src={backupImage || imagePreview.img}
         className={imagePreview?.isCustom ? 'custom_img' : ''}
+        onError={() => {
+          if (imagePreview.isCustom) setBackupImage('/icons/image-file-icon.svg');
+        }}
         alt='file icon'
         width={60}
         height={60}
@@ -145,12 +149,16 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
         if (file.content_type?.includes('image')) {
           return { img: '/icons/image-file-icon.svg' };
         }
-
-        return { img: '/icons/text-file-icon.svg' };
       }
 
       if (file.content_type?.includes('image') && file.download_url) {
-        return { img: file.download_url, isCustom: true };
+        return { img: file.download_url, isCustom: true }; // adding object-fit: cover; to custom image;
+      }
+
+      // The below apply for both LIST and GRID views;
+
+      if (file.content_type?.includes('video')) {
+        return { img: '/icons/image-video-icon.svg' };
       }
 
       return { img: '/icons/text-file-icon.svg' };
