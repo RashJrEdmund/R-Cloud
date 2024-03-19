@@ -1,12 +1,12 @@
 'use client';
 
-import { useRef, useMemo, useState, MouseEventHandler } from 'react';
+import { useRef, useMemo, useState, MouseEventHandler, useEffect } from 'react';
 import { DivCard, TextTag } from '@/components/atoms';
 import { ContextMenu } from '@/components/modals';
 import { getResponsiveMenuPosition, openFileUploadDialog } from '@/utils/helpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import { useModalContext } from '@/store/context';
+import { useContextMenuContext, useModalContext } from '@/store/context';
 
 import type { IModalWrapperRef } from '@/components/modals/generics';
 import type { ContextMenuContent } from '@/interfaces/app';
@@ -20,6 +20,11 @@ export default function MoreSection({ }: Props) {
   const [coordinates, setCoordinates] = useState<{ top: string, left: string }>({ top: '-10px', left: '-10px' });
 
   const { openNewFolderModal } = useModalContext();
+
+  const {
+    selectionStart, setSelectionStart,
+    setSelectedDocs,
+  } = useContextMenuContext();
 
   const toggleModal: MouseEventHandler<HTMLSpanElement> = (e) => {
     // contextMenuRef
@@ -44,11 +49,23 @@ export default function MoreSection({ }: Props) {
       action: openFileUploadDialog,
     },
     {
-      text: 'Start Selection',
+      text: `${selectionStart ? 'Stop' : 'Start'} Selection`,
       icon_url: '/icons/modal-icons/select-file-icon.svg',
-      action: () => null,
+      action: () => {
+        if (selectionStart) { // then we should stop selection
+          setSelectionStart(false);
+          setSelectedDocs([]);
+          return;
+        }
+
+        setSelectionStart(true);
+      },
     },
-  ], []);
+  ], [selectionStart]);
+
+  useEffect(() => {
+    console.log('selection start', selectionStart);
+  }, [selectionStart]);
 
   return (
     <DivCard position='relative'> {/* This relative positioning is for the ContextMenu */}

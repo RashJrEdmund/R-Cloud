@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useRef, useEffect, useState } from 'react';
-import { StyledDisplayCard } from '../shared';
+import { SelectCheckbox, StyledDisplayCard } from '../shared';
 import { DivCard, TextTag } from '@/components/atoms';
 import { getResponsiveMenuPosition, openFileUploadDialog, shortenText } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
@@ -28,6 +28,8 @@ function _GridFileCard({ doc: file, imagePreview, fileRef, handleOpen }: ICardCo
 
   return (
     <StyledDisplayCard ref={fileRef as any} onDoubleClick={handleOpen}>
+      <SelectCheckbox document={file} />
+
       <Image
         src={backupImage || imagePreview.img}
         className={imagePreview?.isCustom ? 'custom_img' : ''}
@@ -63,9 +65,11 @@ function _GridFileCard({ doc: file, imagePreview, fileRef, handleOpen }: ICardCo
 function _ListFileCard({ doc: file, imagePreview, fileRef, handleOpen }: ICardComponentProps) {
 
   return (
-    <DivCard width='100%' flex_wrap='nowrap' justify='start' padding='12px 10px' cursor='pointer' className='card'
+    <DivCard width='100%' flex_wrap='nowrap' justify='start' padding='12px 10px' cursor='pointer' className='card' position='relative'
       ref={fileRef as any} onDoubleClick={handleOpen}
     >
+      <SelectCheckbox document={file} />
+
       <Image
         src={imagePreview.img}
         alt='file icon'
@@ -108,10 +112,17 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
     const {
       setContextCoordinates,
       setContextContent,
-      contextMenuRef
+      contextMenuRef,
+
+      selectedDocs,
+      handleDocumentSelection,
     } = useContextMenuContext();
 
-    const FILE_CONTEXT_MENU_CONTENT: ContextMenuContent[] = [
+    // console.log({ selectedDocs });
+
+    // console.log('is file include?', selectedDocs.includes(file.id));
+
+    const FILE_CONTEXT_MENU_CONTENT = useMemo<ContextMenuContent[]>(() => [
       {
         text: 'Open File',
         icon_url: '/icons/modal-icons/open-folder-icon.svg',
@@ -128,9 +139,9 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
         action: openFileUploadDialog,
       },
       {
-        text: 'Select File',
+        text: `${selectedDocs.includes(file.id) ? 'Deselect' : 'Select'} File`,
         icon_url: '/icons/modal-icons/select-file-icon.svg',
-        action: () => null,
+        action: () => handleDocumentSelection(file),
       },
       {
         text: 'Copy File',
@@ -142,7 +153,7 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
         icon_url: '/icons/modal-icons/delete-icon.svg',
         action: () => null,
       }
-    ];
+    ], [selectedDocs]);
 
     const imagePreview = useMemo<{ img: string, isCustom?: boolean }>(() => {
       if (displayLayout === 'LIST') {

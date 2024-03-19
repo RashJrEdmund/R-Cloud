@@ -5,9 +5,9 @@ import type { DocumentSnapshot, QuerySnapshot } from 'firebase/firestore';
 import type { IStoragePlan, StoragePlanIds } from '@/interfaces/entities';
 
 const getStoragePlans = async (): Promise<QuerySnapshot<IStoragePlan>> => {
-  const doc_path = collection(fireStore, 'storage-plans');
+  const collection_path = collection(fireStore, 'storage-plans');
 
-  return getDocs(doc_path) as Promise<QuerySnapshot<IStoragePlan>>;
+  return getDocs(collection_path) as Promise<QuerySnapshot<IStoragePlan>>;
 };
 
 const getOneStoragePlan = async (id: StoragePlanIds = '0'): Promise<DocumentSnapshot<IStoragePlan>> => {

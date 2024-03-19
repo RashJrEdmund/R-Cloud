@@ -1,7 +1,6 @@
 'use client';
 
-import { StyledDisplayCard } from '../shared';
-import type { ISharedCardProps } from '../shared';
+import { SelectCheckbox, StyledDisplayCard } from '../shared';
 import Image from 'next/image';
 import { DivCard, TextTag } from '@/_core/ui/components/atoms';
 import { useMemo, useEffect, useRef } from 'react';
@@ -11,6 +10,7 @@ import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
 import { useContextMenuContext } from '@/store/context';
 
 import type { MutableRefObject, MouseEventHandler } from 'react';
+import type { ISharedCardProps } from '../shared';
 import type { ContextMenuContent } from '@/interfaces/app';
 
 interface Props extends ISharedCardProps {
@@ -29,6 +29,8 @@ function _GridFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: I
     <StyledDisplayCard ref={folderRef as any}
       onDoubleClick={handleOpen}
     >
+      <SelectCheckbox document={folder} />
+
       <Image
         src='/icons/folder-icon.svg'
         alt='file icon'
@@ -64,9 +66,11 @@ function _ListFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: I
 
   return (
     <>
-      <DivCard ref={folderRef as any} width='100%' flex_wrap='nowrap' justify='start' padding='12px 10px' cursor='pointer' className='card'
+      <DivCard ref={folderRef as any} width='100%' flex_wrap='nowrap' justify='start' padding='12px 10px' cursor='pointer' className='card' position='relative'
         onDoubleClick={handleOpen}
       >
+        <SelectCheckbox document={folder} />
+
         <Image
           src='/icons/folder-icon.svg'
           alt='file icon'
@@ -113,35 +117,46 @@ function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Elemen
     const {
       setContextCoordinates,
       setContextContent,
-      contextMenuRef
+      contextMenuRef,
+
+      selectionStart,
+      selectedDocs,
+      handleDocumentSelection,
     } = useContextMenuContext();
 
     const handleOpen = () => {
+      if (selectionStart) return; // to prevent opening folders when selection has started
+
       router.push('/r-drive/root/' + folder.id);
     };
 
-    const FOLDER_CONTEXT_MENU_CONTENT: ContextMenuContent[] = useMemo(() => [
-      {
-        text: 'Open Folder',
-        icon_url: '/icons/modal-icons/open-folder-icon.svg',
-        action: handleOpen,
-      },
-      {
-        text: 'Rename Folder',
-        icon_url: '/icons/modal-icons/rename-icon.svg',
-        action: () => null,
-      },
-      {
-        text: 'Select Folder',
-        icon_url: '/icons/modal-icons/select-file-icon.svg',
-        action: () => null,
-      },
-      {
-        text: 'Delete Folder',
-        icon_url: '/icons/modal-icons/delete-icon.svg',
-        action: () => null,
-      }
-    ], []);
+    const FOLDER_CONTEXT_MENU_CONTENT: ContextMenuContent[] = useMemo(() => {
+      // console.log('memo change', selectedDocs);
+      // console.log('is folder include?', folder.id, selectedDocs.includes(folder.id));
+
+      return [
+        {
+          text: 'Open Folder',
+          icon_url: '/icons/modal-icons/open-folder-icon.svg',
+          action: handleOpen,
+        },
+        {
+          text: 'Rename Folder',
+          icon_url: '/icons/modal-icons/rename-icon.svg',
+          action: () => null,
+        },
+        {
+          text: `${selectedDocs.includes(folder.id) ? 'Deselect' : 'Select'} Folder`,
+          icon_url: '/icons/modal-icons/select-file-icon.svg',
+          action: () => handleDocumentSelection(folder),
+        },
+        {
+          text: 'Delete Folder',
+          icon_url: '/icons/modal-icons/delete-icon.svg',
+          action: () => null,
+        }
+      ]
+    }, [selectedDocs]);
 
     const handleContextMenu = (e: MouseEvent) => {
       e.preventDefault();
