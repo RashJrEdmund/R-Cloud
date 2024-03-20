@@ -7,6 +7,7 @@ import { getResponsiveMenuPosition, openFileUploadDialog } from '@/utils/helpers
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { useContextMenuContext, useModalContext } from '@/store/context';
+import { CONTEXT_MENU_ICONS } from '@/core/ui/icons';
 
 import type { IModalWrapperRef } from '@/components/modals/generics';
 import type { ContextMenuContent } from '@/interfaces/app';
@@ -22,8 +23,8 @@ export default function MoreSection({ }: Props) {
   const { openNewFolderModal } = useModalContext();
 
   const {
-    selectionStart, setSelectionStart,
-    setSelectedDocs,
+    selectionStart,
+    stopDocumentSelection,
   } = useContextMenuContext();
 
   const toggleModal: MouseEventHandler<HTMLSpanElement> = (e) => {
@@ -40,32 +41,20 @@ export default function MoreSection({ }: Props) {
   const MORE_CONTEXT_MENU_CONTENT: ContextMenuContent[] = useMemo(() => [
     {
       text: 'New Folder',
-      icon_url: '/icons/modal-icons/new-folder-icon.svg',
+      icon_url: CONTEXT_MENU_ICONS.new_folder,
       action: openNewFolderModal,
     },
     {
       text: 'Upload File(s)',
-      icon_url: '/icons/modal-icons/upload-icon.svg',
+      icon_url: CONTEXT_MENU_ICONS.upload,
       action: openFileUploadDialog,
     },
     {
       text: `${selectionStart ? 'Stop' : 'Start'} Selection`,
-      icon_url: '/icons/modal-icons/select-file-icon.svg',
-      action: () => {
-        if (selectionStart) { // then we should stop selection
-          setSelectionStart(false);
-          setSelectedDocs([]);
-          return;
-        }
-
-        setSelectionStart(true);
-      },
+      icon_url: CONTEXT_MENU_ICONS.select,
+      action: stopDocumentSelection,
     },
-  ], [selectionStart]);
-
-  useEffect(() => {
-    console.log('selection start', selectionStart);
-  }, [selectionStart]);
+  ], [selectionStart]); // selectionStart is required especially for the start and stop selection option
 
   return (
     <DivCard position='relative'> {/* This relative positioning is for the ContextMenu */}

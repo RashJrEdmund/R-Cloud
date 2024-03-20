@@ -36,7 +36,6 @@ export default function SelectCheckbox({ document }: Props) {
   const { selectionStart, selectedDocs, handleDocumentSelection } = useContextMenuContext();
 
   const handleSelection = () => {
-    console.log('selection made');
     handleDocumentSelection(document);
   };
 
@@ -47,7 +46,7 @@ export default function SelectCheckbox({ document }: Props) {
     // console.clear();
     // console.log(selectedDocs);
 
-  }, [selectedDocs]);
+  }, [document.id, selectedDocs]);
 
   return selectionStart ? (
     <>

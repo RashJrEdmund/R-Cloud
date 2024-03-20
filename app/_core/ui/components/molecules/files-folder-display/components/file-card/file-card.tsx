@@ -3,10 +3,11 @@
 import { useMemo, useRef, useEffect, useState } from 'react';
 import { SelectCheckbox, StyledDisplayCard } from '../shared';
 import { DivCard, TextTag } from '@/components/atoms';
-import { getResponsiveMenuPosition, openFileUploadDialog, shortenText } from '@/utils/helpers';
+import { deriveDocumentPreviewImage, openFileUploadDialog, shortenText } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
 import { useContextMenuContext } from '@/store/context';
 import { useAppStore } from '@/store/zustand';
+import { CONTEXT_MENU_ICONS, MEDIA_ICONS } from '@/core/ui/icons';
 import Image from 'next/image';
 
 import type { MouseEventHandler, MutableRefObject } from 'react';
@@ -34,7 +35,7 @@ function _GridFileCard({ doc: file, imagePreview, fileRef, handleOpen }: ICardCo
         src={backupImage || imagePreview.img}
         className={imagePreview?.isCustom ? 'custom_img' : ''}
         onError={() => {
-          if (imagePreview.isCustom) setBackupImage('/icons/image-file-icon.svg');
+          if (imagePreview.isCustom) setBackupImage(MEDIA_ICONS.img);
         }}
         alt='file icon'
         width={60}
@@ -110,96 +111,67 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
     const { displayLayout } = useAppStore();
 
     const {
-      setContextCoordinates,
-      setContextContent,
-      contextMenuRef,
+      handleDocCardContextMenu,
 
-      selectedDocs,
-      handleDocumentSelection,
+      selectionStart,
     } = useContextMenuContext();
 
     // console.log({ selectedDocs });
 
     // console.log('is file include?', selectedDocs.includes(file.id));
 
-    const FILE_CONTEXT_MENU_CONTENT = useMemo<ContextMenuContent[]>(() => [
-      {
-        text: 'Open File',
-        icon_url: '/icons/modal-icons/open-folder-icon.svg',
-        action: () => null,
-      },
-      {
-        text: 'Rename File',
-        icon_url: '/icons/modal-icons/rename-icon.svg',
-        action: () => null,
-      },
-      {
-        text: 'New File',
-        icon_url: '/icons/modal-icons/upload-icon.svg',
-        action: openFileUploadDialog,
-      },
-      {
-        text: `${selectedDocs.includes(file.id) ? 'Deselect' : 'Select'} File`,
-        icon_url: '/icons/modal-icons/select-file-icon.svg',
-        action: () => handleDocumentSelection(file),
-      },
-      {
-        text: 'Copy File',
-        icon_url: '/icons/modal-icons/rename-icon.svg',
-        action: () => null,
-      },
-      {
-        text: 'Delete File',
-        icon_url: '/icons/modal-icons/delete-icon.svg',
-        action: () => null,
-      }
-    ], [selectedDocs]);
-
-    const imagePreview = useMemo<{ img: string, isCustom?: boolean }>(() => {
-      if (displayLayout === 'LIST') {
-        if (file.content_type?.includes('image')) {
-          return { img: '/icons/image-file-icon.svg' };
-        }
-      }
-
-      if (file.content_type?.includes('image') && file.download_url) {
-        return { img: file.download_url, isCustom: true }; // adding object-fit: cover; to custom image;
-      }
-
-      // The below apply for both LIST and GRID views;
-
-      if (file.content_type?.includes('video')) {
-        return { img: '/icons/image-video-icon.svg' };
-      }
-
-      return { img: '/icons/text-file-icon.svg' };
-    }, [file.type, displayLayout]);
-
     const handleOpen: MouseEventHandler<HTMLDivElement> = () => {
       // router.push('/r-drive?file=' + folder.id);
     };
 
-    const handleContextMenu = (e: MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
+    const FILE_CONTEXT_MENU_CONTENT = useMemo<ContextMenuContent[]>(() => [
+      {
+        text: 'Open File',
+        icon_url: CONTEXT_MENU_ICONS.open,
+        action: handleOpen,
+      },
+      {
+        text: 'Rename File',
+        icon_url: CONTEXT_MENU_ICONS.rename,
+        action: () => null,
+      },
+      {
+        text: 'New File',
+        icon_url: CONTEXT_MENU_ICONS.upload,
+        action: openFileUploadDialog,
+      },
+      {
+        text: 'Copy File',
+        icon_url: CONTEXT_MENU_ICONS.copy,
+        action: () => null,
+      },
+      {
+        text: 'Delete File',
+        icon_url: CONTEXT_MENU_ICONS.delete,
+        action: () => null,
+      }
+    ], []);
 
-      const coordinates = getResponsiveMenuPosition(e);
-      setContextCoordinates({ top: coordinates.y + 'px', left: coordinates.x + 'px' });
+    const imagePreview = useMemo<{ img: string, isCustom?: boolean }>(() => {
+      return deriveDocumentPreviewImage(file, displayLayout);
+    }, [displayLayout, file.content_type]);
 
-      setContextContent(FILE_CONTEXT_MENU_CONTENT);
-
-      contextMenuRef.current?.open();
+    const handleContext = (e: MouseEvent) => {
+      handleDocCardContextMenu({
+        event: e,
+        CONTEXT_MENU_CONTENT: FILE_CONTEXT_MENU_CONTENT
+      });
     };
 
     useEffect(() => {
       if (!fileRef.current) return;
 
-      fileRef.current.addEventListener('contextmenu', handleContextMenu, false);
+      fileRef.current.addEventListener('contextmenu', handleContext, false);
 
       return () => {
-        fileRef.current?.removeEventListener('contextmenu', handleContextMenu, false);
+        fileRef.current?.removeEventListener('contextmenu', handleContext, false);
       };
-    }, []);
+    }, [selectionStart]);
 
     return (
       <CardComponent

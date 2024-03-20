@@ -7,8 +7,7 @@
 
 import { createContext, useContext, useState, useMemo, useRef } from 'react';
 import { ContextMenu } from '@/components/modals';
-import { openFileUploadDialog } from '@/utils/helpers';
-import { useModalContext } from '.';
+import { getResponsiveMenuPosition } from '@/utils/helpers';
 
 import type { Dispatch, SetStateAction, RefObject } from 'react';
 import type { IModalWrapperRef } from '@/components/modals/generics';
@@ -20,20 +19,23 @@ interface IContextCoordinates {
   left: string;
 }
 
+interface IHandleDocCardContextMenu {
+  event: MouseEvent;
+  CONTEXT_MENU_CONTENT: ContextMenuContent[];
+}
+
 interface IContextMenuContextProvider {
+  // context menu
   setContextCoordinates: Dispatch<SetStateAction<IContextCoordinates>>;
-
   setContextContent: Dispatch<SetStateAction<ContextMenuContent[]>>;
-
   contextMenuRef: RefObject<IModalWrapperRef>;
+  handleDocCardContextMenu: (props: IHandleDocCardContextMenu) => void;
 
   // selection
   selectionStart: boolean; setSelectionStart: Dispatch<SetStateAction<boolean>>;
   selectedDocs: string[]; setSelectedDocs: Dispatch<SetStateAction<string[]>>;
   handleDocumentSelection: (doc: IDocument) => void;
-
-  // context menu content
-  MAIN_CONTEXT_MENU_CONTENT: ContextMenuContent[];
+  stopDocumentSelection: () => void;
 };
 
 const ContextMenuContext = createContext<IContextMenuContextProvider | null>(null);
@@ -47,29 +49,30 @@ const ContextMenuContextProvider = ({ children }: { children: React.ReactNode })
 
   const contextMenuRef = useRef<IModalWrapperRef>(null);
 
-  const { openNewFolderModal } = useModalContext();
+  const handleDocCardContextMenu = ({ event: e, CONTEXT_MENU_CONTENT }: IHandleDocCardContextMenu) => {
+    /* FUNC_DESC +=> ==========================================
+    | This function handles opening the context menu for both |
+    | the file and folder cards.                              |
+    ==========================================//=============*/
+    e.preventDefault();
 
-  const MAIN_CONTEXT_MENU_CONTENT: ContextMenuContent[] = useMemo(() => [
-    {
-      text: 'New Folder',
-      icon_url: '/icons/modal-icons/new-folder-icon.svg',
-      action: openNewFolderModal,
-    },
-    {
-      text: 'Upload File(s)',
-      icon_url: '/icons/modal-icons/upload-icon.svg',
-      action: openFileUploadDialog,
-    },
-  ], []);
+    if (selectionStart) return;
+
+    e.stopPropagation();
+
+    const coordinates = getResponsiveMenuPosition(e);
+    setContextCoordinates({ top: coordinates.y + 'px', left: coordinates.x + 'px' });
+
+    setContextContent(CONTEXT_MENU_CONTENT);
+
+    contextMenuRef.current?.open();
+  };
 
   const handleDocumentSelection = (document: IDocument) => {
     /* FUNC_DESC +=> =========================================
     | This function handles selection actions for both files |
     | and folders                                            |
     ==========================================//============*/
-
-    console.log('document includes?', selectedDocs.includes(document.id));
-    console.log(selectedDocs);
 
     if (!selectionStart) setSelectionStart(true);
 
@@ -82,21 +85,31 @@ const ContextMenuContextProvider = ({ children }: { children: React.ReactNode })
     setSelectedDocs((prev) => [...prev, document.id]);
   };
 
-  const contextValue = useMemo<Omit<IContextMenuContextProvider, 'handleDocumentSelection'>>(() => ({
+  const stopDocumentSelection = () => {
+    if (selectionStart) { // then we should stop selection
+      setSelectionStart(false);
+      setSelectedDocs([]);
+      return;
+    }
+
+    setSelectionStart(true);
+  };
+
+  const contextValue = useMemo<IContextMenuContextProvider>(() => ({
     setContextCoordinates,
     setContextContent,
     contextMenuRef,
+    handleDocCardContextMenu,
 
     // selection
     selectionStart, setSelectionStart,
     selectedDocs, setSelectedDocs,
-    // handleDocumentSelection,
-
-    MAIN_CONTEXT_MENU_CONTENT,
+    handleDocumentSelection,
+    stopDocumentSelection,
   }), [selectionStart, selectedDocs]);
 
   return (
-    <ContextMenuContext.Provider value={{...contextValue, handleDocumentSelection}}>
+    <ContextMenuContext.Provider value={{ ...contextValue }}>
       <>
         <ContextMenu
           ref={contextMenuRef}
