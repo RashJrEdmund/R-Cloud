@@ -23,8 +23,6 @@ export default function DriveDisplay({ }: Props) {
       .then(res => {
         if (!res.exists()) return;
         setUserProfile(res.data());
-
-        console.log(res.data());
       })
       .finally(() => { });
 

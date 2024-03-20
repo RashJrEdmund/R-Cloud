@@ -7,7 +7,7 @@ import { useMemo, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { shortenText } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
-import { useContextMenuContext } from '@/store/context';
+import { useContextMenuContext, useModalContext } from '@/store/context';
 import { CONTEXT_MENU_ICONS, MEDIA_ICONS } from '@/core/ui/icons';
 
 import type { MutableRefObject, MouseEventHandler } from 'react';
@@ -121,6 +121,8 @@ function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Elemen
       selectionStart,
     } = useContextMenuContext();
 
+    const { openEditDocumentModal } = useModalContext();
+
     const handleOpen = () => {
       if (selectionStart) return; // to prevent opening folders when selection has started
 
@@ -136,7 +138,7 @@ function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Elemen
       {
         text: 'Rename Folder',
         icon_url: CONTEXT_MENU_ICONS.rename,
-        action: () => null,
+        action: () => openEditDocumentModal(folder),
       },
       {
         text: 'Delete Folder',

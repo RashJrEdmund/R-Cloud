@@ -33,7 +33,7 @@ export default function RelativeModal({ // generic modal
 
   left = '0',
   top = '0',
-  z_index = '5',
+  z_index = '7',
   position = 'absolute',
 }: Props) {
 

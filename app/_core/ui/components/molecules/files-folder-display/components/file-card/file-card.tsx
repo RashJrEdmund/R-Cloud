@@ -5,7 +5,7 @@ import { SelectCheckbox, StyledDisplayCard } from '../shared';
 import { DivCard, TextTag } from '@/components/atoms';
 import { deriveDocumentPreviewImage, openFileUploadDialog, shortenText } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
-import { useContextMenuContext } from '@/store/context';
+import { useContextMenuContext, useModalContext } from '@/store/context';
 import { useAppStore } from '@/store/zustand';
 import { CONTEXT_MENU_ICONS, MEDIA_ICONS } from '@/core/ui/icons';
 import Image from 'next/image';
@@ -116,6 +116,8 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
       selectionStart,
     } = useContextMenuContext();
 
+    const { openEditDocumentModal } = useModalContext();
+
     // console.log({ selectedDocs });
 
     // console.log('is file include?', selectedDocs.includes(file.id));
@@ -133,7 +135,7 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
       {
         text: 'Rename File',
         icon_url: CONTEXT_MENU_ICONS.rename,
-        action: () => null,
+        action: () => openEditDocumentModal(file),
       },
       {
         text: 'New File',

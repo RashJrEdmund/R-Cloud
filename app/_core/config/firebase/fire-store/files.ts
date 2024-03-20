@@ -58,11 +58,11 @@ const createFileDoc = async (email: string, document: IDocument) => {
   return docRef;
 };
 
-const updateFileDoc = async (email: string, doc_id: string, document: Partial<IDocument>) => {
+const renameDocument = async (email: string, doc_id: string, name: string) => {
   const document_path = createUserDocPath<IDocument>(email, '/r-drive/' + doc_id);
 
   return setDoc(document_path,
-    { ...document },
+    { name },
     { merge: true } // merge true so as to create if doesn't exist of only update specified fields if exits;
   );
 };
@@ -104,6 +104,6 @@ export {
   getTotalUsedSize,
 
   createFileDoc,
-  updateFileDoc,
+  renameDocument,
   updateFolderSize,
 };
