@@ -121,7 +121,7 @@ function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Elemen
       selectionStart,
     } = useContextMenuContext();
 
-    const { openEditDocumentModal } = useModalContext();
+    const { openEditDocumentModal, openDeleteDocumentModal } = useModalContext();
 
     const handleOpen = () => {
       if (selectionStart) return; // to prevent opening folders when selection has started
@@ -143,7 +143,7 @@ function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Elemen
       {
         text: 'Delete Folder',
         icon_url: CONTEXT_MENU_ICONS.delete,
-        action: () => null,
+        action: () => openDeleteDocumentModal(folder),
       }
     ], [selectionStart]);
 

@@ -21,7 +21,8 @@ export default function NewFolderModal({
 }: Props) {
   const [folderName, setFolderName] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { toggleRefetchPath } = useDocStore();
+
+  const { toggleRefetchPath, currentFolder } = useDocStore();
 
   const { currentUser } = useUserStore();
 
@@ -39,13 +40,17 @@ export default function NewFolderModal({
     try {
       setIsLoading(true);
 
+      const ancestor_ids = currentFolder === 'root' ? ['root'] : [...currentFolder.ancestor_ids, currentFolder.id]; // inheriting the parent's ancestor ids and the parent's own id
+
       const new_folder: Omit<IDocument, 'id'> = {
         user_id: currentUser.id,
         name: folderName,
         parent_id: params.folder_id || 'root',
+        ancestor_ids,
         type: 'FOLDER',
         content_type: null,
         download_url: null,
+        filename: null,
         extension: null,
         capacity: {
           size: '0 Bytes',

@@ -18,6 +18,8 @@ interface Props {
 
   isLoading?: boolean;
   loadingMsg?: string;
+
+  prevent_auto_focus?: boolean; // to prevent the dialog's auto focus effect
 };
 
 function AppModalWrapper(
@@ -28,7 +30,9 @@ function AppModalWrapper(
 
     use_base_btns_instead = false,
     isLoading = false,
-    loadingMsg = 'Loading...'
+    loadingMsg = 'Loading...',
+
+    prevent_auto_focus = false,
   }: Props,
   _ref: ForwardedRef<IModalWrapperRef>
 ) {
@@ -66,7 +70,7 @@ function AppModalWrapper(
 
   return (
     <>
-      <dialog ref={dialogRef as LegacyRef<HTMLDialogElement>}>
+      <dialog ref={dialogRef as LegacyRef<HTMLDialogElement>} autoFocus={!prevent_auto_focus}>
         <Overlay
           show={showModal}
           onClick={handleModalClose}

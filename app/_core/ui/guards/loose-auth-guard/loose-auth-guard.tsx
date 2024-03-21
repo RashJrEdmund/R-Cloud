@@ -84,7 +84,7 @@ export default function LooseAuthGuard(Component: (...props: any[]) => JSX.Eleme
               setCurrentFolder({ ...folder.data(), id: folder.id });
             } else {
               router.replace('/r-drive/root');
-              return
+              return;
             }
           } finally {
             setLoading((prev) => ({ ...prev, doc: false }));
