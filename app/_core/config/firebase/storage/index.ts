@@ -3,7 +3,7 @@
 | file upload.                         |
 =========================//========== */
 
-import { ref, uploadBytes, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, deleteObject, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { auth, storage } from '..';
 import { updateProfile } from 'firebase/auth';
 import { getFileName } from '@/utils/file-utils';
@@ -31,7 +31,7 @@ const updateProfileImage = async (file: File, email: string) => {
 
 type ISetProgress = (progress: number) => void;
 
-const uploadFile = async (file: File, email: string, setProgress?: ISetProgress): Promise<string> => {
+const uploadFile = async (file: File, email: string, setProgress?: ISetProgress): Promise<{ download_url: string, filename: string }> => {
   const filename = getFileName(file); // to get the extension
   const storageRef = createUserStorageRef(email, `/r-drive/${filename}`); // +=> ref(storage, `users/${email}/r-drive/${filename}`);
 
@@ -39,7 +39,7 @@ const uploadFile = async (file: File, email: string, setProgress?: ISetProgress)
 
   if (setProgress) setProgress(0); // initializing progress;
 
-  return new Promise<string>((resolve, reject) => {
+  return new Promise<{ download_url: string, filename: string }>((resolve, reject) => {
     uploadTask.on('state_changed',
       (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -86,8 +86,11 @@ const uploadFile = async (file: File, email: string, setProgress?: ISetProgress)
       () => {
         // Upload completed successfully, now we can get the download URL
         getDownloadURL(uploadTask.snapshot.ref)
-          .then((url) => {
-            resolve(url);
+          .then((download_url) => {
+            resolve({
+              download_url,
+              filename, // adding filename so as to store in file document which will be used for deleting the actual file
+            });
           })
           .catch((er) => {
             reject(er);
@@ -97,8 +100,16 @@ const uploadFile = async (file: File, email: string, setProgress?: ISetProgress)
   });
 };
 
+const deleteFile = (email: string, filename: string) => {
+  const file_path = createUserStorageRef(email, `r-drive/${filename}`);
+
+  return deleteObject(file_path);
+};
+
 export {
   updateProfileImage,
 
   uploadFile,
+
+  deleteFile,
 };
