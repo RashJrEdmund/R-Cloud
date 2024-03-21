@@ -22,7 +22,7 @@ export default function EditModal({
 }: Props) {
   const [docName, setDocName] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { toggleRefetchPath } = useDocStore();
+  const { toggleRefetchPath, documents, setDocuments } = useDocStore();
 
   const { currentUser } = useUserStore();
 
@@ -40,12 +40,26 @@ export default function EditModal({
     try {
       setIsLoading(true);
 
-      await renameDocument(currentUser.email, String(document?.id), docName);
+      await renameDocument(currentUser.email, String(document?.id), docName)
+        .then(() => {
+          // trying to reflect updates without toggling refetch.
+
+          const update = documents?.map((doc) => {
+            if (doc.id === document?.id) return {
+              ...doc,
+              name: docName,
+            };
+
+            return doc;
+          });
+
+          setDocuments(update as IDocument[]);
+        });
     } catch (error) {
       // console.warn(error);
     } finally {
-      editModalRef.current?.close();
-      toggleRefetchPath();
+      closeModal();
+      // toggleRefetchPath();
     }
   };
 
