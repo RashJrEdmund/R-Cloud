@@ -1,16 +1,17 @@
 'use client';
 
-import { StyledDisplayCard } from '../shared';
-import type { ISharedCardProps } from '../shared';
+import { SelectCheckbox, StyledDisplayCard } from '../shared';
 import Image from 'next/image';
 import { DivCard, TextTag } from '@/_core/ui/components/atoms';
 import { useMemo, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { getResponsiveMenuPosition, shortenText } from '@/utils/helpers';
+import { shortenText } from '@/utils/helpers';
 import { FILE_FOLDER_MAX_NAME_LENGTH } from '@/utils/constants';
-import { useContextMenuContext } from '@/store/context';
+import { useContextMenuContext, useModalContext } from '@/store/context';
+import { CONTEXT_MENU_ICONS, MEDIA_ICONS } from '@/core/ui/icons';
 
 import type { MutableRefObject, MouseEventHandler } from 'react';
+import type { ISharedCardProps } from '../shared';
 import type { ContextMenuContent } from '@/interfaces/app';
 
 interface Props extends ISharedCardProps {
@@ -29,8 +30,10 @@ function _GridFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: I
     <StyledDisplayCard ref={folderRef as any}
       onDoubleClick={handleOpen}
     >
+      <SelectCheckbox document={folder} />
+
       <Image
-        src='/icons/folder-icon.svg'
+        src={MEDIA_ICONS.folder}
         alt='file icon'
         width={100}
         height={100}
@@ -64,11 +67,13 @@ function _ListFolderCard({ doc: folder, folderLength, folderRef, handleOpen }: I
 
   return (
     <>
-      <DivCard ref={folderRef as any} width='100%' flex_wrap='nowrap' justify='start' padding='12px 10px' cursor='pointer' className='card'
+      <DivCard ref={folderRef as any} width='100%' flex_wrap='nowrap' justify='start' padding='12px 10px' cursor='pointer' className='card' position='relative'
         onDoubleClick={handleOpen}
       >
+        <SelectCheckbox document={folder} />
+
         <Image
-          src='/icons/folder-icon.svg'
+          src={MEDIA_ICONS.folder}
           alt='file icon'
           width={32}
           height={30}
@@ -111,59 +116,53 @@ function FolderCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Elemen
     const folderRef = useRef<HTMLDivElement>();
 
     const {
-      setContextCoordinates,
-      setContextContent,
-      contextMenuRef
+      handleDocCardContextMenu,
+
+      selectionStart,
     } = useContextMenuContext();
 
+    const { openEditDocumentModal } = useModalContext();
+
     const handleOpen = () => {
+      if (selectionStart) return; // to prevent opening folders when selection has started
+
       router.push('/r-drive/root/' + folder.id);
     };
 
     const FOLDER_CONTEXT_MENU_CONTENT: ContextMenuContent[] = useMemo(() => [
       {
         text: 'Open Folder',
-        icon_url: '/icons/modal-icons/open-folder-icon.svg',
+        icon_url: CONTEXT_MENU_ICONS.open,
         action: handleOpen,
       },
       {
         text: 'Rename Folder',
-        icon_url: '/icons/modal-icons/rename-icon.svg',
-        action: () => null,
-      },
-      {
-        text: 'Select Folder',
-        icon_url: '/icons/modal-icons/select-file-icon.svg',
-        action: () => null,
+        icon_url: CONTEXT_MENU_ICONS.rename,
+        action: () => openEditDocumentModal(folder),
       },
       {
         text: 'Delete Folder',
-        icon_url: '/icons/modal-icons/delete-icon.svg',
+        icon_url: CONTEXT_MENU_ICONS.delete,
         action: () => null,
       }
-    ], []);
+    ], [selectionStart]);
 
-    const handleContextMenu = (e: MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      const coordinates = getResponsiveMenuPosition(e);
-      setContextCoordinates({ top: coordinates.y + 'px', left: coordinates.x + 'px' });
-
-      setContextContent(FOLDER_CONTEXT_MENU_CONTENT);
-
-      contextMenuRef.current?.open();
+    const handleContext = (e: MouseEvent) => {
+      handleDocCardContextMenu({
+        event: e,
+        CONTEXT_MENU_CONTENT: FOLDER_CONTEXT_MENU_CONTENT
+      });
     };
 
     useEffect(() => {
       if (!folderRef.current) return;
 
-      folderRef.current.addEventListener('contextmenu', handleContextMenu, false);
+      folderRef.current.addEventListener('contextmenu', handleContext, false);
 
       return () => {
-        folderRef.current?.removeEventListener('contextmenu', handleContextMenu, false);
+        folderRef.current?.removeEventListener('contextmenu', handleContext, false);
       };
-    }, []);
+    }, [selectionStart]);
 
     return (
       <CardComponent

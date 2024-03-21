@@ -13,8 +13,9 @@ const {
   colors: COLORS,
 } = THEME_PALETTE;
 
-export const StyledDisplayCard = styled.div`
+const StyledDisplayCard = styled.div`
   display: flex;
+  position: relative;
   align-items: start;
   justify-content: space-between;
   flex-direction: column;
@@ -47,3 +48,7 @@ export const StyledDisplayCard = styled.div`
     overflow: hidden;
   }
 `;
+
+export {
+  StyledDisplayCard,
+};

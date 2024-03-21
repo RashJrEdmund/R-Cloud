@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useMemo } from 'react';
 import { DivCard, TextTag } from '@/components/atoms';
 import StyledFileFolderDisplay from './styled-file-folder-display';
 import { useDocStore, useAppStore } from '@/store/zustand';
@@ -9,9 +9,11 @@ import {
   GridFileCard, GridFolderCard,
   ListFileCard, ListFolderCard,
 } from './components';
-import { getResponsiveMenuPosition } from '@/utils/helpers';
+import { getResponsiveMenuPosition, openFileUploadDialog } from '@/utils/helpers';
 
 import type { DragEventHandler, MouseEventHandler } from 'react';
+import type { ContextMenuContent } from '@/interfaces/app';
+import { CONTEXT_MENU_ICONS } from '@/core/ui/icons';
 
 interface Props {
   //
@@ -21,14 +23,40 @@ export default function FilesFolderDisplay({ }: Props) {
   const { documents, currentFolder } = useDocStore();
   const { displayLayout } = useAppStore();
 
-  const { readyUploadModal } = useModalContext();
+  const { readyUploadModal, openNewFolderModal } = useModalContext();
 
   const {
     setContextCoordinates,
     setContextContent,
-    MAIN_CONTEXT_MENU_CONTENT,
-    contextMenuRef
+    contextMenuRef,
+
+    selectionStart,
+    stopDocumentSelection,
   } = useContextMenuContext();
+
+  const MAIN_CONTEXT_MENU_CONTENT: ContextMenuContent[] = useMemo(() => selectionStart ? [
+    {
+      text: 'Delete Selected',
+      icon_url: CONTEXT_MENU_ICONS.delete,
+      action: () => null,
+    },
+    {
+      text: 'Stop Selection',
+      icon_url: CONTEXT_MENU_ICONS.select,
+      action: stopDocumentSelection,
+    }
+  ] : [
+    {
+      text: 'New Folder',
+      icon_url: CONTEXT_MENU_ICONS.new_folder,
+      action: openNewFolderModal,
+    },
+    {
+      text: 'Upload File(s)',
+      icon_url: CONTEXT_MENU_ICONS.upload,
+      action: openFileUploadDialog,
+    },
+  ], [selectionStart]);
 
   const handleContextMenu: MouseEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();

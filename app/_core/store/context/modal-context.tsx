@@ -6,7 +6,7 @@
 =====================================================================//============*/
 
 import { createContext, useContext, useState, useMemo, useCallback, useRef } from 'react';
-import { NewFolderModal, UploadModal } from '@/components/modals';
+import { EditModal, NewFolderModal, UploadModal } from '@/components/modals';
 import { uploadFile } from '@/core/config/firebase';
 import { useDocStore, useUserStore } from '../zustand';
 import { createFileDoc, updateFolderSize, updateUsedSpace } from '@/core/config/firebase/fire-store';
@@ -24,6 +24,7 @@ interface IUploadDetails {
 interface IModalContext {
   readyUploadModal: (files: FileList, items?: DataTransferItemList) => void;
   openNewFolderModal: () => void;
+  openEditDocumentModal: (_: IDocument) => void;
 };
 
 const ModalContext = createContext<IModalContext | null>(null);
@@ -34,11 +35,14 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [progress, setProgress] = useState<{ [key: number]: number } | null>(null);
   const [currentUploadIndx, setCurrentUploadIndx] = useState<number>(0);
+  const [documentToBeEdited, setDocumentToBeEdited] = useState<IDocument | null>(null);
+
   const { currentUser } = useUserStore();
   const { toggleRefetchPath } = useDocStore();
 
   const folderModalRef = useRef<IModalWrapperRef>();
   const uploadModalRef = useRef<IModalWrapperRef>();
+  const editModalRef = useRef<IModalWrapperRef>();
 
   const params = useParams<{ folder_id: string }>();
 
@@ -67,6 +71,11 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
     setUploadDetails({ total_size, count: file_arr.length });
 
     uploadModalRef.current?.open();
+  };
+
+  const openEditDocumentModal = (document: IDocument) => {
+    setDocumentToBeEdited(document);
+    editModalRef.current?.open();
   };
 
   const uploadFiles = useCallback(async () => {
@@ -126,6 +135,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const contextValue = useMemo<IModalContext>(() => ({
     readyUploadModal,
     openNewFolderModal,
+    openEditDocumentModal,
   }), []);
 
   return (
@@ -144,6 +154,11 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
 
         <NewFolderModal
           folderModalRef={folderModalRef}
+        />
+
+        <EditModal
+          editModalRef={editModalRef}
+          document={documentToBeEdited}
         />
 
         {children}

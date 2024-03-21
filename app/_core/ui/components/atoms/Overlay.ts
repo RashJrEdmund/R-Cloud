@@ -26,6 +26,8 @@ const Overlay = styled.div<Props>`
   height: ${({ height = '100%' }) => height};
   z-index: ${({ z_index = '4' }) => z_index};
   background: ${COLORS.overlay_gradient};
+
+  ${({ sx }) => sx};
 `;
 
 export default Overlay;

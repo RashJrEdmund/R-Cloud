@@ -4,7 +4,6 @@ import type { IDisplayLayout } from '@/interfaces/app';
 
 interface IAppStore {
   displayLayout: IDisplayLayout;
-
   setDisplayLayout: (layout_type: IDisplayLayout) => void;
 };
 

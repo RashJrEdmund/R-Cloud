@@ -65,7 +65,7 @@ export default function NewFolderModal({
     } catch (error) {
       // console.warn(error);
     } finally {
-      folderModalRef.current?.close();
+      closeModal();
       toggleRefetchPath();
     }
   };

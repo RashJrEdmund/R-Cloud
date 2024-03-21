@@ -1,4 +1,4 @@
-import { IDocument } from '@/interfaces/entities';
+import type { IDocument } from '@/interfaces/entities';
 
 interface ISharedCardProps {
   doc: IDocument;
