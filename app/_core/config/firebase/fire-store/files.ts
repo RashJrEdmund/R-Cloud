@@ -115,7 +115,7 @@ const updateFolderSize = async (email: string, folder_id: string, updates: { byt
 // DELETE REQUESTS
 
 const deleteFiles = async (email: string, files: IDocument[]) => {
-  const parent_id = files[0].parent_id; // since it's files of the same directory level;
+  const parent_id = files[0].parent_id; // since it's files of the same directory level
 
   const completed = {
     bytes: 0,
@@ -125,16 +125,16 @@ const deleteFiles = async (email: string, files: IDocument[]) => {
   for (const file of files) {
     const file_path = createUserDocPath<IDocument>(email, '/r-drive/' + file.id);
 
-    await deleteFile(email, String(file.filename)); // delete file from storage;
+    await deleteFile(email, String(file.filename)); // delete file from storage
     await deleteDoc(file_path);
 
     completed.bytes += file.capacity.bytes;
     completed.length += 1;
   };
 
-  // now updating parent folder's capacity;
+  // now updating parent folder's capacity
 
-  if (parent_id === 'root') return; // meaning the files were at the very top level;
+  if (parent_id === 'root') return; // meaning the files were at the very top level
 
   return updateFolderSize(
     email,
