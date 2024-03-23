@@ -4,4 +4,4 @@
 
 - [see deployment](https://r-cloud.vercel.app/)
 
-![landing-preview](./assets/readme/landing-preview.png)
+ ![landing-preview](./assets/readme/landing-preview.png)
