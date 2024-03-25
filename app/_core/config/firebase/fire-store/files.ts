@@ -114,7 +114,11 @@ const updateFolderSize = async (email: string, folder_id: string, updates: { byt
 
 // DELETE REQUESTS
 
-const deleteFiles = async (email: string, files: IDocument[]) => {
+interface IDeleteOptions {
+  update_profile?: boolean; // this is true by default
+};
+
+const deleteFiles = async (email: string, files: IDocument[], options?: IDeleteOptions) => {
   const parent_id = files[0].parent_id; // since it's files of the same directory level
 
   const completed = {
@@ -123,16 +127,22 @@ const deleteFiles = async (email: string, files: IDocument[]) => {
   };
 
   for (const file of files) {
+
+    console.log('deleting files', file);
     const file_path = createUserDocPath<IDocument>(email, '/r-drive/' + file.id);
 
-    await deleteFile(email, String(file.filename)); // delete file from storage
-    await deleteDoc(file_path);
+    await deleteFile(email, String(file.filename)) // delete file from storage
+      .then(() => deleteDoc(file_path));
 
     completed.bytes += file.capacity.bytes;
     completed.length += 1;
   };
 
   // now updating parent folder's capacity
+
+  if (options?.update_profile) {
+    //
+  }
 
   if (parent_id === 'root') return; // meaning the files were at the very top level
 
@@ -148,7 +158,7 @@ const deleteAllDescendants = async (email: string, ancestor_folder_id: string) =
   //
 };
 
-const deleteFolders = async (email: string, folders: IDocument[]) => {
+const deleteFolders = async (email: string, folders: IDocument[], options?: IDeleteOptions) => {
 
   for (const folder of folders) {
     const folder_path = createUserDocPath<IDocument>(email, '/r-drive/' + folder.id);
@@ -178,4 +188,6 @@ export {
 
   //deletion
   deleteDocuments,
+  deleteFiles,
+  deleteFolders,
 };

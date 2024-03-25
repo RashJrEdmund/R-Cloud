@@ -101,7 +101,7 @@ const uploadFile = async (file: File, email: string, setProgress?: ISetProgress)
 };
 
 const deleteFile = (email: string, filename: string) => {
-  const file_path = createUserStorageRef(email, `r-drive/${filename}`);
+  const file_path = createUserStorageRef(email, `/r-drive/${filename}`);
 
   return deleteObject(file_path);
 };

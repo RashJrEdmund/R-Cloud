@@ -3,9 +3,8 @@
 import { useMemo, useEffect, useState } from 'react';
 import { AppModalWrapper } from '@/components/modals/generics';
 import { TextTag, DivCard } from '@/components/atoms';
-import { InputField } from '@/components/molecules';
 import { useDocStore, useUserStore } from '@/store/zustand';
-import { renameDocument } from '@/core/config/firebase/fire-store';
+import { deleteFiles, deleteFolders, renameDocument } from '@/core/config/firebase/fire-store';
 
 import type { MutableRefObject, FormEventHandler } from 'react';
 import type { IModalWrapperRef } from '@/components/modals/generics';
@@ -33,28 +32,22 @@ export default function DeleteModal({
     setIsLoading(false);
   };
 
-  const handleDeleteDocument: FormEventHandler<HTMLDivElement> = async (e) => {
-    e.preventDefault();
+  const handleDeleteDocument = async () => {
+    if (!document) return;
 
-    if (!docName.trim() || !currentUser) return;
     try {
       setIsLoading(true);
 
-      await renameDocument(currentUser.email, String(document?.id), docName)
-        .then(() => {
-          // trying to reflect updates without toggling refetch.
+      const email = String(currentUser?.email);
 
-          const update = documents?.map((doc) => {
-            if (doc.id === document?.id) return {
-              ...doc,
-              name: docName,
-            };
+      if (document.type === 'FILE') {
+        await deleteFiles(email, [document]);
+        return;
+      }
 
-            return doc;
-          });
+      // deleting Folder and sub documents;
 
-          setDocuments(update as IDocument[]);
-        });
+      await deleteFolders(email, [document]);
     } catch (error) {
       // console.warn(error);
     } finally {
