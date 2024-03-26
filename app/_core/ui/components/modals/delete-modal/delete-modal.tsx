@@ -21,7 +21,7 @@ export default function DeleteModal({
 }: Props) {
   const [docName, setDocName] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { toggleRefetchPath, documents, setDocuments } = useDocStore();
+  const { documents, setDocuments } = useDocStore();
 
   const { currentUser } = useUserStore();
 
@@ -42,12 +42,15 @@ export default function DeleteModal({
 
       if (document.type === 'FILE') {
         await deleteFiles(email, [document]);
-        return;
+      } else {
+        await deleteFolders(email, [document]);
       }
 
-      // deleting Folder and sub documents;
+      // I don't wanna use toggleRefetchPath() just after deleting a single file or folder
 
-      await deleteFolders(email, [document]);
+      const update_docs = (documents as IDocument[]).filter((doc) => doc.id !== document.id);
+
+      setDocuments(update_docs);
     } catch (error) {
       // console.warn(error);
     } finally {

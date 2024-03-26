@@ -9,10 +9,12 @@ import {
   query, where, getAggregateFromServer, sum
 } from 'firebase/firestore';
 import { getSizeFromBytes } from '@/utils/file-utils';
+import { deleteFile } from '..';
+import { updateUsedSpace } from '.';
 
 import type { IDocument } from '@/interfaces/entities';
 import type { AggregateField, AggregateQuerySnapshot, QuerySnapshot } from 'firebase/firestore';
-import { deleteFile } from '..';
+import type { IUpdateAction } from '../interfaces';
 
 // READ REQUESTS
 
@@ -73,7 +75,7 @@ const renameDocument = async (email: string, doc_id: string, name: string) => {
 
 // UPDATE REQUESTS
 
-const updateFolderSize = async (email: string, folder_id: string, updates: { bytes: number, length: number }, action: 'ADD' | 'SUBTRACT' = 'ADD') => { // action defaults to ADDITION action. SUBTRACT is used for when deleting files;
+const updateFolderSize = async (email: string, folder_id: string, updates: { bytes: number, length: number }, action: IUpdateAction = 'ADD') => { // action defaults to ADDITION action. SUBTRACT is used for when deleting files;
   try {
     const document_path = createUserDocPath<IDocument>(email, '/r-drive/' + folder_id);
 
@@ -115,7 +117,7 @@ const updateFolderSize = async (email: string, folder_id: string, updates: { byt
 // DELETE REQUESTS
 
 interface IDeleteOptions {
-  update_profile?: boolean; // this is true by default
+  update_used_bytes?: boolean; // this is true by default
 };
 
 const deleteFiles = async (email: string, files: IDocument[], options?: IDeleteOptions) => {
@@ -127,8 +129,6 @@ const deleteFiles = async (email: string, files: IDocument[], options?: IDeleteO
   };
 
   for (const file of files) {
-
-    console.log('deleting files', file);
     const file_path = createUserDocPath<IDocument>(email, '/r-drive/' + file.id);
 
     await deleteFile(email, String(file.filename)) // delete file from storage
@@ -140,41 +140,53 @@ const deleteFiles = async (email: string, files: IDocument[], options?: IDeleteO
 
   // now updating parent folder's capacity
 
-  if (options?.update_profile) {
-    //
+  if (options?.update_used_bytes) {
+    await updateUsedSpace(email, completed.bytes, 'SUBTRACT');
   }
 
-  if (parent_id === 'root') return; // meaning the files were at the very top level
+  if (parent_id === 'root') return completed; // meaning the files were at the very top level
 
-  return updateFolderSize(
+  await updateFolderSize(
     email,
     parent_id,
     { ...completed },
     'SUBTRACT', // very important for deletion to reflect on size;
   );
+
+  return completed;
 };
 
 const deleteAllDescendants = async (email: string, ancestor_folder_id: string) => {
   //
 };
 
-const deleteFolders = async (email: string, folders: IDocument[], options?: IDeleteOptions) => {
-
+const deleteFolders = async (email: string, folders: IDocument[], options: IDeleteOptions = { update_used_bytes: true }) => {
   for (const folder of folders) {
     const folder_path = createUserDocPath<IDocument>(email, '/r-drive/' + folder.id);
 
     await deleteAllDescendants(email, folder.id);
     await deleteDoc(folder_path);
   };
+
+  if (options?.update_used_bytes) {
+    const replace_bytes = await getTotalUsedSize(email).then(snapshot => snapshot.data().total_bytes);
+
+    await updateUsedSpace(email, replace_bytes, 'REPLACE');
+  }
 };
 
 const deleteDocuments = async (email: string, documents: IDocument[]) => {
   const files = documents.filter((doc) => doc.type === 'FILE');
   const folders = documents.filter((doc) => doc.type === 'FOLDER');
 
-  if (files.length > 0) await deleteFiles(email, files); // meaning there's files selected.
+  if (files.length > 0) await deleteFiles(email, files, { update_used_bytes: false }); // meaning there's files selected.
 
-  if (folders.length > 0) await deleteFolders(email, folders); // meaning there's folder's selected
+  if (folders.length > 0) await deleteFolders(email, folders, { update_used_bytes: false }); // meaning there's folder's selected
+
+  // since i've set update_used_bytes to false, i'm doing a massive update at once here.
+  const replace_bytes = await getTotalUsedSize(email).then(snapshot => snapshot.data().total_bytes);
+
+  await updateUsedSpace(email, replace_bytes, 'REPLACE');
 };
 
 export {
