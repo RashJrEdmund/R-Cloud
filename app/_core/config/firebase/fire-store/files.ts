@@ -140,11 +140,11 @@ const deleteFiles = async (email: string, files: IDocument[], options?: IDeleteO
 
   // now updating parent folder's capacity
 
-  if (options?.update_used_bytes) {
+  if (options?.update_used_bytes) { // updating the overall used_space
     await updateUsedSpace(email, completed.bytes, 'SUBTRACT');
   }
 
-  if (parent_id === 'root') return completed; // meaning the files were at the very top level
+  if (parent_id === 'root') return; // meaning the files were at the very top level
 
   await updateFolderSize(
     email,
@@ -153,11 +153,35 @@ const deleteFiles = async (email: string, files: IDocument[], options?: IDeleteO
     'SUBTRACT', // very important for deletion to reflect on size;
   );
 
-  return completed;
+  return;
 };
 
 const deleteAllDescendants = async (email: string, ancestor_folder_id: string) => {
-  //
+  const collection_path = createUserCollectionPath<IDocument>(email, '/r-drive');
+
+  try {
+    const q = query(
+      collection_path,
+      where('ancestor_ids', 'array-contains', ancestor_folder_id) // more like Array.includes() method
+    );
+
+    const snapshot = await getDocs(q);
+
+    for (const docki of snapshot.docs) {
+      const doc = docki.data();
+
+      const document_path = createUserDocPath(email, `/r-drive/${doc.id}`);
+
+      if (doc.type === 'FOLDER') {
+        await deleteDoc(document_path);
+        continue; // to continue iterating
+      }
+
+      await deleteFiles(email, [doc], { update_used_bytes: false }); // to not try to update used bytes
+    };
+  } catch (error) {
+    throw (error);
+  }
 };
 
 const deleteFolders = async (email: string, folders: IDocument[], options: IDeleteOptions = { update_used_bytes: true }) => {
