@@ -40,13 +40,13 @@ export default function SelectCheckbox({ document }: Props) {
   };
 
   useEffect(() => {
-    if (selectedDocs.includes(document.id)) setChecked(true);
+    if (selectedDocs.find(doc => doc.id === document.id)) setChecked(true);
     else setChecked(false);
 
     // console.clear();
     // console.log(selectedDocs);
 
-  }, [document.id, selectedDocs]);
+  }, [document, selectedDocs]);
 
   return selectionStart ? (
     <>

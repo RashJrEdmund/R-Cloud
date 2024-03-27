@@ -23,7 +23,7 @@ export default function FilesFolderDisplay({ }: Props) {
   const { documents, currentFolder } = useDocStore();
   const { displayLayout } = useAppStore();
 
-  const { readyUploadModal, openNewFolderModal } = useModalContext();
+  const { readyUploadModal, openNewFolderModal, openBulkDeleteModal } = useModalContext();
 
   const {
     setContextCoordinates,
@@ -31,19 +31,23 @@ export default function FilesFolderDisplay({ }: Props) {
     contextMenuRef,
 
     selectionStart,
-    stopDocumentSelection,
+    selectedDocs,
+    toggleDocumentSelection,
   } = useContextMenuContext();
 
   const MAIN_CONTEXT_MENU_CONTENT: ContextMenuContent[] = useMemo(() => selectionStart ? [
     {
       text: 'Delete Selected',
       icon_url: CONTEXT_MENU_ICONS.delete,
-      action: () => null,
+      action: () => openBulkDeleteModal(selectedDocs),
     },
     {
       text: 'Stop Selection',
       icon_url: CONTEXT_MENU_ICONS.select,
-      action: stopDocumentSelection,
+      action: () => {
+        toggleDocumentSelection();
+        contextMenuRef?.current?.close();
+      },
     }
   ] : [
     {
@@ -56,7 +60,15 @@ export default function FilesFolderDisplay({ }: Props) {
       icon_url: CONTEXT_MENU_ICONS.upload,
       action: openFileUploadDialog,
     },
-  ], [selectionStart]);
+    {
+      text: 'Start Selection',
+      icon_url: CONTEXT_MENU_ICONS.select,
+      action: () => {
+        toggleDocumentSelection();
+        contextMenuRef?.current?.close();
+      },
+    }
+  ], [selectionStart, selectedDocs]);
 
   const handleContextMenu: MouseEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
