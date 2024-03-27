@@ -5,3 +5,7 @@
 - [see deployment](https://r-cloud.vercel.app/)
 
 ![landing-preview](./assets/readme/landing-preview.png)
+
+![home-preview](./assets/readme/home-preview.png)
+
+![root-preview](./assets/readme/root-preview.png)

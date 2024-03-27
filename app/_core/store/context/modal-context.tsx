@@ -6,7 +6,7 @@
 =====================================================================//============*/
 
 import { createContext, useContext, useState, useMemo, useCallback, useRef } from 'react';
-import { EditModal, NewFolderModal, UploadModal } from '@/components/modals';
+import { DeleteModal, EditModal, NewFolderModal, UploadModal } from '@/components/modals';
 import { uploadFile } from '@/core/config/firebase';
 import { useDocStore, useUserStore } from '../zustand';
 import { createFileDoc, updateFolderSize, updateUsedSpace } from '@/core/config/firebase/fire-store';
@@ -25,6 +25,7 @@ interface IModalContext {
   readyUploadModal: (files: FileList, items?: DataTransferItemList) => void;
   openNewFolderModal: () => void;
   openEditDocumentModal: (_: IDocument) => void;
+  openDeleteDocumentModal: (_: IDocument) => void;
 };
 
 const ModalContext = createContext<IModalContext | null>(null);
@@ -36,13 +37,15 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [progress, setProgress] = useState<{ [key: number]: number } | null>(null);
   const [currentUploadIndx, setCurrentUploadIndx] = useState<number>(0);
   const [documentToBeEdited, setDocumentToBeEdited] = useState<IDocument | null>(null);
+  const [documentToBeDeleted, setDocumentToBeDeleted] = useState<IDocument | null>(null);
 
   const { currentUser } = useUserStore();
-  const { toggleRefetchPath } = useDocStore();
+  const { toggleRefetchPath, currentFolder } = useDocStore();
 
   const folderModalRef = useRef<IModalWrapperRef>();
   const uploadModalRef = useRef<IModalWrapperRef>();
   const editModalRef = useRef<IModalWrapperRef>();
+  const deleteModalRef = useRef<IModalWrapperRef>();
 
   const params = useParams<{ folder_id: string }>();
 
@@ -78,6 +81,11 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
     editModalRef.current?.open();
   };
 
+  const openDeleteDocumentModal = (document: IDocument) => {
+    setDocumentToBeDeleted(document);
+    deleteModalRef.current?.open();
+  };
+
   const uploadFiles = useCallback(async () => {
     if (!currentUser) return;
 
@@ -90,13 +98,17 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
         const file = selectedFiles[i];
 
         setCurrentUploadIndx(i);
-        const url = await uploadFile(file, currentUser.email, (progress) => setProgress({ [i]: progress }));
+        const { download_url, filename } = await uploadFile(file, currentUser.email, (progress) => setProgress({ [i]: progress }));
+
+        const ancestor_ids = currentFolder === 'root' ? ['root'] : [...currentFolder.ancestor_ids, currentFolder.id]; // inheriting the parent's ancestor ids and the parent's own id
 
         const document: Omit<IDocument, 'id'> = {
-          download_url: url,
+          download_url,
+          filename,
           user_id: currentUser.id,
           name: getFileName(file, { without_extension: true }),
           parent_id: params.folder_id || 'root',
+          ancestor_ids,
           type: 'FILE',
           content_type: file.type,
           extension: getFileName(file, { only_extension: true }),
@@ -136,6 +148,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
     readyUploadModal,
     openNewFolderModal,
     openEditDocumentModal,
+    openDeleteDocumentModal,
   }), []);
 
   return (
@@ -159,6 +172,11 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
         <EditModal
           editModalRef={editModalRef}
           document={documentToBeEdited}
+        />
+
+        <DeleteModal
+          deleteModalRef={deleteModalRef}
+          document={documentToBeDeleted}
         />
 
         {children}

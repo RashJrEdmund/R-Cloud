@@ -37,6 +37,7 @@ export default function UploadModal({
 
   return (
     <AppModalWrapper ref={uploadModalRef as any}
+      prevent_auto_focus
       use_base_btns_instead
       isLoading={isLoading}
       cancelAction={closeModal}

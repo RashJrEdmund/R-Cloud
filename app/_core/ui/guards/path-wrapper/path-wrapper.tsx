@@ -13,7 +13,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { Streamer } from '@/components/molecules';
 
 import type { IDocument } from '@/interfaces/entities';
-import { getOneDocument, listFolderFiles } from '@/core/config/firebase/fire-store';
+import { getOneDocument, listFolderDocuments } from '@/core/config/firebase/fire-store';
 import type { DocumentSnapshot } from 'firebase/firestore';
 
 interface Props {
@@ -38,12 +38,12 @@ export default function PathWrapper({ children }: Props) {
     }
 
     if (folder && !folder.exists()) {
-      return router.replace('/r-drive/root');
+      return router.replace('/r-drive/root'); // going back to root;
     };
 
     if (folder?.exists()) setCurrentFolder({ ...folder.data(), id: folder.id });
 
-    listFolderFiles(currentUser?.email || '', folder_id)
+    listFolderDocuments(currentUser?.email || '', folder_id)
       .then(res => {
         if (res.empty) {
           setDocuments([]);

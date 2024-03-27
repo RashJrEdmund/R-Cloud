@@ -3,11 +3,12 @@
 |, i.e documents and collections.            |
 ================================//========= */
 
-import type { IUserProfile } from '@/interfaces/entities';
-import type { DocumentSnapshot } from 'firebase/firestore';
-
 import { setDoc, getDoc } from 'firebase/firestore';
 import { createUserDocPath } from './utils';
+
+import type { IUserProfile } from '@/interfaces/entities';
+import type { DocumentSnapshot } from 'firebase/firestore';
+import type { IUpdateAction } from '../interfaces';
 
 // READ request
 
@@ -30,7 +31,7 @@ const createUserProfile = async (user: IUserProfile) => {
   return docRef;
 };
 
-const updateUsedSpace = async (email: string, used_bytes: number) => {
+const updateUsedSpace = async (email: string, used_bytes: number, action: IUpdateAction = 'ADD') => {
   try {
     const profile_path = createUserDocPath<IUserProfile>(email, '/profile/me');
 
@@ -42,7 +43,16 @@ const updateUsedSpace = async (email: string, used_bytes: number) => {
 
     const _profile = profile.data();
 
-    const new_used_bytes = Number(_profile.plan.used_bytes) + used_bytes;
+    let new_used_bytes = 0;
+
+    if (action === 'ADD') {
+      new_used_bytes = Number(_profile.plan.used_bytes) + used_bytes;
+    } else if (action === 'SUBTRACT') {
+      new_used_bytes = Number(_profile.plan.used_bytes) - used_bytes;
+    } else { // for replace ACTION
+      new_used_bytes = used_bytes;
+    }
+
     // console.log({ _profile, new_used_bytes });
 
     return setDoc(profile_path,

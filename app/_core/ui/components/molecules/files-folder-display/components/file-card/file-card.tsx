@@ -116,7 +116,7 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
       selectionStart,
     } = useContextMenuContext();
 
-    const { openEditDocumentModal } = useModalContext();
+    const { openEditDocumentModal, openDeleteDocumentModal } = useModalContext();
 
     // console.log({ selectedDocs });
 
@@ -150,7 +150,7 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
       {
         text: 'Delete File',
         icon_url: CONTEXT_MENU_ICONS.delete,
-        action: () => null,
+        action: () => openDeleteDocumentModal(file),
       }
     ], []);
 

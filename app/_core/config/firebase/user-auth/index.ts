@@ -49,7 +49,7 @@ const signUpWithCredentials = async (email: string, password: string, other_cred
 const signInOrUpWithGooglePopup = async () => {
   return signInWithPopup(auth, googleProvider).then((res) => {
     return res; // res is an object with { user, providerId, operationType, _tokenResponse }
-  }).catch(error => {
+  }).catch((error) => {
     console.warn('error');
   });
 };
