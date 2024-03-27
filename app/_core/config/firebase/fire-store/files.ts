@@ -168,9 +168,9 @@ const deleteAllDescendants = async (email: string, ancestor_folder_id: string) =
     const snapshot = await getDocs(q);
 
     for (const docki of snapshot.docs) {
-      const doc = docki.data();
+      const doc = { ...docki.data(), id: docki.id };
 
-      const document_path = createUserDocPath(email, `/r-drive/${doc.id}`);
+      const document_path = createUserDocPath<IDocument>(email, `/r-drive/${doc.id}`);
 
       if (doc.type === 'FOLDER') {
         await deleteDoc(document_path);
