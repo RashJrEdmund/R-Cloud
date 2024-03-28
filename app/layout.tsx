@@ -16,15 +16,11 @@ export const metadata: Metadata = {
     {
       url: 'https://twitter.com/orashus',
       name: 'Rash Edmund'
-    },
-    {
-      url: 'https://twitter.com/orashus',
-      name: 'Roger'
     }
   ],
   openGraph: {
     type: 'website',
-    description: 'cloud storage progressive web application',
+    description: 'Cloud storage web application. Upload, manage and download files',
     siteName: 'R-cloud',
     title: 'R-cloud',
   },
