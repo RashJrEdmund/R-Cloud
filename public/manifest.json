@@ -1,7 +1,7 @@
 {
     "name": "R-Cloud web app",
     "short_name": "R-Cloud",
-    "description": "could storage service progressive web app",
+    "description": "Cloud storage web application. Upload, manage and download files",
     "theme_color": "#5588ff",
     "background_color": "#5588ff",
     "start_url": "/",
@@ -68,6 +68,18 @@
             "short_name": "Plans",
             "description": "go to storage plans page",
             "url": "/storage-plans",
+            "icons": [
+                {
+                    "src": "./manifest-assets/shortcut-r-drive.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Profile",
+            "short_name": "Profile",
+            "description": "go to profile page",
+            "url": "/profile",
             "icons": [
                 {
                     "src": "./manifest-assets/shortcut-r-drive.png",
