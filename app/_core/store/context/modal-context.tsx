@@ -6,7 +6,7 @@
 =====================================================================//============*/
 
 import { createContext, useContext, useState, useMemo, useCallback, useRef } from 'react';
-import { DeleteModal, EditModal, NewFolderModal, UploadModal } from '@/components/modals';
+import { BulkDeleteModal, DeleteModal, EditModal, NewFolderModal, UploadModal } from '@/components/modals';
 import { uploadFile } from '@/core/config/firebase';
 import { useDocStore, useUserStore } from '../zustand';
 import { createFileDoc, updateFolderSize, updateUsedSpace } from '@/core/config/firebase/fire-store';
@@ -26,6 +26,7 @@ interface IModalContext {
   openNewFolderModal: () => void;
   openEditDocumentModal: (_: IDocument) => void;
   openDeleteDocumentModal: (_: IDocument) => void;
+  openBulkDeleteModal: (selectedDocs: IDocument[]) => void;
 };
 
 const ModalContext = createContext<IModalContext | null>(null);
@@ -38,6 +39,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentUploadIndx, setCurrentUploadIndx] = useState<number>(0);
   const [documentToBeEdited, setDocumentToBeEdited] = useState<IDocument | null>(null);
   const [documentToBeDeleted, setDocumentToBeDeleted] = useState<IDocument | null>(null);
+  const [docsToDelete, setDocsToDelete] = useState<IDocument[]>([]);
 
   const { currentUser } = useUserStore();
   const { toggleRefetchPath, currentFolder } = useDocStore();
@@ -46,6 +48,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const uploadModalRef = useRef<IModalWrapperRef>();
   const editModalRef = useRef<IModalWrapperRef>();
   const deleteModalRef = useRef<IModalWrapperRef>();
+  const bulkDeleteModalRef = useRef<IModalWrapperRef>();
 
   const params = useParams<{ folder_id: string }>();
 
@@ -84,6 +87,11 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const openDeleteDocumentModal = (document: IDocument) => {
     setDocumentToBeDeleted(document);
     deleteModalRef.current?.open();
+  };
+
+  const openBulkDeleteModal = (selectedDocs: IDocument[]) => {
+    setDocsToDelete(selectedDocs);
+    bulkDeleteModalRef.current?.open();
   };
 
   const uploadFiles = useCallback(async () => {
@@ -149,6 +157,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
     openNewFolderModal,
     openEditDocumentModal,
     openDeleteDocumentModal,
+    openBulkDeleteModal,
   }), []);
 
   return (
@@ -177,6 +186,16 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
         <DeleteModal
           deleteModalRef={deleteModalRef}
           document={documentToBeDeleted}
+        />
+
+        <DeleteModal
+          deleteModalRef={deleteModalRef}
+          document={documentToBeDeleted}
+        />
+
+        <BulkDeleteModal
+          bulkDeleteModalRef={bulkDeleteModalRef}
+          selectedDocs={docsToDelete}
         />
 
         {children}

@@ -30,8 +30,8 @@
   --box_shadow: 0 0 10px #00000079;
 
   /* DIMENSIONS */
-  --primary_app_width: min(97vw, 1400px);
-  --secondary_app_width: min(100%, 1000px);
+  --primary_app_width: min(97vw, 1450px);
+  --secondary_app_width: min(100%, 1200px);
   --main_min_height: min(800px, calc(100vh - 100px));
 }
 
@@ -46,6 +46,14 @@
     --bg: #f9f9f9;
     --bg_light: gray;
     --bg_invert: #1d2432; */
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  :root {
+    /* DIMENSIONS */
+    --primary_app_width: min(97vw, 1700px);
+    --secondary_app_width: min(100%, 1450px);
   }
 }
 

@@ -24,7 +24,7 @@ export default function MoreSection({ }: Props) {
 
   const {
     selectionStart,
-    stopDocumentSelection,
+    toggleDocumentSelection,
   } = useContextMenuContext();
 
   const toggleModal: MouseEventHandler<HTMLSpanElement> = (e) => {
@@ -52,7 +52,7 @@ export default function MoreSection({ }: Props) {
     {
       text: `${selectionStart ? 'Stop' : 'Start'} Selection`,
       icon_url: CONTEXT_MENU_ICONS.select,
-      action: stopDocumentSelection,
+      action: toggleDocumentSelection,
     },
   ], [selectionStart]); // selectionStart is required especially for the start and stop selection option
 

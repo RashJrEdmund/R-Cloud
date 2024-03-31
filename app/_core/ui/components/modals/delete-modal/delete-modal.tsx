@@ -1,12 +1,12 @@
 'use client';
 
-import { useMemo, useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { AppModalWrapper } from '@/components/modals/generics';
 import { TextTag, DivCard } from '@/components/atoms';
 import { useDocStore, useUserStore } from '@/store/zustand';
-import { deleteFiles, deleteFolders, renameDocument } from '@/core/config/firebase/fire-store';
+import { deleteFiles, deleteFolders } from '@/core/config/firebase/fire-store';
 
-import type { MutableRefObject, FormEventHandler } from 'react';
+import type { MutableRefObject } from 'react';
 import type { IModalWrapperRef } from '@/components/modals/generics';
 import type { IDocument } from '@/interfaces/entities';
 
@@ -19,7 +19,6 @@ export default function DeleteModal({
   deleteModalRef,
   document,
 }: Props) {
-  const [docName, setDocName] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { documents, setDocuments } = useDocStore();
 
@@ -58,10 +57,6 @@ export default function DeleteModal({
       // toggleRefetchPath();
     }
   };
-
-  useEffect(() => {
-    if (document) setDocName(document.name);
-  }, [document]);
 
   return (
     <AppModalWrapper ref={deleteModalRef as any}

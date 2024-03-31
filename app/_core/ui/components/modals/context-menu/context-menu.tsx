@@ -1,8 +1,9 @@
 import { ForwardedRef, forwardRef, useImperativeHandle, useState } from 'react';
 import { RelativeModal } from '../generics';
-import type { IModalWrapperRef } from '../generics';
 import { TextTag } from '@/components/atoms';
 import Image from 'next/image';
+
+import type { IModalWrapperRef } from '../generics';
 import type { ContextMenuContent } from '@/interfaces/app';
 
 interface Props {

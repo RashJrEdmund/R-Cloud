@@ -105,6 +105,8 @@ const updateFolderSize = async (email: string, folder_id: string, updates: { byt
       size: getSizeFromBytes(new_bytes, 1).merged,
     };
 
+    console.log({ _update_capacity, updates, action });
+
     return setDoc(document_path,
       { capacity: _update_capacity }, // document here looks like { capacity: {...}} bcs of the type Pick<IDocument, 'capacity'>
       { merge: true } // merge true so as to create if doesn't exist of only update specified fields if exits;
@@ -118,6 +120,7 @@ const updateFolderSize = async (email: string, folder_id: string, updates: { byt
 
 interface IDeleteOptions {
   update_used_bytes?: boolean; // this is true by default
+  update_parent_folder?: boolean; // this is true by default
 };
 
 const deleteFiles = async (email: string, files: IDocument[], options?: IDeleteOptions) => {
@@ -185,11 +188,19 @@ const deleteAllDescendants = async (email: string, ancestor_folder_id: string) =
 };
 
 const deleteFolders = async (email: string, folders: IDocument[], options: IDeleteOptions = { update_used_bytes: true }) => {
+  const parent_id = folders[0].parent_id;
+
+  const completed = {
+    bytes: 0,
+    length: 0,
+  };
+
   for (const folder of folders) {
     const folder_path = createUserDocPath<IDocument>(email, '/r-drive/' + folder.id);
 
     await deleteAllDescendants(email, folder.id);
     await deleteDoc(folder_path);
+    completed.length += 1;
   };
 
   if (options?.update_used_bytes) {
@@ -197,6 +208,15 @@ const deleteFolders = async (email: string, folders: IDocument[], options: IDele
 
     await updateUsedSpace(email, replace_bytes, 'REPLACE');
   }
+
+  if (parent_id === 'root') return; // meaning the files were at the very top level
+
+  await updateFolderSize(
+    email,
+    parent_id,
+    { ...completed },
+    'SUBTRACT', // very important for deletion to reflect on paren'ts size;
+  );
 };
 
 const deleteDocuments = async (email: string, documents: IDocument[]) => {

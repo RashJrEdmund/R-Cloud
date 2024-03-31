@@ -5,7 +5,7 @@
 | context menu                                                                       |
 =====================================================================//=============*/
 
-import { createContext, useContext, useState, useMemo, useRef } from 'react';
+import { createContext, useContext, useState, useMemo, useRef, useEffect } from 'react';
 import { ContextMenu } from '@/components/modals';
 import { getResponsiveMenuPosition } from '@/utils/helpers';
 
@@ -33,9 +33,9 @@ interface IContextMenuContextProvider {
 
   // selection
   selectionStart: boolean; setSelectionStart: Dispatch<SetStateAction<boolean>>;
-  selectedDocs: string[]; setSelectedDocs: Dispatch<SetStateAction<string[]>>;
+  selectedDocs: IDocument[]; setSelectedDocs: Dispatch<SetStateAction<IDocument[]>>;
   handleDocumentSelection: (doc: IDocument) => void;
-  stopDocumentSelection: () => void;
+  toggleDocumentSelection: () => void;
 };
 
 const ContextMenuContext = createContext<IContextMenuContextProvider | null>(null);
@@ -45,7 +45,7 @@ const ContextMenuContextProvider = ({ children }: { children: React.ReactNode })
   const [contextContent, setContextContent] = useState<ContextMenuContent[]>([]);
 
   const [selectionStart, setSelectionStart] = useState<boolean>(false);
-  const [selectedDocs, setSelectedDocs] = useState<string[]>([]);
+  const [selectedDocs, setSelectedDocs] = useState<IDocument[]>([]);
 
   const contextMenuRef = useRef<IModalWrapperRef>(null);
 
@@ -76,16 +76,16 @@ const ContextMenuContextProvider = ({ children }: { children: React.ReactNode })
 
     if (!selectionStart) setSelectionStart(true);
 
-    if (selectedDocs.includes(document.id)) {
-      const update = selectedDocs.filter(doc_id => doc_id !== document.id);
+    if (selectedDocs.find(doc => doc.id === document.id)) {
+      const update = selectedDocs.filter(doc => doc.id !== document.id);
       setSelectedDocs(update);
       return;
     }
 
-    setSelectedDocs((prev) => [...prev, document.id]);
+    setSelectedDocs((prev) => [...prev, document]);
   };
 
-  const stopDocumentSelection = () => {
+  const toggleDocumentSelection = () => {
     if (selectionStart) { // then we should stop selection
       setSelectionStart(false);
       setSelectedDocs([]);
@@ -105,8 +105,12 @@ const ContextMenuContextProvider = ({ children }: { children: React.ReactNode })
     selectionStart, setSelectionStart,
     selectedDocs, setSelectedDocs,
     handleDocumentSelection,
-    stopDocumentSelection,
+    toggleDocumentSelection,
   }), [selectionStart, selectedDocs]);
+
+  // useEffect(() => {
+  //   console.log('selectedDocs', selectedDocs);
+  // }, [selectedDocs]);
 
   return (
     <ContextMenuContext.Provider value={{ ...contextValue }}>

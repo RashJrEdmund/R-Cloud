@@ -22,7 +22,7 @@ export default function EditModal({
 }: Props) {
   const [docName, setDocName] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { toggleRefetchPath, documents, setDocuments } = useDocStore();
+  const { documents, setDocuments } = useDocStore();
 
   const { currentUser } = useUserStore();
 
@@ -59,7 +59,6 @@ export default function EditModal({
       // console.warn(error);
     } finally {
       closeModal();
-      // toggleRefetchPath();
     }
   };
 
