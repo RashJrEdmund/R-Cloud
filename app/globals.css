@@ -49,6 +49,14 @@
   }
 }
 
+@media only screen and (max-width: 1400px) {
+  :root {
+    /* DIMENSIONS */
+    --primary_app_width: min(97vw, 1700px);
+    --secondary_app_width: min(100%, 1450px);
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
