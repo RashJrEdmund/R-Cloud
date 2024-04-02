@@ -24,6 +24,7 @@
 
   --black: #000;
   --white: #ffffff;
+  --orange: #ffa500; /* mainly used in the progress bar */
 
   /* ---overlay_gradient: linear-gradient(#3679ffab, #3679ffab, #3679ffab); */
   --overlay_gradient: #0505059b;

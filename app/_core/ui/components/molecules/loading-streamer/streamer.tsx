@@ -2,8 +2,6 @@
 
 import { THEME_PALETTE, flex_template } from '@/core/ui/theme';
 import styled from '@emotion/styled';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TextTag } from '@/components/atoms';
 import Image from 'next/image';
 import { APP_ICONS } from '@/core/ui/icons';
@@ -34,10 +32,6 @@ export default function Streamer({ }: Props) {
   return (
     <StyledStreamer>
       <section>
-        {/* <TextTag color_type='success' size='1.25rem' weight='600' gap='5px'>
-          <FontAwesomeIcon icon={faSpinner} spin />
-        </TextTag> */}
-
         <Image
           src={APP_ICONS.logo}
           width={40}

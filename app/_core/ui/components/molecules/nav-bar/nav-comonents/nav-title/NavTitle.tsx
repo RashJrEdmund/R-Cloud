@@ -1,6 +1,6 @@
 'use client';
 
-import { TextTag, Button } from '@/components/atoms';
+import { Button } from '@/components/atoms';
 import { useUserStore } from '@/store/zustand';
 import styled from '@emotion/styled';
 import Link from 'next/link';
@@ -36,8 +36,8 @@ export default function NavTitle({ }: Props) {
   const { currentUser } = useUserStore();
 
   useLayoutEffect(() => {
-    if (currentUser) setNavProperties({ route_name: 'R-Drive', route_url: '/r-drive' });
-    else setNavProperties({ route_name: 'R-Cloud', route_url: '/' });
+    if (currentUser) setNavProperties({ route_name: 'R Drive', route_url: '/r-drive' });
+    else setNavProperties({ route_name: 'R Cloud', route_url: '/' });
   }, [currentUser]);
 
   return (

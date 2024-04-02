@@ -1,8 +1,4 @@
 import { BgVariants } from '@/components/atoms/common/types';
-import {
-  IconDefinition,
-  faArrowRight
-} from '@fortawesome/free-solid-svg-icons';
 
 interface IIllustrationContent {
   url: string;
@@ -28,20 +24,17 @@ export const CTA_CONTENT: {
   text: string;
   url: string;
   bt_bg: BgVariants;
-  icon: IconDefinition;
 }[] = [
   {
     title: 'go to r-drive',
-    text: 'My R-Cloud',
+    text: 'My R Drive',
     url: '/r-drive',
     bt_bg: 'blued',
-    icon: faArrowRight,
   },
   {
     title: 'go to storage plans',
     text: 'Storage Plans',
-    url: '/storage-plans',
+    url: '/storage plans',
     bt_bg: 'invert',
-    icon: faArrowRight,
   }
 ];

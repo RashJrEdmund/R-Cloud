@@ -35,38 +35,37 @@ export default function FilesFolderDisplay({ }: Props) {
     toggleDocumentSelection,
   } = useContextMenuContext();
 
+  const callMenuFunctionThenCloseMenu = (call_back: Function) => {
+    call_back();
+    contextMenuRef?.current?.close();
+  };
+
   const MAIN_CONTEXT_MENU_CONTENT: ContextMenuContent[] = useMemo(() => selectionStart ? [
     {
       text: 'Delete Selected',
       icon_url: CONTEXT_MENU_ICONS.delete,
-      action: () => openBulkDeleteModal(selectedDocs),
+      action: () => callMenuFunctionThenCloseMenu(() => openBulkDeleteModal(selectedDocs)),
     },
     {
       text: 'Stop Selection',
       icon_url: CONTEXT_MENU_ICONS.select,
-      action: () => {
-        toggleDocumentSelection();
-        contextMenuRef?.current?.close();
-      },
+      action: () => callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
     }
   ] : [
     {
       text: 'New Folder',
       icon_url: CONTEXT_MENU_ICONS.new_folder,
-      action: openNewFolderModal,
+      action: () => callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
     },
     {
       text: 'Upload File(s)',
       icon_url: CONTEXT_MENU_ICONS.upload,
-      action: openFileUploadDialog,
+      action: () => callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
     },
     {
       text: 'Start Selection',
       icon_url: CONTEXT_MENU_ICONS.select,
-      action: () => {
-        toggleDocumentSelection();
-        contextMenuRef?.current?.close();
-      },
+      action: () => callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
     }
   ], [selectionStart, selectedDocs]);
 

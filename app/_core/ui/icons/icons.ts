@@ -1,4 +1,6 @@
 const CONTEXT_MENU_ICONS = {
+  more: '/icons/modal-icons/more-icon.svg',
+  close: '/icons/modal-icons/close-icon.svg',
   new_folder: '/icons/modal-icons/new-folder-icon.svg',
   upload: '/icons/modal-icons/upload-icon.svg',
   open: '/icons/modal-icons/open-icon.svg',

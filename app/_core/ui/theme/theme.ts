@@ -17,6 +17,7 @@ interface IColorPalette {
 
   black: string;
   white: string;
+  orange: string;
 
   app_bg: string;
   app_blue: string;
@@ -61,6 +62,7 @@ const THEME_PALETTE: {
 
     black: 'var(--black)',
     white: 'var(--white)',
+    orange: 'var(--orange)',
 
     app_bg: 'var(--app_bg)',
     app_blue: 'var(--app_blue)',

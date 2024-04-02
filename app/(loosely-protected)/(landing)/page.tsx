@@ -11,11 +11,11 @@ export default function Landing({ }: Props) {
         margin='2rem auto 0'
       >
         <TextTag as='h1'>
-          <TextTag weight='600' size='1.25rem'>
+          <TextTag no_white_space weight='600' size='1.25rem'>
             Welcome to
           </TextTag>
-          <TextTag weight='600' size='1.25rem' color_type='success'>
-            R-Cloud
+          <TextTag no_white_space weight='600' size='1.25rem' color_type='success'>
+            R Cloud
           </TextTag>
         </TextTag>
       </DivCard>

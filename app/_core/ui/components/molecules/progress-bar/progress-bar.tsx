@@ -1,9 +1,8 @@
 'use client';
 
 import { DivCard } from '@/components/atoms';
-import { useEffect, useState } from 'react';
-
-import type { BgVariants } from '@/components/atoms/common/types';
+import { useEffect, useMemo, useState } from 'react';
+import { THEME_PALETTE } from '@/core/ui/theme';
 
 interface Props {
   height?: string;
@@ -28,13 +27,23 @@ export default function ProgressBar({
 
   show_usage_colors = false,
 }: Props) {
-  const [color, setColor] = useState<BgVariants>('blued');
+  const [color, setColor] = useState<string>('orange');
+
+  const APP_COLOR = useMemo(() => THEME_PALETTE.colors, []);
 
   useEffect(() => {
     if (show_usage_colors) {
-      // write logic to differentiate coloring based on progress_in_percentage;
+      if (progress_in_percentage <= 50) {
+        setColor(APP_COLOR.app_blue);
+      } else if (progress_in_percentage <= 70) {
+        setColor(APP_COLOR.orange);
+      } else if (progress_in_percentage <= 99) {
+        setColor(APP_COLOR.border_error);
+      } else {
+        setColor(APP_COLOR.black);
+      }
     }
-  }, [show_usage_colors]);
+  }, [show_usage_colors, progress_in_percentage, APP_COLOR]);
 
   return (
     <DivCard bg='grayed' width={width} height={height} radius={outer_radius} position='relative'>
@@ -45,7 +54,9 @@ export default function ProgressBar({
         left='0'
         top='0'
         radius={inner_radius}
-        bg={color}
+        sx={`
+          background-color: ${color}
+        `}
       />
     </DivCard>
   );

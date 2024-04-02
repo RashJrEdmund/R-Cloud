@@ -2,9 +2,9 @@
 
 import { forwardRef, useImperativeHandle, useRef, useState, useEffect } from 'react';
 import { IModalWrapperRef } from '..';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { Button, DivCard, Overlay, TextTag } from '@/components/atoms';
+import { Button, DivCard, Overlay } from '@/components/atoms';
+import { CONTEXT_MENU_ICONS } from '@/core/ui/icons';
+import Image from 'next/image';
 
 import type { ForwardedRef, LegacyRef, MouseEventHandler } from 'react';
 
@@ -84,9 +84,14 @@ function AppModalWrapper(
           min_height='180px'
         >
           {!use_base_btns_instead && (
-            <TextTag size='1.25rem' cursor='pointer' onClick={handleModalClose}>
-              <FontAwesomeIcon icon={faXmark} />
-            </TextTag>
+            <Image
+              src={CONTEXT_MENU_ICONS.close}
+              alt='Show more'
+              className='cursor-pointer'
+              height={24}
+              width={24}
+              onClick={handleModalClose}
+            />
           )}
 
           <DivCard width='100%' flex_dir='column' align='start' justify='start' margin='1rem 0 0' gap='10px'>

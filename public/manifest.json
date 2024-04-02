@@ -1,6 +1,6 @@
 {
-    "name": "R-Cloud Web",
-    "short_name": "R-Cloud",
+    "name": "R Cloud Web",
+    "short_name": "R Cloud",
     "description": "Cloud storage web application. Upload, manage and download files",
     "theme_color": "#5588ff",
     "background_color": "#5588ff",
