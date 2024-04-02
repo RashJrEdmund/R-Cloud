@@ -15,7 +15,12 @@ const MEDIA_ICONS = {
   doc: '/icons/text-file-icon.svg',
 };
 
+const APP_ICONS = {
+  logo: '/icons/r-cloud-logo.svg',
+};
+
 export {
   CONTEXT_MENU_ICONS,
   MEDIA_ICONS,
+  APP_ICONS,
 };

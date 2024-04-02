@@ -8,8 +8,7 @@ import { ProfileImage } from '..';
 import { useRouter } from 'next/navigation';
 import { logOut } from '@/core/config/firebase';
 import { getUserProfile } from '@/core/config/firebase/fire-store';
-import { calculatePercentage, getUsedSpaceVisualRepresentation } from '@/utils/helpers';
-import { ProgressBar } from '@/components/molecules';
+import { UsedSpaceDisplay } from '@/components/molecules';
 
 interface Props {
   //
@@ -24,8 +23,6 @@ export default function ProfileDisplay({ }: Props) {
   const router = useRouter();
 
   const LastLogin = useMemo(() => new Date((currentUser?.metadata?.lastSignInTime as any)).toDateString(), [currentUser]);
-
-  const usedSpaceVisualRep = useMemo<number>(() => getUsedSpaceVisualRepresentation(userProfile), [userProfile]);
 
   const handleLogOut = () => {
     setLogOutState({
@@ -105,23 +102,7 @@ export default function ProfileDisplay({ }: Props) {
         {JSON.stringify(userProfile, null, 4)}
       </pre> */}
 
-      {userProfile && (
-        <DivCard width='100%' flex_dir='column' align='start' justify='start'>
-          <TextTag size='0.9rem'>
-            Used space
-
-            <TextTag color_type='success'>
-              {calculatePercentage(userProfile?.plan.used_bytes, userProfile?.plan.bytes).ans.toFixed(2)} %
-            </TextTag>
-          </TextTag>
-
-          <ProgressBar
-            show_usage_colors
-            progress_in_percentage={usedSpaceVisualRep}
-            width='min(100%, 500px)'
-          />
-        </DivCard>
-      )}
+      <UsedSpaceDisplay userProfile={userProfile} />
 
       <DivCard width='100%' flex_dir='column' align='start' justify='start'>
         <TextTag size='0.9rem'>

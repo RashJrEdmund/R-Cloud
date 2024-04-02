@@ -5,6 +5,8 @@ import styled from '@emotion/styled';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TextTag } from '@/components/atoms';
+import Image from 'next/image';
+import { APP_ICONS } from '@/core/ui/icons';
 
 interface Props {
   //
@@ -32,12 +34,19 @@ export default function Streamer({ }: Props) {
   return (
     <StyledStreamer>
       <section>
-        <TextTag color_type='success' size='1.25rem' weight='600' gap='5px'>
+        {/* <TextTag color_type='success' size='1.25rem' weight='600' gap='5px'>
           <FontAwesomeIcon icon={faSpinner} spin />
-        </TextTag>
+        </TextTag> */}
+
+        <Image
+          src={APP_ICONS.logo}
+          width={40}
+          height={40}
+          alt='app logo'
+        />
 
         <TextTag color_type='success' size='1.25rem' weight='600' gap='5px' no_white_space>
-          R-Cloud
+          R Cloud
         </TextTag>
       </section>
     </StyledStreamer>

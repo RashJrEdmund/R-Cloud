@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { Streamer } from '@/components/molecules';
 import { useUserStore, useDocStore } from '@/store/zustand';
 import { useParams, useRouter } from 'next/navigation';
-import { getOneDocument, getUserProfile } from '@/core/config/firebase/fire-store';
+import { getOneDocument } from '@/core/config/firebase/fire-store';
 
 import type { IUser } from '@/interfaces/entities';
 
@@ -20,7 +20,7 @@ export default function LooseAuthGuard(Component: (...props: any[]) => JSX.Eleme
   return function Guard(props: any) {
     const [loading, setLoading] = useState<{ user: boolean; doc: boolean }>({ user: true, doc: false }); // loading states for both document and user.
     const [current_user, set_current_user] = useState<IUser | null>(null);
-    const { setCurrentUser, setUserProfile } = useUserStore();
+    const { setCurrentUser } = useUserStore();
     const { setCurrentFolder } = useDocStore();
 
     const params = useParams<{ folder_id: string }>();
@@ -52,13 +52,6 @@ export default function LooseAuthGuard(Component: (...props: any[]) => JSX.Eleme
                 lastSignInTime: user.metadata.lastSignInTime || '',
               }
             };
-
-            await getUserProfile(_user.email) // getting user profile at once
-              .then(res => {
-                if (!res.exists()) return;
-                setUserProfile(res.data());
-              })
-              .finally(() => { });
 
             set_current_user(_user as any);
             setCurrentUser(_user as any);
