@@ -17,6 +17,7 @@ interface IColorPalette {
 
   black: string;
   white: string;
+  orange: string;
 
   app_bg: string;
   app_blue: string;
@@ -26,6 +27,7 @@ interface IColorPalette {
 interface IDimensions {
   primary_app_width: string;
   secondary_app_width: string;
+  tertiary_app_width: string;
   main_min_height: string;
 }
 
@@ -60,6 +62,7 @@ const THEME_PALETTE: {
 
     black: 'var(--black)',
     white: 'var(--white)',
+    orange: 'var(--orange)',
 
     app_bg: 'var(--app_bg)',
     app_blue: 'var(--app_blue)',
@@ -69,6 +72,7 @@ const THEME_PALETTE: {
   dimensions: {
     primary_app_width: 'var(--primary_app_width)',
     secondary_app_width: 'var(--secondary_app_width)',
+    tertiary_app_width: 'var(--tertiary_app_width)',
     main_min_height: 'var(--main_min_height)',
   },
 

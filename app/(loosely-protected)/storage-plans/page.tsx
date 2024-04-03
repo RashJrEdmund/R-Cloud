@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { MainTag } from '@/components/atoms';
 import { TopSection } from '@/components/molecules';
-import PlanDisplay from './_components/storage-plans';
+import PlanDisplay from './_components/plan-display';
 
 export async function generateMetadata(): Promise<Metadata> {
   // to dynamically generate metadata3

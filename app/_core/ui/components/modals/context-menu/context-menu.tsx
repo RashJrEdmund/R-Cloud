@@ -52,7 +52,7 @@ function ContextMenu(
         <TextTag key={text} no_white_space cursor='pointer' onClick={() => action()}>
           <Image
             src={icon_url}
-            alt='close modal icon'
+            alt={text}
             className='cursor-pointer'
             height={17}
             width={17}

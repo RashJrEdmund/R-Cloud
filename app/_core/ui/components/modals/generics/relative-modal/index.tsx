@@ -3,9 +3,9 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { DivCard, TextTag } from '@/components/atoms';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { DivCard } from '@/components/atoms';
+import { CONTEXT_MENU_ICONS } from '@/core/ui/icons';
+import Image from 'next/image';
 
 interface Props {
   children: React.ReactNode;
@@ -65,9 +65,16 @@ export default function RelativeModal({ // generic modal
       id='relative-modal' // used by the getResponsivePosition function to get component's height and width
       onBlur={() => setShowModal(false)}
     >
-      <TextTag size='1.25rem' cursor='pointer' margin='0 0 0.5rem' onClick={() => setShowModal(false)}>
-        <FontAwesomeIcon icon={faXmark} />
-      </TextTag>
+      <DivCard margin='0 0 0.5rem' onClick={() => setShowModal(false)}>
+
+        <Image
+          src={CONTEXT_MENU_ICONS.close}
+          alt='Show more'
+          className='cursor-pointer'
+          height={24}
+          width={24}
+        />
+      </DivCard>
 
       {children}
     </DivCard>

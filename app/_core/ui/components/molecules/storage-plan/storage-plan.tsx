@@ -1,13 +1,19 @@
+'use client';
+
 import { Button, DivCard, TextTag } from '@/components/atoms';
-import type { IStoragePlan } from '@/interfaces/entities';
+import { useUserStore } from '@/store/zustand';
 import { getSize } from '@/utils/file-utils';
 import Image from 'next/image';
+
+import type { IStoragePlan } from '@/interfaces/entities';
 
 interface Props {
   plan: IStoragePlan
 };
 
 export default function StoragePlan({ plan }: Props) {
+  const { currentUser, userProfile } = useUserStore();
+
   return (
     <DivCard
       shadow_effect
@@ -55,14 +61,27 @@ export default function StoragePlan({ plan }: Props) {
         </TextTag>
       </DivCard>
 
-      <Button
-        width='100%'
-        bg={plan.is_free ? 'black' : 'blued'}
-        title={'subscribe to plan: ' + plan.label}
-        padding='10px'
-      >
-        {plan.is_free ? 'Current Plan' : 'Buy Plan'}
-      </Button>
+      {
+        (currentUser && userProfile && userProfile.plan.id === plan.id) ? (
+          <Button
+            width='100%'
+            bg={plan.is_free ? 'black' : 'blued'}
+            title={'subscribe to plan: ' + plan.label}
+            padding='10px'
+          >
+            Current Plan
+          </Button>
+        ) : (
+          <Button
+            width='100%'
+            bg={plan.is_free ? 'black' : 'blued'}
+            title={'subscribe to plan: ' + plan.label}
+            padding='10px'
+          >
+            {plan.is_free ? 'Free Plan' : 'Buy Plan'}
+          </Button>
+        )
+      }
     </DivCard>
   );
 };

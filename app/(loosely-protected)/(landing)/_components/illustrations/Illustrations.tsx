@@ -1,6 +1,7 @@
 import { DivCard, TextTag } from '@/components/atoms';
 import { LANDING_ILLUSTRATION_CONTENT } from '@/core/ui/ui-constants';
 import Image from 'next/image';
+import { StyledIllustrations } from './styled-illustration';
 
 interface Props {
   //
@@ -8,12 +9,13 @@ interface Props {
 
 export default function Illustrations({}: Props) {
   return (
-    <DivCard>
+    <StyledIllustrations>
       {LANDING_ILLUSTRATION_CONTENT.map(({ url, alt, description}) => (
         <DivCard
           key={alt}
           title={description}
           flex_dir='column'
+          className='illustration'
         >
           <Image
             src={url}
@@ -26,6 +28,6 @@ export default function Illustrations({}: Props) {
           <TextTag>{description}</TextTag>
         </DivCard>
       ))}
-    </DivCard>
+    </StyledIllustrations>
   );
 };

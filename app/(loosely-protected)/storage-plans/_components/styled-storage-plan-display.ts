@@ -13,7 +13,7 @@ const StyledStoragePlanDisplay = styled.section`
   gap: 1rem 10px;
   align-items: center;
   justify-content: center;
-  width: ${DIMENSIONS.secondary_app_width};
+  width: ${DIMENSIONS.tertiary_app_width};
   height: fit-content;
   min-height: 400px;
   margin: 0 auto;

@@ -13,9 +13,9 @@ import type { IUpdateAction } from '../interfaces';
 // READ request
 
 const getUserProfile = async (email: string): Promise<DocumentSnapshot<IUserProfile>> => {
-  const doc_path = createUserDocPath(email || '', '/profile/me');
+  const doc_path = createUserDocPath<IUserProfile>(email || '', '/profile/me');
 
-  return getDoc(doc_path) as Promise<DocumentSnapshot<IUserProfile>>;
+  return getDoc(doc_path);
 };
 
 // WRITE requests

@@ -1,20 +1,17 @@
 'use client'
 
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { Button, DivCard, TextTag } from '@/components/atoms';
-import { ProgressBar } from '@/components/molecules';
+import { UsedSpaceDisplay } from '@/components/molecules';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getTotalUsedSize, getUserProfile } from '@/core/config/firebase/fire-store';
 import { useUserStore } from '@/store/zustand';
-import { getUsedSpaceVisualRepresentation } from '@/utils/helpers';
 
 interface Props { };
 
 export default function DriveDisplay({ }: Props) {
   const { currentUser, userProfile, setUserProfile } = useUserStore();
-
-  const usedSpaceVisualRep = useMemo<number>(() => getUsedSpaceVisualRepresentation(userProfile), [userProfile]);
 
   useEffect(() => {
     if (!currentUser) return;
@@ -48,16 +45,7 @@ export default function DriveDisplay({ }: Props) {
             used space
           </TextTag>
 
-          {
-            userProfile ? (
-              <ProgressBar
-                show_usage_colors
-                progress_in_percentage={usedSpaceVisualRep}
-                width='min(100%, 400px)'
-                height='25px'
-              />
-            ) : null
-          }
+          <UsedSpaceDisplay userProfile={userProfile} width='min(100%, 400px)' />
         </DivCard>
 
         <Button as={Link} href='/r-drive/root' bg='blued'>
