@@ -48,7 +48,7 @@ export default function ProgressBar({
   return (
     <DivCard bg='grayed' width={width} height={height} radius={outer_radius} position='relative'>
       <DivCard
-        width={progress_in_percentage + '%'} /* eg 90% */
+        width={progress_in_percentage + '%'} /* eg 95% */
         height='100%'
         position='absolute'
         left='0'
