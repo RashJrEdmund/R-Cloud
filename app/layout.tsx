@@ -5,8 +5,8 @@ import { NavBar } from '@/components/molecules';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | R-Cloud',
-    default: 'R-Cloud',
+    template: '%s | R - Cloud',
+    default: 'R - Cloud',
   },
   description: 'could storage service app',
   metadataBase: new URL('https://r-cloud.vercel.app'),
@@ -21,8 +21,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     description: 'Cloud storage web application. Upload, manage and download files',
-    siteName: 'R-cloud',
-    title: 'R-cloud',
+    siteName: 'R - cloud',
+    title: 'R - cloud',
   },
 };
 

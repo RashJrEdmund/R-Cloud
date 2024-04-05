@@ -34,7 +34,7 @@ export const CTA_CONTENT: {
   {
     title: 'go to storage plans',
     text: 'Storage Plans',
-    url: '/storage plans',
+    url: '/storage-plans',
     bt_bg: 'invert',
   }
 ];
