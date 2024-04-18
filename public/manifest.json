@@ -50,8 +50,8 @@
             ]
         },
         {
-            "name": "R-Drive",
-            "short_name": "R-Drive",
+            "name": "R - Drive",
+            "short_name": "R - Drive",
             "description": "go to drive page",
             "url": "/r-drive",
             "icons": [
