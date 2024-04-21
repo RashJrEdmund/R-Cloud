@@ -7,17 +7,25 @@ interface StoreState<T> {
 
 type Updater<T> = (old: T) => T;
 
+type Setter<T> = (data: T | (Updater<T>)) => void;
+
 interface Store<T> {
   getSnapshot: () => T;
   subscribe: (cb: StoreState<T>['subscriptions'][number]) => (() => void);
-  set: (data: T | (Updater<T>)) => void;
+  set: Setter<T>;
 }
 
 function isFunction<T>(d: T | Updater<T>): d is Updater<T> {
   return typeof d === "function";
 }
 
-export function createStore<T>(initialData: T): Store<T> {
+/**
+ * @param initialDate
+ * of type T
+ *
+ * Creates a store in stance and exposes the getSnapshot, subscribe and set methods
+*/
+function createStore<T>(initialData: T): Store<T> {
   let state: StoreState<T> = {
     data: initialData,
     subscriptions: []
@@ -41,23 +49,16 @@ export function createStore<T>(initialData: T): Store<T> {
   };
 }
 
-export const useStore = <T>(store: Store<T>) => [useSyncExternalStore(store.subscribe, store.getSnapshot), store.set];
+/**
+ * @returns [state, setState] // an array of length 2, with the state and the state updater
+*/
+const useStore = <T>(store: Store<T>): [T, Setter<T>] => [useSyncExternalStore(store.subscribe, store.getSnapshot), store.set];
 
-// interface User {
-//   id: string;
-//   name?: string;
-// }
+export type {
+  Setter,
+};
 
-// const userStore = createStore<User>({id: '20'});
-
-// const useLoadUser = () => {
-//   const {id} = useStore(userStore);
-
-//   // useEffect(() => {
-//     setTimeout(() => {
-//       userStore.set({id: '30', name: 'Rash'});
-//     }, 1000);
-//   // }, []);
-
-//   return useStore(userStore);
-// };
+export {
+  createStore,
+  useStore,
+};
