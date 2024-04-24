@@ -8,8 +8,6 @@ type ITestStore = {
 
 const testStore = createStore<ITestStore>({} as ITestStore);
 
-// testStore.
-
 const useTestStore = () => useStore<ITestStore>(testStore);
 
 export default function Test() {
