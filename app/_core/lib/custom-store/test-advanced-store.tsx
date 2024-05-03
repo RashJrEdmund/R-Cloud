@@ -1,4 +1,4 @@
-import { createStore, useStore } from './store.base';
+import { createStore, useStore } from './custom-store';
 
 type ITestStore = {
   name: string;
@@ -11,7 +11,7 @@ const testStore = createStore<ITestStore>({} as ITestStore);
 const useTestStore = () => useStore<ITestStore>(testStore);
 
 export default function Test() {
-  const testState = useTestStore();
+  const [testState] = useTestStore();
 
   return (
     <div>
