@@ -13,11 +13,21 @@ const useTestStore = () => useStore<ITestStore>(testStore);
 export default function Test() {
   const [testState] = useTestStore();
 
+  const clearState = () => {
+    //
+  };
+
   return (
-    <div>
-      name: {testState.name}
-      date: {testState.date.toLocaleDateString()}
-      day: {testState.day}
-    </div>
+    <>
+      <div>
+        name: {testState.name}
+        date: {testState.date.toLocaleDateString()}
+        day: {testState.day}
+      </div>
+
+      <button type='button' onClick={clearState}>
+        clear state
+      </button>
+    </>
   );
 };
