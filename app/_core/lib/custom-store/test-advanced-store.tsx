@@ -11,10 +11,14 @@ const testStore = createStore<ITestStore>({} as ITestStore);
 const useTestStore = () => useStore<ITestStore>(testStore);
 
 export default function Test() {
-  const [testState] = useTestStore();
+  const [testState, setTestState] = useTestStore();
 
   const clearState = () => {
-    //
+    setTestState({
+      name: '',
+      day: 12,
+      date: new Date()
+    });
   };
 
   return (
