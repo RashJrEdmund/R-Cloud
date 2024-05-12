@@ -5,7 +5,7 @@ import { DriveDisplay } from './_components';
 
 export async function generateMetadata(): Promise<Metadata> { // to dynamically generate metadata
   return {
-    title: 'R-Drive',
+    title: 'R - Drive',
     description: 'user drive page',
     alternates: {
       canonical: '/r-drive/',

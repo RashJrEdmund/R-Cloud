@@ -5,7 +5,7 @@ import SignupForm from './signup-form/signup-form';
 export async function generateMetadata(): Promise<Metadata> { // to dynamically generate metadata
   return {
     title: 'Signup',
-    description: 'r-cloud signup page',
+    description: 'r-cloud sign-up page',
     alternates: {
       canonical: '/signup'
     }

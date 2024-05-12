@@ -49,6 +49,27 @@ const StyledDisplayCard = styled.div`
   }
 `;
 
+const StyledShimmerCard = styled.div`
+  /* border: 0.5px solid ${COLORS.border}; */
+  border-radius: 4px;
+  width: 120px;
+  height: fit-content;
+  min-height: 150px;
+  margin: 10px auto;
+  transition: 200ms;
+    background-color: ${COLORS.bg_light};
+
+  &:hover {
+    background-color: ${COLORS.bg_light};
+  }
+
+  @media only screen and (max-width: 650px) {
+    width: 110px;
+    overflow: hidden;
+  }
+`;
+
 export {
   StyledDisplayCard,
+  StyledShimmerCard,
 };

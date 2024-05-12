@@ -64,7 +64,7 @@ interface IStoragePlan {
   id?: string;
   label: StoragePlanLabels;
   icon_url: string;
-  capacity: string; // eg 1.5 Gb
+  capacity: string; // e.g 1.5 GB
   bytes: number; // eg 1610612736 in bytes
   rate: string;
   is_free: boolean;
