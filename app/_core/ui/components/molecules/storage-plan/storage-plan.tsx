@@ -14,6 +14,8 @@ interface Props {
 export default function StoragePlan({ plan }: Props) {
   const { currentUser, userProfile } = useUserStore();
 
+  console.log({ currentUser, userProfile });
+
   return (
     <DivCard
       shadow_effect

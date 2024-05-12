@@ -16,7 +16,7 @@ export default function NotFound({ }: Props) {
 
       <Button as={Link} href='/' bg='black' padding='10px 15px'
         replace // replace attribute is for the Link. like router.replace('/path');
-      > 
+      >
         Go Back
       </Button>
     </MainTag>

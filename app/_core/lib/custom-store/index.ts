@@ -1,1 +1,1 @@
-export * from './store.advanced';
+export * from './custom-store';

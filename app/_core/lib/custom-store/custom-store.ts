@@ -16,7 +16,7 @@ interface Store<T> {
 }
 
 function isFunction<T>(d: T | Updater<T>): d is Updater<T> {
-  return typeof d === "function";
+  return typeof d === 'function';
 }
 
 /**
@@ -37,7 +37,7 @@ function createStore<T>(initialData: T): Store<T> {
     },
     subscribe(cb) {
       state.subscriptions.push(cb);
-      return () => {
+      return () => { // returning a function that unsubscribes
         state.subscriptions = state.subscriptions.filter(sub => sub !== cb);
       };
     },

@@ -27,7 +27,7 @@ export default function DriveDisplay({ }: Props) {
     //   console.log(res);
     //   console.log('data', res.data());
     // });
-  }, []);
+  }, [currentUser, setUserProfile]);
 
   return (
     <DivCard width='100%' flex_dir='column' gap='1rem' min_height='70vh'>

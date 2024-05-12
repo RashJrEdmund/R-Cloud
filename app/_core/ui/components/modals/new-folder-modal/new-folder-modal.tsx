@@ -57,8 +57,8 @@ export default function NewFolderModal({
           bytes: 0,
           length: 0,
         },
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
 
       await createFileDoc(currentUser.email, new_folder as IDocument);

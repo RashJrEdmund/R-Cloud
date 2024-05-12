@@ -14,6 +14,7 @@ import { getResponsiveMenuPosition, openFileUploadDialog } from '@/utils/helpers
 import type { DragEventHandler, MouseEventHandler } from 'react';
 import type { ContextMenuContent } from '@/interfaces/app';
 import { CONTEXT_MENU_ICONS } from '@/core/ui/icons';
+import FilesFolderShimmer from './components/files-folder-shimmer';
 
 interface Props {
   //
@@ -174,7 +175,9 @@ export default function FilesFolderDisplay({ }: Props) {
                 </TextTag>
               </DivCard>
             )
-          ) : null
+          ) : (
+            <FilesFolderShimmer displayLayout={displayLayout} />
+          )
         }
       </DivCard>
     </>
