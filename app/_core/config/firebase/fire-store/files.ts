@@ -25,14 +25,14 @@ const getOneDocument = async (email: string, doc_id: string) => {
 };
 
 const listFolderDocuments = async (email: string, folder_id: string): Promise<QuerySnapshot<IDocument>> => {
-  const collection_path = createUserCollectionPath(email, '/r-drive');
+  const collection_path = createUserCollectionPath<IDocument>(email, '/r-drive');
 
   const fileQuery = query(
     collection_path,
     where('parent_id', '==', folder_id),
   );
 
-  return getDocs(fileQuery) as Promise<QuerySnapshot<IDocument>>;
+  return getDocs(fileQuery);
 };
 
 const getTotalUsedSize = async (email: string): Promise<AggregateQuerySnapshot<{
@@ -69,7 +69,7 @@ const renameDocument = async (email: string, doc_id: string, name: string) => {
 
   return setDoc(document_path,
     { name },
-    { merge: true } // merge true so as to create if doesn't exist of only update specified fields if exits;
+    { merge: true } // merge true so as to create if doesn't exist or only update specified fields if exits;
   );
 };
 
@@ -91,12 +91,21 @@ const updateFolderSize = async (email: string, folder_id: string, updates: { byt
 
     let new_length = 0;
 
-    if (action === 'ADD') { // default is ADD
+    switch (action) {
+    case 'ADD':
       new_bytes = prev.capacity.bytes + updates.bytes;
       new_length = Number(prev.capacity.length) + Number(updates.length);
-    } else { // subtracting
+      break;
+    case 'SUBTRACT':
       new_bytes = prev.capacity.bytes - updates.bytes;
       new_length = Number(prev.capacity.length) - Number(updates.length);
+      break;
+    case 'REPLACE':
+      new_bytes = updates.bytes;
+      new_length = Number(updates.length);
+      break;
+    default:
+      break;
     }
 
     const _update_capacity = {

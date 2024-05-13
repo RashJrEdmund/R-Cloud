@@ -55,92 +55,99 @@ export default function ProfileDisplay({ }: Props) {
 
   return (
     <StyledProfileDisplay>
-      <ProfileImage />
+      <DivCard align='start' gap='1rem' media_sx='flex-direction: column;'>
+        <ProfileImage />
 
-      <DivCard width='100%' flex_wrap='wrap' justify='start' gap='1rem'>
-        {(!loading || currentUser)? (
-          <>
-            <TextTag size='0.9rem' no_white_space>
-              Logged In as:
+        <DivCard flex_dir='column' align='start' gap='1rem'>
+          <DivCard width='100%' flex_wrap='wrap' justify='start' gap='1rem'>
+            {(!loading || currentUser) ? (
+              <>
+                <div className='flex flex-col'>
+                  <TextTag size='0.9rem' no_white_space>
+                    Logged In as:
+                  </TextTag>
+                  <TextTag color_type='success'>
+                    {currentUser?.username}
+                  </TextTag>
+                </div>
+
+                <div className='flex flex-col'>
+                  <TextTag size='0.9rem' no_white_space>
+                    Current Plan
+                  </TextTag>
+                  <TextTag color_type='success'>
+                    {userProfile?.plan.label || '---'}
+                  </TextTag>
+                </div>
+
+                <div className='flex flex-col gap-[7px]'>
+                  <TextTag size='0.9rem' no_white_space>
+                    Plan Capacity
+                  </TextTag>
+
+                  <DivCard flex_wrap='wrap' justify='start'>
+                    <TextTag no_white_space color_type='success'>
+                      {userProfile?.plan.capacity} at
+                    </TextTag>
+
+                    <TextTag no_white_space color_type='success'>
+                      {userProfile?.plan.rate}
+                      ({userProfile?.plan.is_free ? 'Free' : 'Paid'} Tier)
+                    </TextTag>
+                  </DivCard>
+                </div>
+              </>
+            ) : (
+              <TextTag no_white_space>getting profile...</TextTag>
+            )}
+          </DivCard>
+
+          {/* <pre>
+  {JSON.stringify(userProfile, null, 4)}
+</pre> */}
+
+          <UsedSpaceDisplay userProfile={userProfile} />
+
+          <DivCard width='100%' flex_dir='column' align='start' justify='start'>
+            <TextTag size='0.9rem'>
+              username
 
               <TextTag color_type='success'>
                 {currentUser?.username}
               </TextTag>
             </TextTag>
 
-            <TextTag size='0.9rem' no_white_space>
-              Current Plan
+            <TextTag size='0.9rem'>
+              email
 
               <TextTag color_type='success'>
-                {userProfile?.plan.label}
+                {currentUser?.email}
               </TextTag>
             </TextTag>
 
-            <DivCard width='100%' flex_dir='row' align='start' justify='start' gap='7px'>
-              <TextTag size='0.9rem' no_white_space>
-                Plan Capacity
+            <TextTag size='0.9rem'>
+              Phone Number
+
+              <TextTag color_type='success'>
+                {currentUser?.phone_number || 'None Provided'}
               </TextTag>
+            </TextTag>
 
-              <DivCard flex_wrap='wrap' justify='start'>
-                <TextTag no_white_space color_type='success'>
-                  {userProfile?.plan.capacity} at
-                </TextTag>
+            <TextTag size='0.9rem'>
+              Last Log in
 
-                <TextTag no_white_space color_type='success'>
-                  {userProfile?.plan.rate}
-                  ({userProfile?.plan.is_free ? 'Free' : 'Paid'} Tier)
-                </TextTag>
-              </DivCard>
-            </DivCard>
-          </>
-        ) : (
-          <TextTag no_white_space>getting profile...</TextTag>
-        )}
-      </DivCard>
-
-      {/* <pre>
-        {JSON.stringify(userProfile, null, 4)}
-      </pre> */}
-
-      <UsedSpaceDisplay userProfile={userProfile} />
-
-      <DivCard width='100%' flex_dir='column' align='start' justify='start'>
-        <TextTag size='0.9rem'>
-          username
-
-          <TextTag color_type='success'>
-            {currentUser?.username}
-          </TextTag>
-        </TextTag>
-
-        <TextTag size='0.9rem'>
-          email
-
-          <TextTag color_type='success'>
-            {currentUser?.email}
-          </TextTag>
-        </TextTag>
-
-        <TextTag size='0.9rem'>
-          Phone Number
-
-          <TextTag color_type='success'>
-            {currentUser?.phone_number || 'None Provided'}
-          </TextTag>
-        </TextTag>
-
-        <TextTag size='0.9rem'>
-          Last Log in
-
-          <TextTag color_type='success'>
-            {LastLogin}
-          </TextTag>
-        </TextTag>
+              <TextTag color_type='success'>
+                {LastLogin}
+              </TextTag>
+            </TextTag>
+          </DivCard>
+        </DivCard>
       </DivCard>
 
       <DivCard width='100%' align='start' justify='start'>
         <Button
-          bg='black'
+          bg='error'
+          min_width='320px'
           disabled={logOutState?.isLoading}
           cursor={logOutState?.isLoading ? 'not-allowed' : 'pointer'}
           onClick={handleLogOut}

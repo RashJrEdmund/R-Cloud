@@ -31,6 +31,11 @@ interface IDocument {
   updatedAt?: Date | string;
 };
 
+enum Roles {
+  USER = 'USER',
+  ADMIN = 'ADMIN',
+}
+
 interface IUser {
   id: string;
   email: string;
@@ -56,6 +61,7 @@ interface IUserProfile {
   id: string;
   email: string;
   date_of_birth: Date | string;
+  role: keyof (typeof Roles);
   phone_number: string;
   plan: IUserPlan;
 };
@@ -79,6 +85,7 @@ export type {
   IUserPlan,
   IUserProfile,
   DocumentType,
+  Roles,
 
   // storage plan
   IStoragePlan,

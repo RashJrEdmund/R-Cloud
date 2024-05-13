@@ -57,6 +57,10 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
     setSelectedFiles([]);
     setUploadDetails(null);
     setProgress(null);
+
+    const fileUploadField = document.querySelector<HTMLInputElement>('#file-upload-field');
+
+    if (fileUploadField) fileUploadField.value = ''; // making sure upload file is cleared after file selection.
   };
 
   const openNewFolderModal = () => {
@@ -125,8 +129,8 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
             bytes: file.size,
             length: null,
           },
-          createdAt: new Date(),
-          updatedAt: new Date(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
         };
 
         await createFileDoc(currentUser.email, document as IDocument);
@@ -146,7 +150,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
       closeUploadModal();
       toggleRefetchPath();
     };
-  }, [currentUser, params.folder_id, selectedFiles]);
+  }, [currentUser, params.folder_id, selectedFiles, currentFolder, toggleRefetchPath]);
 
   // useEffect(() => {
   //   if (progress) console.log('progress changing', progress);

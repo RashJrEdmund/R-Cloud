@@ -9,13 +9,9 @@ interface Props {
 };
 
 export default function FormWrapper({ children, img_url, formAction }: Props) {
-  const handleFormAction = (formData: FormData) => {
-    formAction(formData);
-  };
-
   return (
     <StyledFormWrapper>
-      <form className='form' action={handleFormAction}>
+      <form className='form' action={formAction}>
         {children}
       </form>
 

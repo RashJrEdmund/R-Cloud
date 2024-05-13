@@ -16,6 +16,10 @@ const StyledProfileDisplay = styled.section`
   width: ${DIMENSIONS.secondary_app_width};
   height: fit-content;
   padding: 2rem 0;
+
+  /* @media only screen and (max-width: 650px) {
+    flex-direction: column;
+  } */
 `;
 
 export default StyledProfileDisplay;

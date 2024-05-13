@@ -27,20 +27,18 @@ export default function ProgressBar({
 
   show_usage_colors = false,
 }: Props) {
-  const [color, setColor] = useState<string>('orange');
-
   const APP_COLOR = useMemo(() => THEME_PALETTE.colors, []);
+
+  const [color, setColor] = useState<string>(APP_COLOR.app_blue);
 
   useEffect(() => {
     if (show_usage_colors) {
       if (progress_in_percentage <= 50) {
         setColor(APP_COLOR.app_blue);
-      } else if (progress_in_percentage <= 70) {
+      } else if (progress_in_percentage <= 75) {
         setColor(APP_COLOR.orange);
-      } else if (progress_in_percentage <= 99) {
-        setColor(APP_COLOR.border_error);
       } else {
-        setColor(APP_COLOR.black);
+        setColor(APP_COLOR.border_error);
       }
     }
   }, [show_usage_colors, progress_in_percentage, APP_COLOR]);

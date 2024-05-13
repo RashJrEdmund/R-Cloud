@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 const StyledProfileImage = styled.section`
   ${flex_template}
   flex-direction: column;
-  width: min(90vw, 250px);
+  width: min(90vw, 320px);
   height: fit-content;
   margin: 0 0 1rem;
 
