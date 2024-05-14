@@ -6,7 +6,7 @@
 =====================================================================//============*/
 
 import { createContext, useContext, useState, useMemo, useCallback, useRef } from 'react';
-import { BulkDeleteModal, DeleteModal, EditModal, NewFolderModal, UploadModal } from '@/components/modals';
+import { BulkDeleteModal, DeleteModal, EditModal, FileViewer, NewFolderModal, UploadModal } from '@/components/modals';
 import { uploadFile } from '@/core/config/firebase';
 import { useDocStore, useUserStore } from '../zustand';
 import { createFileDoc, updateFolderSize, updateUsedSpace } from '@/core/config/firebase/fire-store';
@@ -201,6 +201,8 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
           bulkDeleteModalRef={bulkDeleteModalRef}
           selectedDocs={docsToDelete}
         />
+
+        <FileViewer /> {/* Uses search params to open or close, so has no need for ref, or any other props */}
 
         {children}
       </>

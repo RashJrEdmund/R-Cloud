@@ -13,6 +13,7 @@ import Image from 'next/image';
 import type { MouseEventHandler, MutableRefObject } from 'react';
 import type { ISharedCardProps } from '../shared';
 import type { ContextMenuContent } from '@/interfaces/app';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface Props extends ISharedCardProps {
   // PROPS
@@ -107,6 +108,8 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
   ================================================================//================*/
   return function Card({ doc: file }: Props) {
     const fileRef = useRef<HTMLDivElement>();
+    const pathname = usePathname();
+    const router = useRouter();
 
     const { displayLayout } = useAppStore();
 
@@ -123,7 +126,7 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
     // console.log('is file include?', selectedDocs.includes(file.id));
 
     const handleOpen: MouseEventHandler<HTMLDivElement> = () => {
-      // router.push('/r-drive?file=' + folder.id);
+      router.push(`${pathname}?viewing=${file.id}`);
     };
 
     const FILE_CONTEXT_MENU_CONTENT = useMemo<ContextMenuContent[]>(() => [
