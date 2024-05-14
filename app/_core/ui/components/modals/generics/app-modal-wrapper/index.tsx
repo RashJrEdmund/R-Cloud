@@ -11,7 +11,7 @@ import type { ForwardedRef, LegacyRef, MouseEventHandler } from 'react';
 interface Props {
   children: React.ReactNode;
 
-  use_base_btns_instead?: boolean;
+  use_base_btns_instead?: boolean; // false by default
 
   confirmAction?: Function, cancelAction?: Function;
   confirmMsg?: string; cancelMsg?: string;

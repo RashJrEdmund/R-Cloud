@@ -76,7 +76,7 @@ export default function NewFolderModal({
   };
 
   return (
-    <AppModalWrapper ref={folderModalRef as any}
+    <AppModalWrapper ref={folderModalRef as MutableRefObject<IModalWrapperRef>}
       use_base_btns_instead
       isLoading={isLoading}
       confirmMsg='Create'

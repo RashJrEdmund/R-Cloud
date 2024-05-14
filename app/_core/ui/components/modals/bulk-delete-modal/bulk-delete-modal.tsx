@@ -37,7 +37,7 @@ export default function BulkDeleteModal({
       total: selectedDocs.length,
       has_folders: num_folders > 0,
       capacity: getSizeFromBytes(total_bytes),
-    }
+    };
   }, [selectedDocs]);
 
   const closeModal = () => {
@@ -67,7 +67,7 @@ export default function BulkDeleteModal({
   };
 
   return (
-    <AppModalWrapper ref={bulkDeleteModalRef as any}
+    <AppModalWrapper ref={bulkDeleteModalRef as MutableRefObject<IModalWrapperRef>}
       prevent_auto_focus
       use_base_btns_instead
       isLoading={isLoading}

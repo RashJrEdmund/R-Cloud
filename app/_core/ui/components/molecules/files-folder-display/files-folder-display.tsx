@@ -15,7 +15,6 @@ import type { DragEventHandler, MouseEventHandler } from 'react';
 import type { ContextMenuContent } from '@/interfaces/app';
 import { CONTEXT_MENU_ICONS } from '@/core/ui/icons';
 import FilesFolderShimmer from './components/files-folder-shimmer';
-import DocViewer, { DocViewerRenderers, PNGRenderer } from '@cyntler/react-doc-viewer';
 
 interface Props {
   //
@@ -75,7 +74,7 @@ export default function FilesFolderDisplay({ }: Props) {
     e.preventDefault();
     e.stopPropagation();
 
-    const coordinates = getResponsiveMenuPosition(e as any as MouseEvent);
+    const coordinates = getResponsiveMenuPosition(e as unknown as MouseEvent);
     setContextCoordinates({ top: coordinates.y + 'px', left: coordinates.x + 'px' });
 
     setContextContent(MAIN_CONTEXT_MENU_CONTENT);
@@ -128,7 +127,7 @@ export default function FilesFolderDisplay({ }: Props) {
 
   return (
     <>
-      {/* <DivCard
+      <DivCard
         // bg='light'
         width='100%'
         flex_dir='column'
@@ -181,21 +180,7 @@ export default function FilesFolderDisplay({ }: Props) {
             <FilesFolderShimmer displayLayout={displayLayout} />
           )
         }
-      </DivCard> */}
-      {
-        documents && (
-          <DocViewer
-            documents={[] ||(
-              documents?.filter((doc) => doc.type !== 'FOLDER')
-                .map(file => ({
-                  uri: '/vercel.svg' || 'https://images.unsplash.com/photo-1509043759401-136742328bb3?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D' || file.download_url || ''
-                })))
-            }
-
-            pluginRenderers={[PNGRenderer]}
-          />
-        )
-      }
+      </DivCard>
     </>
   );
 };

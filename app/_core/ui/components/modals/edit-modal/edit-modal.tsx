@@ -71,7 +71,7 @@ export default function EditModal({
   }, [document]);
 
   return (
-    <AppModalWrapper ref={editModalRef as any}
+    <AppModalWrapper ref={editModalRef as MutableRefObject<IModalWrapperRef>}
       use_base_btns_instead
       isLoading={isLoading}
       confirmMsg='Accept'
