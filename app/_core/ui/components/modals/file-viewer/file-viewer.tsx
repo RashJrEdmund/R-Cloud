@@ -5,7 +5,7 @@ import type { IDocument } from '@/interfaces/entities';
 import AppModalWrapper from '../generics/app-modal-wrapper';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDocStore } from '@/store/zustand';
-import { DivCard } from '@/components/atoms';
+import { Button, DivCard } from '@/components/atoms';
 import Image from 'next/image';
 import Viewer from './viewer';
 
@@ -99,20 +99,21 @@ export default function FileViewer() {
       cancelAction={handleCancelAction}
     >
       <DivCard width='100%' position='relative' padding='0 10px'>
-        {/* <DivCard position='absolute' top='50%' left='0' transform='translate(0, -50%)'
+        <Button position='absolute' top='50%' left='0' transform='translate(0, -50%)'
           onClick={() => handMotion('PREV')}
+          // disabled={!!(files && files[currentIndx - 1])}
         >
           &lt; prev
-        </DivCard>
-        */}
+        </Button>
 
         <Viewer fileInView={currenFile} />
 
-        {/* <DivCard position='absolute' top='50%' right='0' transform='translate(0, -50%)'
-          onClick={() => handMotion('PREV')}
+        <Button position='absolute' top='50%' right='0' transform='translate(0, -50%)'
+          onClick={() => handMotion('NEXT')}
+          // disabled={!!(files && files[currentIndx + 1])}
         >
           &gt; next
-        </DivCard> */}
+        </Button>
       </DivCard>
     </AppModalWrapper>
   );

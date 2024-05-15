@@ -49,11 +49,11 @@ export default function Viewer({ fileInView }: { fileInView: IDocument }) {
           />
 
           {/* <object
-          width='100%'
-          height='100%'
-          style={{ minHeight: '80vh', width: 'min(95vw, 1000px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-          data={currenFile?.download_url || ''}
-        /> */}
+            width='100%'
+            height='100%'
+            style={{ minHeight: '80vh', width: 'min(95vw, 1000px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            data={fileInView?.download_url || ''}
+          /> */}
         </>
       )
   );
