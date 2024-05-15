@@ -6,6 +6,7 @@ import AppModalWrapper from '../generics/app-modal-wrapper';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDocStore } from '@/store/zustand';
 import { DivCard } from '@/components/atoms';
+import Image from 'next/image';
 
 export default function FileViewer() {
   const pathname = usePathname();
@@ -17,6 +18,12 @@ export default function FileViewer() {
   const fileViewerRef = useRef<IModalWrapperRef>();
 
   const { documents } = useDocStore();
+
+  const handleCancelAction = () => {
+    setCurrentFile({} as IDocument);
+    router.replace(pathname);
+    // fileViewerRef.current?.close();
+  };
 
   const files = useMemo(() => {
     const _files = (documents || []).filter((doc) => doc.type !== 'FOLDER');
@@ -42,7 +49,7 @@ export default function FileViewer() {
 
     if (!files[newIndx]) return;
 
-    router.push(`${pathname}?viewing=${files[newIndx].id}`);
+    router.replace(`${pathname}?viewing=${files[newIndx].id}`);
   };
 
   const getCurrentIdex = useCallback((fileId: string) => {
@@ -60,7 +67,10 @@ export default function FileViewer() {
   useEffect(() => {
     const fileId = searchParams.get('viewing'); // this params is set whenever a file is opened, and it's value set to the file's Id.
 
-    if (!files || !fileId?.trim()) return;
+    if (!files || !fileId?.trim()) {
+      if (fileViewerRef.current?.isOpen) fileViewerRef.current?.close();
+      return;
+    };
 
     const curIndx = getCurrentIdex(fileId);
 
@@ -76,14 +86,14 @@ export default function FileViewer() {
 
   // searchParams.set()
 
+  console.log({ currenFile });
+
   return (
     <AppModalWrapper
       ref={fileViewerRef as MutableRefObject<IModalWrapperRef>}
       use_base_btns_instead={false}
       prevent_auto_focus
-      cancelAction={() => {
-        router.push(pathname); // no need to do fileViewerRef.current?.close() in cancelAction since we aren't using the base buttons instead
-      }}
+      cancelAction={handleCancelAction}
     >
       {/* <object
         width={500}
@@ -92,24 +102,67 @@ export default function FileViewer() {
       /> */}
 
       <DivCard width='100%' position='relative' padding='0 10px'>
-        <DivCard position='absolute' top='50%' left='0' transform='translate(0, -50%)'
+        {/* <DivCard position='absolute' top='50%' left='0' transform='translate(0, -50%)'
           onClick={() => handMotion('PREV')}
         >
           &lt; prev
-        </DivCard>
+        </DivCard> */}
 
-        <embed
+        {/* {
+          currenFile?.content_type?.includes('image') ? ():
+          (
+          <object
           width='100%'
           height='100%'
-          style={{ height: '80vh' }}
-          src={currenFile?.download_url || ''}
+          style={{ minHeight: '80vh', width: 'min(97vw, 1000px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          data={currenFile?.download_url || ''}
         />
+      )
+        } */}
 
-        <DivCard position='absolute' top='50%' right='0' transform='translate(0, -50%)'
+        {
+          currenFile?.content_type?.includes('iimage') ?
+            (
+              <Image
+                width='100'
+                height='100'
+                quality={100}
+                alt={'image for ' + currenFile?.name}
+                src={currenFile?.download_url || ''}
+                objectFit='contain'
+                // placeholder='blur'
+                style={{ minHeight: '80vh', minWidth: 'min(90vw, 1000px)', display: 'flex', alignItems: 'center', justifyContent: 'center', objectFit: 'contain' }}
+              />
+            ) : (
+              <embed
+                width='100%'
+                height='100%'
+                style={{ minHeight: '80vh', width: 'min(97vw, 1000px)', display: 'block', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}
+                // type={currenFile?.content_type || undefined}
+                src={currenFile?.download_url || ''}
+              />
+            )
+        }
+
+        {/* <object
+          width='100%'
+          height='100%'
+          style={{ minHeight: '80vh', width: 'min(95vw, 1000px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          data={currenFile?.download_url || ''}
+        /> */}
+
+        {/* <embed
+          width='100%'
+          height='100%'
+          style={{ minHeight: '80vh', width: 'min(97vw, 1000px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          src={currenFile?.download_url || ''}
+        /> */}
+
+        {/* <DivCard position='absolute' top='50%' right='0' transform='translate(0, -50%)'
           onClick={() => handMotion('PREV')}
         >
           &gt; next
-        </DivCard>
+        </DivCard> */}
       </DivCard>
     </AppModalWrapper>
   );

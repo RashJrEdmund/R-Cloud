@@ -77,45 +77,48 @@ function AppModalWrapper(
           z_index='9'
         />
 
-        <DivCard
-          bg='normal' position='fixed' top='50%' left='50%' transform='translate(-50%, -50%)' z_index='10' flex_dir='column' align='start' justify='space-between'
-          padding='1rem' radius='8px'
-          min_width='min(97vw, 400px)'
-          min_height='180px'
-        >
-          {!use_base_btns_instead && (
-            <Image
-              src={CONTEXT_MENU_ICONS.close}
-              alt='Show more'
-              className='cursor-pointer'
-              height={24}
-              width={24}
-              onClick={handleModalClose}
-            />
-          )}
+        {showModal ? (
+          <DivCard
+            bg='normal' position='fixed' top='50%' left='50%' transform='translate(-50%, -50%)' z_index='10' flex_dir='column' align='start' justify='space-between'
+            padding='1rem' radius='8px'
+            min_width='min(97vw, 400px)'
+            min_height='180px'
+          >
+            {!use_base_btns_instead && (
+              <Image
+                src={CONTEXT_MENU_ICONS.close}
+                alt='Show more'
+                className='cursor-pointer'
+                height={24}
+                width={24}
+                onClick={handleModalClose}
+                style={{ alignSelf: 'end' }}
+              />
+            )}
 
-          <DivCard width='100%' flex_dir='column' align='start' justify='start' margin='1rem 0 0' gap='10px'>
-            {children}
-          </DivCard>
-
-          {use_base_btns_instead && (
-            <DivCard width='100%' justify='end' gap='1rem' margin='1rem 0 0'>
-              <Button bg='error' radius='5px' onClick={cancelAction as MouseEventHandler<HTMLButtonElement>}
-                disabled={isLoading} cursor={isLoading ? 'not-allowed' : 'pointer'}
-              >
-                {cancelMsg || 'Cancel'}
-              </Button>
-
-              <Button bg='blued' radius='5px' onClick={confirmAction as MouseEventHandler<HTMLButtonElement>}
-                disabled={isLoading} cursor={isLoading ? 'not-allowed' : 'pointer'}
-              >
-                {
-                  isLoading ? loadingMsg : confirmMsg || 'Confirm'
-                }
-              </Button>
+            <DivCard width='100%' flex_dir='column' align='start' justify='start' margin='1rem 0 0' gap='10px'>
+              {children}
             </DivCard>
-          )}
-        </DivCard>
+
+            {use_base_btns_instead && (
+              <DivCard width='100%' justify='end' gap='1rem' margin='1rem 0 0'>
+                <Button bg='error' radius='5px' onClick={cancelAction as MouseEventHandler<HTMLButtonElement>}
+                  disabled={isLoading} cursor={isLoading ? 'not-allowed' : 'pointer'}
+                >
+                  {cancelMsg || 'Cancel'}
+                </Button>
+
+                <Button bg='blued' radius='5px' onClick={confirmAction as MouseEventHandler<HTMLButtonElement>}
+                  disabled={isLoading} cursor={isLoading ? 'not-allowed' : 'pointer'}
+                >
+                  {
+                    isLoading ? loadingMsg : confirmMsg || 'Confirm'
+                  }
+                </Button>
+              </DivCard>
+            )}
+          </DivCard>
+        ) : null}
       </dialog>
     </>
   );
