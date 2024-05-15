@@ -103,7 +103,8 @@ export default function FileViewer() {
           onClick={() => handMotion('PREV')}
         >
           &lt; prev
-        </DivCard> */}
+        </DivCard>
+        */}
 
         <Viewer fileInView={currenFile} />
 

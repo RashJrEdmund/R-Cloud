@@ -6,11 +6,23 @@ import Image from 'next/image';
 
 const StyledEmbedTag = styled.embed`
   min-height: 80vh;
-  width: min(97vw, 000px);
-  display: block;
+  min-width: min(94vw, 1000px);
+  /* max-height: 93vh; */
+  display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+
+  * {
+    background-color: red;
+    padding: 5px;
+    border: 3px solid red;
+    object-fit: fill;
+  }
+
+  * {
+    margin: 0 auto;
+  }
 `;
 
 export default function Viewer({ fileInView }: { fileInView: IDocument }) {
