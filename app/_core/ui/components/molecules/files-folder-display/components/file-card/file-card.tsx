@@ -126,7 +126,7 @@ function FileCardHoc(CardComponent: (props: ICardComponentProps) => JSX.Element)
     // console.log('is file include?', selectedDocs.includes(file.id));
 
     const handleOpen: MouseEventHandler<HTMLDivElement> = () => {
-      router.replace(`${pathname}?viewing=${file.id}`);
+      router.push(`${pathname}?viewing=${file.id}`);
     };
 
     const FILE_CONTEXT_MENU_CONTENT = useMemo<ContextMenuContent[]>(() => [

@@ -7,11 +7,13 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDocStore } from '@/store/zustand';
 import { DivCard } from '@/components/atoms';
 import Image from 'next/image';
+import Viewer from './viewer';
 
 export default function FileViewer() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
+
   const [currenFile, setCurrentFile] = useState<IDocument>({} as IDocument);
   const [currentIndx, setCurrentIndx] = useState<number>(0);
 
@@ -65,6 +67,7 @@ export default function FileViewer() {
   }, [files]);
 
   useEffect(() => {
+    // searchParams.set()
     const fileId = searchParams.get('viewing'); // this params is set whenever a file is opened, and it's value set to the file's Id.
 
     if (!files || !fileId?.trim()) {
@@ -86,7 +89,7 @@ export default function FileViewer() {
 
   // searchParams.set()
 
-  console.log({ currenFile });
+  // console.log({ currenFile });
 
   return (
     <AppModalWrapper
@@ -95,12 +98,6 @@ export default function FileViewer() {
       prevent_auto_focus
       cancelAction={handleCancelAction}
     >
-      {/* <object
-        width={500}
-        height={500}
-        data='https://images.unsplash.com/photo-1509043759401-136742328bb3?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D'
-      /> */}
-
       <DivCard width='100%' position='relative' padding='0 10px'>
         {/* <DivCard position='absolute' top='50%' left='0' transform='translate(0, -50%)'
           onClick={() => handMotion('PREV')}
@@ -108,55 +105,7 @@ export default function FileViewer() {
           &lt; prev
         </DivCard> */}
 
-        {/* {
-          currenFile?.content_type?.includes('image') ? ():
-          (
-          <object
-          width='100%'
-          height='100%'
-          style={{ minHeight: '80vh', width: 'min(97vw, 1000px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-          data={currenFile?.download_url || ''}
-        />
-      )
-        } */}
-
-        {
-          currenFile?.content_type?.includes('iimage') ?
-            (
-              <Image
-                width='100'
-                height='100'
-                quality={100}
-                alt={'image for ' + currenFile?.name}
-                src={currenFile?.download_url || ''}
-                objectFit='contain'
-                // placeholder='blur'
-                style={{ minHeight: '80vh', minWidth: 'min(90vw, 1000px)', display: 'flex', alignItems: 'center', justifyContent: 'center', objectFit: 'contain' }}
-              />
-            ) : (
-              <embed
-                width='100%'
-                height='100%'
-                style={{ minHeight: '80vh', width: 'min(97vw, 1000px)', display: 'block', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}
-                // type={currenFile?.content_type || undefined}
-                src={currenFile?.download_url || ''}
-              />
-            )
-        }
-
-        {/* <object
-          width='100%'
-          height='100%'
-          style={{ minHeight: '80vh', width: 'min(95vw, 1000px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-          data={currenFile?.download_url || ''}
-        /> */}
-
-        {/* <embed
-          width='100%'
-          height='100%'
-          style={{ minHeight: '80vh', width: 'min(97vw, 1000px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-          src={currenFile?.download_url || ''}
-        /> */}
+        <Viewer fileInView={currenFile} />
 
         {/* <DivCard position='absolute' top='50%' right='0' transform='translate(0, -50%)'
           onClick={() => handMotion('PREV')}

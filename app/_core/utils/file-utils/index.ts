@@ -17,8 +17,8 @@ const isFile = (item: DataTransferItem) => {
 const getFileName = (file: File, options?: FileNameOptions) => {
   const name_arr = file.name.split('.');
 
-  const extension = file.type.split('/').pop() || name_arr.pop() || '';
-  const name = name_arr.join('.');
+  const extension = file.type.split('/').pop() || [...name_arr].pop() || '';
+  const name = name_arr.slice(0, -1).join('.'); // slicing to exclude the file extension
 
   if (options?.without_extension) return name;
 

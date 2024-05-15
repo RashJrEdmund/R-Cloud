@@ -12,7 +12,8 @@ const CONTEXT_MENU_ICONS = {
 
 const MEDIA_ICONS = {
   folder: '/icons/folder-icon.svg',
-  vid: '/icons/image-video-icon.svg',
+  video: '/icons/image-video-icon.svg',
+  audio: '/icons/image-video-icon.svg',
   img: '/icons/image-file-icon.svg',
   doc: '/icons/text-file-icon.svg',
 };
