@@ -74,7 +74,7 @@ export default function FilesFolderDisplay({ }: Props) {
     e.preventDefault();
     e.stopPropagation();
 
-    const coordinates = getResponsiveMenuPosition(e as any as MouseEvent);
+    const coordinates = getResponsiveMenuPosition(e as unknown as MouseEvent);
     setContextCoordinates({ top: coordinates.y + 'px', left: coordinates.x + 'px' });
 
     setContextContent(MAIN_CONTEXT_MENU_CONTENT);
@@ -121,6 +121,7 @@ export default function FilesFolderDisplay({ }: Props) {
 
     return () => {
       fileUploadField.removeEventListener('change', handleFileUploadInputFieldData, false);
+      fileUploadField.value = '';
     };
   }, [handleFileUploadInputFieldData]);
 

@@ -2,6 +2,8 @@ import './globals.css';
 import { inter } from './_core/ui/fonts';
 import { Metadata } from 'next';
 import { NavBar } from '@/components/molecules';
+import { Toaster } from 'sonner';
+import ReactQueryClientProvider from './_core/lib/react-query';
 
 export const metadata: Metadata = {
   title: {
@@ -37,13 +39,17 @@ export default function RootLayout({ children }: Props) {
         <meta name='theme-color' content='#5588ff' />
       </head>
 
-      <body className={inter.className}>
-        <NavBar />
+      <ReactQueryClientProvider>
+        <body className={inter.className}>
+          <Toaster richColors />
 
-        <>
-          {children}
-        </>
-      </body>
+          <NavBar />
+
+          <>
+            {children}
+          </>
+        </body>
+      </ReactQueryClientProvider>
     </html>
   );
 }

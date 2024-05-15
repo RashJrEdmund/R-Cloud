@@ -10,6 +10,7 @@ import { renameDocument } from '@/core/config/firebase/fire-store';
 import type { MutableRefObject, FormEventHandler } from 'react';
 import type { IModalWrapperRef } from '@/components/modals/generics';
 import type { IDocument } from '@/interfaces/entities';
+import { toast } from 'sonner';
 
 interface Props {
   editModalRef: MutableRefObject<IModalWrapperRef | undefined>;
@@ -54,6 +55,9 @@ export default function EditModal({
           });
 
           setDocuments(update as IDocument[]);
+          toast.info('Update successful', {
+            description: `Successfully renamed folder from ${document?.name} to ${docName}`
+          });
         });
     } catch (error) {
       // console.warn(error);
@@ -67,7 +71,7 @@ export default function EditModal({
   }, [document]);
 
   return (
-    <AppModalWrapper ref={editModalRef as any}
+    <AppModalWrapper ref={editModalRef as MutableRefObject<IModalWrapperRef>}
       use_base_btns_instead
       isLoading={isLoading}
       confirmMsg='Accept'

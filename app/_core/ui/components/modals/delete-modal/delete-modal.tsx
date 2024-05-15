@@ -59,7 +59,7 @@ export default function DeleteModal({
   };
 
   return (
-    <AppModalWrapper ref={deleteModalRef as any}
+    <AppModalWrapper ref={deleteModalRef as MutableRefObject<IModalWrapperRef>}
       prevent_auto_focus
       use_base_btns_instead
       isLoading={isLoading}

@@ -7,6 +7,7 @@ import StyledProfileImage from './styled-profile-image';
 import Image from 'next/image';
 import { updateProfileImage } from '@/core/config/firebase';
 import { IUser } from '@/interfaces/entities';
+import { toast } from 'sonner';
 
 interface Props {
   //
@@ -52,6 +53,9 @@ export default function ProfileImage({ }: Props) {
         setProfileUrl(url);
 
         setCurrentUser(user as IUser);
+        toast.info('Profile photo updated', {
+          description: 'Successfully updated profile photo',
+        });
       })
       .finally(() => {
         setPreview(null);
@@ -75,6 +79,7 @@ export default function ProfileImage({ }: Props) {
           draggable={false}
           width={250}
           height={250}
+          className='max-h-[300px] min-w-[300px] object-cover'
         />
 
         <TextTag no_white_space cursor='pointer' position='relative'>
@@ -97,7 +102,7 @@ export default function ProfileImage({ }: Props) {
             height={17}
             draggable={false}
           />
-          upload image
+          Change image
         </TextTag>
       </DivCard>
 

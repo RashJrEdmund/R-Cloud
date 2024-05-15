@@ -30,6 +30,7 @@ const handleCreateUserProfile: IHandleCreateUserProfile = async (user, extra_dat
     email: user?.email || '',
     date_of_birth: extra_data?.date_of_birth || '',
     phone_number: '', // extra_data?.phone_number, // TODO +=> ADD phone_number: extra_data
+    role: 'USER',
     plan: {
       id: res.id,
       ...plan,

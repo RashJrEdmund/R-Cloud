@@ -39,7 +39,11 @@ const deriveDocumentPreviewImage = (file: IDocument, displayLayout: IDisplayLayo
   // The below apply for both LIST and GRID views;
 
   if (file.content_type?.includes('video')) {
-    return { img: MEDIA_ICONS.vid };
+    return { img: MEDIA_ICONS.video };
+  }
+
+  if (file.content_type?.includes('audio')) {
+    return { img: MEDIA_ICONS.audio };
   }
 
   return { img: MEDIA_ICONS.doc };

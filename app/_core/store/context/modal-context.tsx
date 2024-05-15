@@ -6,7 +6,7 @@
 =====================================================================//============*/
 
 import { createContext, useContext, useState, useMemo, useCallback, useRef } from 'react';
-import { BulkDeleteModal, DeleteModal, EditModal, NewFolderModal, UploadModal } from '@/components/modals';
+import { BulkDeleteModal, DeleteModal, EditModal, FileViewer, NewFolderModal, UploadModal } from '@/components/modals';
 import { uploadFile } from '@/core/config/firebase';
 import { useDocStore, useUserStore } from '../zustand';
 import { createFileDoc, updateFolderSize, updateUsedSpace } from '@/core/config/firebase/fire-store';
@@ -57,6 +57,10 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
     setSelectedFiles([]);
     setUploadDetails(null);
     setProgress(null);
+
+    const fileUploadField = document.querySelector<HTMLInputElement>('#file-upload-field');
+
+    if (fileUploadField) fileUploadField.value = ''; // making sure upload file is cleared after file selection.
   };
 
   const openNewFolderModal = () => {
@@ -125,8 +129,8 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
             bytes: file.size,
             length: null,
           },
-          createdAt: new Date(),
-          updatedAt: new Date(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
         };
 
         await createFileDoc(currentUser.email, document as IDocument);
@@ -146,7 +150,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
       closeUploadModal();
       toggleRefetchPath();
     };
-  }, [currentUser, params.folder_id, selectedFiles]);
+  }, [currentUser, params.folder_id, selectedFiles, currentFolder, toggleRefetchPath]);
 
   // useEffect(() => {
   //   if (progress) console.log('progress changing', progress);
@@ -197,6 +201,8 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
           bulkDeleteModalRef={bulkDeleteModalRef}
           selectedDocs={docsToDelete}
         />
+
+        <FileViewer /> {/* Uses search params to open or close, so has no need for ref, or any other props */}
 
         {children}
       </>

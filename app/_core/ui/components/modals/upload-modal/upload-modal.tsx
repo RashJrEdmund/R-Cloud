@@ -36,7 +36,7 @@ export default function UploadModal({
 }: Props) {
 
   return (
-    <AppModalWrapper ref={uploadModalRef as any}
+    <AppModalWrapper ref={uploadModalRef as MutableRefObject<IModalWrapperRef>}
       prevent_auto_focus
       use_base_btns_instead
       isLoading={isLoading}

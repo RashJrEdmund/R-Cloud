@@ -35,7 +35,7 @@ export default function LooseAuthGuard(Component: (...props: any[]) => JSX.Eleme
 
           unsubscribe = res.unsubscribe;
 
-          if (res.user) {
+          if (res?.user) {
             const { user } = res;
             const _user = {
               id: user.uid,

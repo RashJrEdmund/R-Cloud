@@ -3,14 +3,11 @@
 | file upload.                         |
 =========================//========== */
 
-import { ref, uploadBytes, deleteObject, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { auth, storage } from '..';
+import { uploadBytes, deleteObject, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { auth } from '..';
 import { updateProfile } from 'firebase/auth';
 import { getFileName } from '@/utils/file-utils';
-
-const baseStorageRef = ref(storage, 'users');
-
-const createUserStorageRef = (email: string, path: string) => ref(baseStorageRef, `${email}` + path); // +=> ref(storage, `users/${email}/{path}`);
+import { createUserStorageRef } from './utils';
 
 const updateProfileImage = async (file: File, email: string) => {
   const storageRef = createUserStorageRef(email, '/assets/profile_url'); // +=> ref(storage, `users/${email}/assets/profile_url`);
@@ -22,6 +19,7 @@ const updateProfileImage = async (file: File, email: string) => {
       if (auth.currentUser) {
         await updateProfile(auth.currentUser, {
           photoURL: url,
+          // di
         });
       }
 
