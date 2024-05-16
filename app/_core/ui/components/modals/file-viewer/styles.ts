@@ -30,12 +30,12 @@ const StyledViewerContainer = styled.div`
   justify-content: center;
   width: 100%;
   height: fit-content;
+  min-height: 190px;
 
   .control-left,
   .control-right {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
     left: 0;
     background-color: white;
     transition: 200ms;
@@ -43,13 +43,14 @@ const StyledViewerContainer = styled.div`
     opacity: 0;
     cursor: pointer;
     border-radius: 100px;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
+    z-index: 6;
   }
 
   .control-right {
     right: 0;
     left: unset;
-    transform: translateX(50%);
+    transform: translate(50%, -50%);
   }
 
   &:hover {
