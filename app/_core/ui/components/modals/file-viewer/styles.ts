@@ -24,7 +24,6 @@ const StyledEmbedTag = styled.embed`
 `;
 
 const StyledViewerContainer = styled.div`
-  background-color: gold;
   /* position: relative; */
   display: flex;
   align-items: center;
