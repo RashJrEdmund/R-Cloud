@@ -5,7 +5,6 @@ import type { IDocument } from '@/interfaces/entities';
 import AppModalWrapper from '../generics/app-modal-wrapper';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDocStore } from '@/store/zustand';
-import { Button } from '@/components/atoms';
 import Image from 'next/image';
 import Viewer from './viewer';
 import { StyledViewerContainer } from './styles';
