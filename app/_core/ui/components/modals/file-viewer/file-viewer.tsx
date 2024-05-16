@@ -5,9 +5,11 @@ import type { IDocument } from '@/interfaces/entities';
 import AppModalWrapper from '../generics/app-modal-wrapper';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDocStore } from '@/store/zustand';
-import { Button, DivCard } from '@/components/atoms';
+import { Button } from '@/components/atoms';
 import Image from 'next/image';
 import Viewer from './viewer';
+import { StyledViewerContainer } from './styles';
+import { APP_ICONS } from '@/core/ui/icons';
 
 export default function FileViewer() {
   const pathname = usePathname();
@@ -98,23 +100,43 @@ export default function FileViewer() {
       prevent_auto_focus
       cancelAction={handleCancelAction}
     >
-      <DivCard width='100%' position='relative' padding='0 10px'>
-        <Button position='absolute' top='50%' left='0' transform='translate(0, -50%)'
+      <StyledViewerContainer>
+        {/* <Button position='absolute' top='50%' left='0' transform='translate(0, -50%)'
           onClick={() => handMotion('PREV')}
-          // disabled={!!(files && files[currentIndx - 1])}
+        // disabled={!!(files && files[currentIndx - 1])}
         >
           &lt; prev
-        </Button>
+        </Button> */}
+
+        <Image
+          src={APP_ICONS.ctrlLeft}
+          draggable={false}
+          alt='control left'
+          width={35}
+          height={35}
+          onClick={() => handMotion('PREV')}
+          className='control-left'
+        />
 
         <Viewer fileInView={currenFile} />
 
-        <Button position='absolute' top='50%' right='0' transform='translate(0, -50%)'
+        <Image
+          src={APP_ICONS.ctrlRight}
+          draggable={false}
+          alt='control right'
+          width={35}
+          height={35}
           onClick={() => handMotion('NEXT')}
-          // disabled={!!(files && files[currentIndx + 1])}
+          className='control-right'
+        />
+
+        {/* <Button position='absolute' top='50%' right='0' transform='translate(0, -50%)'
+          onClick={() => handMotion('NEXT')}
+        // disabled={!!(files && files[currentIndx + 1])}
         >
           &gt; next
-        </Button>
-      </DivCard>
+        </Button> */}
+      </StyledViewerContainer>
     </AppModalWrapper>
   );
 };

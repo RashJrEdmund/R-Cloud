@@ -20,6 +20,8 @@ interface Props {
   loadingMsg?: string;
 
   prevent_auto_focus?: boolean; // to prevent the dialog's auto focus effect
+
+  container_sx?: string;
 };
 
 function AppModalWrapper(
@@ -33,6 +35,8 @@ function AppModalWrapper(
     loadingMsg = 'Loading...',
 
     prevent_auto_focus = false,
+
+    container_sx = '',
   }: Props,
   _ref: ForwardedRef<IModalWrapperRef>
 ) {
@@ -83,6 +87,7 @@ function AppModalWrapper(
             padding='1rem' radius='8px'
             min_width='min(97vw, 400px)'
             min_height='180px'
+            sx={container_sx}
           >
             {!use_base_btns_instead && (
               <Image
