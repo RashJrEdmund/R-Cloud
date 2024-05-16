@@ -101,41 +101,31 @@ export default function FileViewer() {
       cancelAction={handleCancelAction}
     >
       <StyledViewerContainer>
-        {/* <Button position='absolute' top='50%' left='0' transform='translate(0, -50%)'
-          onClick={() => handMotion('PREV')}
-        // disabled={!!(files && files[currentIndx - 1])}
-        >
-          &lt; prev
-        </Button> */}
-
-        <Image
-          src={APP_ICONS.ctrlLeft}
-          draggable={false}
-          alt='control left'
-          width={35}
-          height={35}
-          onClick={() => handMotion('PREV')}
-          className='control-left'
-        />
+        {!!(files && files[currentIndx - 1]) ? (
+          <Image
+            src={APP_ICONS.ctrlLeft}
+            draggable={false}
+            alt='control left'
+            width={35}
+            height={35}
+            onClick={() => handMotion('PREV')}
+            className='control-left'
+          />
+        ): null}
 
         <Viewer fileInView={currenFile} />
 
-        <Image
-          src={APP_ICONS.ctrlRight}
-          draggable={false}
-          alt='control right'
-          width={35}
-          height={35}
-          onClick={() => handMotion('NEXT')}
-          className='control-right'
-        />
-
-        {/* <Button position='absolute' top='50%' right='0' transform='translate(0, -50%)'
-          onClick={() => handMotion('NEXT')}
-        // disabled={!!(files && files[currentIndx + 1])}
-        >
-          &gt; next
-        </Button> */}
+        {!!(files && files[currentIndx + 1])? (
+          <Image
+            src={APP_ICONS.ctrlRight}
+            draggable={false}
+            alt='control right'
+            width={35}
+            height={35}
+            onClick={() => handMotion('NEXT')}
+            className='control-right'
+          />
+        ): null}
       </StyledViewerContainer>
     </AppModalWrapper>
   );
