@@ -5,9 +5,11 @@ import type { IDocument } from '@/interfaces/entities';
 import AppModalWrapper from '../generics/app-modal-wrapper';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDocStore } from '@/store/zustand';
-import { DivCard } from '@/components/atoms';
 import Image from 'next/image';
 import Viewer from './viewer';
+import { StyledViewerContainer } from './styles';
+import { APP_ICONS } from '@/core/ui/icons';
+import { TextTag } from '@/components/atoms';
 
 export default function FileViewer() {
   const pathname = usePathname();
@@ -97,22 +99,46 @@ export default function FileViewer() {
       use_base_btns_instead={false}
       prevent_auto_focus
       cancelAction={handleCancelAction}
+      container_sx='min-width: unset; background: none; border: 0.5px solid grey;'
     >
-      <DivCard width='100%' position='relative' padding='0 10px'>
-        {/* <DivCard position='absolute' top='50%' left='0' transform='translate(0, -50%)'
-          onClick={() => handMotion('PREV')}
-        >
-          &lt; prev
-        </DivCard> */}
+      <StyledViewerContainer>
+        {!!(files && files[currentIndx - 1]) ? (
+          <Image
+            src={APP_ICONS.ctrlLeft}
+            draggable={false}
+            alt='control left'
+            width={35}
+            height={35}
+            onClick={() => handMotion('PREV')}
+            className='control-left'
+          />
+        ) : null}
+
+        {currenFile ?
+          (
+            <TextTag className='file-info' color_type='invert' size='1rem' weight='500'
+              position='absolute' z_index='6' top='0' left='50%' transform='translateX(-50%)' margin='10px 0'
+              media_sx='position: unset; transform: unset;'
+            >
+              {currenFile?.name}
+            </TextTag>
+          ) : null
+        }
 
         <Viewer fileInView={currenFile} />
 
-        {/* <DivCard position='absolute' top='50%' right='0' transform='translate(0, -50%)'
-          onClick={() => handMotion('PREV')}
-        >
-          &gt; next
-        </DivCard> */}
-      </DivCard>
+        {!!(files && files[currentIndx + 1]) ? (
+          <Image
+            src={APP_ICONS.ctrlRight}
+            draggable={false}
+            alt='control right'
+            width={35}
+            height={35}
+            onClick={() => handMotion('NEXT')}
+            className='control-right'
+          />
+        ) : null}
+      </StyledViewerContainer>
     </AppModalWrapper>
   );
 };

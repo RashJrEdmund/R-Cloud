@@ -34,7 +34,7 @@ export default function ProfileDropDown({ showDropDown, setShowDropDown, coordin
     return [
       {
         action: () => router.push('/r-drive'),
-        text: 'R-Drive',
+        text: 'R - Drive',
       },
       {
         action: () => router.push('/r-drive/root'),

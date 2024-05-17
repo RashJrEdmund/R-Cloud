@@ -11,15 +11,17 @@ const CONTEXT_MENU_ICONS = {
 };
 
 const MEDIA_ICONS = {
-  folder: '/icons/folder-icon.svg',
-  video: '/icons/image-video-icon.svg',
-  audio: '/icons/image-video-icon.svg',
-  img: '/icons/image-file-icon.svg',
-  doc: '/icons/text-file-icon.svg',
+  folder: '/icons/media/folder-icon.svg',
+  video: '/icons/media/video-file-icon.svg',
+  audio: '/icons/media/audio-file-icon.svg',
+  img: '/icons/media/image-file-icon.svg',
+  doc: '/icons/media/text-file-icon.svg',
 };
 
 const APP_ICONS = {
   logo: '/icons/r-cloud-logo.svg',
+  ctrlRight: '/icons/ctrl-right.svg',
+  ctrlLeft: '/icons/ctrl-left.svg',
 };
 
 export {
