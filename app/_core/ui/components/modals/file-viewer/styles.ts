@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 const StyledEmbedTag = styled.embed`
   min-height: 80vh;
   min-width: min(94vw, 1000px);
-  /* max-height: 93vh; */
+  /* max-height: 96vh; */
   display: flex;
   align-items: start;
   justify-content: center;
@@ -26,9 +26,11 @@ const StyledEmbedTag = styled.embed`
 const StyledViewerContainer = styled.div`
   /* position: relative; */
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
+  min-width: min(94vw, 400px);
   height: fit-content;
   min-height: 190px;
 

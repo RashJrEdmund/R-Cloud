@@ -6,6 +6,8 @@ import { getSize } from '@/utils/file-utils';
 import Image from 'next/image';
 
 import type { IStoragePlan } from '@/interfaces/entities';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   plan: IStoragePlan
@@ -13,8 +15,35 @@ interface Props {
 
 export default function StoragePlan({ plan }: Props) {
   const { currentUser, userProfile } = useUserStore();
+  const router = useRouter();
 
   console.log({ currentUser, userProfile });
+
+  const handleNewSubscription = (plan: IStoragePlan) => {
+    if (!currentUser) {
+      router.push('/login');
+      toast.info('You need to be logged in first', {
+        duration: 10_000,
+      });
+      return;
+    }
+
+    toast('This feature is still in progress', {
+      description: 'Would you like to be added to wait list',
+      closeButton: true,
+      duration: 5000,
+      action: {
+        label: 'Add me',
+        onClick: () => {
+          toast.promise(new Promise((res) => setTimeout(() => res('🙂 This feature is also not yet available'), 1000)) as Promise<string>, {
+            loading: 'Processing...',
+            success: (res) => res,
+            error: 'failed'
+          });
+        }
+      },
+    });
+  };
 
   return (
     <DivCard
@@ -70,6 +99,9 @@ export default function StoragePlan({ plan }: Props) {
             bg={plan.is_free ? 'black' : 'blued'}
             title={'subscribe to plan: ' + plan.label}
             padding='10px'
+            onClick={() => {
+              toast.warning('Already subscribed to this plan');
+            }}
           >
             Current Plan
           </Button>
@@ -79,6 +111,7 @@ export default function StoragePlan({ plan }: Props) {
             bg={plan.is_free ? 'black' : 'blued'}
             title={'subscribe to plan: ' + plan.label}
             padding='10px'
+            onClick={() => handleNewSubscription(plan)}
           >
             {plan.is_free ? 'Free Plan' : 'Buy Plan'}
           </Button>

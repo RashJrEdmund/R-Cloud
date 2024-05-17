@@ -9,6 +9,7 @@ import Image from 'next/image';
 import Viewer from './viewer';
 import { StyledViewerContainer } from './styles';
 import { APP_ICONS } from '@/core/ui/icons';
+import { TextTag } from '@/components/atoms';
 
 export default function FileViewer() {
   const pathname = usePathname();
@@ -98,6 +99,7 @@ export default function FileViewer() {
       use_base_btns_instead={false}
       prevent_auto_focus
       cancelAction={handleCancelAction}
+      container_sx='min-width: unset; background: none; border: 0.5px solid grey;'
     >
       <StyledViewerContainer>
         {!!(files && files[currentIndx - 1]) ? (
@@ -110,11 +112,22 @@ export default function FileViewer() {
             onClick={() => handMotion('PREV')}
             className='control-left'
           />
-        ): null}
+        ) : null}
+
+        {currenFile ?
+          (
+            <TextTag className='file-info' color_type='invert' size='1rem' weight='500'
+              position='absolute' z_index='6' top='0' left='50%' transform='translateX(-50%)' margin='10px 0'
+              media_sx='position: unset; transform: unset;'
+            >
+              {currenFile?.name}
+            </TextTag>
+          ) : null
+        }
 
         <Viewer fileInView={currenFile} />
 
-        {!!(files && files[currentIndx + 1])? (
+        {!!(files && files[currentIndx + 1]) ? (
           <Image
             src={APP_ICONS.ctrlRight}
             draggable={false}
@@ -124,7 +137,7 @@ export default function FileViewer() {
             onClick={() => handMotion('NEXT')}
             className='control-right'
           />
-        ): null}
+        ) : null}
       </StyledViewerContainer>
     </AppModalWrapper>
   );

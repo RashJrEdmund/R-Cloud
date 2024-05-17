@@ -29,15 +29,15 @@ export default function Viewer({ fileInView }: { fileInView: IDocument }) {
 
   if (fileInView?.content_type?.includes('image')) {
     return (
-      <Image
+      <img
         width='100'
         height='100'
-        quality={100}
+        // quality={100}
         alt={'image for ' + fileInView?.name}
         src={fileInView?.download_url || ''}
         // objectFit='contain'
         // placeholder='blur'
-        style={{ minHeight: '80vh', minWidth: 'min(90vw, 1000px)', display: 'flex', alignItems: 'center', justifyContent: 'center', objectFit: 'contain' }}
+        style={{ maxHeight: '90vh', minWidth: 'min(90vw, 1000px)', display: 'flex', alignItems: 'center', justifyContent: 'center', objectFit: 'contain' }}
       />
     );
   }
