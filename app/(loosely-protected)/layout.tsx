@@ -4,7 +4,7 @@
 | Layout for loosely protected routes |
 ==========================//=========*/
 
-import { LooseAuthGuard } from '@/guards/index';
+import { AuthGuard } from '@/guards/index';
 import { IUser } from '@/interfaces/entities';
 
 interface Props {
@@ -20,4 +20,4 @@ function Layout({ children }: Props) {
   );
 };
 
-export default LooseAuthGuard(Layout);
+export default AuthGuard(Layout);

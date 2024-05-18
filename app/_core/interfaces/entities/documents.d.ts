@@ -31,10 +31,13 @@ interface IDocument {
   updatedAt?: Date | string;
 };
 
-enum Roles {
-  USER = 'USER',
-  ADMIN = 'ADMIN',
-}
+const Roles = {
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+  SUPER_ADMIN: 'SUPER_ADMIN',
+} as const;
+
+type UserRoles = keyof (typeof Roles);
 
 interface IUser {
   id: string;
@@ -61,7 +64,7 @@ interface IUserProfile {
   id: string;
   email: string;
   date_of_birth: Date | string;
-  role: keyof (typeof Roles);
+  role: UserRoles;
   phone_number: string;
   plan: IUserPlan;
 };
@@ -76,16 +79,20 @@ interface IStoragePlan {
   is_free: boolean;
 }
 
+export {
+  Roles,
+};
+
 export type {
   IDocument,
   IStorageUnit,
   StoragePlanIds,
 
+  UserRoles,
   IUser,
   IUserPlan,
   IUserProfile,
   DocumentType,
-  Roles,
 
   // storage plan
   IStoragePlan,

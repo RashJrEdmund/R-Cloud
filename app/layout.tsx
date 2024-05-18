@@ -2,8 +2,8 @@ import './globals.css';
 import { inter } from './_core/ui/fonts';
 import { Metadata } from 'next';
 import { NavBar } from '@/components/molecules';
+import { ReactQueryClientProvider } from '@/features/react-query';
 import { Toaster } from 'sonner';
-import ReactQueryClientProvider from './_core/lib/react-query';
 
 export const metadata: Metadata = {
   title: {
