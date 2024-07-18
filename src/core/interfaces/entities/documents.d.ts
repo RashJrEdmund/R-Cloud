@@ -1,0 +1,103 @@
+/* FILE_DESC +=> =====================================
+| database entity type definitions (interfaces) have |
+| been defined here                                  |
+==========================================//======= */
+
+type DocumentType = "FILE" | "FOLDER";
+
+type StorageUnit = "Bytes" | "Kb" | "Mb" | "Gb" | "Tb" | "Pb";
+
+type StoragePlanLabels =
+  | "SIGMA"
+  | "OMEGA"
+  | "ZETA"
+  | "GAMMA"
+  | "BETA"
+  | "ALPHA";
+
+type StoragePlanIds = "0" | "1" | "2" | "3" | "4" | "5";
+
+interface Document {
+  id: string;
+  user_id: string;
+  name: string;
+  parent_id: string; // Id of parent folder should default to 0 for files/root under root.
+  ancestor_ids: string[]; // an array of ids of the documents ancestors. 'root', is the very first ancestor.
+  type: DocumentType;
+  content_type: string | null; // eg. image/png, image/jpg, video/mp4 etc or null for when it's folders
+  download_url: string | null; // null when it's folders
+  filename: string | null; // null when it's a folder. also adding this to help reference the actual file when trying to delete it
+  extension: string | null; // file extension for when it's files;
+  capacity: {
+    size: string; // size in Mbs or Gbs
+    bytes: number; // actual bytes
+    length: number | null; // number of items if it's a folder or null if it's a file
+  };
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+}
+
+const Roles = {
+  USER: "USER",
+  ADMIN: "ADMIN",
+  SUPER_ADMIN: "SUPER_ADMIN",
+} as const;
+
+type UserRoles = keyof typeof Roles;
+
+interface User {
+  id: string;
+  email: string;
+  username: string;
+  displayName?: string;
+  date_of_birth: Date | string;
+  phone_number: string;
+  photo_url: string;
+  accessToken: string;
+  metadata: {
+    createdAt: Date | string;
+    creationTime: Date | string;
+    lastLoginAt: Date | string;
+    lastSignInTime: Date | string;
+  };
+}
+
+interface UserPlan extends StoragePlan {
+  used_bytes: number;
+}
+
+interface UserProfile {
+  id: string;
+  email: string;
+  date_of_birth: Date | string;
+  role: UserRoles;
+  phone_number: string;
+  plan: UserPlan;
+}
+
+interface StoragePlan {
+  id?: string;
+  label: StoragePlanLabels;
+  icon_url: string;
+  capacity: string; // e.g 1.5 GB
+  bytes: number; // eg 1610612736 in bytes
+  rate: string;
+  is_free: boolean;
+}
+
+export { Roles };
+
+export type {
+  Document,
+  StorageUnit,
+  StoragePlanIds,
+  UserRoles,
+  User,
+  UserPlan,
+  UserProfile,
+  DocumentType,
+
+  // storage plan
+  StoragePlan,
+  StoragePlanLabels,
+};

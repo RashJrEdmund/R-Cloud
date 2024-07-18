@@ -6,8 +6,8 @@
 
 - [see deployment](https://r-cloud.vercel.app/)
 
-![landing-preview](./assets/readme/landing-preview.png)
+![landing-preview](./readme-assets/landing-preview.png)
 
-![home-preview](./assets/readme/home-preview.png)
+![home-preview](./readme-assets/home-preview.png)
 
-![root-preview](./assets/readme/root-preview.png)
+![root-preview](./readme-assets/root-preview.png)
