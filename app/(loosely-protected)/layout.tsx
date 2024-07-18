@@ -8,7 +8,7 @@ import { AuthGuard } from '@/guards/index';
 import { IUser } from '@/interfaces/entities';
 
 interface Props {
-  currentUser: IUser | null; // from loose-auth-guard;
+  // currentUser: IUser | null; // from loose-auth-guard;
   children: React.ReactNode;
 };
 
