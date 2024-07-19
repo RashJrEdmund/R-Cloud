@@ -18,7 +18,7 @@ interface Props {}
 
 export default function LoginPage({}: Props) {
   return (
-    <MainTag justify="center">
+    <MainTag className="justify-center">
       <LoginForm />
     </MainTag>
   );

@@ -2,7 +2,7 @@ import { MainTag } from "@/components/atoms";
 
 export default function DashboardPage() {
   return (
-    <MainTag width="100%" bg="blued">
+    <MainTag className="w-full bg-app_blue">
       base dashboard page
     </MainTag>
   );
