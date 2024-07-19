@@ -2,8 +2,10 @@ import './globals.css';
 import { inter } from './_core/ui/fonts';
 import { Metadata } from 'next';
 import { NavBar } from '@/components/molecules';
+import { ReactQueryClientProvider } from '@/features/react-query';
 import { Toaster } from 'sonner';
-import ReactQueryClientProvider from './_core/lib/react-query';
+
+const appDescription = 'Cloud storage web application. Upload, manage and download files';
 
 export const metadata: Metadata = {
   title: {
@@ -22,10 +24,28 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     type: 'website',
-    description: 'Cloud storage web application. Upload, manage and download files',
+    description: appDescription,
     siteName: 'R - cloud',
-    title: 'R - cloud',
+    title: {
+      template: '%s | R - Cloud',
+      default: 'R - Cloud',
+    },
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'R - Cloud',
+    // startupImage: []
+  },
+  twitter: {
+    card: 'summary',
+    creator: 'orashus',
+    description: appDescription,
+    title: {
+      template: '%s | R - Cloud',
+      default: 'R - Cloud',
+    },
+  }
 };
 
 interface Props {

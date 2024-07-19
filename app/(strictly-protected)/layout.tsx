@@ -4,16 +4,18 @@
 | Layout for strictly protected routes |
 ==========================//==========*/
 
-import { StrictAuthGuard } from '@/guards/index';
+import { AuthGuard } from '@/guards/index';
 
 interface Props {
   children: React.ReactNode;
 };
 
-export default function Layout({ children }: Props) {
+function Layout({ children }: Props) {
   return (
-    <StrictAuthGuard>
+    <>
       {children}
-    </StrictAuthGuard>
+    </>
   );
 };
+
+export default AuthGuard(Layout, { strict: true }); // to ensure that the current user is gotten

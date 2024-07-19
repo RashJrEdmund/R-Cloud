@@ -16,8 +16,12 @@ import { getOneDocument } from '@/core/config/firebase/fire-store';
 
 import type { IUser } from '@/interfaces/entities';
 
-export default function LooseAuthGuard(Component: (...props: any[]) => JSX.Element) {
-  return function Guard(props: any) {
+interface LooseGuardOptions {
+  strict?: boolean;
+}
+
+export default function AuthGuard<T>(Component: (p: T) => JSX.Element, guardOptions?: LooseGuardOptions) {
+  return function Guard(props: Partial<T>) {
     const [loading, setLoading] = useState<{ user: boolean; doc: boolean }>({ user: true, doc: false }); // loading states for both document and user.
     const [current_user, set_current_user] = useState<IUser | null>(null);
     const { setCurrentUser } = useUserStore();
@@ -98,6 +102,13 @@ export default function LooseAuthGuard(Component: (...props: any[]) => JSX.Eleme
 
     if (loading.user || loading.doc) return <Streamer />;
 
-    return <Component {...props} currentUser={current_user} />;
+    if (guardOptions?.strict) {
+      if (!current_user) {
+        router.replace('/login');
+        return null;
+      }
+    }
+
+    return <Component {...(props as T)} currentUser={current_user} />;
   };
 };
