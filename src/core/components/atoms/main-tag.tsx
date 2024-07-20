@@ -7,7 +7,7 @@ function MainTag({ className, ...restProps }: MainProps) {
   return (
     <main
       {...restProps}
-      className={cn("min-h-main_min_height flex flex-col mx-auto rounded-[4px] py-[2rem]", className)}
+      className={cn("bg-blue-200 w-full min-h-main_min_height flex flex-col mx-auto rounded-[4px] pt-[2.5rem] sm:pt-[4rem] pb-[2rem]", className)}
     />
   );
 };

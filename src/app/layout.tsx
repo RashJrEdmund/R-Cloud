@@ -71,7 +71,7 @@ export default function RootLayout({ children }: Props) {
         <meta name="theme-color" content="#5588ff" />
       </head>
 
-      <body className={inter.className}>
+      <body className={inter.className + " bg-app_bg"}>
         <ReactQueryClientProvider>
           <AppWrapper>
             <Toaster richColors />

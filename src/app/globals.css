@@ -4,41 +4,40 @@
 
 :root {
   /* Extensions */
-  --text: #000;
-  --text_grayed: #1a1a1a7a;
-  --text_invert: #ffffff;
-  --text_blue: #367aff;
-  --text_dark: #000;
-  --text_white: #f5f5f5;
+  --app_text: #000;
+  --app_text_grayed: #1a1a1a7a;
+  --app_text_invert: #ffffff;
+  --app_text_blue: #367aff;
+  --app_text_dark: #000;
+  --app_text_white: #f5f5f5;
 
-  --border: #59575757;
-  --border_thick: #000;
-  --border_error: red;
-
-  --bg: #f9f9f9;
-  --bg_light: #d9d9d9;
-  --bg_grayed: #a6a5a5;
-  --bg_invert: #1d2432;
+  --app_border: #59575757;
+  --app_border_thick: #000;
+  --app_border_error: red;
 
   --app_bg: #f9f9f9;
+  --app_bg_light: #d9d9d9;
+  --app_bg_grayed: #a6a5a5;
+  --app_bg_invert: #1d2432;
+
   --app_blue: #367aff;
 
-  --black: #000;
-  --white: #ffffff;
-  --orange: #ffa500; /* mainly used in the progress bar */
+  --app_black: #000;
+  --app_white: #ffffff;
+  --app_orange: #ffa500;
+  /* mainly used in the progress bar */
 
-  /* ---overlay_gradient: linear-gradient(#3679ffab, #3679ffab, #3679ffab); */
-  --overlay_gradient: #0505059b;
-  --box_shadow: 0 0 10px #00000079;
+  /* --app_-overlay_gradient: linear-gradient(#3679ffab, #3679ffab, #3679ffab); */
+  --app_overlay_gradient: #0505059b;
+  --app_box_shadow: 0 0 10px #00000079;
 
   /* DIMENSIONS */
   --primary_app_width: min(97vw, 1450px);
   --secondary_app_width: min(100%, 1200px);
-  --tertiary_app_width: min(
-    100%,
-    1000px
-  ); /* Mainly used in the storage plans section */
-  --main_min_height: min(800px, calc(100vh - 100px));
+  --tertiary_app_width: min(100%,
+      1000px);
+  /* Mainly used in the storage plans section */
+  --main_min_height: min(1000px, 100vh);
 }
 
 @layer base {
@@ -102,6 +101,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -109,4 +109,6 @@
 
 body {
   background-color: var(--bg);
-};
+}
+
+;

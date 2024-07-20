@@ -1,31 +1,12 @@
 "use client";
 
-import { Button } from "@/components/atoms";
-import { useUserStore } from "@/providers/stores/zustand"
-import styled from "@emotion/styled";
+import { useUserStore } from "@/providers/stores/zustand";
 import Link from "next/link";
 import { useLayoutEffect, useState } from "react";
 
-interface Props {}
+interface Props { };
 
-const StyledNavTitle = styled.section`
-  position: absolute; // side nav-bar itself has position relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-transform: capitalize;
-
-  span {
-    a {
-      max-width: 100px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-`;
-
-export default function NavTitle({}: Props) {
+export default function NavTitle({ }: Props) {
   const [navProperties, setNavProperties] = useState<{
     route_name: string;
     route_url: string;
@@ -40,15 +21,13 @@ export default function NavTitle({}: Props) {
   }, [currentUser]);
 
   return (
-    <StyledNavTitle>
-      <Button
-        as={Link}
+    <section className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+      <Link
         href={navProperties.route_url}
-        bg="white"
-        no_white_space
+        className="inline-block max-w-[100px] whitespace-nowrap overflow-hidden text-ellipsis"
       >
         {navProperties.route_name}
-      </Button>
-    </StyledNavTitle>
+      </Link>
+    </section>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
+import { TextLogo, TextTag } from "@/components/atoms";
 
-import { TextTag } from "@/components/atoms";
 import {
   BreadCrumbs,
   NavTitle,
@@ -9,17 +9,18 @@ import {
 } from "./nav-comonents";
 import Link from "next/link";
 
-interface Props {}
+interface Props { }
 
-export default function NavBar({}: Props) {
+export default function NavBar({ }: Props) {
   return (
-    <StyledNavBar>
-      <section className="nav_holder">
-        <section className="logo-x-crumbs">
-          <Link href="/">
-            <TextTag no_white_space color_type="grayed" cursor="pointer">
-              R-Cloud
-            </TextTag>
+    <nav className="bg-app_white fixed top-0 left-0 w-full h-fit z-[7]">
+      <section className="relative w-primary_app_width mx-auto p-[10px_1rem] flex items-center justify-between">
+        <section className="flex items-center justify-center">
+          <Link href="/" className="w-fit">
+            <TextLogo
+              showLogo
+              sxTextClassName="hidden sm:inline"
+            />
           </Link>
 
           <BreadCrumbs />
@@ -29,6 +30,6 @@ export default function NavBar({}: Props) {
 
         <ProfileSection />
       </section>
-    </StyledNavBar>
+    </nav>
   );
 }

@@ -52,8 +52,27 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+
         app_blue: "var(--app_blue)",
-        app_text_blue: "var(--text_blue)",
+        app_text_blue: "var(--app_text_blue)",
+        overlay_gradient: "var(--app_overlay_gradient)",
+        
+        app_text: "var(--app_text)",
+        app_text_grayed: "var(--app_text_grayed)",
+        app_text_invert: "var(--app_text_invert)",
+        app_text_dark: "var(--app_text_dark)",
+        app_text_white: "var(--app_text_white)",
+        app_border: "var(--app_border)",
+        app_border_thick: "var(--app_border_thick)",
+        app_border_error: "var(--app_border_error)",
+
+        app_bg: "var(--app_bg)",
+        app_bg_light: "var(--app_bg_light)",
+        app_bg_grayed: "var(--app_bg_grayed)",
+        app_bg_invert: "var(--app_bg_invert)",
+        app_black: "var(--app_black)",
+        app_white: "var(--app_white)",
+        app_orange: "var(--app_orange)",
       },
       borderRadius: {
         lg: "var(--radius)",

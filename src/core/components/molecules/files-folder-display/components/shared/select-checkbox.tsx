@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import type { Document } from "@/core/interfaces/entities";
 import { useContextMenuContext } from "@/providers/stores/context";
 
-const {} = THEME_PALETTE;
+const { } = THEME_PALETTE;
 
 interface _props {
   absolute: boolean;
@@ -51,11 +51,9 @@ export default function SelectCheckbox({ document }: Props) {
   return selectionStart ? (
     <>
       <Overlay
-        show
-        position="absolute"
+        isOpen
+        className="absolute z-[3] bg-transparent cursor-pointer"
         onClick={handleSelection}
-        z_index="3"
-        sx="background-color: transparent; cursor: pointer;"
       />
 
       <StyledCheckBox

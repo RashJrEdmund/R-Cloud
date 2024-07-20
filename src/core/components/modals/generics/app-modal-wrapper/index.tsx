@@ -88,7 +88,7 @@ function AppModalWrapper(
         ref={dialogRef as LegacyRef<HTMLDialogElement>}
         autoFocus={!prevent_auto_focus}
       >
-        <Overlay show={showModal} onClick={handleModalClose} z_index="9" />
+        <Overlay isOpen={showModal} onClick={handleModalClose} className="z-[9]" />
 
         {showModal ? (
           <DivCard

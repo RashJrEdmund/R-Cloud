@@ -101,6 +101,7 @@ export default function InputField({
 
       <TextField
         ref={inputRef as LegacyRef<HTMLInputElement>}
+        className="w-full min-h-[2.7rem] text-app_text placeholder:text-app_text_grayed"
         onFocus={() => setActive(true)}
         onBlur={() =>
           !fieldVal?.trim() && !leave_active ? setActive(false) : null
@@ -108,10 +109,7 @@ export default function InputField({
         onChange={handleInputChange}
         value={value ?? fieldVal}
         type={type}
-        color_type="no_border"
         name={field_name}
-        min_height="2.7rem"
-        width="100%"
       />
     </StyledInput>
   );

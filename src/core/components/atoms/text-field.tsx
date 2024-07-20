@@ -4,6 +4,9 @@ import { THEME_PALETTE } from "@/core/ui/theme";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
+import type { ComponentProps } from "react";
+import { cn } from "@/core/lib/utils";
+
 const { colors: COLORS } = THEME_PALETTE;
 
 interface Props {
@@ -14,7 +17,7 @@ interface Props {
   width?: string;
   min_height?: string;
   color_type?: "invert" | "normal" | "no_border";
-}
+};
 
 export const generateFieldColors = (
   color_type: "invert" | "normal" | "no_border"
@@ -50,7 +53,7 @@ export const generateFieldColors = (
   }
 };
 
-const TextField = styled.input<Props>`
+const _TextField = styled.input<Props>`
   ${({ color_type = "normal" }) => generateFieldColors(color_type)}
 
   border-radius: ${({ radius = "10px" }) => radius};
@@ -62,4 +65,14 @@ const TextField = styled.input<Props>`
   ${({ sx }) => sx};
 `;
 
-export default TextField;
+interface TextFieldProps extends ComponentProps<"input"> { };
+
+export default function TextField({ className, ...restProps }: TextFieldProps) {
+  return (
+    <input
+      {...restProps}
+      className={cn("rounded-[10px] m-0 w-full p-[5px_10px]", className)}
+    />
+  )
+};
+
