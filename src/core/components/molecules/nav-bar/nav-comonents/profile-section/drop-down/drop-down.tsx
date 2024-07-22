@@ -2,6 +2,7 @@
 
 import { DivCard, TextTag } from "@/components/atoms";
 import { logOut } from "@/core/config/firebase";
+import { cn } from "@/core/lib/utils";
 import { useDocStore, useUserStore } from "@/providers/stores/zustand";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef } from "react";
@@ -67,19 +68,12 @@ export default function ProfileDropDown({
 
   return showDropDown ? (
     <DivCard
-      border
+      className={cn(
+        "absolute min-w-[150px] flex-col items-start gap-4 rounded-[8px] border bg-app_white p-[1rem_1rem_10px_10px]",
+        `top-[${coordinates.top}] left-[${coordinates.left}]`
+      )}
       tabIndex={5} // to make it focusable
       ref={dropDownRef as LegacyRef<HTMLDivElement>}
-      bg="white"
-      position="absolute" // parent component has position absolute.
-      top={coordinates.top}
-      left={coordinates.left}
-      padding="1rem 1rem 10px 10px"
-      gap="1rem"
-      flex_dir="column"
-      align="start"
-      radius="8px"
-      min_width="150px"
       onBlur={() => setShowDropDown(false)}
     >
       {DROP_DOWN_CONTENT.map(({ text, action }) => (

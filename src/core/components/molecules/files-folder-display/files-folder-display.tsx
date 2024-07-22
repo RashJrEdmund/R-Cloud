@@ -4,7 +4,10 @@ import { useEffect, useCallback, useMemo } from "react";
 import { DivCard, TextTag } from "@/components/atoms";
 import StyledFileFolderDisplay from "./styled-file-folder-display";
 import { useDocStore, useAppStore } from "@/providers/stores/zustand";
-import { useContextMenuContext, useModalContext } from "@/providers/stores/context";
+import {
+  useContextMenuContext,
+  useModalContext,
+} from "@/providers/stores/context";
 import {
   GridFileCard,
   GridFolderCard,
@@ -163,10 +166,7 @@ export default function FilesFolderDisplay({}: Props) {
     <>
       <DivCard
         // bg='light'
-        width="100%"
-        flex_dir="column"
-        justify="start"
-        min_height="80vh"
+        className="min-h-[80vh] w-full flex-col justify-start"
         onContextMenu={handleContextMenu}
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
@@ -198,7 +198,7 @@ export default function FilesFolderDisplay({}: Props) {
                   )}
             </StyledFileFolderDisplay>
           ) : (
-            <DivCard width="100%" min_height="60vh">
+            <DivCard className="min-h-[60vh] w-full">
               <TextTag as="h3" weight="600" size="2rem" color_type="grayed">
                 Folder Is Empty
               </TextTag>

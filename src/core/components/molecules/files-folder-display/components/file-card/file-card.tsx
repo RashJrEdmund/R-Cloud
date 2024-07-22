@@ -9,7 +9,10 @@ import {
   shortenText,
 } from "@/core/utils/helpers";
 import { FILE_FOLDER_MAX_NAME_LENGTH } from "@/core/utils/constants";
-import { useContextMenuContext, useModalContext } from "@/providers/stores/context";
+import {
+  useContextMenuContext,
+  useModalContext,
+} from "@/providers/stores/context";
 import { useAppStore } from "@/providers/stores/zustand";
 import { CONTEXT_MENU_ICONS, MEDIA_ICONS } from "@/core/ui/icons";
 import Image from "next/image";
@@ -53,10 +56,11 @@ function _GridFileCard({
         height={60}
       />
 
-      <DivCard flex_dir="column" align="start">
-        <DivCard margin="5px 0 0">
+      <DivCard className="flex-col items-start">
+        <DivCard className="mt-[5px]">
           <TextTag
             title={file.name}
+            className="font-[500]"
             weight="500"
             size="0.9rem"
             margin="0"
@@ -66,7 +70,7 @@ function _GridFileCard({
           </TextTag>
         </DivCard>
 
-        <DivCard width="100%" margin="10px 0 0" gap="5px">
+        <DivCard className="mt-[10px] w-full gap-[5px]">
           <TextTag color_type="grayed" size="0.75rem" no_white_space>
             {file.extension}
           </TextTag>
@@ -88,13 +92,7 @@ function _ListFileCard({
 }: ICardComponentProps) {
   return (
     <DivCard
-      width="100%"
-      flex_wrap="nowrap"
-      justify="start"
-      padding="12px 10px"
-      cursor="pointer"
-      className="card"
-      position="relative"
+      className="card relative w-full cursor-pointer flex-nowrap justify-start p-[12px_10px]"
       ref={fileRef as any}
       onDoubleClick={handleOpen}
     >
@@ -102,7 +100,7 @@ function _ListFileCard({
 
       <Image src={imagePreview.img} alt="file icon" width={25} height={25} />
 
-      <DivCard margin="0 0 0 10px">
+      <DivCard className="mb-[10px]">
         <TextTag
           title={file.name}
           weight="500"
@@ -113,7 +111,7 @@ function _ListFileCard({
           {shortenText(file.name, FILE_FOLDER_MAX_NAME_LENGTH + 14)}
         </TextTag>
 
-        <DivCard justify="start" width="100%" gap="5px">
+        <DivCard className="w-full justify-start gap-[5px]">
           <TextTag color_type="grayed" size="0.75rem" no_white_space>
             {file.extension}
           </TextTag>

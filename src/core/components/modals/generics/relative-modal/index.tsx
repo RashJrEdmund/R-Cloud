@@ -6,19 +6,12 @@ import { useEffect, useRef } from "react";
 import { DivCard } from "@/components/atoms";
 import { CONTEXT_MENU_ICONS } from "@/core/ui/icons";
 import Image from "next/image";
+import { cn } from "@/core/lib/utils";
 
 interface Props {
   children: React.ReactNode;
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-
-  radius?: string;
-
-  left?: string; // gives absolute x units towards x-direction;
-  top?: string; // gives absolute y units towards y-direction;
-  z_index?: string;
-  position: "absolute" | "fixed";
-
   sx?: string; // for overriding styles;
 }
 
@@ -29,13 +22,6 @@ export default function RelativeModal({
   setShowModal,
 
   sx,
-
-  radius = "5px",
-
-  left = "0",
-  top = "0",
-  z_index = "7",
-  position = "absolute",
 }: Props) {
   const modalRef = useRef<any>(null);
 
@@ -45,27 +31,16 @@ export default function RelativeModal({
 
   return showModal ? (
     <DivCard
-      bg="grayed"
-      shadow_effect
-      position={position}
-      top={top}
-      left={left}
-      z_index={z_index}
-      align="start"
-      justify="start"
-      flex_dir="column"
-      padding="1rem"
-      gap="10px"
-      radius={radius}
-      min_width="min(97vw, 200px)"
-      min_height="170px"
-      sx={sx}
+      className={cn(
+        "min-h-[170px] min-w-[min(97vw,_200px)] flex-col items-start justify-start gap-3 bg-app_bg_grayed p-4 shadow",
+        sx
+      )}
       tabIndex={1}
       ref={modalRef}
       id="relative-modal" // used by the getResponsivePosition function to get component's height and width
       onBlur={() => setShowModal(false)}
     >
-      <DivCard margin="0 0 0.5rem" onClick={() => setShowModal(false)}>
+      <DivCard className="mb-2" onClick={() => setShowModal(false)}>
         <Image
           src={CONTEXT_MENU_ICONS.close}
           alt="Show more"

@@ -42,10 +42,7 @@ const listFolderDocuments = async (
   email: string,
   folder_id: string
 ): Promise<QuerySnapshot<Document>> => {
-  const collection_path = createUserCollectionPath<Document>(
-    email,
-    "/r-drive"
-  );
+  const collection_path = createUserCollectionPath<Document>(email, "/r-drive");
 
   const fileQuery = query(collection_path, where("parent_id", "==", folder_id));
 
@@ -59,10 +56,7 @@ const getTotalUsedSize = async (
     total_bytes: AggregateField<number>;
   }>
 > => {
-  const collection_path = createUserCollectionPath<Document>(
-    email,
-    "/r-drive"
-  );
+  const collection_path = createUserCollectionPath<Document>(email, "/r-drive");
 
   const q = query(collection_path, where("type", "==", "FILE"));
 
@@ -180,10 +174,7 @@ const deleteFiles = async (
   };
 
   for (const file of files) {
-    const file_path = createUserDocPath<Document>(
-      email,
-      "/r-drive/" + file.id
-    );
+    const file_path = createUserDocPath<Document>(email, "/r-drive/" + file.id);
 
     await deleteFile(email, String(file.filename)) // delete file from storage
       .then(() => deleteDoc(file_path));
@@ -215,10 +206,7 @@ const deleteAllDescendants = async (
   email: string,
   ancestor_folder_id: string
 ) => {
-  const collection_path = createUserCollectionPath<Document>(
-    email,
-    "/r-drive"
-  );
+  const collection_path = createUserCollectionPath<Document>(email, "/r-drive");
 
   try {
     const q = query(

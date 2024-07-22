@@ -103,7 +103,7 @@ export default function FileViewer() {
       use_base_btns_instead={false}
       prevent_auto_focus
       cancelAction={handleCancelAction}
-      container_sx="min-width: unset; background: none; border: 0.5px solid grey;"
+      sxContainer="min-width: unset; background: none; border: 0.5px solid grey;"
     >
       <StyledViewerContainer>
         {!!(files && files[currentIndx - 1]) ? (

@@ -93,11 +93,7 @@ export default function NewFolderModal({ folderModalRef }: Props) {
     >
       <DivCard
         as="form"
-        width="100%"
-        flex_dir="column"
-        align="start"
-        justify="start"
-        gap="10px"
+        className="w-full flex-col items-start justify-start gap-[10px]"
         onSubmit={uploadFolder}
       >
         <TextTag>New Folder</TextTag>

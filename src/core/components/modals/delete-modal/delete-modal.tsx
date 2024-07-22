@@ -71,13 +71,7 @@ export default function DeleteModal({ deleteModalRef, document }: Props) {
       cancelAction={closeModal}
       confirmAction={handleDeleteDocument}
     >
-      <DivCard
-        width="100%"
-        flex_dir="column"
-        align="start"
-        justify="start"
-        gap="10px"
-      >
+      <DivCard className="w-full flex-col items-start justify-start gap-3">
         <TextTag text_align="left">
           Are you sure you want to delete this {doc_type}
         </TextTag>

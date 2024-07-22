@@ -8,7 +8,7 @@ interface Props {
   //
 }
 
-export default function Search({ }: Props) {
+export default function Search({}: Props) {
   const [searchVal, setSearchVal] = useState<string>("");
   const [searchCombo, setSearchCombo] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>();
@@ -51,10 +51,7 @@ export default function Search({ }: Props) {
     <DivCard as="search" media_sx="display: none;">
       <DivCard
         as="form"
-        width="min(300px, 97vw)"
-        position="relative"
-        border
-        radius="10px"
+        className="relative w-[min(300px,_97vw)] rounded-[10px] border border-app_border"
         onSubmit={handleSubmit}
       >
         <TextField
@@ -63,24 +60,17 @@ export default function Search({ }: Props) {
           value={searchVal}
           onChange={handleChange}
           className="border-none"
-        // onFocus={() => {
-        //   window.removeEventListener('keydown', handleSearchKeyCombo);
-        // }}
-        // onBlur={() => {
-        //   window.addEventListener('keydown', handleSearchKeyCombo);
-        // }}
+          // onFocus={() => {
+          //   window.removeEventListener('keydown', handleSearchKeyCombo);
+          // }}
+          // onBlur={() => {
+          //   window.addEventListener('keydown', handleSearchKeyCombo);
+          // }}
         />
         {searchVal ? (
           <DivCard
             as="button"
-            position="relative"
-            bg="black"
-            top="0"
-            right="0"
-            height="100%"
-            padding="5.5px 10px"
-            radius="0 10px 10px 0"
-            cursor="pointer"
+            className="p-[5.5px 10px] relative right-0 top-0 h-full cursor-pointer rounded-[0_10px_10px_0] bg-app_black"
             onClick={() => setSearchVal("")}
           >
             clear

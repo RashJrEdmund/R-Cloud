@@ -1,12 +1,12 @@
 import { DivCard, MainTag, TextTag } from "@/components/atoms";
 import { Illustrations, CtaButtons } from "./_components";
 
-interface Props { };
+interface Props {}
 
-export default function LandingPage({ }: Props) {
+export default function LandingPage({}: Props) {
   return (
     <MainTag className="justify-center">
-      <DivCard as="section" margin="2rem auto 0">
+      <DivCard as="section" className="mx-auto mt-8">
         <TextTag as="h1">
           <TextTag no_white_space weight="600" size="1.25rem">
             Welcome to

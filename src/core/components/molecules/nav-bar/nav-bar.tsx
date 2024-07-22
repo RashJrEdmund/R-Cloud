@@ -9,18 +9,15 @@ import {
 } from "./nav-comonents";
 import Link from "next/link";
 
-interface Props { }
+interface Props {}
 
-export default function NavBar({ }: Props) {
+export default function NavBar({}: Props) {
   return (
-    <nav className="bg-app_white fixed top-0 left-0 w-full h-fit z-[7]">
-      <section className="relative w-primary_app_width mx-auto p-[10px_1rem] flex items-center justify-between">
+    <nav className="fixed left-0 top-0 z-[7] h-fit w-full bg-app_white">
+      <section className="relative mx-auto flex w-primary_app_width items-center justify-between p-[10px_1rem]">
         <section className="flex items-center justify-center">
           <Link href="/" className="w-fit">
-            <TextLogo
-              showLogo
-              sxTextClassName="hidden sm:inline"
-            />
+            <TextLogo showLogo sxTextClassName="hidden sm:inline" />
           </Link>
 
           <BreadCrumbs />

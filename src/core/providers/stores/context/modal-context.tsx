@@ -59,8 +59,9 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
     null
   );
   const [currentUploadIndx, setCurrentUploadIndx] = useState<number>(0);
-  const [documentToBeEdited, setDocumentToBeEdited] =
-    useState<Document | null>(null);
+  const [documentToBeEdited, setDocumentToBeEdited] = useState<Document | null>(
+    null
+  );
   const [documentToBeDeleted, setDocumentToBeDeleted] =
     useState<Document | null>(null);
   const [docsToDelete, setDocsToDelete] = useState<Document[]>([]);

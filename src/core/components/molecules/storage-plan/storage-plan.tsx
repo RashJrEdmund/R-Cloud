@@ -53,18 +53,7 @@ export default function StoragePlan({ plan }: Props) {
   };
 
   return (
-    <DivCard
-      shadow_effect
-      border
-      width="min(100%, 85vw)"
-      flex_dir="column"
-      bg="white"
-      gap="1rem"
-      padding="2rem 1.5rem 3rem"
-      margin="0 auto"
-      position="relative"
-      radius="5px"
-    >
+    <DivCard className="relative mx-auto w-[min(100%,_85vw)] flex-col gap-4 rounded-[5px] border border-app_border bg-app_white px-6 pb-12 pt-8 duration-300 hover:shadow">
       {plan.is_free ? (
         <TextTag
           position="absolute"
@@ -94,7 +83,7 @@ export default function StoragePlan({ plan }: Props) {
         height={200}
       />
 
-      <DivCard width="100%" flex_dir="column" gap="10px">
+      <DivCard className="w-full flex-col gap-[10px]">
         <TextTag size="2rem" weight="600">
           {plan.capacity}
         </TextTag>

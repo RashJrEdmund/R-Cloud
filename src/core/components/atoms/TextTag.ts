@@ -113,7 +113,7 @@ const TextTag = styled.span<Props>`
       media_size ??
       size ??
       "1rem"}; // 1rem is default text size and 2rem is for like h1s
-  };
+  }
 
   @media only screen and (max-width: 650px) {
     ${({ media_sx = "" }) => media_sx}

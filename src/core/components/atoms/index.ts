@@ -1,6 +1,6 @@
 export { default as Button } from "./Button";
 
-export { default as DivCard } from "./DivCard";
+export { default as DivCard } from "./div-card";
 
 export { default as TextTag } from "./TextTag";
 

@@ -6,6 +6,6 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Files & Folders",
     description: "r-cloud files and folders page",
   };
-};
+}
 
 export { FilesFolderDisplayPage as default } from "@/features/pages";

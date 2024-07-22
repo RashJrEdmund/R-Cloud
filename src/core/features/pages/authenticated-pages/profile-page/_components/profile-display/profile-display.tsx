@@ -64,11 +64,11 @@ export default function ProfileDisplay({}: Props) {
 
   return (
     <StyledProfileDisplay>
-      <DivCard align="start" gap="1rem" media_sx="flex-direction: column;">
+      <DivCard className="items-start gap-4" media_sx="flex-direction: column;">
         <ProfileImage />
 
-        <DivCard flex_dir="column" align="start" gap="1rem">
-          <DivCard width="100%" flex_wrap="wrap" justify="start" gap="1rem">
+        <DivCard className="flex-col items-start gap-4">
+          <DivCard className="w-full flex-wrap justify-start gap-4">
             {!loading || currentUser ? (
               <>
                 <div className="flex flex-col">
@@ -94,7 +94,7 @@ export default function ProfileDisplay({}: Props) {
                     Plan Capacity
                   </TextTag>
 
-                  <DivCard flex_wrap="wrap" justify="start">
+                  <DivCard className="flex-wrap justify-start">
                     <TextTag no_white_space color_type="success">
                       {userProfile?.plan.capacity} at
                     </TextTag>
@@ -117,7 +117,7 @@ export default function ProfileDisplay({}: Props) {
 
           <UsedSpaceDisplay userProfile={userProfile} />
 
-          <DivCard width="100%" flex_dir="column" align="start" justify="start">
+          <DivCard className="w-full flex-col items-start justify-start">
             <TextTag size="0.9rem">
               username
               <TextTag color_type="success">{currentUser?.username}</TextTag>
@@ -143,7 +143,7 @@ export default function ProfileDisplay({}: Props) {
         </DivCard>
       </DivCard>
 
-      <DivCard width="100%" align="start" justify="start">
+      <DivCard className="w-full items-start justify-start">
         <Button
           bg="error"
           min_width="320px"

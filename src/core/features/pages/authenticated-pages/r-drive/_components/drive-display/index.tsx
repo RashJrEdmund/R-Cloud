@@ -33,7 +33,7 @@ export default function DriveDisplay({}: Props) {
   }, [currentUser, setUserProfile]);
 
   return (
-    <DivCard width="100%" flex_dir="column" gap="1rem" min_height="70vh">
+    <DivCard className="min-h-[70vh] w-full flex-col gap-4">
       <Image
         src="/landing/my-r-drive.svg"
         alt="my-r-drive"
@@ -42,8 +42,8 @@ export default function DriveDisplay({}: Props) {
         draggable={false}
       />
 
-      <DivCard width="100%" flex_dir="column" gap="1rem">
-        <DivCard width="100%" flex_dir="column" flex_wrap="nowrap" gap="10px">
+      <DivCard className="w-full flex-col gap-4">
+        <DivCard className="w-full flex-col flex-nowrap gap-[10px]">
           <TextTag as="p">used space</TextTag>
 
           <UsedSpaceDisplay

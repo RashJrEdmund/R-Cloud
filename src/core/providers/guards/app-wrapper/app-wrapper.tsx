@@ -19,7 +19,7 @@ import { useDocStore, useUserStore } from "@/providers/stores/zustand";
 interface APPWRAPPER {
   children: React.ReactNode;
   strict?: boolean;
-};
+}
 
 export default function AppWrapper({ children, strict }: APPWRAPPER) {
   const [loading, setLoading] = useState<{ user: boolean; doc: boolean }>({
@@ -48,8 +48,7 @@ export default function AppWrapper({ children, strict }: APPWRAPPER) {
           const _user = {
             id: user.uid,
             email: user.email || "",
-            username:
-              user.displayName || user?.email?.split("@").shift() || "",
+            username: user.displayName || user?.email?.split("@").shift() || "",
             date_of_birth: "",
             phone_number: user.phoneNumber || "",
             photo_url: user.photoURL || "",
@@ -117,9 +116,5 @@ export default function AppWrapper({ children, strict }: APPWRAPPER) {
     }
   }
 
-  return (
-    <>
-      {children}
-    </>
-  )
-};
+  return <>{children}</>;
+}

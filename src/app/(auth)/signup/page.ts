@@ -12,4 +12,3 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export { SignupPage as default } from "@/features/pages";
-  

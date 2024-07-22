@@ -101,7 +101,7 @@ export default function InputField({
 
       <TextField
         ref={inputRef as LegacyRef<HTMLInputElement>}
-        className="w-full min-h-[2.7rem] text-app_text placeholder:text-app_text_grayed"
+        className="min-h-[2.7rem] w-full text-app_text placeholder:text-app_text_grayed"
         onFocus={() => setActive(true)}
         onBlur={() =>
           !fieldVal?.trim() && !leave_active ? setActive(false) : null

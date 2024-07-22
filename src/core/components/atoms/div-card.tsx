@@ -32,7 +32,7 @@ interface Props extends CommonProps {
   hover_effect?: HoverEffectVariants;
 }
 
-const DivCard = styled.div<Props>`
+const _DivCard = styled.div<Props>`
   visibility: ${({ visibility = "visible" }) => visibility};
 
   // alignment
@@ -93,4 +93,25 @@ const DivCard = styled.div<Props>`
   }
 `;
 
-export default DivCard;
+import { ComponentProps } from "react";
+import { cn } from "@/core/lib/utils";
+
+interface DivCardProps extends ComponentProps<"div"> {
+  as?: keyof JSX.IntrinsicElements;
+}
+
+export default function DivCard({
+  className,
+  as: Tag = "div",
+  ...restProps
+}: DivCardProps) {
+  return (
+    <Tag
+      {...(restProps as {})}
+      className={cn(
+        "m-0 flex h-fit w-fit items-center justify-center border-app_border outline-none",
+        className
+      )}
+    />
+  );
+}

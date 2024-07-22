@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import type { Document } from "@/core/interfaces/entities";
 import { useContextMenuContext } from "@/providers/stores/context";
 
-const { } = THEME_PALETTE;
+const {} = THEME_PALETTE;
 
 interface _props {
   absolute: boolean;
@@ -52,7 +52,7 @@ export default function SelectCheckbox({ document }: Props) {
     <>
       <Overlay
         isOpen
-        className="absolute z-[3] bg-transparent cursor-pointer"
+        className="absolute z-[3] cursor-pointer bg-transparent"
         onClick={handleSelection}
       />
 

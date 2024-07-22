@@ -25,8 +25,8 @@ export default async function PlanDisplay({}: Props) {
     });
 
   return (
-    <DivCard width="100%" flex_dir="column">
-      <DivCard as="section" margin="0 auto 2rem">
+    <DivCard className="w-full flex-col">
+      <DivCard as="section" className="mx-auto mb-8">
         <TextTag as="h2">
           <TextTag weight="600" size="1.25rem" color_type="success">
             R-Cloud

@@ -65,13 +65,7 @@ export default function ProfileImage({}: Props) {
 
   return (
     <StyledProfileImage>
-      <DivCard
-        border
-        width="100%"
-        flex_dir="column"
-        gap="10px"
-        padding="0 0 10px"
-      >
+      <DivCard className="w-full flex-col gap-[10px] border border-app_border pb-[10px]">
         <Image
           src={preview || profileUrl}
           alt={`image of ${currentUser?.username}`}
@@ -105,7 +99,7 @@ export default function ProfileImage({}: Props) {
       </DivCard>
 
       {preview ? (
-        <DivCard gap="10px">
+        <DivCard className="gap-[10px]">
           <Button
             bg="blued"
             margin="5px 0 0"

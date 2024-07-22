@@ -12,9 +12,9 @@ export async function generateMetadata(): Promise<Metadata> {
       canonical: "/r-drive/",
     },
   };
-};
+}
 
-interface Props {};
+interface Props {}
 
 export default function RDrivePage({}: Props) {
   return (

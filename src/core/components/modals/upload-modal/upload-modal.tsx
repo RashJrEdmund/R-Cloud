@@ -60,14 +60,8 @@ export default function UploadModal({
       </TextTag>
 
       {progress && (
-        <DivCard
-          width="100%"
-          flex_dir="column"
-          align="start"
-          justify="start"
-          gap="10px"
-        >
-          <DivCard gap="10px" flex_wrap="nowrap">
+        <DivCard className="w-full flex-col items-start justify-start gap-[10px]">
+          <DivCard className="flex-nowrap gap-[10px]">
             <TextTag>
               uploading {currentUploadIndx + 1} / {selectedFiles.length}
             </TextTag>

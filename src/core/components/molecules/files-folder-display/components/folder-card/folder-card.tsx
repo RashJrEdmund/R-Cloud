@@ -7,7 +7,10 @@ import { useMemo, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { shortenText } from "@/core/utils/helpers";
 import { FILE_FOLDER_MAX_NAME_LENGTH } from "@/core/utils/constants";
-import { useContextMenuContext, useModalContext } from "@/providers/stores/context";
+import {
+  useContextMenuContext,
+  useModalContext,
+} from "@/providers/stores/context";
 import { CONTEXT_MENU_ICONS, MEDIA_ICONS } from "@/core/ui/icons";
 
 import type { MutableRefObject, MouseEventHandler } from "react";
@@ -42,14 +45,14 @@ function _GridFolderCard({
         height={100}
       />
 
-      <DivCard flex_dir="column" align="start">
-        <DivCard margin="5px 0 0">
+      <DivCard className="flex-col items-start">
+        <DivCard className="mt-[5px]">
           <TextTag title={folder.name} weight="500" size="0.9rem" margin="0">
             {shortenText(folder.name, FILE_FOLDER_MAX_NAME_LENGTH)}
           </TextTag>
         </DivCard>
 
-        <DivCard justify="start" width="100%" margin="10px 0 0" gap="5px">
+        <DivCard className="mt-[10px] w-full justify-start gap-[5px]">
           <TextTag color_type="grayed" size="0.75rem" no_white_space>
             {folderLength > 0
               ? folderLength + ` item${folderLength > 1 ? "s" : ""}`
@@ -75,13 +78,7 @@ function _ListFolderCard({
     <>
       <DivCard
         ref={folderRef as any}
-        width="100%"
-        flex_wrap="nowrap"
-        justify="start"
-        padding="12px 10px"
-        cursor="pointer"
-        className="card"
-        position="relative"
+        className="card relative w-full cursor-pointer flex-nowrap justify-start p-[12px_10px]"
         onDoubleClick={handleOpen}
       >
         <SelectCheckbox document={folder} />
@@ -93,7 +90,7 @@ function _ListFolderCard({
           height={30}
         />
 
-        <DivCard margin="0 0 0 10px">
+        <DivCard className="mb-[10px]">
           <TextTag
             title={folder.name}
             weight="500"
@@ -103,7 +100,7 @@ function _ListFolderCard({
             {shortenText(folder.name, FILE_FOLDER_MAX_NAME_LENGTH + 14)}
           </TextTag>
 
-          <DivCard justify="start" width="100%" gap="5px">
+          <DivCard className="w-full justify-start gap-[5px]">
             <TextTag color_type="grayed" size="0.75rem" no_white_space>
               {folderLength > 0
                 ? folderLength + ` item${folderLength > 1 ? "s" : ""}`

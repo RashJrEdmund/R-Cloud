@@ -86,11 +86,7 @@ export default function EditModal({ editModalRef, document }: Props) {
     >
       <DivCard
         as="form"
-        width="100%"
-        flex_dir="column"
-        align="start"
-        justify="start"
-        gap="10px"
+        className="w-full flex-col items-start justify-start gap-3"
         onSubmit={handleEditDocument}
       >
         <TextTag>Rename {doc_type}</TextTag>

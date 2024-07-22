@@ -10,8 +10,9 @@ import {
 import { ModalWrapperRef } from "..";
 import { Button, DivCard, Overlay } from "@/components/atoms";
 import { CONTEXT_MENU_ICONS } from "@/core/ui/icons";
-import Image from "next/image";
+import { cn } from "@/core/lib/utils";
 
+import Image from "next/image";
 import type { ForwardedRef, LegacyRef, MouseEventHandler } from "react";
 
 interface Props {
@@ -29,7 +30,7 @@ interface Props {
 
   prevent_auto_focus?: boolean; // to prevent the dialog's auto focus effect
 
-  container_sx?: string;
+  sxContainer?: string;
 }
 
 function AppModalWrapper(
@@ -46,7 +47,7 @@ function AppModalWrapper(
 
     prevent_auto_focus = false,
 
-    container_sx = "",
+    sxContainer = "",
   }: Props,
   _ref: ForwardedRef<ModalWrapperRef>
 ) {
@@ -88,24 +89,18 @@ function AppModalWrapper(
         ref={dialogRef as LegacyRef<HTMLDialogElement>}
         autoFocus={!prevent_auto_focus}
       >
-        <Overlay isOpen={showModal} onClick={handleModalClose} className="z-[9]" />
+        <Overlay
+          isOpen={showModal}
+          onClick={handleModalClose}
+          className="z-[9]"
+        />
 
         {showModal ? (
           <DivCard
-            bg="normal"
-            position="fixed"
-            top="50%"
-            left="50%"
-            transform="translate(-50%, -50%)"
-            z_index="10"
-            flex_dir="column"
-            align="start"
-            justify="space-between"
-            padding="1rem"
-            radius="8px"
-            min_width="min(97vw, 400px)"
-            min_height="180px"
-            sx={container_sx}
+            className={cn(
+              "fixed left-1/2 top-1/2 z-10 min-h-[180px] w-[min(97vw,_400px)] -translate-x-1/2 -translate-y-1/2 flex-col items-start justify-between gap-4 rounded-[8px] bg-app_bg text-app_text",
+              sxContainer
+            )}
           >
             {!use_base_btns_instead && (
               <Image
@@ -119,19 +114,12 @@ function AppModalWrapper(
               />
             )}
 
-            <DivCard
-              width="100%"
-              flex_dir="column"
-              align="start"
-              justify="start"
-              margin="1rem 0 0"
-              gap="10px"
-            >
+            <DivCard className="mt-4 w-full flex-col items-start justify-start gap-[10px]">
               {children}
             </DivCard>
 
             {use_base_btns_instead && (
-              <DivCard width="100%" justify="end" gap="1rem" margin="1rem 0 0">
+              <DivCard className="mt-4 w-full justify-end gap-4">
                 <Button
                   bg="error"
                   radius="5px"

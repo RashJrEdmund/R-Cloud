@@ -9,6 +9,7 @@ import { ProgressBar } from "..";
 import { useMemo } from "react";
 
 import type { UserProfile } from "@/core/interfaces/entities";
+import { cn } from "@/core/lib/utils";
 
 interface Props {
   userProfile: UserProfile | null;
@@ -25,7 +26,9 @@ export default function UsedSpaceDisplay({
   );
 
   return userProfile ? (
-    <DivCard width={width} flex_dir="column" align="start" justify="start">
+    <DivCard
+      className={cn("flex-col items-start justify-start", `w-[${width}]`)}
+    >
       <TextTag size="0.9rem">
         Used space
         <TextTag color_type="success">

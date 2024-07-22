@@ -34,8 +34,7 @@
   /* DIMENSIONS */
   --primary_app_width: min(97vw, 1450px);
   --secondary_app_width: min(100%, 1200px);
-  --tertiary_app_width: min(100%,
-      1000px);
+  --tertiary_app_width: min(100%, 1000px);
   /* Mainly used in the storage plans section */
   --main_min_height: min(1000px, 100vh);
 }
@@ -111,4 +110,8 @@ body {
   background-color: var(--bg);
 }
 
-;
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}

@@ -14,8 +14,7 @@ export default function Illustrations({}: Props) {
         <DivCard
           key={alt}
           title={description}
-          flex_dir="column"
-          className="illustration"
+          className="illustration flex-col"
         >
           <Image
             src={url}

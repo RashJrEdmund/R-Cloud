@@ -12,7 +12,7 @@ export default function TopSection({ hide_search_section = false }: Props) {
       <Navigator />
 
       {hide_search_section ? null : (
-        <DivCard gap="1rem">
+        <DivCard className="gap-4">
           <Search />
 
           <DisplayLayout />

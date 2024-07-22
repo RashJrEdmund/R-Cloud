@@ -13,14 +13,14 @@ import { MainTag } from "@/components/atoms";
 
 import {
   ModalContextProvider,
-  ContextMenuContextProvider
+  ContextMenuContextProvider,
 } from "@/providers/stores/context";
 
 interface Props {
   //
-};
+}
 
-export default function FilesFolderDisplayPage({ }: Props) {
+export default function FilesFolderDisplayPage({}: Props) {
   return (
     <MainTag>
       {/* INPUT_DES +=> ========================================================================

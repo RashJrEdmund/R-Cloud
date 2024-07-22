@@ -17,13 +17,7 @@ export default function FilesFolderShimmer({
         : new Array(16).fill(null).map((_, i) => (
             <DivCard
               key={i}
-              width="100%"
-              flex_wrap="nowrap"
-              justify="start"
-              padding="20px 10px"
-              cursor="pointer"
-              bg="light"
-              margin="2px 0"
+              className="my-[2px] w-full cursor-pointer flex-nowrap justify-start bg-app_bg_light px-[10px] py-[20px]"
             >
               {null}
             </DivCard>

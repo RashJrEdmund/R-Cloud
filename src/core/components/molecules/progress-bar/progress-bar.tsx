@@ -3,15 +3,13 @@
 import { DivCard } from "@/components/atoms";
 import { useEffect, useMemo, useState } from "react";
 import { THEME_PALETTE } from "@/core/ui/theme";
+import { cn } from "@/core/lib/utils";
 
 interface Props {
-  height?: string;
-  width?: string;
+  sx?: string;
+  sxInner?: string;
 
   progress_in_percentage: number;
-
-  inner_radius?: string;
-  outer_radius?: string;
 
   show_usage_colors?: boolean; // weather or not to show usage colors;
 }
@@ -19,11 +17,8 @@ interface Props {
 export default function ProgressBar({
   progress_in_percentage,
 
-  height = "20px",
-  width = "100%",
-
-  outer_radius = "8px",
-  inner_radius = "10px",
+  sx = "",
+  sxInner = "",
 
   show_usage_colors = false,
 }: Props) {
@@ -45,22 +40,17 @@ export default function ProgressBar({
 
   return (
     <DivCard
-      bg="grayed"
-      width={width}
-      height={height}
-      radius={outer_radius}
-      position="relative"
+      className={cn(
+        "relative h-[20px] w-full rounded-[8px] bg-app_bg_grayed",
+        sx
+      )}
     >
       <DivCard
-        width={progress_in_percentage + "%"} /* eg 95% */
-        height="100%"
-        position="absolute"
-        left="0"
-        top="0"
-        radius={inner_radius}
-        sx={`
-          background-color: ${color}
-        `}
+        className={cn(
+          "absolute left-0 top-0 h-full rounded-[10px]",
+          `w-[${progress_in_percentage}%] bg-[${color}]` /* eg 95% */,
+          sxInner
+        )}
       />
     </DivCard>
   );

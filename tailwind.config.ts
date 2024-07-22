@@ -56,7 +56,7 @@ const config = {
         app_blue: "var(--app_blue)",
         app_text_blue: "var(--app_text_blue)",
         overlay_gradient: "var(--app_overlay_gradient)",
-        
+
         app_text: "var(--app_text)",
         app_text_grayed: "var(--app_text_grayed)",
         app_text_invert: "var(--app_text_invert)",
@@ -99,7 +99,7 @@ const config = {
         tertiary_app_width: "var(--tertiary_app_width)",
 
         main_min_height: "var(--main_min_height)",
-      }
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

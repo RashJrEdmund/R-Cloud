@@ -6,10 +6,11 @@ import { useAppStore } from "@/providers/stores/zustand";
 import Image from "next/image";
 import { CLIENT_STORAGE } from "@/core/lib";
 import type { DisplayLayout } from "@/core/interfaces/app";
+import { cn } from "@/core/lib/utils";
 
 interface Props {
   //
-};
+}
 
 export default function DisplayLayout({}: Props) {
   const { displayLayout, setDisplayLayout } = useAppStore();
@@ -43,12 +44,12 @@ export default function DisplayLayout({}: Props) {
   }, [displayLayout]);
 
   return (
-    <DivCard border radius="10px">
+    <DivCard className="rounded-[10px] border border-app_border">
       <DivCard
-        radius="8px 0 0 8px"
-        padding="4px 5px"
-        cursor="pointer"
-        bg={displayLayout === "GRID" ? "grayed" : "none"}
+        className={cn(
+          "cursor-pointer rounded-[8px_0_0_8px] p-[4px_5px]",
+          displayLayout === "GRID" ? "bg-app_bg_grayed" : "bg-transparent"
+        )}
       >
         <Image
           src="/icons/display-layout-grid.svg"
@@ -64,10 +65,10 @@ export default function DisplayLayout({}: Props) {
       </DivCard>
 
       <DivCard
-        radius="0 8px 8px 0"
-        padding="4px 5px"
-        cursor="pointer"
-        bg={displayLayout === "LIST" ? "grayed" : "none"}
+        className={cn(
+          "cursor-pointer rounded-[0_8px_8px_0] p-[4px_5px]",
+          displayLayout === "LIST" ? "bg-app_bg_grayed" : "bg-transparent"
+        )}
       >
         <Image
           src="/icons/display-layout-list.svg"

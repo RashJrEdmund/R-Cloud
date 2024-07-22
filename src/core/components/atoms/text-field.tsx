@@ -17,7 +17,7 @@ interface Props {
   width?: string;
   min_height?: string;
   color_type?: "invert" | "normal" | "no_border";
-};
+}
 
 export const generateFieldColors = (
   color_type: "invert" | "normal" | "no_border"
@@ -65,14 +65,13 @@ const _TextField = styled.input<Props>`
   ${({ sx }) => sx};
 `;
 
-interface TextFieldProps extends ComponentProps<"input"> { };
+interface TextFieldProps extends ComponentProps<"input"> {}
 
 export default function TextField({ className, ...restProps }: TextFieldProps) {
   return (
     <input
       {...restProps}
-      className={cn("rounded-[10px] m-0 w-full p-[5px_10px]", className)}
+      className={cn("m-0 w-full rounded-[10px] p-[5px_10px]", className)}
     />
-  )
-};
-
+  );
+}

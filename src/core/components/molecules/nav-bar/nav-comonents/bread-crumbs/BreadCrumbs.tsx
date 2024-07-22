@@ -5,7 +5,7 @@ import { TextTag } from "@/components/atoms";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useDocStore } from "@/providers/stores/zustand"
+import { useDocStore } from "@/providers/stores/zustand";
 import { shortenText } from "@/core/utils/helpers";
 
 interface Props {

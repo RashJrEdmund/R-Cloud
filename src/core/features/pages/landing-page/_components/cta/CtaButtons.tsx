@@ -4,11 +4,11 @@ import Link from "next/link";
 
 interface Props {
   //
-};
+}
 
 export default function CtaButtons({}: Props) {
   return (
-    <DivCard margin="5rem auto auto" gap="1rem">
+    <DivCard className="mx-auto mb-auto mt-20 gap-4">
       {CTA_CONTENT.map(({ text, bt_bg, title, url }) => (
         <Button
           as={Link}

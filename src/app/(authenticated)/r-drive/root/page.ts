@@ -9,6 +9,6 @@ export async function generateMetadata(): Promise<Metadata> {
       canonical: "/r-drive/root",
     },
   };
-};
+}
 
 export { FilesFolderDisplayPage as default } from "@/features/pages";

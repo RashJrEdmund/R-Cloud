@@ -7,7 +7,10 @@ import {
   getResponsiveMenuPosition,
   openFileUploadDialog,
 } from "@/core/utils/helpers";
-import { useContextMenuContext, useModalContext } from "@/providers/stores/context";
+import {
+  useContextMenuContext,
+  useModalContext,
+} from "@/providers/stores/context";
 import { CONTEXT_MENU_ICONS } from "@/core/ui/icons";
 import Image from "next/image";
 
@@ -95,7 +98,7 @@ export default function MoreSection({}: Props) {
   ); // selectionStart is required especially for the start and stop selection option
 
   return (
-    <DivCard position="relative">
+    <DivCard className="relative">
       {" "}
       {/* This relative positioning is for the ContextMenu */}
       <TextTag cursor="pointer" onClick={toggleModal}>
