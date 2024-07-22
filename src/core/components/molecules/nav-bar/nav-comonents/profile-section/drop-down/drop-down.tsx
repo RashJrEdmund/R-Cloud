@@ -2,29 +2,19 @@
 
 import { DivCard, TextTag } from "@/components/atoms";
 import { logOut } from "@/core/config/firebase";
-import { cn } from "@/core/lib/utils";
 import { useDocStore, useUserStore } from "@/providers/stores/zustand";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef } from "react";
-import type { LegacyRef } from "react";
+import { useMemo } from "react";
 
 interface Props {
-  showDropDown: boolean;
   setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>;
-  coordinates: {
-    top: string;
-    left: string;
-  };
 }
 
 export default function ProfileDropDown({
-  showDropDown,
   setShowDropDown,
-  coordinates,
 }: Props) {
   const { setCurrentUser } = useUserStore();
   const { setDocuments } = useDocStore();
-  const dropDownRef = useRef<HTMLDivElement>();
   const router = useRouter();
 
   const handleLogOut = () => {
@@ -60,27 +50,14 @@ export default function ProfileDropDown({
     ];
   }, [router]);
 
-  useEffect(() => {
-    if (showDropDown) {
-      dropDownRef.current?.focus();
-    }
-  }, [showDropDown]);
-
-  return showDropDown ? (
+  return (
     <DivCard
-      className={cn(
-        "absolute min-w-[150px] flex-col items-start gap-4 rounded-[8px] border bg-app_white p-[1rem_1rem_10px_10px]",
-        `top-[${coordinates.top}] left-[${coordinates.left}]`
-      )}
-      tabIndex={5} // to make it focusable
-      ref={dropDownRef as LegacyRef<HTMLDivElement>}
-      onBlur={() => setShowDropDown(false)}
+      className="min-w-[150px] flex-col items-start gap-4 rounded-[8px] bg-app_white p-[1rem_1rem_10px_10px]"
     >
       {DROP_DOWN_CONTENT.map(({ text, action }) => (
         <TextTag
-          no_white_space
-          cursor="pointer"
           key={text}
+          className="cursor-pointer whitespace-nowrap"
           onClick={() => {
             action();
             setShowDropDown(false);
@@ -90,5 +67,5 @@ export default function ProfileDropDown({
         </TextTag>
       ))}
     </DivCard>
-  ) : null;
-}
+  );
+};

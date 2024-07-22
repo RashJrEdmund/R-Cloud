@@ -81,39 +81,39 @@ export default function BulkDeleteModal({
       confirmAction={handleDeleteDocuments}
     >
       <DivCard className="w-full flex-col items-start justify-start gap-3">
-        <TextTag text_align="left">
+        <TextTag className="text-left">
           Are you sure you want to the delete selected
         </TextTag>
 
         {selectedDocDetails.has_folders ? (
-          <TextTag color_type="error" text_align="left">
+          <TextTag className="text-left text-app_error">
             Folders detected. Deleting folders will delete their content
           </TextTag>
         ) : null}
 
-        <TextTag text_align="left">
+        <TextTag className="text-left">
           Files:
-          <TextTag color_type="success">{selectedDocDetails.num_files}</TextTag>
+          <TextTag className="text-app_text_blue">{selectedDocDetails.num_files}</TextTag>
         </TextTag>
 
-        <TextTag text_align="left">
+        <TextTag className="text-left">
           Folders:
-          <TextTag color_type="success">
+          <TextTag className="text-app_text_blue">
             {selectedDocDetails.num_folders}
           </TextTag>
         </TextTag>
 
-        <TextTag text_align="left">
+        <TextTag className="text-left">
           Size,{" "}
           {selectedDocDetails.has_folders ? (
-            <TextTag color_type="success" text_align="left">
+            <TextTag className="text-left text-app_text_blue">
               Excluding sub folders
             </TextTag>
           ) : (
             ""
           )}
           :
-          <TextTag color_type="success">
+          <TextTag className="text-app_text_blue">
             {selectedDocDetails.capacity.merged}
           </TextTag>
         </TextTag>

@@ -1,11 +1,10 @@
 "use client";
-import { TextLogo, TextTag } from "@/components/atoms";
+import { TextLogo } from "@/components/atoms";
 
 import {
   BreadCrumbs,
   NavTitle,
   ProfileSection,
-  StyledNavBar,
 } from "./nav-comonents";
 import Link from "next/link";
 

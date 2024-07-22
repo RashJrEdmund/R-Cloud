@@ -58,7 +58,7 @@ export default function BreadCrumbs({}: Props) {
 
       return (
         <Link key={crumb + i} href={String(currentLink)}>
-          <TextTag cursor="pointer">
+          <TextTag className="cursor-pointer">
             / {add_trails ? "... /" : ""} {shortenText(route_crumb, 15)}
           </TextTag>
         </Link>
@@ -73,7 +73,7 @@ export default function BreadCrumbs({}: Props) {
 
         return (
           <Link key={crumb + i} href={String(currentLink)}>
-            <TextTag cursor='pointer'>
+            <TextTag className="cursor-pointer">
               / {crumb}
             </TextTag>
           </Link>

@@ -60,22 +60,18 @@ function _GridFileCard({
         <DivCard className="mt-[5px]">
           <TextTag
             title={file.name}
-            className="font-[500]"
-            weight="500"
-            size="0.9rem"
-            margin="0"
-            no_white_space
+            className="font-[500] text-[0.9rem] m-0 whitespace-nowrap"
           >
             {shortenText(file.name, FILE_FOLDER_MAX_NAME_LENGTH)}
           </TextTag>
         </DivCard>
 
         <DivCard className="mt-[10px] w-full gap-[5px]">
-          <TextTag color_type="grayed" size="0.75rem" no_white_space>
+          <TextTag className="text-app_text_grayed text-[0.75rem] whitespace-nowrap">
             {file.extension}
           </TextTag>
 
-          <TextTag color_type="grayed" size="0.75rem" no_white_space>
+          <TextTag className="text-app_text_grayed text-[0.75rem] whitespace-nowrap">
             {file.capacity.size}
           </TextTag>
         </DivCard>
@@ -103,20 +99,17 @@ function _ListFileCard({
       <DivCard className="mb-[10px]">
         <TextTag
           title={file.name}
-          weight="500"
-          size="0.9rem"
-          margin="0"
-          no_white_space
+          className="font-[500] text-[0.9rem] m-0 whitespace-nowrap"
         >
           {shortenText(file.name, FILE_FOLDER_MAX_NAME_LENGTH + 14)}
         </TextTag>
 
         <DivCard className="w-full justify-start gap-[5px]">
-          <TextTag color_type="grayed" size="0.75rem" no_white_space>
+          <TextTag className="text-app_text_grayed text-[0.75rem] whitespace-nowrap">
             {file.extension}
           </TextTag>
 
-          <TextTag color_type="grayed" size="0.75rem" no_white_space>
+          <TextTag className="text-app_text_grayed text-[0.75rem] whitespace-nowrap">
             {file.capacity.size}
           </TextTag>
         </DivCard>

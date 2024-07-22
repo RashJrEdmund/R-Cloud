@@ -29,9 +29,9 @@ export default function UsedSpaceDisplay({
     <DivCard
       className={cn("flex-col items-start justify-start", `w-[${width}]`)}
     >
-      <TextTag size="0.9rem">
+      <TextTag className="text-[0.9rem]">
         Used space
-        <TextTag color_type="success">
+        <TextTag className="text-app_text_blue">
           {calculatePercentage(
             userProfile?.plan.used_bytes,
             userProfile?.plan.bytes

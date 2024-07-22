@@ -55,7 +55,7 @@ const generateColor = (text: IColor) => {
   }
 };
 
-const TextTag = styled.span<Props>`
+const _TextTag = styled.span<Props>`
   visibility: ${({ visibility = "visible" }) => visibility};
   width: ${({ width = "fit-content" }) => width};
   min-width: ${({ min_width = "unset" }) => min_width};
@@ -120,4 +120,25 @@ const TextTag = styled.span<Props>`
   }
 `;
 
-export default TextTag;
+import { ComponentProps } from "react";
+import { cn } from "@/core/lib/utils";
+
+interface DivCardProps extends ComponentProps<"span"> {
+  as?: keyof JSX.IntrinsicElements;
+}
+
+export default function TextTag({
+  className,
+  as: Tag = "span",
+  ...restProps
+}: DivCardProps) {
+  return (
+    <Tag
+      {...(restProps as {})}
+      className={cn(
+        "w-fit h-fit font-[400] text-[1rem] text-[inherit] flex items-center justify-center gap-[3px] mx-[0.25px] p-0",
+        className
+      )}
+    />
+  );
+}

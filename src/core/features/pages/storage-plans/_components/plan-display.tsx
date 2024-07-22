@@ -28,10 +28,10 @@ export default async function PlanDisplay({}: Props) {
     <DivCard className="w-full flex-col">
       <DivCard as="section" className="mx-auto mb-8">
         <TextTag as="h2">
-          <TextTag weight="600" size="1.25rem" color_type="success">
+          <TextTag className="font-semibold text-[1.25rem] text-app_text_blue">
             R-Cloud
           </TextTag>
-          <TextTag weight="600" size="1.25rem">
+          <TextTag className="font-semibold text-[1.25rem]">
             Plans and pricing
           </TextTag>
         </TextTag>

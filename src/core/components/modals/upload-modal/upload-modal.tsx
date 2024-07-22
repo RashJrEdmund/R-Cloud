@@ -47,14 +47,14 @@ export default function UploadModal({
     >
       <TextTag>
         You&apos;ve selected
-        <TextTag color_type="success">
+        <TextTag className="text-app_text_blue">
           {selectedFiles.length} file{selectedFiles.length > 0 ? "s" : ""}
         </TextTag>
       </TextTag>
 
       <TextTag>
         Total upload size{" "}
-        <TextTag color_type="success">
+        <TextTag className="text-app_text_blue">
           {getSizeFromBytes(Number(uploadDetails?.total_size ?? 0)).merged}
         </TextTag>
       </TextTag>
@@ -66,7 +66,7 @@ export default function UploadModal({
               uploading {currentUploadIndx + 1} / {selectedFiles.length}
             </TextTag>
 
-            <TextTag color_type="success">
+            <TextTag className="text-app_text_blue">
               {progress[currentUploadIndx].toFixed(1) + " %"}
             </TextTag>
           </DivCard>

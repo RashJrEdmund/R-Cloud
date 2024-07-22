@@ -72,34 +72,34 @@ export default function ProfileDisplay({}: Props) {
             {!loading || currentUser ? (
               <>
                 <div className="flex flex-col">
-                  <TextTag size="0.9rem" no_white_space>
+                  <TextTag className="text-[0.9rem] whitespace-nowrap">
                     Logged In as:
                   </TextTag>
-                  <TextTag color_type="success">
+                  <TextTag className="text-app_text_blue">
                     {currentUser?.username}
                   </TextTag>
                 </div>
 
                 <div className="flex flex-col">
-                  <TextTag size="0.9rem" no_white_space>
+                  <TextTag className="text-[0.9rem] whitespace-nowrap">
                     Current Plan
                   </TextTag>
-                  <TextTag color_type="success">
+                  <TextTag className="text-app_text_blue">
                     {userProfile?.plan.label || "---"}
                   </TextTag>
                 </div>
 
                 <div className="flex flex-col gap-[7px]">
-                  <TextTag size="0.9rem" no_white_space>
+                  <TextTag className="text-[0.9rem] whitespace-nowrap">
                     Plan Capacity
                   </TextTag>
 
                   <DivCard className="flex-wrap justify-start">
-                    <TextTag no_white_space color_type="success">
+                    <TextTag className="text-app_text_blue whitespace-nowrap">
                       {userProfile?.plan.capacity} at
                     </TextTag>
 
-                    <TextTag no_white_space color_type="success">
+                    <TextTag className="text-app_text_blue whitespace-nowrap">
                       {userProfile?.plan.rate}(
                       {userProfile?.plan.is_free ? "Free" : "Paid"} Tier)
                     </TextTag>
@@ -107,7 +107,7 @@ export default function ProfileDisplay({}: Props) {
                 </div>
               </>
             ) : (
-              <TextTag no_white_space>getting profile...</TextTag>
+              <TextTag className="whitespace-nowrap">getting profile...</TextTag>
             )}
           </DivCard>
 
@@ -118,26 +118,26 @@ export default function ProfileDisplay({}: Props) {
           <UsedSpaceDisplay userProfile={userProfile} />
 
           <DivCard className="w-full flex-col items-start justify-start">
-            <TextTag size="0.9rem">
+            <TextTag className="text-[0.9rem]">
               username
-              <TextTag color_type="success">{currentUser?.username}</TextTag>
+              <TextTag className="text-app_text_blue">{currentUser?.username}</TextTag>
             </TextTag>
 
-            <TextTag size="0.9rem">
+            <TextTag className="text-[0.9rem]">
               email
-              <TextTag color_type="success">{currentUser?.email}</TextTag>
+              <TextTag className="text-app_text_blue">{currentUser?.email}</TextTag>
             </TextTag>
 
-            <TextTag size="0.9rem">
+            <TextTag className="text-[0.9rem]">
               Phone Number
-              <TextTag color_type="success">
+              <TextTag className="text-app_text_blue">
                 {currentUser?.phone_number || "None Provided"}
               </TextTag>
             </TextTag>
 
-            <TextTag size="0.9rem">
+            <TextTag className="text-[0.9rem]">
               Last Log in
-              <TextTag color_type="success">{LastLogin}</TextTag>
+              <TextTag className="text-app_text_blue">{LastLogin}</TextTag>
             </TextTag>
           </DivCard>
         </DivCard>

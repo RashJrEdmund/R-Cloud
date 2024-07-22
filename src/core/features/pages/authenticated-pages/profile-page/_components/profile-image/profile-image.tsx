@@ -75,7 +75,7 @@ export default function ProfileImage({}: Props) {
           className="max-h-[300px] min-w-[300px] object-cover"
         />
 
-        <TextTag no_white_space cursor="pointer" position="relative">
+        <TextTag className="relative cursor-pointer whitespace-nowrap">
           <label htmlFor="image-upload-field" className="image-upload-label">
             <input
               value="" // to not allow the name of the file from block the immediate selection of the same prev file.

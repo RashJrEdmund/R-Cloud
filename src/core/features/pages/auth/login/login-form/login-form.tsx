@@ -16,12 +16,13 @@ import { handleCreateUserProfile } from "../../auth-helpers";
 import { validateLoginForm } from "../../services/form-validations";
 import type { MouseEventHandler } from "react";
 import type { FieldErrors } from "../../services/form-validations/form-interfaces";
+import { cn } from "@/core/lib/utils";
 
 interface Props {
   //
 }
 
-export default function LoginForm({}: Props) {
+export default function LoginForm({ }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<FieldErrors | null>(null);
   const [formStatus, setFormStatus] = useState<{
@@ -89,20 +90,21 @@ export default function LoginForm({}: Props) {
 
   return (
     <FormWrapper img_url="login-img.svg" formAction={loginFormAction}>
-      <TextTag as="h1" size="2rem" weight="600">
+      <TextTag as="h1" className="font-semibold text-[2rem]">
         Log In
       </TextTag>
 
-      <TextTag as="p" color_type="grayed" text_align="left">
+      <TextTag as="p" className="text-app_text_grayed text-left">
         Please login to continue to your account
       </TextTag>
 
       {formStatus ? (
         <TextTag
           as="p"
-          color_type={formStatus.status === 200 ? "success" : "error"}
-          text_align="left"
-          size="0.9rem"
+          className={cn(
+            "text-left text-[0.9rem]",
+            formStatus.status === 2000 ? "text-app_text_blue" : "text-app_error"
+          )}
         >
           {formStatus.message}
         </TextTag>
@@ -159,10 +161,10 @@ export default function LoginForm({}: Props) {
         />
       </Button>
 
-      <TextTag color_type="grayed" margin="10px auto" sx="align-self: center;">
+      <TextTag className="text-app_text_grayed mx-auto my-[10px] self-center sm:self-auto">
         Don&apos;t have an account?
         <Link href="/signup">
-          <TextTag color_type="success" cursor="pointer">
+          <TextTag className="text-app_text_blue cursor-pointer">
             Create One
           </TextTag>
         </Link>

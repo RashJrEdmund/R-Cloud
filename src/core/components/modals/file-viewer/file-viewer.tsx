@@ -120,17 +120,7 @@ export default function FileViewer() {
 
         {currenFile ? (
           <TextTag
-            className="file-info"
-            color_type="invert"
-            size="1rem"
-            weight="500"
-            position="absolute"
-            z_index="6"
-            top="0"
-            left="50%"
-            transform="translateX(-50%)"
-            margin="10px 0"
-            media_sx="position: unset; transform: unset;"
+            className="file-info md:absolute top-0 left-1/2 z-[6] md:-translate-x-1/2 text-app_text_invert text-[1rem] font-[500] m-0 mt-[10px]"
           >
             {currenFile?.name}
           </TextTag>

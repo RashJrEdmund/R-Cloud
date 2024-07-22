@@ -2,7 +2,7 @@ export { default as Button } from "./Button";
 
 export { default as DivCard } from "./div-card";
 
-export { default as TextTag } from "./TextTag";
+export { default as TextTag } from "./text-tag";
 
 export { default as TextLogo } from "./text-logo";
 

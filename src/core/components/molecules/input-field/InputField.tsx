@@ -10,6 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { cn } from "@/core/lib/utils";
 
 const { colors: COLORS } = THEME_PALETTE;
 
@@ -85,16 +86,17 @@ export default function InputField({
   return (
     <StyledInput>
       <TextTag
-        className={`title ${active ? "active" : ""}`}
-        color_type={active ? "normal" : "normal"}
+        className={cn(
+          "cursor-text",
+          `title ${active ? "active" : ""}`
+        )}
         onClick={() => inputRef.current?.focus()}
-        cursor="text"
       >
         {field_title}
       </TextTag>
 
       {error ? (
-        <TextTag className="error-message" color_type="error" cursor="text">
+        <TextTag className="error-message text-app_error cursor-text">
           {error}
         </TextTag>
       ) : null}

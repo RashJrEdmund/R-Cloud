@@ -56,21 +56,14 @@ export default function StoragePlan({ plan }: Props) {
     <DivCard className="relative mx-auto w-[min(100%,_85vw)] flex-col gap-4 rounded-[5px] border border-app_border bg-app_white px-6 pb-12 pt-8 duration-300 hover:shadow">
       {plan.is_free ? (
         <TextTag
-          position="absolute"
-          top="0"
-          left="0"
-          size="0.9rem"
-          margin="15px"
+          className="absolute top-0 left-0 text-[0.9rem] m-[15px]"
         >
           free
         </TextTag>
       ) : null}
 
       <TextTag
-        color_type="success"
-        weight="600"
-        size="1.75rem"
-        media_size="1.5rem"
+        className="text-app_text_blue font-semibold text-[1.5rem]  md:text-[1.75rem]"
       >
         {plan.label}
       </TextTag>
@@ -84,11 +77,11 @@ export default function StoragePlan({ plan }: Props) {
       />
 
       <DivCard className="w-full flex-col gap-[10px]">
-        <TextTag size="2rem" weight="600">
+        <TextTag className="text-[2rem] font-semibold">
           {plan.capacity}
         </TextTag>
 
-        <TextTag size="0.9rem">{plan.rate}</TextTag>
+        <TextTag className="text-[0.9rem]">{plan.rate}</TextTag>
       </DivCard>
 
       {currentUser && userProfile && userProfile.plan.id === plan.id ? (

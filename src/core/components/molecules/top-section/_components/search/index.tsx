@@ -1,6 +1,6 @@
 "use client";
 
-import { DivCard, TextField, TextTag } from "@/components/atoms";
+import { DivCard, TextField } from "@/components/atoms";
 import { useEffect, useRef, useState } from "react";
 import type { ChangeEvent, FormEvent, LegacyRef } from "react";
 

@@ -16,12 +16,13 @@ import { handleCreateUserProfile } from "../../auth-helpers";
 
 import type { MouseEventHandler } from "react";
 import type { FieldErrors } from "../../services/form-validations/form-interfaces";
+import { cn } from "@/core/lib/utils";
 
 interface Props {
   //
 }
 
-export default function SignUpForm({}: Props) {
+export default function SignUpForm({ }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<FieldErrors | null>(null);
   const [formStatus, setFormStatus] = useState<{
@@ -88,20 +89,21 @@ export default function SignUpForm({}: Props) {
 
   return (
     <FormWrapper img_url="signup-img.svg" formAction={signUpFormAction}>
-      <TextTag as="h1" size="2rem" weight="600">
+      <TextTag as="h1" className="font-semibold text-[2rem]">
         Create Account
       </TextTag>
 
-      <TextTag as="p" color_type="grayed" text_align="left">
+      <TextTag as="p" className="text-app_text_grayed text-left">
         Create an account to get started
       </TextTag>
 
       {formStatus ? (
         <TextTag
           as="p"
-          color_type={formStatus.status === 200 ? "success" : "error"}
-          text_align="left"
-          size="0.9rem"
+          className={cn(
+            "text-left text-[0.9rem]",
+            formStatus.status === 2000 ? "text-app_text_blue" : "text-app_error"
+          )}
         >
           {formStatus.message}
         </TextTag>
@@ -168,10 +170,10 @@ export default function SignUpForm({}: Props) {
         />
       </Button>
 
-      <TextTag color_type="grayed" margin="10px auto" sx="align-self: center;">
+      <TextTag className="text-app_text_grayed mx-auto my-[10px] self-center sm:self-auto">
         Already have an account ??
         <Link href="/login">
-          <TextTag color_type="success" cursor="pointer">
+          <TextTag className="text-app_text_blue cursor-pointer">
             Sign In
           </TextTag>
         </Link>

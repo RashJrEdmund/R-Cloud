@@ -42,7 +42,9 @@ export default function TextLogo({
       ) : null}
 
       <span className={cn("whitespace-nowrap", sxTextClassName)}>
-        R - Cloud
+        {
+          showLogo ? "Cloud" : "R - Cloud"
+        }
       </span>
     </span>
   );

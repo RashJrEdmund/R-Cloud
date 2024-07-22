@@ -64,7 +64,7 @@ const config = {
         app_text_white: "var(--app_text_white)",
         app_border: "var(--app_border)",
         app_border_thick: "var(--app_border_thick)",
-        app_border_error: "var(--app_border_error)",
+        app_error: "var(--app_error)",
 
         app_bg: "var(--app_bg)",
         app_bg_light: "var(--app_bg_light)",

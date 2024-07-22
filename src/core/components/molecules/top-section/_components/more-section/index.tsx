@@ -101,7 +101,7 @@ export default function MoreSection({}: Props) {
     <DivCard className="relative">
       {" "}
       {/* This relative positioning is for the ContextMenu */}
-      <TextTag cursor="pointer" onClick={toggleModal}>
+      <TextTag className="cursor-pointer" onClick={toggleModal}>
         <Image
           src={CONTEXT_MENU_ICONS.more}
           alt="Show more"

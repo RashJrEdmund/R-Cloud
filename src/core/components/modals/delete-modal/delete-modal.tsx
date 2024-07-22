@@ -72,32 +72,32 @@ export default function DeleteModal({ deleteModalRef, document }: Props) {
       confirmAction={handleDeleteDocument}
     >
       <DivCard className="w-full flex-col items-start justify-start gap-3">
-        <TextTag text_align="left">
+        <TextTag className="text-left">
           Are you sure you want to delete this {doc_type}
         </TextTag>
 
         {document?.type === "FOLDER" && Number(document?.capacity.bytes) > 0 ? (
-          <TextTag color_type="error" text_align="left">
+          <TextTag className="text-left text-app_error">
             Deleting this folder will delete all it&apos;s content
           </TextTag>
         ) : null}
 
-        <TextTag text_align="left">
+        <TextTag className="text-left">
           name:
-          <TextTag color_type="success">{document?.name}</TextTag>
+          <TextTag className="text-app_text_blue">{document?.name}</TextTag>
         </TextTag>
 
         {document?.type === "FILE" ? (
-          <TextTag text_align="left">
+          <TextTag className="text-left">
             size:
-            <TextTag color_type="success" text_align="left">
+            <TextTag className="text-left text-app_text_blue">
               {document?.capacity.size}
             </TextTag>
           </TextTag>
         ) : (
-          <TextTag text_align="left">
+          <TextTag className="text-left">
             Capacity:
-            <TextTag color_type="success">
+            <TextTag className="text-app_text_blue">
               {Number(document?.capacity.bytes) <= 0
                 ? "Empty"
                 : document?.capacity.size}

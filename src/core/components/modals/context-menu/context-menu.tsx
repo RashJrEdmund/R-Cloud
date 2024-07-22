@@ -51,8 +51,7 @@ function ContextMenu(
       {content.map(({ text, icon_url, action }) => (
         <TextTag
           key={text}
-          no_white_space
-          cursor="pointer"
+          className="whitespace-nowrap cursor-pointer"
           onClick={() => action()}
         >
           <Image

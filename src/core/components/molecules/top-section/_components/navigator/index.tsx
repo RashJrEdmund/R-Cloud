@@ -20,11 +20,11 @@ export default function Navigator({}: Props) {
 
   return (
     <DivCard className="gap-4 self-start">
-      <TextTag cursor="pointer" no_white_space onClick={goBack}>
+      <TextTag className="cursor-pointer whitespace-nowrap" onClick={goBack}>
         &lt;-
       </TextTag>
 
-      <TextTag cursor="pointer" no_white_space onClick={goFoward}>
+      <TextTag className="cursor-pointer whitespace-nowrap" onClick={goFoward}>
         -&gt;
       </TextTag>
     </DivCard>

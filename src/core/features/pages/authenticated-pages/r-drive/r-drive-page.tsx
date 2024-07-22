@@ -20,7 +20,7 @@ export default function RDrivePage({}: Props) {
   return (
     <MainTag>
       <TopSection hide_search_section />
-      <TextTag as="h2" weight="600" no_white_space>
+      <TextTag as="h2" className="font-semibold whitespace-nowrap">
         My R - Drive
       </TextTag>
 

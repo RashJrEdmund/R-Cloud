@@ -13,7 +13,7 @@
 
   --app_border: #59575757;
   --app_border_thick: #000;
-  --app_border_error: red;
+  --app_error: red;
 
   --app_bg: #f9f9f9;
   --app_bg_light: #d9d9d9;
@@ -107,7 +107,7 @@
 }
 
 body {
-  background-color: var(--bg);
+  background-color: var(--app_bg);
 }
 
 input:focus,

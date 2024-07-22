@@ -8,7 +8,7 @@ function MainTag({ className, ...restProps }: MainProps) {
     <main
       {...restProps}
       className={cn(
-        "mx-auto flex min-h-main_min_height w-full flex-col rounded-[4px] bg-blue-200 pb-[2rem] pt-[2.5rem] sm:pt-[4rem]",
+        "mx-auto flex min-h-main_min_height w-full flex-col rounded-[4px] pb-[2rem] pt-[2.5rem] sm:pt-[4rem]",
         className
       )}
     />

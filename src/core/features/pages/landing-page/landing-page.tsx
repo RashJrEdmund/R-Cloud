@@ -8,14 +8,11 @@ export default function LandingPage({}: Props) {
     <MainTag className="justify-center">
       <DivCard as="section" className="mx-auto mt-8">
         <TextTag as="h1">
-          <TextTag no_white_space weight="600" size="1.25rem">
+          <TextTag className="text-[1.25rem] font-semibold whitespace-nowrap">
             Welcome to
           </TextTag>
           <TextTag
-            no_white_space
-            weight="600"
-            size="1.25rem"
-            color_type="success"
+            className="font-semibold text-[1.25rem] text-app_text_blue"
           >
             R Cloud
           </TextTag>
