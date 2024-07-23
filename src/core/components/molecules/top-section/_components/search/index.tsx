@@ -51,7 +51,7 @@ export default function Search({}: Props) {
     <DivCard as="search" media_sx="display: none;">
       <DivCard
         as="form"
-        className="relative w-[min(300px,_97vw)] rounded-[10px] border border-app_border"
+        className="relative w-[min(300px,_91vw)] rounded-[10px] border border-app_border"
         onSubmit={handleSubmit}
       >
         <TextField

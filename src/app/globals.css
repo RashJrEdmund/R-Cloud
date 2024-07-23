@@ -32,7 +32,7 @@
   --app_box_shadow: 0 0 10px #00000079;
 
   /* DIMENSIONS */
-  --primary_app_width: min(97vw, 1450px);
+  --primary_app_width: min(91vw, 1450px);
   --secondary_app_width: min(100%, 1200px);
   --tertiary_app_width: min(100%, 1000px);
   /* Mainly used in the storage plans section */

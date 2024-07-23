@@ -32,7 +32,7 @@ export default function RelativeModal({
   return showModal ? (
     <DivCard
       className={cn(
-        "min-h-[170px] min-w-[min(97vw,_200px)] flex-col items-start justify-start gap-3 bg-app_bg_grayed p-4 shadow",
+        "min-h-[170px] min-w-[min(91vw,_200px)] flex-col items-start justify-start gap-3 bg-app_bg_grayed p-4 shadow",
         sx
       )}
       tabIndex={1}

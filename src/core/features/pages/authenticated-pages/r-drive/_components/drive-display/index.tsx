@@ -34,7 +34,15 @@ export default function DriveDisplay({}: Props) {
   }, [currentUser, setUserProfile]);
 
   return (
-    <DivCard className="min-h-[70vh] w-full flex-col gap-4">
+    <DivCard className="w-full flex-col gap-4">
+      <DivCard className="w-full flex-col gap-4">
+        <UsedSpaceDisplay userProfile={userProfile} className="" />
+
+        <Button asChild variant="blued">
+          <Link href="/r-drive/root">Open Drive</Link>
+        </Button>
+      </DivCard>
+
       <Image
         src="/landing/my-r-drive.svg"
         alt="my-r-drive"
@@ -42,18 +50,6 @@ export default function DriveDisplay({}: Props) {
         height={500}
         draggable={false}
       />
-
-      <DivCard className="w-full flex-col gap-4">
-        <DivCard className="w-full flex-col flex-nowrap gap-[10px]">
-          <TextTag as="p">used space</TextTag>
-
-          <UsedSpaceDisplay userProfile={userProfile} className="" />
-        </DivCard>
-
-        <Button asChild variant="blued">
-          <Link href="/r-drive/root">Open Drive</Link>
-        </Button>
-      </DivCard>
     </DivCard>
   );
 }

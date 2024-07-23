@@ -99,7 +99,7 @@ function AppModalWrapper(
         {showModal ? (
           <DivCard
             className={cn(
-              "fixed left-1/2 top-1/2 z-10 min-h-[180px] w-[min(97vw,_400px)] -translate-x-1/2 -translate-y-1/2 flex-col items-start justify-between gap-4 rounded-[8px] bg-app_bg text-app_text",
+              "fixed left-1/2 top-1/2 z-10 min-h-[180px] w-[min(91vw,_400px)] -translate-x-1/2 -translate-y-1/2 flex-col items-start justify-between gap-4 rounded-[8px] bg-app_bg text-app_text",
               sxContainer
             )}
           >

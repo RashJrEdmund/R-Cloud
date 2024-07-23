@@ -58,7 +58,7 @@ export default function Viewer({ fileInView }: { fileInView: Document }) {
       {/* <object
             width='100%'
             height='100%'
-            style={{ minHeight: '80vh', width: 'min(95vw, 1000px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            style={{ minHeight: '80vh', width: 'min(91vw, 1000px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             data={fileInView?.download_url || ''}
           /> */}
     </>

@@ -22,7 +22,8 @@ function UsedSpaceShimmer() {
     <div className="flex w-[min(100%,_500px)] flex-col items-start justify-start gap-1">
       <Skeleton className="h-[1.2rem] w-full max-w-[120px]" />
 
-      <Skeleton className="h-[1.3rem] w-full rounded-[10px]" />
+      {/* <Skeleton className="h-[1.3rem] w-full rounded-[10px]" /> */}
+      <Skeleton className="h-[150px] w-full rounded-[10px]" />
     </div>
   );
 }
@@ -56,7 +57,7 @@ export default function UsedSpaceDisplay({ userProfile, className }: Props) {
       <ProgressBar
         show_usage_colors
         progress_in_percentage={usedSpaceVisualRep}
-        sx="w-full"
+        sx="w-full h-[150px]"
       />
     </DivCard>
   );

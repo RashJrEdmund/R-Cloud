@@ -6,10 +6,10 @@ interface Props {}
 
 export default function RDrivePage({}: Props) {
   return (
-    <MainTag className="w-primary_app_width">
+    <MainTag className="w-primary_app_width justify-start">
       <TopSection hide_search_section />
 
-      <TextTag as="h2" className="whitespace-nowrap font-semibold">
+      <TextTag as="h2" className="mb-4 whitespace-nowrap font-semibold">
         My R - Drive
       </TextTag>
 

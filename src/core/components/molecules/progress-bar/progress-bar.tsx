@@ -22,21 +22,19 @@ export default function ProgressBar({
 
   show_usage_colors = false,
 }: Props) {
-  const APP_COLOR = useMemo(() => THEME_PALETTE.colors, []);
-
-  const [color, setColor] = useState<string>(APP_COLOR.app_blue);
+  const [bgColor, setBgColor] = useState<string>("bg-app_blue");
 
   useEffect(() => {
     if (show_usage_colors) {
       if (progress_in_percentage <= 50) {
-        setColor(APP_COLOR.app_blue);
+        setBgColor("bg-app_blue");
       } else if (progress_in_percentage <= 75) {
-        setColor(APP_COLOR.orange);
+        setBgColor("bg-app_orange");
       } else {
-        setColor(APP_COLOR.border_error);
+        setBgColor("bg-app_error");
       }
     }
-  }, [show_usage_colors, progress_in_percentage, APP_COLOR]);
+  }, [show_usage_colors, progress_in_percentage]);
 
   return (
     <DivCard
@@ -48,7 +46,8 @@ export default function ProgressBar({
       <DivCard
         className={cn(
           "absolute left-0 top-0 h-full rounded-[10px]",
-          `w-[${progress_in_percentage}%] bg-[${color}]` /* eg 95% */,
+          `w-[${progress_in_percentage}%] ${bgColor}` /* eg 95% */,
+          "w-[20%]",
           sxInner
         )}
       />

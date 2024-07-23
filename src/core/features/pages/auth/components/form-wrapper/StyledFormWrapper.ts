@@ -7,8 +7,8 @@ const StyledFormWrapper = styled.section`
   ${flex_template}
   justify-content: space-between;
   width: fit-content;
-  min-width: min(97vw, 1000px);
-  max-width: 97vw;
+  min-width: min(91vw, 1000px);
+  max-width: 91vw;
 
   .form {
     ${flex_template}
