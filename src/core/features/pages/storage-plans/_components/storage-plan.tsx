@@ -8,7 +8,7 @@ import Image from "next/image";
 import type { StoragePlan } from "@/core/interfaces/entities";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { BadgeCheck } from "lucide-react";
+import { PlanBadge } from "./plan-badge";
 
 interface Props {
   plan: StoragePlan;
@@ -56,12 +56,7 @@ export default function StoragePlan({ plan }: Props) {
 
   return (
     <DivCard className="relative mx-auto w-[min(100%,_85vw)] flex-col gap-4 overflow-hidden rounded-[5px] border border-app_border bg-app_white px-6 pb-12 pt-8 duration-300 hover:shadow">
-      {plan.is_free ? (
-        <TextTag className="absolute left-[-45%] top-0 m-[15px] w-full rotate-[-45deg] bg-app_orange text-[0.9rem] text-app_text_white">
-          <BadgeCheck size={20} />
-          free
-        </TextTag>
-      ) : null}
+      <PlanBadge plan={plan} />
 
       <TextTag className="text-[1.5rem] font-semibold text-app_text_blue md:text-[1.75rem]">
         {plan.label}

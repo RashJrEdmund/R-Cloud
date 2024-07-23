@@ -162,6 +162,8 @@ export default function FilesFolderDisplay({}: Props) {
     };
   }, [handleFileUploadInputFieldData]);
 
+  return <FilesFolderShimmer displayLayout={displayLayout} />
+
   return (
     <>
       <DivCard

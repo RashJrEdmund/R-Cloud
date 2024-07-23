@@ -14,7 +14,7 @@ export default function CtaButtons({}: Props) {
         <Button
           asChild
           key={text}
-          className="whitespace-nowrap delay-300 duration-300 hover:scale-[1.1]"
+          className="whitespace-nowrap"
           variant={bt_bg}
           // min_width="140px"
         >

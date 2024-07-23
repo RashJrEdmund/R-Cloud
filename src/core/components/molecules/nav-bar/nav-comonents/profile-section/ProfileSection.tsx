@@ -12,10 +12,11 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { shortenText } from "@/core/utils/helpers";
 
-interface Props {}
+interface Props { }
 
-export default function ProfileSection({}: Props) {
+export default function ProfileSection({ }: Props) {
   const { currentUser } = useUserStore();
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
@@ -44,17 +45,22 @@ export default function ProfileSection({}: Props) {
       ) : (
         <DropdownMenu onOpenChange={setShowDropDown} open={showDropDown}>
           <DropdownMenuTrigger className="outline-none">
-            <TextTag>
+            <TextTag className="flex-col md:flex-row">
               <Image
                 src={profile_url}
                 alt="user profile image icon"
                 width={50}
                 height={50}
                 draggable={false}
-                className="h-[38px] w-[38px] rounded-full border border-gray-500 object-cover"
+                className="h-[35px] w-[35px] md:h-[38px] md:w-[38px] rounded-full border border-gray-500 object-cover"
               />
+
               <TextTag className="hidden md:inline">
                 {currentUser?.username}
+              </TextTag>
+
+              <TextTag className="md:hidden text-sm">
+                {shortenText(currentUser?.username + " rash eddie", 17)}
               </TextTag>
             </TextTag>
           </DropdownMenuTrigger>

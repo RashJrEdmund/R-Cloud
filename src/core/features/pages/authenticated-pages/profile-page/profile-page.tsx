@@ -6,7 +6,7 @@ interface Props {}
 
 export default function ProfilePage({}: Props) {
   return (
-    <MainTag>
+    <MainTag className="justify-start">
       <TopSection hide_search_section />
 
       <ProfileDisplay />
