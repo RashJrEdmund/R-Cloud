@@ -173,7 +173,7 @@ export default function FilesFolderDisplay({}: Props) {
         onDrop={handleDrop}
         onDragEnd={handleDragEnd}
       >
-        <TextTag className="text-app_text_grayed break-all">
+        <TextTag className="break-all text-app_text_grayed">
           {currentFolder === "root" ? "root" : currentFolder.name}
         </TextTag>
         {documents ? (
@@ -199,7 +199,10 @@ export default function FilesFolderDisplay({}: Props) {
             </StyledFileFolderDisplay>
           ) : (
             <DivCard className="min-h-[60vh] w-full">
-              <TextTag as="h3" className="font-semibold text-[2rem] text-app_text_grayed">
+              <TextTag
+                as="h3"
+                className="text-[2rem] font-semibold text-app_text_grayed"
+              >
                 Folder Is Empty
               </TextTag>
             </DivCard>

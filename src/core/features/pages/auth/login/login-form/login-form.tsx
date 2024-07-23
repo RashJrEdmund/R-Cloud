@@ -6,7 +6,8 @@ import {
   loginWithEmailAndPass,
   signInOrUpWithGooglePopup,
 } from "@/core/config/firebase";
-import { Button, TextTag } from "@/components/atoms";
+import { TextTag } from "@/components/atoms";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -22,7 +23,7 @@ interface Props {
   //
 }
 
-export default function LoginForm({ }: Props) {
+export default function LoginForm({}: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<FieldErrors | null>(null);
   const [formStatus, setFormStatus] = useState<{
@@ -90,11 +91,11 @@ export default function LoginForm({ }: Props) {
 
   return (
     <FormWrapper img_url="login-img.svg" formAction={loginFormAction}>
-      <TextTag as="h1" className="font-semibold text-[2rem]">
+      <TextTag as="h1" className="text-[2rem] font-semibold">
         Log In
       </TextTag>
 
-      <TextTag as="p" className="text-app_text_grayed text-left">
+      <TextTag as="p" className="text-left text-app_text_grayed">
         Please login to continue to your account
       </TextTag>
 
@@ -134,11 +135,12 @@ export default function LoginForm({ }: Props) {
 
       <Button
         type="submit"
-        bg="blued"
-        width="100%"
-        padding="7px 0"
+        variant="blued"
+        className={cn(
+          "w-full p-[7px_0]",
+          loading ? "cursor-not-allowed" : "cursor-pointer"
+        )}
         disabled={loading}
-        cursor={loading ? "not-allowed" : "pointer"}
       >
         {loading ? "loading..." : "Sign In"}
       </Button>
@@ -146,10 +148,9 @@ export default function LoginForm({ }: Props) {
       <FormOrSeparator />
 
       <Button
+        className="w-full p-[7px_0]"
         type="button"
-        bg="light"
-        width="100%"
-        padding="7px 0"
+        variant="light"
         onClick={handleGoogleLogin}
       >
         Sign in with Google
@@ -161,10 +162,10 @@ export default function LoginForm({ }: Props) {
         />
       </Button>
 
-      <TextTag className="text-app_text_grayed mx-auto my-[10px] self-center sm:self-auto">
+      <TextTag className="mx-auto my-[10px] self-center text-app_text_grayed sm:self-auto">
         Don&apos;t have an account?
         <Link href="/signup">
-          <TextTag className="text-app_text_blue cursor-pointer">
+          <TextTag className="cursor-pointer text-app_text_blue">
             Create One
           </TextTag>
         </Link>

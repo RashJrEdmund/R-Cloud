@@ -47,19 +47,19 @@ function _GridFolderCard({
 
       <DivCard className="flex-col items-start">
         <DivCard className="mt-[5px]">
-          <TextTag title={folder.name} className="font-[500] text-[0.9rem] m-0">
+          <TextTag title={folder.name} className="m-0 text-[0.9rem] font-[500]">
             {shortenText(folder.name, FILE_FOLDER_MAX_NAME_LENGTH)}
           </TextTag>
         </DivCard>
 
         <DivCard className="mt-[10px] w-full justify-start gap-[5px]">
-          <TextTag className="text-app_text_grayed text-[0.75rem] whitespace-nowrap">
+          <TextTag className="whitespace-nowrap text-[0.75rem] text-app_text_grayed">
             {folderLength > 0
               ? folderLength + ` item${folderLength > 1 ? "s" : ""}`
               : "Empty"}
           </TextTag>
 
-          <TextTag className="text-app_text_grayed text-[0.75rem] whitespace-nowrap">
+          <TextTag className="whitespace-nowrap text-[0.75rem] text-app_text_grayed">
             {folderLength > 0 ? folder.capacity.size : null}
           </TextTag>
         </DivCard>
@@ -93,19 +93,19 @@ function _ListFolderCard({
         <DivCard className="mb-[10px]">
           <TextTag
             title={folder.name}
-            className="font-[500] text-[0.9rem] whitespace-nowrap"
+            className="whitespace-nowrap text-[0.9rem] font-[500]"
           >
             {shortenText(folder.name, FILE_FOLDER_MAX_NAME_LENGTH + 14)}
           </TextTag>
 
           <DivCard className="w-full justify-start gap-[5px]">
-            <TextTag className="text-app_text_grayed text-[0.75rem] whitespace-nowrap">
+            <TextTag className="whitespace-nowrap text-[0.75rem] text-app_text_grayed">
               {folderLength > 0
                 ? folderLength + ` item${folderLength > 1 ? "s" : ""}`
                 : "Empty"}
             </TextTag>
 
-            <TextTag className="text-app_text_grayed text-[0.75rem] whitespace-nowrap">
+            <TextTag className="whitespace-nowrap text-[0.75rem] text-app_text_grayed">
               {folderLength > 0 ? folder.capacity.size : null}
             </TextTag>
           </DivCard>

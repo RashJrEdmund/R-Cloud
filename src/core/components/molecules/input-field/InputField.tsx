@@ -86,17 +86,14 @@ export default function InputField({
   return (
     <StyledInput>
       <TextTag
-        className={cn(
-          "cursor-text",
-          `title ${active ? "active" : ""}`
-        )}
+        className={cn("cursor-text", `title ${active ? "active" : ""}`)}
         onClick={() => inputRef.current?.focus()}
       >
         {field_title}
       </TextTag>
 
       {error ? (
-        <TextTag className="error-message text-app_error cursor-text">
+        <TextTag className="error-message cursor-text text-app_error">
           {error}
         </TextTag>
       ) : null}

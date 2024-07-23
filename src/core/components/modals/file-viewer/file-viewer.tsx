@@ -119,9 +119,7 @@ export default function FileViewer() {
         ) : null}
 
         {currenFile ? (
-          <TextTag
-            className="file-info md:absolute top-0 left-1/2 z-[6] md:-translate-x-1/2 text-app_text_invert text-[1rem] font-[500] m-0 mt-[10px]"
-          >
+          <TextTag className="file-info left-1/2 top-0 z-[6] m-0 mt-[10px] text-[1rem] font-[500] text-app_text_invert md:absolute md:-translate-x-1/2">
             {currenFile?.name}
           </TextTag>
         ) : null}

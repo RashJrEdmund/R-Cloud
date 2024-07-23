@@ -1,6 +1,7 @@
 "use client";
 
 import { DivCard, TextTag } from "@/components/atoms";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { logOut } from "@/core/config/firebase";
 import { useDocStore, useUserStore } from "@/providers/stores/zustand";
 import { useRouter } from "next/navigation";
@@ -10,9 +11,7 @@ interface Props {
   setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function ProfileDropDown({
-  setShowDropDown,
-}: Props) {
+export default function ProfileDropDown({ setShowDropDown }: Props) {
   const { setCurrentUser } = useUserStore();
   const { setDocuments } = useDocStore();
   const router = useRouter();
@@ -51,9 +50,7 @@ export default function ProfileDropDown({
   }, [router]);
 
   return (
-    <DivCard
-      className="min-w-[150px] flex-col items-start gap-4 rounded-[8px] bg-app_white p-[1rem_1rem_10px_10px]"
-    >
+    <DivCard className="min-w-[150px] flex-col items-start gap-4 rounded-[8px] bg-app_white p-[1rem_1rem_10px_10px]">
       {DROP_DOWN_CONTENT.map(({ text, action }) => (
         <TextTag
           key={text}
@@ -68,4 +65,4 @@ export default function ProfileDropDown({
       ))}
     </DivCard>
   );
-};
+}

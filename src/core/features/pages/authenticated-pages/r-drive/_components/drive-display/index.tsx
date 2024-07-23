@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { Button, DivCard, TextTag } from "@/components/atoms";
+import { DivCard, TextTag } from "@/components/atoms";
+import { Button } from "@/components/ui/button";
 import { UsedSpaceDisplay } from "@/components/molecules";
 import Link from "next/link";
 import Image from "next/image";
@@ -46,14 +47,11 @@ export default function DriveDisplay({}: Props) {
         <DivCard className="w-full flex-col flex-nowrap gap-[10px]">
           <TextTag as="p">used space</TextTag>
 
-          <UsedSpaceDisplay
-            userProfile={userProfile}
-            width="min(100%, 400px)"
-          />
+          <UsedSpaceDisplay userProfile={userProfile} className="" />
         </DivCard>
 
-        <Button as={Link} href="/r-drive/root" bg="blued">
-          Open Drive
+        <Button asChild variant="blued">
+          <Link href="/r-drive/root">Open Drive</Link>
         </Button>
       </DivCard>
     </DivCard>

@@ -1,6 +1,7 @@
 "use client";
 
-import { Button, DivCard, TextTag } from "@/components/atoms";
+import { DivCard, TextTag } from "@/components/atoms";
+import { Button } from "@/components/ui/button";
 import { useUserStore } from "@/providers/stores/zustand";
 import Image from "next/image";
 
@@ -55,16 +56,12 @@ export default function StoragePlan({ plan }: Props) {
   return (
     <DivCard className="relative mx-auto w-[min(100%,_85vw)] flex-col gap-4 rounded-[5px] border border-app_border bg-app_white px-6 pb-12 pt-8 duration-300 hover:shadow">
       {plan.is_free ? (
-        <TextTag
-          className="absolute top-0 left-0 text-[0.9rem] m-[15px]"
-        >
+        <TextTag className="absolute left-0 top-0 m-[15px] text-[0.9rem]">
           free
         </TextTag>
       ) : null}
 
-      <TextTag
-        className="text-app_text_blue font-semibold text-[1.5rem]  md:text-[1.75rem]"
-      >
+      <TextTag className="text-[1.5rem] font-semibold text-app_text_blue md:text-[1.75rem]">
         {plan.label}
       </TextTag>
 
@@ -77,19 +74,16 @@ export default function StoragePlan({ plan }: Props) {
       />
 
       <DivCard className="w-full flex-col gap-[10px]">
-        <TextTag className="text-[2rem] font-semibold">
-          {plan.capacity}
-        </TextTag>
+        <TextTag className="text-[2rem] font-semibold">{plan.capacity}</TextTag>
 
         <TextTag className="text-[0.9rem]">{plan.rate}</TextTag>
       </DivCard>
 
       {currentUser && userProfile && userProfile.plan.id === plan.id ? (
         <Button
-          width="100%"
-          bg={plan.is_free ? "black" : "blued"}
+          variant={plan.is_free ? "black" : "blued"}
+          className="w-full p-[10px]"
           title={"subscribe to plan: " + plan.label}
-          padding="10px"
           onClick={() => {
             toast.warning("Already subscribed to this plan");
           }}
@@ -98,10 +92,9 @@ export default function StoragePlan({ plan }: Props) {
         </Button>
       ) : (
         <Button
-          width="100%"
-          bg={plan.is_free ? "black" : "blued"}
+          variant={plan.is_free ? "black" : "blued"}
+          className="w-full p-[10px]"
           title={"subscribe to plan: " + plan.label}
-          padding="10px"
           onClick={() => handleNewSubscription(plan)}
         >
           {plan.is_free ? "Free Plan" : "Buy Plan"}

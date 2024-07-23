@@ -93,7 +93,9 @@ export default function BulkDeleteModal({
 
         <TextTag className="text-left">
           Files:
-          <TextTag className="text-app_text_blue">{selectedDocDetails.num_files}</TextTag>
+          <TextTag className="text-app_text_blue">
+            {selectedDocDetails.num_files}
+          </TextTag>
         </TextTag>
 
         <TextTag className="text-left">

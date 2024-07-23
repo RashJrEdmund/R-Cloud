@@ -8,7 +8,8 @@ import {
   useEffect,
 } from "react";
 import { ModalWrapperRef } from "..";
-import { Button, DivCard, Overlay } from "@/components/atoms";
+import { DivCard, Overlay } from "@/components/atoms";
+import { Button } from "@/components/ui/button";
 import { CONTEXT_MENU_ICONS } from "@/core/ui/icons";
 import { cn } from "@/core/lib/utils";
 
@@ -121,23 +122,27 @@ function AppModalWrapper(
             {use_base_btns_instead && (
               <DivCard className="mt-4 w-full justify-end gap-4">
                 <Button
-                  bg="error"
-                  radius="5px"
+                  variant="error"
+                  className={cn(
+                    // className="rounded-[5px]"
+                    isLoading ? "cursor-not-allowed" : "cursor-pointer"
+                  )}
                   onClick={cancelAction as MouseEventHandler<HTMLButtonElement>}
                   disabled={isLoading}
-                  cursor={isLoading ? "not-allowed" : "pointer"}
                 >
                   {cancelMsg || "Cancel"}
                 </Button>
 
                 <Button
-                  bg="blued"
-                  radius="5px"
+                  variant="blued"
+                  className={cn(
+                    // className="rounded-[5px]"
+                    isLoading ? "cursor-not-allowed" : "cursor-pointer"
+                  )}
                   onClick={
                     confirmAction as MouseEventHandler<HTMLButtonElement>
                   }
                   disabled={isLoading}
-                  cursor={isLoading ? "not-allowed" : "pointer"}
                 >
                   {isLoading ? loadingMsg : confirmMsg || "Confirm"}
                 </Button>

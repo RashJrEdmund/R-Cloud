@@ -10,24 +10,37 @@ import { useMemo } from "react";
 
 import type { UserProfile } from "@/core/interfaces/entities";
 import { cn } from "@/core/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Props {
   userProfile: UserProfile | null;
-  width?: string;
+  className?: string;
 }
 
-export default function UsedSpaceDisplay({
-  userProfile,
-  width = "min(100%, 500px)",
-}: Props) {
+function UsedSpaceShimmer() {
+  return (
+    <div className="flex w-[min(100%,_500px)] flex-col items-start justify-start gap-1">
+      <Skeleton className="h-[1.2rem] w-full max-w-[120px]" />
+
+      <Skeleton className="h-[1.3rem] w-full rounded-[10px]" />
+    </div>
+  );
+}
+
+export default function UsedSpaceDisplay({ userProfile, className }: Props) {
   const usedSpaceVisualRep = useMemo<number>(
     () => getUsedSpaceVisualRepresentation(userProfile),
     [userProfile]
   );
 
-  return userProfile ? (
+  return !userProfile ? (
+    <UsedSpaceShimmer />
+  ) : (
     <DivCard
-      className={cn("flex-col items-start justify-start", `w-[${width}]`)}
+      className={cn(
+        "w-[min(100%,_500px)] flex-col items-start justify-start",
+        className
+      )}
     >
       <TextTag className="text-[0.9rem]">
         Used space
@@ -43,8 +56,8 @@ export default function UsedSpaceDisplay({
       <ProgressBar
         show_usage_colors
         progress_in_percentage={usedSpaceVisualRep}
-        width="100%"
+        sx="w-full"
       />
     </DivCard>
-  ) : null;
+  );
 }

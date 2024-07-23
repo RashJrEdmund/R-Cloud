@@ -1,6 +1,7 @@
 "use client";
 
-import { TextTag, Button, DivCard } from "@/components/atoms";
+import { TextTag, DivCard } from "@/components/atoms";
+import { Button } from "@/components/ui/button";
 import { useUserStore } from "@/providers/stores/zustand";
 import { ChangeEventHandler, MouseEventHandler, useState } from "react";
 import StyledProfileImage from "./styled-profile-image";
@@ -8,6 +9,7 @@ import Image from "next/image";
 import { updateProfileImage } from "@/core/config/firebase";
 import type { User } from "@/core/interfaces/entities";
 import { toast } from "sonner";
+import { cn } from "@/core/lib/utils";
 
 interface Props {
   //
@@ -101,16 +103,22 @@ export default function ProfileImage({}: Props) {
       {preview ? (
         <DivCard className="gap-[10px]">
           <Button
-            bg="blued"
-            margin="5px 0 0"
+            variant="blued"
+            className={cn(
+              "m-[5px_0_0] w-full",
+              loading ? "cursor-not-allowed" : "cursor-pointer"
+            )}
             disabled={loading}
             onClick={handleFileUpload}
-            cursor={loading ? "not-allowed" : "pointer"}
           >
             {loading ? "uploading..." : "done"}
           </Button>
 
-          <Button bg="error" margin="5px 0 0" onClick={handleCancel}>
+          <Button
+            variant="error"
+            className="m-[5px_0_0]"
+            onClick={handleCancel}
+          >
             Cancel
           </Button>
         </DivCard>

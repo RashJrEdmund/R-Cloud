@@ -5,15 +5,13 @@ interface Props {}
 
 export default function LandingPage({}: Props) {
   return (
-    <MainTag className="justify-center">
+    <MainTag>
       <DivCard as="section" className="mx-auto mt-8">
         <TextTag as="h1">
-          <TextTag className="text-[1.25rem] font-semibold whitespace-nowrap">
+          <TextTag className="whitespace-nowrap text-[1.25rem] font-semibold">
             Welcome to
           </TextTag>
-          <TextTag
-            className="font-semibold text-[1.25rem] text-app_text_blue"
-          >
+          <TextTag className="text-[1.25rem] font-semibold text-app_text_blue">
             R Cloud
           </TextTag>
         </TextTag>

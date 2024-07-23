@@ -1,5 +1,5 @@
 import { DivCard, TextTag } from "@/components/atoms";
-import { LANDING_ILLUSTRATION_CONTENT } from "@/features/pages/ui-constants";
+import { LANDING_ILLUSTRATION_CONTENT } from "../landing-ui-constants";
 import Image from "next/image";
 import { StyledIllustrations } from "./styled-illustration";
 
@@ -11,11 +11,7 @@ export default function Illustrations({}: Props) {
   return (
     <StyledIllustrations>
       {LANDING_ILLUSTRATION_CONTENT.map(({ url, alt, description }) => (
-        <DivCard
-          key={alt}
-          title={description}
-          className="illustration flex-col"
-        >
+        <DivCard key={alt} className="illustration flex-col">
           <Image
             src={url}
             alt={alt}

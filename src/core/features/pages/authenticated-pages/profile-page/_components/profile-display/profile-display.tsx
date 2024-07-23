@@ -1,6 +1,7 @@
 "use client";
 
-import { Button, DivCard, TextTag } from "@/components/atoms";
+import { DivCard, TextTag } from "@/components/atoms";
+import { Button } from "@/components/ui/button";
 import { useUserStore } from "@/providers/stores/zustand";
 import { useEffect, useMemo, useState } from "react";
 import StyledProfileDisplay from "./styled-profile-display";
@@ -9,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { logOut } from "@/core/config/firebase";
 import { getUserProfile } from "@/core/config/firebase/fire-store";
 import { UsedSpaceDisplay } from "@/components/molecules";
+import { cn } from "@/core/lib/utils";
 
 interface Props {
   //
@@ -72,7 +74,7 @@ export default function ProfileDisplay({}: Props) {
             {!loading || currentUser ? (
               <>
                 <div className="flex flex-col">
-                  <TextTag className="text-[0.9rem] whitespace-nowrap">
+                  <TextTag className="whitespace-nowrap text-[0.9rem]">
                     Logged In as:
                   </TextTag>
                   <TextTag className="text-app_text_blue">
@@ -81,7 +83,7 @@ export default function ProfileDisplay({}: Props) {
                 </div>
 
                 <div className="flex flex-col">
-                  <TextTag className="text-[0.9rem] whitespace-nowrap">
+                  <TextTag className="whitespace-nowrap text-[0.9rem]">
                     Current Plan
                   </TextTag>
                   <TextTag className="text-app_text_blue">
@@ -90,16 +92,16 @@ export default function ProfileDisplay({}: Props) {
                 </div>
 
                 <div className="flex flex-col gap-[7px]">
-                  <TextTag className="text-[0.9rem] whitespace-nowrap">
+                  <TextTag className="whitespace-nowrap text-[0.9rem]">
                     Plan Capacity
                   </TextTag>
 
                   <DivCard className="flex-wrap justify-start">
-                    <TextTag className="text-app_text_blue whitespace-nowrap">
+                    <TextTag className="whitespace-nowrap text-app_text_blue">
                       {userProfile?.plan.capacity} at
                     </TextTag>
 
-                    <TextTag className="text-app_text_blue whitespace-nowrap">
+                    <TextTag className="whitespace-nowrap text-app_text_blue">
                       {userProfile?.plan.rate}(
                       {userProfile?.plan.is_free ? "Free" : "Paid"} Tier)
                     </TextTag>
@@ -107,7 +109,9 @@ export default function ProfileDisplay({}: Props) {
                 </div>
               </>
             ) : (
-              <TextTag className="whitespace-nowrap">getting profile...</TextTag>
+              <TextTag className="whitespace-nowrap">
+                getting profile...
+              </TextTag>
             )}
           </DivCard>
 
@@ -120,12 +124,16 @@ export default function ProfileDisplay({}: Props) {
           <DivCard className="w-full flex-col items-start justify-start">
             <TextTag className="text-[0.9rem]">
               username
-              <TextTag className="text-app_text_blue">{currentUser?.username}</TextTag>
+              <TextTag className="text-app_text_blue">
+                {currentUser?.username}
+              </TextTag>
             </TextTag>
 
             <TextTag className="text-[0.9rem]">
               email
-              <TextTag className="text-app_text_blue">{currentUser?.email}</TextTag>
+              <TextTag className="text-app_text_blue">
+                {currentUser?.email}
+              </TextTag>
             </TextTag>
 
             <TextTag className="text-[0.9rem]">
@@ -145,10 +153,12 @@ export default function ProfileDisplay({}: Props) {
 
       <DivCard className="w-full items-start justify-start">
         <Button
-          bg="error"
-          min_width="320px"
+          variant="error"
+          className={cn(
+            "min-w-[320px]",
+            loading ? "cursor-not-allowed" : "cursor-pointer"
+          )}
           disabled={logOutState?.isLoading}
-          cursor={logOutState?.isLoading ? "not-allowed" : "pointer"}
           onClick={handleLogOut}
         >
           {logOutState?.isLoading ? logOutState?.message : "Log out"}

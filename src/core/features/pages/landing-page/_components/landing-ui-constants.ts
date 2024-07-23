@@ -15,26 +15,23 @@ export const LANDING_ILLUSTRATION_CONTENT: IIllustrationContent[] = [
   {
     url: "/landing/share_files.svg",
     alt: "share files illustration",
-    description: "Find and share your files",
+    description: "Find and share with friends and colleges",
   },
 ];
 
 export const CTA_CONTENT: {
-  title: string;
   text: string;
   url: string;
   bt_bg: BgVariants;
 }[] = [
   {
-    title: "go to r-drive",
     text: "My R Drive",
     url: "/r-drive",
     bt_bg: "blued",
   },
   {
-    title: "go to storage plans",
     text: "Storage Plans",
     url: "/storage-plans",
-    bt_bg: "invert",
+    bt_bg: "default",
   },
 ];
