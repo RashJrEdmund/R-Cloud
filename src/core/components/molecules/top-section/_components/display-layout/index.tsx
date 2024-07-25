@@ -13,7 +13,7 @@ interface Props {
   //
 }
 
-export default function DisplayLayout({ }: Props) {
+export default function DisplayLayout({}: Props) {
   const { displayLayout, setDisplayLayout } = useAppStore();
 
   useLayoutEffect(() => {
@@ -50,7 +50,9 @@ export default function DisplayLayout({ }: Props) {
         size={35}
         className={cn(
           "cursor-pointer rounded-[7px_0_0_7px] p-[4px_5px]",
-          displayLayout === "GRID" ? "bg-app_blue text-app_text_invert border border-app_blue shadow" : "bg-transparent"
+          displayLayout === "GRID"
+            ? "border border-app_blue bg-app_blue text-app_text_invert shadow"
+            : "bg-transparent"
         )}
         onClick={() => setDisplayLayout("GRID")}
       />
@@ -59,7 +61,9 @@ export default function DisplayLayout({ }: Props) {
         size={35}
         className={cn(
           "cursor-pointer rounded-[0_7px_7px_0] p-[4px_5px]",
-          displayLayout === "LIST" ? "bg-app_blue text-app_text_invert border border-app_blue shadow" : "bg-transparent"
+          displayLayout === "LIST"
+            ? "border border-app_blue bg-app_blue text-app_text_invert shadow"
+            : "bg-transparent"
         )}
         onClick={() => setDisplayLayout("LIST")}
       />

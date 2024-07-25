@@ -18,25 +18,25 @@ import { getResponsiveMenuPosition } from "@/core/utils/helpers";
 
 import type { Dispatch, SetStateAction, RefObject } from "react";
 import type { ModalWrapperRef } from "@/components/modals/generics";
-import type { ContextMenuContent } from "@/core/interfaces/app";
+import type { ContextMenuContentType } from "@/core/interfaces/app";
 import type { Document } from "@/core/interfaces/entities";
 
-interface IContextCoordinates {
+interface ContextCoordinates {
   top: string;
   left: string;
 }
 
-interface IHandleDocCardContextMenu {
+interface HandleDocCardContextMenu {
   event: MouseEvent;
-  CONTEXT_MENU_CONTENT: ContextMenuContent[];
+  CONTEXT_MENU_CONTENT: ContextMenuContentType[];
 }
 
-interface IContextMenuContextProvider {
+interface ContextMenuContextProviderType {
   // context menu
-  setContextCoordinates: Dispatch<SetStateAction<IContextCoordinates>>;
-  setContextContent: Dispatch<SetStateAction<ContextMenuContent[]>>;
+  setContextCoordinates: Dispatch<SetStateAction<ContextCoordinates>>;
+  setContextContent: Dispatch<SetStateAction<ContextMenuContentType[]>>;
   contextMenuRef: RefObject<ModalWrapperRef>;
-  handleDocCardContextMenu: (props: IHandleDocCardContextMenu) => void;
+  handleDocCardContextMenu: (props: HandleDocCardContextMenu) => void;
 
   // selection
   selectionStart: boolean;
@@ -47,7 +47,7 @@ interface IContextMenuContextProvider {
   toggleDocumentSelection: () => void;
 }
 
-const ContextMenuContext = createContext<IContextMenuContextProvider | null>(
+const ContextMenuContext = createContext<ContextMenuContextProviderType | null>(
   null
 );
 
@@ -57,8 +57,8 @@ const ContextMenuContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [contextCoordinates, setContextCoordinates] =
-    useState<IContextCoordinates>({ top: "0", left: "0" });
-  const [contextContent, setContextContent] = useState<ContextMenuContent[]>(
+    useState<ContextCoordinates>({ top: "0", left: "0" });
+  const [contextContent, setContextContent] = useState<ContextMenuContentType[]>(
     []
   );
 
@@ -70,7 +70,7 @@ const ContextMenuContextProvider = ({
   const handleDocCardContextMenu = ({
     event: e,
     CONTEXT_MENU_CONTENT,
-  }: IHandleDocCardContextMenu) => {
+  }: HandleDocCardContextMenu) => {
     /* FUNC_DESC +=> ==========================================
     | This function handles opening the context menu for both |
     | the file and folder cards.                              |
@@ -115,12 +115,12 @@ const ContextMenuContextProvider = ({
       setSelectionStart(false);
       setSelectedDocs([]);
       return;
-    }
+    };
 
     setSelectionStart(true);
   };
 
-  const contextValue = useMemo<IContextMenuContextProvider>(
+  const contextValue = useMemo<ContextMenuContextProviderType>(
     () => ({
       setContextCoordinates,
       setContextContent,
@@ -158,7 +158,7 @@ const ContextMenuContextProvider = ({
   );
 };
 
-const useContextMenuContext = (): IContextMenuContextProvider =>
-  useContext(ContextMenuContext) as IContextMenuContextProvider;
+const useContextMenuContext = (): ContextMenuContextProviderType =>
+  useContext(ContextMenuContext) as ContextMenuContextProviderType;
 
 export { ContextMenuContextProvider, useContextMenuContext };

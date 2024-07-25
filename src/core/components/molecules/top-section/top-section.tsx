@@ -7,7 +7,7 @@ interface Props {
 
 export default function TopSection({ hide_search_section = false }: Props) {
   return (
-    <DivCard className="w-primary_app_width h-fit justify-between px-0 py-[10px] mx-auto my-4">
+    <DivCard className="mx-auto my-4 h-fit w-primary_app_width justify-between px-0 py-[10px]">
       <Navigator />
 
       {hide_search_section ? null : (
@@ -21,4 +21,4 @@ export default function TopSection({ hide_search_section = false }: Props) {
       )}
     </DivCard>
   );
-};
+}

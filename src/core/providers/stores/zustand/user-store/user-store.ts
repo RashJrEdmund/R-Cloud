@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { UserStore } from "../../interfaces";
+import type { UserStore } from "./user-store.d";
 
 const useUserStore = create<UserStore>((set) => ({
   currentUser: null,

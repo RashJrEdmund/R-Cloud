@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { AppStore } from "@/providers/stores/interfaces";
+import type { AppStore } from "./app-store.d";
 
 const useAppStore = create<AppStore>((set) => {
   return {

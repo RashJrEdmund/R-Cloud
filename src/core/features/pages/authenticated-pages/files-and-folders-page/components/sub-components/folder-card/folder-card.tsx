@@ -1,6 +1,10 @@
 "use client";
 
-import { SelectCheckbox, GridCardContainer, ListCardContainer } from "../shared";
+import {
+  SelectCheckbox,
+  GridCardContainer,
+  ListCardContainer,
+} from "../shared";
 import Image from "next/image";
 import { DivCard, TextTag } from "@/core/components/atoms";
 import { useMemo, useEffect, useRef } from "react";
@@ -12,21 +16,27 @@ import {
   useModalContext,
 } from "@/providers/stores/context";
 import { CONTEXT_MENU_ICONS, MEDIA_ICONS } from "@/core/ui/icons";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuTrigger
+} from "@/components/ui/context-menu";
 
 import type { MutableRefObject, MouseEventHandler } from "react";
 import type { SharedCardProps } from "../shared";
-import type { ContextMenuContent } from "@/core/interfaces/app";
+import type { ContextMenuContentType } from "@/core/interfaces/app";
+import { FolderContextMenu } from "./folder-context-menu";
 
 interface Props extends SharedCardProps {
   //
-};
+}
 
 interface CardComponentProps extends Props {
   // doc: Document already exists as type here.
   handleOpen: MouseEventHandler<HTMLDivElement>;
   folderRef: MutableRefObject<HTMLDivElement | undefined>;
   folderLength: number;
-};
+}
 
 function _GridFolderCard({
   doc: folder,
@@ -45,7 +55,7 @@ function _GridFolderCard({
         height={100}
       />
 
-      <DivCard className="flex-col items-start w-full">
+      <DivCard className="w-full flex-col items-start">
         <DivCard className="mt-[5px]">
           <TextTag title={folder.name} className="m-0 text-[0.9rem] font-[500]">
             {shortenText(folder.name, FILE_FOLDER_MAX_NAME_LENGTH)}
@@ -76,10 +86,7 @@ function _ListFolderCard({
 }: CardComponentProps) {
   return (
     <>
-      <ListCardContainer
-        ref={folderRef as any}
-        onDoubleClick={handleOpen}
-      >
+      <ListCardContainer ref={folderRef as any} onDoubleClick={handleOpen}>
         <SelectCheckbox document={folder} />
 
         <span className="inline-block min-w-[40px]">
@@ -94,7 +101,7 @@ function _ListFolderCard({
         <DivCard className="w-full justify-between">
           <TextTag
             title={folder.name}
-            className="inline-block m-0 whitespace-nowrap text-ellipsis overflow-hidden w-full max-w-[calc(100%_-_100px)] text-[0.8rem] sm:text-[0.9rem] font-[500] text-left"
+            className="m-0 inline-block w-full max-w-[calc(100%_-_100px)] overflow-hidden text-ellipsis whitespace-nowrap text-left text-[0.8rem] font-[500] sm:text-[0.9rem]"
           >
             {folder.name}
           </TextTag>
@@ -140,8 +147,11 @@ function FolderCardHoc(
       selectionStart,
     } = useContextMenuContext();
 
-    const { openEditDocumentModal, openDeleteDocumentModal } =
-      useModalContext();
+    const {
+      openEditDocumentModal,
+
+      openDeleteDocumentModal,
+    } = useModalContext();
 
     const handleOpen = () => {
       if (selectionStart) return; // to prevent opening folders when selection has started
@@ -149,58 +159,60 @@ function FolderCardHoc(
       router.push("/r-drive/root/" + folder.id);
     };
 
-    const FOLDER_CONTEXT_MENU_CONTENT: ContextMenuContent[] = useMemo(
-      () => [
-        {
-          text: "Open Folder",
-          icon_url: CONTEXT_MENU_ICONS.open,
-          action: handleOpen,
-        },
-        {
-          text: "Rename Folder",
-          icon_url: CONTEXT_MENU_ICONS.rename,
-          action: () => openEditDocumentModal(folder),
-        },
-        {
-          text: "Delete Folder",
-          icon_url: CONTEXT_MENU_ICONS.delete,
-          action: () => openDeleteDocumentModal(folder),
-        },
-      ],
-      [selectionStart]
-    );
+    // const FOLDER_CONTEXT_MENU_CONTENT: ContextMenuContentType[] = useMemo(
+    //   () => [
+    //     {
+    //       text: "Open Folder",
+    //       icon_url: CONTEXT_MENU_ICONS.open,
+    //       action: handleOpen,
+    //     },
+    //     {
+    //       text: "Rename Folder",
+    //       icon_url: CONTEXT_MENU_ICONS.rename,
+    //       action: () => openEditDocumentModal(folder),
+    //     },
+    //     {
+    //       text: "Delete Folder",
+    //       icon_url: CONTEXT_MENU_ICONS.delete,
+    //       action: () => openDeleteDocumentModal(folder),
+    //     },
+    //   ],
+    //   [selectionStart]
+    // );
 
-    const handleContext = (e: MouseEvent) => {
-      handleDocCardContextMenu({
-        event: e,
-        CONTEXT_MENU_CONTENT: FOLDER_CONTEXT_MENU_CONTENT,
-      });
-    };
+    // const handleContext = (e: MouseEvent) => {
+    //   handleDocCardContextMenu({
+    //     event: e,
+    //     CONTEXT_MENU_CONTENT: FOLDER_CONTEXT_MENU_CONTENT,
+    //   });
+    // };
 
-    useEffect(() => {
-      if (!folderRef.current) return;
+    // useEffect(() => {
+    //   if (!folderRef.current) return;
 
-      folderRef.current.addEventListener("contextmenu", handleContext, false);
+    //   folderRef.current.addEventListener("contextmenu", handleContext, false);
 
-      return () => {
-        folderRef.current?.removeEventListener(
-          "contextmenu",
-          handleContext,
-          false
-        );
-      };
-    }, [selectionStart]);
+    //   return () => {
+    //     folderRef.current?.removeEventListener(
+    //       "contextmenu",
+    //       handleContext,
+    //       false
+    //     );
+    //   };
+    // }, [selectionStart]);
 
     return (
-      <CardComponent
-        doc={folder}
-        handleOpen={handleOpen}
-        folderRef={folderRef}
-        folderLength={folderLength}
-      />
+      <FolderContextMenu doc={folder}>
+        <CardComponent
+          doc={folder}
+          handleOpen={handleOpen}
+          folderRef={folderRef}
+          folderLength={folderLength}
+        />
+      </FolderContextMenu>
     );
   };
-};
+}
 
 const GridFolderCard = FolderCardHoc(_GridFolderCard);
 

@@ -15,7 +15,7 @@ const {} = THEME_PALETTE;
 
 interface _props {
   absolute: boolean;
-};
+}
 
 const StyledCheckBox = styled.input<_props>`
   position: ${({ absolute }) =>
@@ -27,7 +27,7 @@ const StyledCheckBox = styled.input<_props>`
 
 interface Props {
   document: Document;
-};
+}
 
 export default function SelectCheckbox({ document }: Props) {
   const [checked, setChecked] = useState<boolean>(false);

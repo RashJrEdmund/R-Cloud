@@ -69,7 +69,7 @@ export default function ProfileDisplay({}: Props) {
 
   return (
     <StyledProfileDisplay>
-      <DivCard className="flex-col sm:flex-row items-start gap-4">
+      <DivCard className="flex-col items-start gap-4 sm:flex-row">
         <ProfileImage />
 
         <DivCard className="flex-col items-start gap-4">

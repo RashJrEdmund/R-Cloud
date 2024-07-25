@@ -1,9 +1,9 @@
 import { DivCard, MainTag, TextTag } from "@/components/atoms";
 import { Illustrations, CtaButtons } from "./_components";
 
-interface Props { };
+interface Props {}
 
-export default function LandingPage({ }: Props) {
+export default function LandingPage({}: Props) {
   return (
     <MainTag>
       <DivCard as="section" className="mx-auto mt-8">

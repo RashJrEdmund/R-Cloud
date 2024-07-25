@@ -13,9 +13,12 @@ export default function FilesFolderShimmer({
       className={displayLayout.toLowerCase() + "-layout"} // e.g grid-layout or list-layout
     >
       {displayLayout === "GRID"
-        ? Array.from({ length: 16 }, (_, i) => i).map((i) => <GridShimmerCard key={i} />)
-        : Array.from({ length: 16 }, (_, i) => i).map((i) => <ListShimmerCard key={i} />)
-      }
+        ? Array.from({ length: 16 }, (_, i) => i).map((i) => (
+            <GridShimmerCard key={i} />
+          ))
+        : Array.from({ length: 16 }, (_, i) => i).map((i) => (
+            <ListShimmerCard key={i} />
+          ))}
     </StyledFileFolderDisplay>
   );
-};
+}

@@ -11,11 +11,11 @@ import {
   useContextMenuContext,
   useModalContext,
 } from "@/providers/stores/context";
-import { CONTEXT_MENU_ICONS } from "@/core/ui/icons";
 import Image from "next/image";
 
 import type { ModalWrapperRef } from "@/components/modals/generics";
-import type { ContextMenuContent } from "@/core/interfaces/app";
+import type { ContextMenuContentType } from "@/core/interfaces/app";
+import { MoreVertical } from "lucide-react";
 
 interface Props {
   //
@@ -55,68 +55,71 @@ export default function MoreSection({}: Props) {
     }
   };
 
-  const MORE_CONTEXT_MENU_CONTENT: ContextMenuContent[] = useMemo(
-    () =>
-      selectionStart
-        ? [
-            {
-              text: "Delete Selected",
-              icon_url: CONTEXT_MENU_ICONS.delete,
-              action: () =>
-                callMenuFunctionThenCloseMenu(() =>
-                  openBulkDeleteModal(selectedDocs)
-                ),
-            },
-            {
-              text: "Stop Selection",
-              icon_url: CONTEXT_MENU_ICONS.select,
-              action: () =>
-                callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
-            },
-          ]
-        : [
-            {
-              text: "New Folder",
-              icon_url: CONTEXT_MENU_ICONS.new_folder,
-              action: () =>
-                callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
-            },
-            {
-              text: "Upload File(s)",
-              icon_url: CONTEXT_MENU_ICONS.upload,
-              action: () =>
-                callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
-            },
-            {
-              text: "Start Selection",
-              icon_url: CONTEXT_MENU_ICONS.select,
-              action: () =>
-                callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
-            },
-          ],
-    [selectionStart, selectedDocs]
-  ); // selectionStart is required especially for the start and stop selection option
+  // const MORE_CONTEXT_MENU_CONTENT: ContextMenuContentType[] = useMemo(
+  //   () =>
+  //     selectionStart
+  //       ? [
+  //           {
+  //             text: "Delete Selected",
+  //             icon_url: CONTEXT_MENU_ICONS.delete,
+  //             action: () =>
+  //               callMenuFunctionThenCloseMenu(() =>
+  //                 openBulkDeleteModal(selectedDocs)
+  //               ),
+  //           },
+  //           {
+  //             text: "Stop Selection",
+  //             icon_url: CONTEXT_MENU_ICONS.select,
+  //             action: () =>
+  //               callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
+  //           },
+  //         ]
+  //       : [
+  //           {
+  //             text: "New Folder",
+  //             icon_url: CONTEXT_MENU_ICONS.new_folder,
+  //             action: () =>
+  //               callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
+  //           },
+  //           {
+  //             text: "Upload File(s)",
+  //             icon_url: CONTEXT_MENU_ICONS.upload,
+  //             action: () =>
+  //               callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
+  //           },
+  //           {
+  //             text: "Start Selection",
+  //             icon_url: CONTEXT_MENU_ICONS.select,
+  //             action: () =>
+  //               callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
+  //           },
+  //         ],
+  //   [selectionStart, selectedDocs]
+  // ); // selectionStart is required especially for the start and stop selection option
 
   return (
     <DivCard className="relative">
       {" "}
       {/* This relative positioning is for the ContextMenu */}
       <TextTag className="cursor-pointer" onClick={toggleModal}>
-        <Image
+        {/* <Image
           src={CONTEXT_MENU_ICONS.more}
           alt="Show more"
           className="cursor-pointer"
           height={24}
           width={24}
-        />
+        /> */}
+
+        <MoreVertical />
         More
       </TextTag>
-      <ContextMenu
+
+      {/* <ContextMenu
         top={coordinates.top}
         left={coordinates.left}
         ref={contextMenuRef}
         content={MORE_CONTEXT_MENU_CONTENT}
-      />
+      /> */}
     </DivCard>
   );
 }

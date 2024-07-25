@@ -20,16 +20,15 @@ import {
 } from "@/core/utils/helpers";
 
 import type { DragEventHandler, MouseEventHandler } from "react";
-import type { ContextMenuContent } from "@/core/interfaces/app";
-import { CONTEXT_MENU_ICONS } from "@/core/ui/icons";
+import type { ContextMenuContentType } from "@/core/interfaces/app";
 import FilesFolderShimmer from "./sub-components/files-folder-shimmer";
 import MainAndTopSection from "./main-and-to-section-tag";
 
 interface Props {
   //
-};
+}
 
-export default function FilesFolderDisplay({ }: Props) {
+export default function FilesFolderDisplay({}: Props) {
   const { documents, currentFolder } = useDocStore();
   const { displayLayout } = useAppStore();
 
@@ -51,62 +50,62 @@ export default function FilesFolderDisplay({ }: Props) {
     contextMenuRef?.current?.close();
   };
 
-  const MAIN_CONTEXT_MENU_CONTENT: ContextMenuContent[] = useMemo(
-    () =>
-      selectionStart
-        ? [
-          {
-            text: "Delete Selected",
-            icon_url: CONTEXT_MENU_ICONS.delete,
-            action: () =>
-              callMenuFunctionThenCloseMenu(() =>
-                openBulkDeleteModal(selectedDocs)
-              ),
-          },
-          {
-            text: "Stop Selection",
-            icon_url: CONTEXT_MENU_ICONS.select,
-            action: () =>
-              callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
-          },
-        ]
-        : [
-          {
-            text: "New Folder",
-            icon_url: CONTEXT_MENU_ICONS.new_folder,
-            action: () =>
-              callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
-          },
-          {
-            text: "Upload File(s)",
-            icon_url: CONTEXT_MENU_ICONS.upload,
-            action: () =>
-              callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
-          },
-          {
-            text: "Start Selection",
-            icon_url: CONTEXT_MENU_ICONS.select,
-            action: () =>
-              callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
-          },
-        ],
-    [selectionStart, selectedDocs]
-  );
+  // const CONTEXT_MENU_CONTENT: ContextMenuContentType[] = useMemo(
+  //   () =>
+  //     selectionStart
+  //       ? [
+  //           {
+  //             text: "Delete Selected",
+  //             icon_url: CONTEXT_MENU_ICONS.delete,
+  //             action: () =>
+  //               callMenuFunctionThenCloseMenu(() =>
+  //                 openBulkDeleteModal(selectedDocs)
+  //               ),
+  //           },
+  //           {
+  //             text: "Stop Selection",
+  //             icon_url: CONTEXT_MENU_ICONS.select,
+  //             action: () =>
+  //               callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
+  //           },
+  //         ]
+  //       : [
+  //           {
+  //             text: "New Folder",
+  //             icon_url: CONTEXT_MENU_ICONS.new_folder,
+  //             action: () =>
+  //               callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
+  //           },
+  //           {
+  //             text: "Upload File(s)",
+  //             icon_url: CONTEXT_MENU_ICONS.upload,
+  //             action: () =>
+  //               callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
+  //           },
+  //           {
+  //             text: "Start Selection",
+  //             icon_url: CONTEXT_MENU_ICONS.select,
+  //             action: () =>
+  //               callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
+  //           },
+  //         ],
+  //   [selectionStart, selectedDocs]
+  // );
 
-  const handleContextMenu: MouseEventHandler<HTMLDivElement> = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  // const handleContextMenu: MouseEventHandler<HTMLDivElement> = (e) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
 
-    const coordinates = getResponsiveMenuPosition(e as unknown as MouseEvent);
-    setContextCoordinates({
-      top: coordinates.y + "px",
-      left: coordinates.x + "px",
-    });
+  //   const coordinates = getResponsiveMenuPosition(e as unknown as MouseEvent);
+  //   setContextCoordinates({
+  //     top: coordinates.y + "px",
+  //     left: coordinates.x + "px",
+  //   });
 
-    setContextContent(MAIN_CONTEXT_MENU_CONTENT);
+  //   setContextContent(MAIN_CONTEXT_MENU_CONTENT);
 
-    contextMenuRef?.current?.open();
-  };
+  //   contextMenuRef?.current?.open();
+  // };
 
   // DRAG_DROP_HANDLERS_STARTS_HERE!
 
@@ -170,7 +169,7 @@ export default function FilesFolderDisplay({ }: Props) {
       <MainAndTopSection
         // bg='light'
         // className="min-h-[80vh] w-full flex-col justify-start bg-orange-400"
-        onContextMenu={handleContextMenu}
+        // onContextMenu={handleContextMenu}
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
@@ -187,20 +186,19 @@ export default function FilesFolderDisplay({ }: Props) {
             >
               {displayLayout === "GRID"
                 ? documents.map((doc) =>
-                  doc.type === "FOLDER" ? (
-                    <GridFolderCard key={doc.id} doc={doc} />
-                  ) : (
-                    <GridFileCard key={doc.id} doc={doc} />
+                    doc.type === "FOLDER" ? (
+                      <GridFolderCard key={doc.id} doc={doc} />
+                    ) : (
+                      <GridFileCard key={doc.id} doc={doc} />
+                    )
                   )
-                )
                 : documents.map((doc) =>
-                  doc.type === "FOLDER" ? (
-                    <ListFolderCard key={doc.id} doc={doc} />
-                  ) : (
-                    <ListFileCard key={doc.id} doc={doc} />
-                  )
-                )
-              }
+                    doc.type === "FOLDER" ? (
+                      <ListFolderCard key={doc.id} doc={doc} />
+                    ) : (
+                      <ListFileCard key={doc.id} doc={doc} />
+                    )
+                  )}
             </StyledFileFolderDisplay>
           ) : (
             <DivCard className="min-h-[60vh] w-full">

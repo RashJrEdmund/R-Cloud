@@ -1,9 +1,11 @@
+import type { FC } from "react";
+
 type DisplayLayout = "GRID" | "LIST";
 
-interface ContextMenuContent {
+interface ContextMenuContentType {
   text: string;
-  icon_url: string;
+  icon: FC<>;
   action: Function;
 }
 
-export type { DisplayLayout, ContextMenuContent };
+export type { DisplayLayout, ContextMenuContentType };

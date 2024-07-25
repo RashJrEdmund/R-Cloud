@@ -4,10 +4,10 @@ import { TextTag } from "@/components/atoms";
 import Image from "next/image";
 
 import type { ModalWrapperRef } from "../generics";
-import type { ContextMenuContent } from "@/core/interfaces/app";
+import type { ContextMenuContentType } from "@/core/interfaces/app";
 
 interface Props {
-  content: ContextMenuContent[];
+  content: ContextMenuContentType[];
   top: string;
   left: string;
 

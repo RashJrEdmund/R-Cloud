@@ -1,7 +1,11 @@
 "use client";
 
 import { useMemo, useRef, useEffect, useState } from "react";
-import { SelectCheckbox, GridCardContainer, ListCardContainer } from "../shared";
+import {
+  SelectCheckbox,
+  GridCardContainer,
+  ListCardContainer,
+} from "../shared";
 import { DivCard, TextTag } from "@/components/atoms";
 import {
   deriveDocumentPreviewImage,
@@ -14,14 +18,15 @@ import {
   useModalContext,
 } from "@/providers/stores/context";
 import { useAppStore } from "@/providers/stores/zustand";
-import { CONTEXT_MENU_ICONS, MEDIA_ICONS } from "@/core/ui/icons";
+import { MEDIA_ICONS } from "@/core/ui/icons";
 import Image from "next/image";
 
 import type { MouseEventHandler, MutableRefObject } from "react";
 import type { SharedCardProps } from "../shared";
-import type { ContextMenuContent } from "@/core/interfaces/app";
+import type { ContextMenuContentType } from "@/core/interfaces/app";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/core/lib/utils";
+import { FileContextMenu } from "./file-context-menu";
 
 interface Props extends SharedCardProps {
   // PROPS
@@ -48,7 +53,10 @@ function _GridFileCard({
 
       <Image
         src={backupImage || imagePreview.img}
-        className={cn("w-full max-h-[75px]", imagePreview?.isCustom ? "object-cover" : "")}
+        className={cn(
+          "max-h-[75px] w-full",
+          imagePreview?.isCustom ? "object-cover" : ""
+        )}
         onError={() => {
           if (imagePreview.isCustom) setBackupImage(MEDIA_ICONS.img);
         }}
@@ -88,25 +96,17 @@ function _ListFileCard({
   handleOpen,
 }: CardComponentProps) {
   return (
-    <ListCardContainer
-      ref={fileRef as any}
-      onDoubleClick={handleOpen}
-    >
+    <ListCardContainer ref={fileRef as any} onDoubleClick={handleOpen}>
       <SelectCheckbox document={file} />
 
       <span className="inline-block min-w-[40px]">
-        <Image
-          src={imagePreview.img}
-          alt="file icon"
-          width={25}
-          height={25}
-        />
+        <Image src={imagePreview.img} alt="file icon" width={25} height={25} />
       </span>
 
       <DivCard className="w-full justify-between">
         <TextTag
           title={file.name}
-          className="inline-block m-0 whitespace-nowrap text-ellipsis overflow-hidden w-full max-w-[calc(100%_-_100px)] text-[0.8rem] sm:text-[0.9rem] font-[500] text-left"
+          className="m-0 inline-block w-full max-w-[calc(100%_-_100px)] overflow-hidden text-ellipsis whitespace-nowrap text-left text-[0.8rem] font-[500] sm:text-[0.9rem]"
         >
           {file.name}
         </TextTag>
@@ -159,69 +159,71 @@ function FileCardHoc(
       router.push(`${pathname}?viewing=${file.id}`);
     };
 
-    const FILE_CONTEXT_MENU_CONTENT = useMemo<ContextMenuContent[]>(
-      () => [
-        {
-          text: "Open File",
-          icon_url: CONTEXT_MENU_ICONS.open,
-          action: handleOpen,
-        },
-        {
-          text: "Rename File",
-          icon_url: CONTEXT_MENU_ICONS.rename,
-          action: () => openEditDocumentModal(file),
-        },
-        {
-          text: "New File",
-          icon_url: CONTEXT_MENU_ICONS.upload,
-          action: openFileUploadDialog,
-        },
-        {
-          text: "Copy File",
-          icon_url: CONTEXT_MENU_ICONS.copy,
-          action: () => null,
-        },
-        {
-          text: "Delete File",
-          icon_url: CONTEXT_MENU_ICONS.delete,
-          action: () => openDeleteDocumentModal(file),
-        },
-      ],
-      []
-    );
+    // const FILE_CONTEXT_MENU_CONTENT = useMemo<ContextMenuContentType[]>(
+    //   () => [
+    //     {
+    //       text: "Open File",
+    //       icon_url: CONTEXT_MENU_ICONS.open,
+    //       action: handleOpen,
+    //     },
+    //     {
+    //       text: "Rename File",
+    //       icon_url: CONTEXT_MENU_ICONS.rename,
+    //       action: () => openEditDocumentModal(file),
+    //     },
+    //     {
+    //       text: "New File",
+    //       icon_url: CONTEXT_MENU_ICONS.upload,
+    //       action: openFileUploadDialog,
+    //     },
+    //     {
+    //       text: "Copy File",
+    //       icon_url: CONTEXT_MENU_ICONS.copy,
+    //       action: () => null,
+    //     },
+    //     {
+    //       text: "Delete File",
+    //       icon_url: CONTEXT_MENU_ICONS.delete,
+    //       action: () => openDeleteDocumentModal(file),
+    //     },
+    //   ],
+    //   []
+    // );
 
     const imagePreview = useMemo<{ img: string; isCustom?: boolean }>(() => {
       return deriveDocumentPreviewImage(file, displayLayout);
     }, [displayLayout, file.content_type]);
 
-    const handleContext = (e: MouseEvent) => {
-      handleDocCardContextMenu({
-        event: e,
-        CONTEXT_MENU_CONTENT: FILE_CONTEXT_MENU_CONTENT,
-      });
-    };
+    // const handleContext = (e: MouseEvent) => {
+    //   handleDocCardContextMenu({
+    //     event: e,
+    //     CONTEXT_MENU_CONTENT: FILE_CONTEXT_MENU_CONTENT,
+    //   });
+    // };
 
-    useEffect(() => {
-      if (!fileRef.current) return;
+    // useEffect(() => {
+    //   if (!fileRef.current) return;
 
-      fileRef.current.addEventListener("contextmenu", handleContext, false);
+    //   fileRef.current.addEventListener("contextmenu", handleContext, false);
 
-      return () => {
-        fileRef.current?.removeEventListener(
-          "contextmenu",
-          handleContext,
-          false
-        );
-      };
-    }, [selectionStart]);
+    //   return () => {
+    //     fileRef.current?.removeEventListener(
+    //       "contextmenu",
+    //       handleContext,
+    //       false
+    //     );
+    //   };
+    // }, [selectionStart]);
 
     return (
-      <CardComponent
-        doc={file}
-        handleOpen={handleOpen}
-        fileRef={fileRef}
-        imagePreview={imagePreview}
-      />
+      <FileContextMenu doc={file}>
+        <CardComponent
+          doc={file}
+          handleOpen={handleOpen}
+          fileRef={fileRef}
+          imagePreview={imagePreview}
+        />
+      </FileContextMenu>
     );
   };
 }

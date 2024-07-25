@@ -8,7 +8,7 @@ interface Props {
   //
 }
 
-export default function Search({ }: Props) {
+export default function Search({}: Props) {
   const [searchVal, setSearchVal] = useState<string>("");
   const [searchCombo, setSearchCombo] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>();
@@ -60,12 +60,12 @@ export default function Search({ }: Props) {
           value={searchVal}
           onChange={handleChange}
           className="border-none"
-        // onFocus={() => {
-        //   window.removeEventListener('keydown', handleSearchKeyCombo);
-        // }}
-        // onBlur={() => {
-        //   window.addEventListener('keydown', handleSearchKeyCombo);
-        // }}
+          // onFocus={() => {
+          //   window.removeEventListener('keydown', handleSearchKeyCombo);
+          // }}
+          // onBlur={() => {
+          //   window.addEventListener('keydown', handleSearchKeyCombo);
+          // }}
         />
         {searchVal ? (
           <DivCard
