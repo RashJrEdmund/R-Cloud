@@ -13,7 +13,7 @@ import {
   GridFolderCard,
   ListFileCard,
   ListFolderCard,
-} from "./components";
+} from "./sub-components";
 import {
   getResponsiveMenuPosition,
   openFileUploadDialog,
@@ -22,13 +22,14 @@ import {
 import type { DragEventHandler, MouseEventHandler } from "react";
 import type { ContextMenuContent } from "@/core/interfaces/app";
 import { CONTEXT_MENU_ICONS } from "@/core/ui/icons";
-import FilesFolderShimmer from "./components/files-folder-shimmer";
+import FilesFolderShimmer from "./sub-components/files-folder-shimmer";
+import MainAndTopSection from "./main-and-to-section-tag";
 
 interface Props {
   //
-}
+};
 
-export default function FilesFolderDisplay({}: Props) {
+export default function FilesFolderDisplay({ }: Props) {
   const { documents, currentFolder } = useDocStore();
   const { displayLayout } = useAppStore();
 
@@ -54,41 +55,41 @@ export default function FilesFolderDisplay({}: Props) {
     () =>
       selectionStart
         ? [
-            {
-              text: "Delete Selected",
-              icon_url: CONTEXT_MENU_ICONS.delete,
-              action: () =>
-                callMenuFunctionThenCloseMenu(() =>
-                  openBulkDeleteModal(selectedDocs)
-                ),
-            },
-            {
-              text: "Stop Selection",
-              icon_url: CONTEXT_MENU_ICONS.select,
-              action: () =>
-                callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
-            },
-          ]
+          {
+            text: "Delete Selected",
+            icon_url: CONTEXT_MENU_ICONS.delete,
+            action: () =>
+              callMenuFunctionThenCloseMenu(() =>
+                openBulkDeleteModal(selectedDocs)
+              ),
+          },
+          {
+            text: "Stop Selection",
+            icon_url: CONTEXT_MENU_ICONS.select,
+            action: () =>
+              callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
+          },
+        ]
         : [
-            {
-              text: "New Folder",
-              icon_url: CONTEXT_MENU_ICONS.new_folder,
-              action: () =>
-                callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
-            },
-            {
-              text: "Upload File(s)",
-              icon_url: CONTEXT_MENU_ICONS.upload,
-              action: () =>
-                callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
-            },
-            {
-              text: "Start Selection",
-              icon_url: CONTEXT_MENU_ICONS.select,
-              action: () =>
-                callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
-            },
-          ],
+          {
+            text: "New Folder",
+            icon_url: CONTEXT_MENU_ICONS.new_folder,
+            action: () =>
+              callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
+          },
+          {
+            text: "Upload File(s)",
+            icon_url: CONTEXT_MENU_ICONS.upload,
+            action: () =>
+              callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
+          },
+          {
+            text: "Start Selection",
+            icon_url: CONTEXT_MENU_ICONS.select,
+            action: () =>
+              callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
+          },
+        ],
     [selectionStart, selectedDocs]
   );
 
@@ -162,13 +163,13 @@ export default function FilesFolderDisplay({}: Props) {
     };
   }, [handleFileUploadInputFieldData]);
 
-  return <FilesFolderShimmer displayLayout={displayLayout} />
+  // return <FilesFolderShimmer displayLayout={displayLayout} />;
 
   return (
     <>
-      <DivCard
+      <MainAndTopSection
         // bg='light'
-        className="min-h-[80vh] w-full flex-col justify-start"
+        // className="min-h-[80vh] w-full flex-col justify-start bg-orange-400"
         onContextMenu={handleContextMenu}
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
@@ -178,26 +179,28 @@ export default function FilesFolderDisplay({}: Props) {
         <TextTag className="break-all text-app_text_grayed">
           {currentFolder === "root" ? "root" : currentFolder.name}
         </TextTag>
+
         {documents ? (
-          documents.length > 0 ? (
+          documents.length ? (
             <StyledFileFolderDisplay
               className={displayLayout.toLowerCase() + "-layout"} // e.g grid-layout or list-layout
             >
               {displayLayout === "GRID"
                 ? documents.map((doc) =>
-                    doc.type === "FOLDER" ? (
-                      <GridFolderCard key={doc.id} doc={doc} />
-                    ) : (
-                      <GridFileCard key={doc.id} doc={doc} />
-                    )
+                  doc.type === "FOLDER" ? (
+                    <GridFolderCard key={doc.id} doc={doc} />
+                  ) : (
+                    <GridFileCard key={doc.id} doc={doc} />
                   )
+                )
                 : documents.map((doc) =>
-                    doc.type === "FOLDER" ? (
-                      <ListFolderCard key={doc.id} doc={doc} />
-                    ) : (
-                      <ListFileCard key={doc.id} doc={doc} />
-                    )
-                  )}
+                  doc.type === "FOLDER" ? (
+                    <ListFolderCard key={doc.id} doc={doc} />
+                  ) : (
+                    <ListFileCard key={doc.id} doc={doc} />
+                  )
+                )
+              }
             </StyledFileFolderDisplay>
           ) : (
             <DivCard className="min-h-[60vh] w-full">
@@ -212,7 +215,7 @@ export default function FilesFolderDisplay({}: Props) {
         ) : (
           <FilesFolderShimmer displayLayout={displayLayout} />
         )}
-      </DivCard>
+      </MainAndTopSection>
     </>
   );
 }

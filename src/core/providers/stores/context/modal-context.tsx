@@ -233,7 +233,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
           bulkDeleteModalRef={bulkDeleteModalRef}
           selectedDocs={docsToDelete}
         />
-        <FileViewer />{" "}
+        <FileViewer />
         {/* Uses search params to open or close, so has no need for ref, or any other props */}
         {children}
       </>

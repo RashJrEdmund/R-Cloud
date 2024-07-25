@@ -7,9 +7,8 @@
 | the holder                                          |
 =======================================//============*/
 
-import { FilesFolderDisplay, TopSection } from "@/components/molecules";
+import { FilesFolderDisplay, MainAndTopSection } from "./components";
 import { PathWrapper } from "@/providers/guards";
-import { MainTag } from "@/components/atoms";
 
 import {
   ModalContextProvider,
@@ -22,7 +21,8 @@ interface Props {
 
 export default function FilesFolderDisplayPage({ }: Props) {
   return (
-    <MainTag className="justify-star">
+    <>
+      <input hidden multiple type="file" id="file-upload-field" />
       {/* INPUT_DES +=> ========================================================================
       | This is a special input field. The one used to open the select file dialog in the       |
       | FilesFolderDisplay component, and open/activated by the openFileUploadDialog utility    |
@@ -30,18 +30,17 @@ export default function FilesFolderDisplayPage({ }: Props) {
       | FilesFolderDisplay component in app/_core/ui/components/molecules/files-folder-display  |
       | which inturn calls the readyUploadModal function in FilesFolderDisplayContext           |
       =========================================================================//=============*/}
-      <input hidden multiple type="file" id="file-upload-field" />
 
       <PathWrapper>
         {/* IT'S HERE DOCUMENTS ARE FETCHED AS PARAMS CHANGE */}
         <ModalContextProvider>
           <ContextMenuContextProvider>
-            <TopSection />
+            {/* <TopSection /> */}
 
             <FilesFolderDisplay />
           </ContextMenuContextProvider>
         </ModalContextProvider>
       </PathWrapper>
-    </MainTag>
+    </>
   );
-}
+};

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useEffect, useState } from "react";
-import { SelectCheckbox, StyledDisplayCard } from "../shared";
+import { SelectCheckbox, GridCardContainer, ListCardContainer } from "../shared";
 import { DivCard, TextTag } from "@/components/atoms";
 import {
   deriveDocumentPreviewImage,
@@ -18,15 +18,16 @@ import { CONTEXT_MENU_ICONS, MEDIA_ICONS } from "@/core/ui/icons";
 import Image from "next/image";
 
 import type { MouseEventHandler, MutableRefObject } from "react";
-import type { ISharedCardProps } from "../shared";
+import type { SharedCardProps } from "../shared";
 import type { ContextMenuContent } from "@/core/interfaces/app";
 import { usePathname, useRouter } from "next/navigation";
+import { cn } from "@/core/lib/utils";
 
-interface Props extends ISharedCardProps {
+interface Props extends SharedCardProps {
   // PROPS
 }
 
-interface ICardComponentProps extends Props {
+interface CardComponentProps extends Props {
   // doc: Document already exists as type here.
   handleOpen: MouseEventHandler<HTMLDivElement>;
   imagePreview: { img: string; isCustom?: boolean }; // This helps to know weather or not to add the object-fit: cover; css style.
@@ -38,16 +39,16 @@ function _GridFileCard({
   imagePreview,
   fileRef,
   handleOpen,
-}: ICardComponentProps) {
+}: CardComponentProps) {
   const [backupImage, setBackupImage] = useState<string | null>("");
 
   return (
-    <StyledDisplayCard ref={fileRef as any} onDoubleClick={handleOpen}>
+    <GridCardContainer ref={fileRef as any} onDoubleClick={handleOpen}>
       <SelectCheckbox document={file} />
 
       <Image
         src={backupImage || imagePreview.img}
-        className={imagePreview?.isCustom ? "custom_img" : ""}
+        className={cn("w-full max-h-[75px]", imagePreview?.isCustom ? "object-cover" : "")}
         onError={() => {
           if (imagePreview.isCustom) setBackupImage(MEDIA_ICONS.img);
         }}
@@ -76,7 +77,7 @@ function _GridFileCard({
           </TextTag>
         </DivCard>
       </DivCard>
-    </StyledDisplayCard>
+    </GridCardContainer>
   );
 }
 
@@ -85,26 +86,32 @@ function _ListFileCard({
   imagePreview,
   fileRef,
   handleOpen,
-}: ICardComponentProps) {
+}: CardComponentProps) {
   return (
-    <DivCard
-      className="card relative w-full cursor-pointer flex-nowrap justify-start p-[12px_10px]"
+    <ListCardContainer
       ref={fileRef as any}
       onDoubleClick={handleOpen}
     >
       <SelectCheckbox document={file} />
 
-      <Image src={imagePreview.img} alt="file icon" width={25} height={25} />
+      <span className="inline-block min-w-[40px]">
+        <Image
+          src={imagePreview.img}
+          alt="file icon"
+          width={25}
+          height={25}
+        />
+      </span>
 
-      <DivCard className="mb-[10px]">
+      <DivCard className="w-full justify-between">
         <TextTag
           title={file.name}
-          className="m-0 whitespace-nowrap text-[0.9rem] font-[500]"
+          className="inline-block m-0 whitespace-nowrap text-ellipsis overflow-hidden w-full max-w-[calc(100%_-_100px)] text-[0.8rem] sm:text-[0.9rem] font-[500] text-left"
         >
-          {shortenText(file.name, FILE_FOLDER_MAX_NAME_LENGTH + 14)}
+          {file.name}
         </TextTag>
 
-        <DivCard className="w-full justify-start gap-[5px]">
+        <DivCard className="w-fit min-w-[90px] justify-between gap-[5px]">
           <TextTag className="whitespace-nowrap text-[0.75rem] text-app_text_grayed">
             {file.extension}
           </TextTag>
@@ -114,14 +121,14 @@ function _ListFileCard({
           </TextTag>
         </DivCard>
       </DivCard>
-    </DivCard>
+    </ListCardContainer>
   );
 }
 
 // HOC STARTS HERES
 
 function FileCardHoc(
-  CardComponent: (props: ICardComponentProps) => JSX.Element
+  CardComponent: (props: CardComponentProps) => JSX.Element
 ) {
   /* FUNC_DESC +=> ===================================================================
   | Could not bring myself to copying the same logic and using in both variations of |

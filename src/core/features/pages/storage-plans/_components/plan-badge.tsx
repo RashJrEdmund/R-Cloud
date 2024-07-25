@@ -32,7 +32,7 @@ function PlanBadge({ className, plan }: PlanBadgeProps) {
   if (plan.is_free) return (
     <PlanBadgeText
       className={cn(
-        "bg-app_orange",
+        "bg-app_black",
         className,
       )}
     >
@@ -43,7 +43,7 @@ function PlanBadge({ className, plan }: PlanBadgeProps) {
 
   const getPlanBadgeColor = (id?: string) => {
     if (id === "3") return "bg-yellow-300";
-    if (id === "4") return "bg-app_blue";
+    if (id === "4") return "bg-app_orange";
     if (id === "5") return "bg-orange-500";
     return false;
   };

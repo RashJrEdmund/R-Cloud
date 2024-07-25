@@ -1,5 +1,4 @@
 import { DivCard } from "@/components/atoms";
-import TopSectionHolder from "./top-section-holder";
 import { Navigator, Search, DisplayLayout, MoreSection } from "./_components";
 
 interface Props {
@@ -8,7 +7,7 @@ interface Props {
 
 export default function TopSection({ hide_search_section = false }: Props) {
   return (
-    <TopSectionHolder>
+    <DivCard className="w-primary_app_width h-fit justify-between px-0 py-[10px] mx-auto my-4">
       <Navigator />
 
       {hide_search_section ? null : (
@@ -20,6 +19,6 @@ export default function TopSection({ hide_search_section = false }: Props) {
           <MoreSection />
         </DivCard>
       )}
-    </TopSectionHolder>
+    </DivCard>
   );
-}
+};

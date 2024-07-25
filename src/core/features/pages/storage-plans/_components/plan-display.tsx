@@ -18,8 +18,6 @@ export default async function PlanDisplay({}: Props) {
         return PLANS.sort(({ capacity: a }, { capacity: z }) => +a - +z);
       });
 
-  console.log({ STORAGE_PLANS });
-
   return (
     <StyledStoragePlanDisplay>
       {STORAGE_PLANS?.map((plan) => (
@@ -27,4 +25,4 @@ export default async function PlanDisplay({}: Props) {
       ))}
     </StyledStoragePlanDisplay>
   );
-}
+};

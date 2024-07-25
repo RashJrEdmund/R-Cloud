@@ -1,7 +1,7 @@
 import type { Document } from "@/core/interfaces/entities";
 
-interface ISharedCardProps {
+interface SharedCardProps {
   doc: Document;
 }
 
-export type { ISharedCardProps };
+export type { SharedCardProps };

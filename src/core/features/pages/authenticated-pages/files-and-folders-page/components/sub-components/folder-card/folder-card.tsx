@@ -1,6 +1,6 @@
 "use client";
 
-import { SelectCheckbox, StyledDisplayCard } from "../shared";
+import { SelectCheckbox, GridCardContainer, ListCardContainer } from "../shared";
 import Image from "next/image";
 import { DivCard, TextTag } from "@/core/components/atoms";
 import { useMemo, useEffect, useRef } from "react";
@@ -14,28 +14,28 @@ import {
 import { CONTEXT_MENU_ICONS, MEDIA_ICONS } from "@/core/ui/icons";
 
 import type { MutableRefObject, MouseEventHandler } from "react";
-import type { ISharedCardProps } from "../shared";
+import type { SharedCardProps } from "../shared";
 import type { ContextMenuContent } from "@/core/interfaces/app";
 
-interface Props extends ISharedCardProps {
+interface Props extends SharedCardProps {
   //
-}
+};
 
-interface ICardComponentProps extends Props {
+interface CardComponentProps extends Props {
   // doc: Document already exists as type here.
   handleOpen: MouseEventHandler<HTMLDivElement>;
   folderRef: MutableRefObject<HTMLDivElement | undefined>;
   folderLength: number;
-}
+};
 
 function _GridFolderCard({
   doc: folder,
   folderLength,
   folderRef,
   handleOpen,
-}: ICardComponentProps) {
+}: CardComponentProps) {
   return (
-    <StyledDisplayCard ref={folderRef as any} onDoubleClick={handleOpen}>
+    <GridCardContainer ref={folderRef as any} onDoubleClick={handleOpen}>
       <SelectCheckbox document={folder} />
 
       <Image
@@ -45,7 +45,7 @@ function _GridFolderCard({
         height={100}
       />
 
-      <DivCard className="flex-col items-start">
+      <DivCard className="flex-col items-start w-full">
         <DivCard className="mt-[5px]">
           <TextTag title={folder.name} className="m-0 text-[0.9rem] font-[500]">
             {shortenText(folder.name, FILE_FOLDER_MAX_NAME_LENGTH)}
@@ -64,7 +64,7 @@ function _GridFolderCard({
           </TextTag>
         </DivCard>
       </DivCard>
-    </StyledDisplayCard>
+    </GridCardContainer>
   );
 }
 
@@ -73,32 +73,33 @@ function _ListFolderCard({
   folderLength,
   folderRef,
   handleOpen,
-}: ICardComponentProps) {
+}: CardComponentProps) {
   return (
     <>
-      <DivCard
+      <ListCardContainer
         ref={folderRef as any}
-        className="card relative w-full cursor-pointer flex-nowrap justify-start p-[12px_10px]"
         onDoubleClick={handleOpen}
       >
         <SelectCheckbox document={folder} />
 
-        <Image
-          src={MEDIA_ICONS.folder}
-          alt="file icon"
-          width={32}
-          height={30}
-        />
+        <span className="inline-block min-w-[40px]">
+          <Image
+            src={MEDIA_ICONS.folder}
+            alt="file icon"
+            width={32}
+            height={30}
+          />
+        </span>
 
-        <DivCard className="mb-[10px]">
+        <DivCard className="w-full justify-between">
           <TextTag
             title={folder.name}
-            className="whitespace-nowrap text-[0.9rem] font-[500]"
+            className="inline-block m-0 whitespace-nowrap text-ellipsis overflow-hidden w-full max-w-[calc(100%_-_100px)] text-[0.8rem] sm:text-[0.9rem] font-[500] text-left"
           >
-            {shortenText(folder.name, FILE_FOLDER_MAX_NAME_LENGTH + 14)}
+            {folder.name}
           </TextTag>
 
-          <DivCard className="w-full justify-start gap-[5px]">
+          <DivCard className="w-fit min-w-[90px] justify-between gap-[5px]">
             <TextTag className="whitespace-nowrap text-[0.75rem] text-app_text_grayed">
               {folderLength > 0
                 ? folderLength + ` item${folderLength > 1 ? "s" : ""}`
@@ -110,7 +111,7 @@ function _ListFolderCard({
             </TextTag>
           </DivCard>
         </DivCard>
-      </DivCard>
+      </ListCardContainer>
     </>
   );
 }
@@ -118,7 +119,7 @@ function _ListFolderCard({
 // HOC STARTS HERES
 
 function FolderCardHoc(
-  CardComponent: (props: ICardComponentProps) => JSX.Element
+  CardComponent: (props: CardComponentProps) => JSX.Element
 ) {
   /* FUNC_DESC +=> ===================================================================
   | Could not bring myself to copying the same logic and using in both variations of |
@@ -199,7 +200,7 @@ function FolderCardHoc(
       />
     );
   };
-}
+};
 
 const GridFolderCard = FolderCardHoc(_GridFolderCard);
 

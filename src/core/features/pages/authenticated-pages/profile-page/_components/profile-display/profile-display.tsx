@@ -51,6 +51,9 @@ export default function ProfileDisplay({}: Props) {
 
   useEffect(() => {
     if (!currentUser) return;
+    if (!currentUser) return;
+    if (!currentUser) return;
+    if (!currentUser) return;
     getUserProfile(currentUser.email)
       .then((res) => {
         if (!res.exists()) return;
@@ -66,7 +69,7 @@ export default function ProfileDisplay({}: Props) {
 
   return (
     <StyledProfileDisplay>
-      <DivCard className="items-start gap-4" media_sx="flex-direction: column;">
+      <DivCard className="flex-col sm:flex-row items-start gap-4">
         <ProfileImage />
 
         <DivCard className="flex-col items-start gap-4">
