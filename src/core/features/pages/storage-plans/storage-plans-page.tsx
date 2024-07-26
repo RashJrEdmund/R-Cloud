@@ -8,7 +8,7 @@ interface Props {}
 
 export default function StoragePlansPage({}: Props) {
   return (
-    <MainTag className="w-primary_app_width">
+    <MainTag className="w-primary_app_width justify-start">
       <TopSection hide_search_section />
 
       <DivCard as="section" className="mx-auto mb-8">

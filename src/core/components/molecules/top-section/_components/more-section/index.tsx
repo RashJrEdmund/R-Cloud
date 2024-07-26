@@ -16,12 +16,20 @@ import Image from "next/image";
 import type { ModalWrapperRef } from "@/components/modals/generics";
 import type { ContextMenuContentType } from "@/core/interfaces/app";
 import { MoreVertical } from "lucide-react";
+import {
+  BookmarkX,
+  BoxSelectIcon,
+  Folder,
+  Trash2,
+  Upload
+} from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 interface Props {
   //
 }
 
-export default function MoreSection({}: Props) {
+export default function MoreSection({ }: Props) {
   const contextMenuRef = useRef<ModalWrapperRef>(null);
   const [coordinates, setCoordinates] = useState<{ top: string; left: string }>(
     { top: "-10px", left: "-10px" }
@@ -55,71 +63,73 @@ export default function MoreSection({}: Props) {
     }
   };
 
-  // const MORE_CONTEXT_MENU_CONTENT: ContextMenuContentType[] = useMemo(
-  //   () =>
-  //     selectionStart
-  //       ? [
-  //           {
-  //             text: "Delete Selected",
-  //             icon_url: CONTEXT_MENU_ICONS.delete,
-  //             action: () =>
-  //               callMenuFunctionThenCloseMenu(() =>
-  //                 openBulkDeleteModal(selectedDocs)
-  //               ),
-  //           },
-  //           {
-  //             text: "Stop Selection",
-  //             icon_url: CONTEXT_MENU_ICONS.select,
-  //             action: () =>
-  //               callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
-  //           },
-  //         ]
-  //       : [
-  //           {
-  //             text: "New Folder",
-  //             icon_url: CONTEXT_MENU_ICONS.new_folder,
-  //             action: () =>
-  //               callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
-  //           },
-  //           {
-  //             text: "Upload File(s)",
-  //             icon_url: CONTEXT_MENU_ICONS.upload,
-  //             action: () =>
-  //               callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
-  //           },
-  //           {
-  //             text: "Start Selection",
-  //             icon_url: CONTEXT_MENU_ICONS.select,
-  //             action: () =>
-  //               callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
-  //           },
-  //         ],
-  //   [selectionStart, selectedDocs]
-  // ); // selectionStart is required especially for the start and stop selection option
+  const MORE_CONTEXT_MENU_CONTENT = useMemo(
+    () =>
+      selectionStart
+        ? [
+          {
+            text: "Delete Selected",
+            icon: Trash2,
+            action: () => "",
+            // callMenuFunctionThenCloseMenu(() =>
+            //   openBulkDeleteModal(selectedDocs)
+            // ),
+          },
+          {
+            text: "Stop Selection",
+            icon: BookmarkX,
+            // action: () =>
+            //   callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
+          },
+        ]
+        : [
+          {
+            text: "New Folder",
+            icon: Folder,
+            // action: () =>
+            //   callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
+          },
+          {
+            text: "Upload File(s)",
+            icon: Upload,
+            // action: () =>
+            //   callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
+          },
+          {
+            text: "Start Selection",
+            icon: BoxSelectIcon,
+            // action: () =>
+            //   callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
+          },
+        ],
+    [selectionStart, selectedDocs]
+  );
 
   return (
-    <DivCard className="relative">
-      {" "}
-      {/* This relative positioning is for the ContextMenu */}
-      <TextTag className="cursor-pointer" onClick={toggleModal}>
-        {/* <Image
-          src={CONTEXT_MENU_ICONS.more}
-          alt="Show more"
-          className="cursor-pointer"
-          height={24}
-          width={24}
-        /> */}
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <TextTag className="cursor-pointer" onClick={toggleModal}>
+          <MoreVertical size={20} />
 
-        <MoreVertical />
-        More
-      </TextTag>
+          More
+        </TextTag>
+      </DropdownMenuTrigger>
 
-      {/* <ContextMenu
-        top={coordinates.top}
-        left={coordinates.left}
-        ref={contextMenuRef}
-        content={MORE_CONTEXT_MENU_CONTENT}
-      /> */}
-    </DivCard>
+      <DropdownMenuContent>
+        {
+          MORE_CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon }) => (
+            <DropdownMenuItem
+              key={text}
+              onClick={action}
+              className="bg-app_bg lex items-center justify-start gap-2"
+            >
+              <Icon size={18} />
+
+              {text}
+            </DropdownMenuItem>
+          ))
+        }
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

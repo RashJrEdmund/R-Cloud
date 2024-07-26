@@ -10,7 +10,13 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { useContextMenuContext } from "@/providers/stores/context";
-import { BookmarkX, BoxSelectIcon, Folder, Trash2, Upload } from "lucide-react";
+import {
+  BookmarkX,
+  BoxSelectIcon,
+  Folder,
+  Trash2,
+  Upload  
+} from "lucide-react";
 
 interface MainAndTopSectionProps extends ComponentProps<"main"> {
   //
