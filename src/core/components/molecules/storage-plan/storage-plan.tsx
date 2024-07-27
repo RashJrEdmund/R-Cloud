@@ -93,7 +93,7 @@ export default function StoragePlan({ plan }: Props) {
       ) : (
         <Button
           variant={plan.is_free ? "black" : "blued"}
-          className="w-full p-[10px]"
+          className="w-full p-[10px] duration-300 hover:bg-app_orange"
           title={"subscribe to plan: " + plan.label}
           onClick={() => handleNewSubscription(plan)}
         >

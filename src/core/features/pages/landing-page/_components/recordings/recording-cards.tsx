@@ -2,13 +2,6 @@ import { DivCard, TextTag } from "@/components/atoms";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { RecordingData } from "./types";
 
-const DemoData = [
-  {
-    header: "Get Authenticated",
-    source: "/recordings/r-cloud-not-signed-in-recording.webm",
-  }
-];
-
 function RecordingShimmer() {
   return (
     /**
@@ -26,19 +19,19 @@ function RecordingShimmer() {
   )
 };
 
-function RecordingsCard({ data }: { data: RecordingData }) {
+function RecordingsCard({ data: { heading, source } }: { data: RecordingData }) {
   return (
     <DivCard className="w-full flex-col gap-4">
       <TextTag
         as="h3"
         className="font-semibold text-xl"
       >
-        Get Authenticated
+        {heading}
       </TextTag>
 
       <video
         controls
-        src="/recordings/r-cloud-not-signed-in-recording.webm"
+        src={source}
         className="w-full bg-app_bg_light shadow-app_blue shadow-md md:shadow-lg md:shadow-app_blue"
       >
         <TextTag className="bg-red-500">

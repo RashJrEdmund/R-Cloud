@@ -11,7 +11,7 @@ import { _onAuthStateChange } from "@/core/config/firebase";
 import { useEffect } from "react";
 import { LoadingPage } from "@/features/next-primitive-pages";
 import { useUserStore } from "@/providers/stores/zustand";
-import type { User } from "@/core/interfaces/entities";
+import { extractUserDetailsFromFirebaseAuth } from "./app-wrapper.service";
 
 interface Props {
   children: React.ReactNode;
@@ -38,23 +38,9 @@ export default function AppWrapper({ children }: Props) {
 
         if (res?.user) {
           const { user } = res;
-          const _user = {
-            id: user.uid,
-            email: user.email || "",
-            username: user.displayName || user?.email?.split("@").shift() || "",
-            date_of_birth: "",
-            phone_number: user.phoneNumber || "",
-            photo_url: user.photoURL || "",
-            accessToken: await user.getIdToken(),
-            metadata: {
-              createdAt: (user.metadata as any)?.createdAt || "",
-              lastLoginAt: (user.metadata as any)?.lastLoginAt || "",
-              creationTime: user.metadata.creationTime || "",
-              lastSignInTime: user.metadata.lastSignInTime || "",
-            },
-          };
+          const _user = await extractUserDetailsFromFirebaseAuth(user);
 
-          setCurrentUser(_user as User);
+          setCurrentUser(_user);
         }
       } catch (err) {
         console.warn(err);

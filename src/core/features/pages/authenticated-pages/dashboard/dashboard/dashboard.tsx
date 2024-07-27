@@ -1,5 +1,9 @@
-import { MainTag } from "@/components/atoms";
+import { MainTag, TextTag } from "@/components/atoms";
 
 export default function DashboardPage() {
-  return <MainTag className="w-full bg-app_blue">base dashboard page</MainTag>;
-}
+  return (
+    <MainTag className="w-full bg-app_blue">
+      <TextTag>base dashboard page</TextTag>
+    </MainTag>
+  );
+};

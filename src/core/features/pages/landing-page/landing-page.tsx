@@ -2,14 +2,15 @@ import { DivCard, MainTag, Separator, TextTag } from "@/components/atoms";
 import {
   Illustrations,
   CtaButtons,
-  Recordings
+  Recordings,
+  Footer
 } from "./_components";
 
 interface Props { }
 
 export default function LandingPage({ }: Props) {
   return (
-    <MainTag>
+    <MainTag className="gap-0">
       <DivCard className="w-full flex-col min-h-screen">
         <DivCard as="section" className="mx-auto mt-8 gap-12">
           <TextTag as="h1">
@@ -27,10 +28,13 @@ export default function LandingPage({ }: Props) {
         <CtaButtons />
       </DivCard>
 
+      <Separator className="mb-16" />
+
+      <Recordings />
 
       <Separator className="my-16" />
 
-      <Recordings />
+      <Footer />
     </MainTag>
   );
 }

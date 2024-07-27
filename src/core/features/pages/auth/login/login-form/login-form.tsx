@@ -18,24 +18,34 @@ import { validateLoginForm } from "../../services/form-validations";
 import type { MouseEventHandler } from "react";
 import type { FieldErrors } from "../../services/form-validations/form-interfaces";
 import { cn } from "@/core/lib/utils";
+import { useUserStore } from "@/providers/stores/zustand";
+import { extractUserDetailsFromFirebaseAuth } from "@/providers/guards/app-wrapper/app-wrapper.service";
 
 interface Props {
   //
 }
 
-export default function LoginForm({}: Props) {
+export default function LoginForm({ }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<FieldErrors | null>(null);
   const [formStatus, setFormStatus] = useState<{
     status: number;
     message: string;
   } | null>(null);
+
+  const { setCurrentUser } = useUserStore();
+
   const router = useRouter();
 
   const handleGoogleLogin: MouseEventHandler<HTMLButtonElement> = () => {
     signInOrUpWithGooglePopup().then(async (res) => {
       const user = res?.user;
-      const tokenRes = (res as any)._tokenResponse;
+      const tokenRes = (res as unknown as { _tokenResponse: { isNewUser: boolean } })._tokenResponse;
+
+      const _user = await extractUserDetailsFromFirebaseAuth(user!);
+
+      setCurrentUser(_user);
+
       if (tokenRes.isNewUser) {
         await handleCreateUserProfile(user, null, { setFormStatus });
       } else {
@@ -70,7 +80,11 @@ export default function LoginForm({}: Props) {
 
     // API CALL.
     loginWithEmailAndPass(rawData.email, rawData.password)
-      .then((user) => {
+      .then(async (user) => {
+        const _user = await extractUserDetailsFromFirebaseAuth(user!);
+
+        setCurrentUser(_user);
+
         setFormStatus({
           status: 200,
           message: `welcome back ${user?.displayName || user?.email?.split("@").shift() || "user"}`,

@@ -62,12 +62,16 @@ export default function ProfileDropDown({ setShowDropDown }: Props) {
     ];
 
     if (userProfile && ["ADMIN", "SUPER_ADMIN"].includes(userProfile.role)) {
-      return [...data].splice(3, 0, {
+      const _data = [...data]
+
+      _data.splice(3, 0, ({
         href: "/dashboard",
         text: "Dashboard",
         icon: LayoutDashboard || Gauge,
-      });
-    }
+      }));
+
+      return _data;
+    };
 
     return data;
   }, [userProfile]);

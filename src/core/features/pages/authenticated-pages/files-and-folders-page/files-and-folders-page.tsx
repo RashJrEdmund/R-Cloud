@@ -7,7 +7,7 @@
 | the holder                                          |
 =======================================//============*/
 
-import { FilesFolderDisplay, MainAndTopSection } from "./components";
+import { FilesFolderDisplay } from "./components";
 import { PathWrapper } from "@/providers/guards";
 
 import {

@@ -28,8 +28,8 @@ interface Props {
   //
 }
 
-export default function FilesFolderDisplay({}: Props) {
-  const { documents, currentFolder } = useDocStore();
+export default function FilesFolderDisplay({ }: Props) {
+  const { documents, loadingDocs, currentFolder } = useDocStore();
   const { displayLayout } = useAppStore();
 
   const { readyUploadModal, openNewFolderModal, openBulkDeleteModal } =
@@ -91,21 +91,6 @@ export default function FilesFolderDisplay({}: Props) {
   //         ],
   //   [selectionStart, selectedDocs]
   // );
-
-  // const handleContextMenu: MouseEventHandler<HTMLDivElement> = (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-
-  //   const coordinates = getResponsiveMenuPosition(e as unknown as MouseEvent);
-  //   setContextCoordinates({
-  //     top: coordinates.y + "px",
-  //     left: coordinates.x + "px",
-  //   });
-
-  //   setContextContent(MAIN_CONTEXT_MENU_CONTENT);
-
-  //   contextMenuRef?.current?.open();
-  // };
 
   // DRAG_DROP_HANDLERS_STARTS_HERE!
 
@@ -179,7 +164,7 @@ export default function FilesFolderDisplay({}: Props) {
           {currentFolder === "root" ? "root" : currentFolder.name}
         </TextTag>
 
-        {documents ? (
+        {/* {documents ? (
           documents.length ? (
             <StyledFileFolderDisplay
               className={displayLayout.toLowerCase() + "-layout"} // e.g grid-layout or list-layout
@@ -212,7 +197,51 @@ export default function FilesFolderDisplay({}: Props) {
           )
         ) : (
           <FilesFolderShimmer displayLayout={displayLayout} />
-        )}
+        )} */}
+
+        {
+          (
+            function () { // anonymous component
+
+              if (loadingDocs) return (
+                <FilesFolderShimmer displayLayout={displayLayout} />
+              );
+
+              if (!documents?.length) return (
+                <DivCard className="min-h-[60vh] w-full">
+                  <TextTag
+                    as="h3"
+                    className="text-[2rem] font-semibold text-app_text_grayed"
+                  >
+                    Folder Is Empty
+                  </TextTag>
+                </DivCard>
+              );
+
+              return (
+                <StyledFileFolderDisplay
+                  className={displayLayout.toLowerCase() + "-layout"} // e.g grid-layout or list-layout
+                >
+                  {displayLayout === "GRID"
+                    ? documents.map((doc) =>
+                      doc.type === "FOLDER" ? (
+                        <GridFolderCard key={doc.id} doc={doc} />
+                      ) : (
+                        <GridFileCard key={doc.id} doc={doc} />
+                      )
+                    )
+                    : documents.map((doc) =>
+                      doc.type === "FOLDER" ? (
+                        <ListFolderCard key={doc.id} doc={doc} />
+                      ) : (
+                        <ListFileCard key={doc.id} doc={doc} />
+                      )
+                    )}
+                </StyledFileFolderDisplay>
+              )
+            }
+          )()
+        }
       </MainAndTopSection>
     </>
   );
