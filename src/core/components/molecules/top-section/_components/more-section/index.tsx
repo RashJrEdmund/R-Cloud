@@ -107,7 +107,7 @@ export default function MoreSection({ }: Props) {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger className="outline-none">
         <TextTag className="cursor-pointer" onClick={toggleModal}>
           <MoreVertical size={20} />
 
@@ -115,7 +115,7 @@ export default function MoreSection({ }: Props) {
         </TextTag>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent>
+      <DropdownMenuContent className="p-[10px] pb-8 w-fit min-w-[min(180px,_97vw)]">
         {
           MORE_CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon }) => (
             <DropdownMenuItem

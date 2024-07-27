@@ -45,7 +45,7 @@ export default function DeleteModal({ deleteModalRef, document }: Props) {
         await deleteFolders(email, [document]);
       }
 
-      // I don't wanna use toggleRefetchPath() just after deleting a single file or folder
+      // I don't wanna use toggleRefetchDocs() just after deleting a single file or folder
 
       const update_docs = (documents as Document[]).filter(
         (doc) => doc.id !== document.id
@@ -56,7 +56,7 @@ export default function DeleteModal({ deleteModalRef, document }: Props) {
       // console.warn(error);
     } finally {
       closeModal();
-      // toggleRefetchPath();
+      // toggleRefetchDocs();
     }
   };
 

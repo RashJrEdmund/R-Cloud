@@ -5,8 +5,23 @@ interface UserStore {
   currentUser: User | null;
   setCurrentUser: (currentUser: User | null) => void;
 
+  refetchCurrentUser: boolean;
+  toggleRefetchCurrentUser: () => void;
+
+  currentUserLoading: boolean;
+  setCurrentUserLoading: (state: boolean) => void;
+
+  /**
+   * Use Profile
+  */
   userProfile: UserProfile | null;
   setUserProfile: (profile: UserProfile) => void;
+
+  refetchUserProfile: boolean;
+  toggleRefetchUserProfile: () => void;
+
+  userProfileLoading: boolean;
+  setUserProfileLoading: (state: boolean) => void;
 }
 
 export type { UserStore };

@@ -14,9 +14,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { shortenText } from "@/core/utils/helpers";
 
-interface Props {}
+interface Props { }
 
-export default function ProfileSection({}: Props) {
+export default function ProfileSection({ }: Props) {
   const { currentUser } = useUserStore();
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
 

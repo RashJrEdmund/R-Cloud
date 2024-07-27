@@ -62,7 +62,7 @@ const ContextMenuContextProvider = ({
     []
   );
 
-  const [selectionStart, setSelectionStart] = useState<boolean>(false);
+  const [selectionStart, setSelectionStart] = useState<boolean>(true);
   const [selectedDocs, setSelectedDocs] = useState<Document[]>([]);
 
   const contextMenuRef = useRef<ModalWrapperRef>(null);

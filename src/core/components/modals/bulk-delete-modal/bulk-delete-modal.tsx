@@ -21,7 +21,7 @@ export default function BulkDeleteModal({
   selectedDocs,
 }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { toggleRefetchPath } = useDocStore();
+  const { toggleRefetchDocs } = useDocStore();
 
   const { currentUser } = useUserStore();
 
@@ -58,14 +58,14 @@ export default function BulkDeleteModal({
 
       await deleteDocuments(email, selectedDocs);
 
-      // I don't wanna use toggleRefetchPath() just after deleting a single file or folder
+      // I don't wanna use toggleRefetchDocs() just after deleting a single file or folder
 
-      toggleRefetchPath();
+      toggleRefetchDocs();
     } catch (error) {
       // console.warn(error);
     } finally {
       closeModal();
-      // toggleRefetchPath();
+      // toggleRefetchDocs();
     }
   };
 

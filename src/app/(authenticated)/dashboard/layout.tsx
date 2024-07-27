@@ -32,7 +32,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <DashboardGuard allowedRoles={["ADMIN", "SUPER_ADMIN"]}>
+    <DashboardGuard>
       {children}
     </DashboardGuard>
   );

@@ -67,7 +67,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [docsToDelete, setDocsToDelete] = useState<Document[]>([]);
 
   const { currentUser } = useUserStore();
-  const { toggleRefetchPath, currentFolder } = useDocStore();
+  const { toggleRefetchDocs, currentFolder } = useDocStore();
 
   const folderModalRef = useRef<ModalWrapperRef>();
   const uploadModalRef = useRef<ModalWrapperRef>();
@@ -181,14 +181,14 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
     } finally {
       setIsLoading(false);
       closeUploadModal();
-      toggleRefetchPath();
+      toggleRefetchDocs();
     }
   }, [
     currentUser,
     params.folder_id,
     selectedFiles,
     currentFolder,
-    toggleRefetchPath,
+    toggleRefetchDocs,
   ]);
 
   // useEffect(() => {

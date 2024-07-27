@@ -7,42 +7,49 @@
 | strict-auth-guard.tsx                       |
 =================================//==========*/
 
-import type { User, UserRoles } from "@/core/interfaces/entities";
-import { AuthGuard } from "..";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getUserProfile } from "@/core/config/firebase/fire-store";
+import { useUserStore } from "@/providers/stores/zustand";
+import { LoadingPage } from "@/features/next-primitive-pages";
 
 interface Props {
   children: React.ReactNode;
-  currentUser: User;
-  allowedRoles?: UserRoles[];
 }
 
-export default AuthGuard<Props>(
-  function DashboardGuard({ children, currentUser, allowedRoles }: Props) {
-    const router = useRouter();
+export default function DashboardGuard({ children }: Props) {
+  const router = useRouter();
+  const { currentUser } = useUserStore();
 
-    const { data: userProfile, isLoading } = useQuery({
-      queryKey: ["user-profile", currentUser.id],
-      queryFn: () => getUserProfile(currentUser.email),
-    });
+  const { data: userProfile, isLoading } = useQuery({
+    queryKey: ["user-profile", currentUser!.id],
+    queryFn: () => getUserProfile(currentUser!.email),
+  });
 
-    console.log({ userProfile });
+  if (isLoading) return <LoadingPage />;
 
-    // getUserProfile(currentUser.email)
-    //   .then(res => {
-    //     if (!res.exists()) return;
+  if (!userProfile?.exists()) {
+    router.replace("/login?next=" + window.location);
 
-    //     const profile = res.data();
-    //     setUserProfile(profile);
-    //   })
-    //   .catch(() => router.push('/r-drive'))
-    //   .finally(() => setLoading(false));
-
-    return <>{children}</>;
-  } as () => JSX.Element, // it actually is of type () => JSX.Element | undefined;
-  {
-    strict: true, // to ensure that the current user is gotten
+    return <LoadingPage />
   }
-);
+
+  if (!["ADMIN", "SUPER_ADMIN"].includes(userProfile.data().role)) {
+    router.replace("/r-drive");
+    return <LoadingPage />
+  }
+
+  console.log({ userProfile });
+
+  // getUserProfile(currentUser.email)
+  //   .then(res => {
+  //     if (!res.exists()) return;
+
+  //     const profile = res.data();
+  //     setUserProfile(profile);
+  //   })
+  //   .catch(() => router.push('/r-drive'))
+  //   .finally(() => setLoading(false));
+
+  return <>{children}</>;
+};

@@ -23,7 +23,7 @@ export default function NewFolderModal({ folderModalRef }: Props) {
   const [folderName, setFolderName] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { toggleRefetchPath, currentFolder } = useDocStore();
+  const { toggleRefetchDocs, currentFolder } = useDocStore();
 
   const { currentUser } = useUserStore();
 
@@ -77,7 +77,7 @@ export default function NewFolderModal({ folderModalRef }: Props) {
       // console.warn(error);
     } finally {
       closeModal();
-      toggleRefetchPath();
+      toggleRefetchDocs();
     }
   };
 

@@ -8,36 +8,29 @@
 =====================================//==========*/
 
 import { _onAuthStateChange } from "@/core/config/firebase";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { LoadingPage } from "@/features/next-primitive-pages";
-// import { useUserStore, useDocStore } from "@/providers/stores/zustand";
-import { useParams, useRouter } from "next/navigation";
-import { getOneDocument } from "@/core/config/firebase/fire-store";
-import { User } from "@/core/interfaces/entities";
-import { useDocStore, useUserStore } from "@/providers/stores/zustand";
+import { useUserStore } from "@/providers/stores/zustand";
+import type { User } from "@/core/interfaces/entities";
 
-interface APPWRAPPER {
+interface Props {
   children: React.ReactNode;
-  strict?: boolean;
-}
+};
 
-export default function AppWrapper({ children, strict }: APPWRAPPER) {
-  const [loading, setLoading] = useState<{ user: boolean; doc: boolean }>({
-    user: true,
-    doc: false,
-  }); // loading states for both document and user.
+export default function AppWrapper({ children }: Props) {
+  const {
+    setCurrentUser,
 
-  const [current_user, set_current_user] = useState<User | null>(null);
-  const { setCurrentUser } = useUserStore();
-  const { setCurrentFolder } = useDocStore();
-
-  const params = useParams<{ folder_id: string }>();
-  const router = useRouter();
+    currentUserLoading,
+    setCurrentUserLoading,
+  } = useUserStore();
 
   useEffect(() => {
     let unsubscribe: any = () => null;
 
     (async () => {
+      setCurrentUserLoading(true);
+
       try {
         const res = await _onAuthStateChange();
 
@@ -61,13 +54,12 @@ export default function AppWrapper({ children, strict }: APPWRAPPER) {
             },
           };
 
-          set_current_user(_user as any);
-          setCurrentUser(_user as any);
+          setCurrentUser(_user as User);
         }
       } catch (err) {
         console.warn(err);
       } finally {
-        setLoading((prev) => ({ ...prev, user: false }));
+        setCurrentUserLoading(false);
       }
     })();
 
@@ -76,45 +68,7 @@ export default function AppWrapper({ children, strict }: APPWRAPPER) {
     };
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      if (current_user && params?.folder_id) {
-        /* DESC +=> ==============================================
-        | Meaning you are in the /r-drive/root/[folder_id] route |
-        ==========================================//============*/
-
-        try {
-          setLoading((prev) => ({ ...prev, doc: true }));
-
-          const folder = await getOneDocument(
-            current_user.email,
-            params.folder_id
-          );
-
-          if (folder.exists()) {
-            setCurrentFolder({ ...folder.data(), id: folder.id });
-          } else {
-            router.replace("/r-drive/root");
-            return;
-          }
-        } finally {
-          setLoading((prev) => ({ ...prev, doc: false }));
-        }
-      } else {
-        setCurrentFolder("root");
-        setLoading((prev) => ({ ...prev, doc: false }));
-      } // the default;
-    })();
-  }, [params, current_user]);
-
-  if (loading.user || loading.doc) return <LoadingPage />;
-
-  if (strict) {
-    if (!current_user) {
-      router.replace("/login");
-      return null;
-    }
-  }
+  if (currentUserLoading) return <LoadingPage />;
 
   return <>{children}</>;
-}
+};

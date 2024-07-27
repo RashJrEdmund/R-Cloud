@@ -1,46 +1,31 @@
 "use client";
 
-import { DivCard, TextTag } from "@/components/atoms";
+import { DivCard } from "@/components/atoms";
 import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { logOut } from "@/core/config/firebase";
 import { useDocStore, useUserStore } from "@/providers/stores/zustand";
-import { FolderRoot, HardDrive, LogOut, Stamp, User } from "lucide-react";
+import {
+  FolderRoot,
+  Gauge,
+  HardDrive,
+  LayoutDashboard,
+  LogOut,
+  Stamp,
+  User
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 
 interface Props {
   setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const DROP_DOWN_CONTENT_1 = [
-  {
-    href: "/r-drive",
-    text: "R - Drive",
-    icon: HardDrive,
-  },
-  {
-    href: "/r-drive/root",
-    text: "Root",
-    icon: FolderRoot,
-  },
-  {
-    href: "/profile",
-    text: "My Profile",
-    icon: User,
-  },
-  {
-    href: "/storage-plans",
-    text: "Storage Plans",
-    icon: Stamp,
-  },
-];
+};
 
 export default function ProfileDropDown({ setShowDropDown }: Props) {
-  const { setCurrentUser } = useUserStore();
+  const { setCurrentUser, userProfile } = useUserStore();
   const { setDocuments } = useDocStore();
   const router = useRouter();
 
@@ -52,15 +37,48 @@ export default function ProfileDropDown({ setShowDropDown }: Props) {
     });
   };
 
-  const DROP_DOWN_CONTENT_2 = useMemo(() => {
-    return [
+  const DROP_DOWN_CONTENT_1 = useMemo(() => {
+    const data = [
       {
-        action: handleLogOut,
-        text: "Log Out",
-        icon: LogOut,
+        href: "/r-drive",
+        text: "R - Drive",
+        icon: HardDrive,
+      },
+      {
+        href: "/r-drive/root",
+        text: "Root",
+        icon: FolderRoot,
+      },
+      {
+        href: "/profile",
+        text: "My Profile",
+        icon: User,
+      },
+      {
+        href: "/storage-plans",
+        text: "Storage Plans",
+        icon: Stamp,
       },
     ];
-  }, [router]);
+
+    if (userProfile && ["ADMIN", "SUPER_ADMIN"].includes(userProfile.role)) {
+      return [...data].splice(3, 0, {
+        href: "/dashboard",
+        text: "Dashboard",
+        icon: LayoutDashboard || Gauge,
+      });
+    }
+
+    return data;
+  }, [userProfile]);
+
+  const DROP_DOWN_CONTENT_2 = useMemo(() => ([
+    {
+      action: handleLogOut,
+      text: "Log Out",
+      icon: LogOut,
+    },
+  ]), [router]);
 
   return (
     <DivCard className="min-w-[150px] flex-col items-start gap-1 rounded-[8px] bg-app_white p-[1rem_1rem_10px_10px]">
@@ -88,4 +106,4 @@ export default function ProfileDropDown({ setShowDropDown }: Props) {
       ))}
     </DivCard>
   );
-}
+};

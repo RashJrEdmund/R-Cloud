@@ -10,8 +10,40 @@ interface Props {
   children: React.ReactNode;
 }
 
-function Layout({ children }: Props) {
-  return <>{children}</>;
-}
+export default function Layout({ children }: Props) {
+  return <AuthGuard>{children}</AuthGuard>;
+};
 
-export default AuthGuard(Layout, { strict: true }); // to ensure that the current user is gotten
+// function AuthGuard({ children }: { children: React.ReactNode }) {
+//   const { currentUser, userLoading } = useUserStore();
+//   const router = useRouter();
+
+//   if (userLoading) {
+//     return "Loading ..." // loading component
+//   }
+
+//   if (!currentUser) {
+//     router.push("/login?next=" + window.location)
+//     return null;
+//   }
+
+//   return <>{children}</>
+// };
+
+// function _AuthGuard<T>(Component: (p: T) => JSX.Element) {
+//   return function Guard(props: Partial<T>) {
+//     const { currentUser, userLoading } = useUserStore();
+//     const router = useRouter();
+
+//     if (userLoading) {
+//       return "Loading ..." // loading component
+//     }
+
+//     if (!currentUser) {
+//       router.push("/login?next=" + window.location)
+//       return null;
+//     }
+
+//     return <Component {...(props as unknown as T)} />
+//   }
+// };

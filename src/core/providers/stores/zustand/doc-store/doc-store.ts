@@ -9,10 +9,22 @@ export const useDocStore = create<DocStore>((set) => ({
   currentFolder: "root",
   setCurrentFolder: (currentFolder) => set({ currentFolder }),
 
-  refetchPath: false,
-  toggleRefetchPath: () =>
+  refetchDocs: false,
+  toggleRefetchDocs: () =>
     set((prev) => ({
       ...prev,
-      refetchPath: !prev.refetchPath,
+      refetchDocs: !prev.refetchDocs,
     })),
+
+  loadingDocs: true,
+  setLoadingDocs: (loadingDocs) => set({ loadingDocs }),
+
+  loadingCurrentFolder: true,
+  setLoadingCurrentFolder: (loadingCurrentFolder) => set({ loadingCurrentFolder }),
+
+  upLoadingDocs: false,
+  setUpLoadingDocs: (upLoadingDocs) => set({ upLoadingDocs }),
+
+  uploadProgress: 0,
+  setUploadProgress: (uploadProgress) => set({ uploadProgress }),
 }));

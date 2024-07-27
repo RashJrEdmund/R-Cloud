@@ -10,7 +10,7 @@ interface Props { }
 export default function LandingPage({ }: Props) {
   return (
     <MainTag>
-      {/* <DivCard className="w-full flex-col min-h-screen"> */}
+      <DivCard className="w-full flex-col min-h-screen">
         <DivCard as="section" className="mx-auto mt-8 gap-12">
           <TextTag as="h1">
             <TextTag className="whitespace-nowrap text-[1.25rem] font-semibold">
@@ -23,9 +23,10 @@ export default function LandingPage({ }: Props) {
         </DivCard>
 
         <Illustrations />
-      {/* </DivCard> */}
 
-      <CtaButtons />
+        <CtaButtons />
+      </DivCard>
+
 
       <Separator className="my-16" />
 

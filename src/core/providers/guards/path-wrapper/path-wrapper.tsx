@@ -6,11 +6,10 @@
 | for the parent folder                              |
 ========================================//==========*/
 
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { useDocStore, useUserStore } from "@/providers/stores/zustand";
 
 import { useParams, useRouter } from "next/navigation";
-import { LoadingPage } from "@/features/next-primitive-pages";
 
 import type { Document } from "@/core/interfaces/entities";
 import {
@@ -21,15 +20,22 @@ import type { DocumentSnapshot } from "firebase/firestore";
 
 interface Props {
   children: React.ReactNode;
-}
+};
 
 export default function PathWrapper({ children }: Props) {
-  const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
   const params = useParams<{ folder_id: string }>();
 
   const { currentUser } = useUserStore();
-  const { setDocuments, refetchPath, setCurrentFolder } = useDocStore();
+  const {
+    setDocuments,
+    setLoadingDocs,
+
+    setCurrentFolder,
+    setLoadingCurrentFolder,
+
+    refetchDocs,
+  } = useDocStore();
 
   // const content: Document[] = [];
 
@@ -38,50 +44,51 @@ export default function PathWrapper({ children }: Props) {
 
     if (params.folder_id) {
       folder = await getOneDocument(currentUser?.email || "", params.folder_id);
-    }
-
+    };
+    
+    console.log({
+      if_folder_before_if_statement: folder
+    });
     if (folder && !folder.exists()) {
+      console.log({
+        if_folder_in_if_statement: folder
+      });
+
       return router.replace("/r-drive/root"); // going back to root;
-    }
+    };
+
+    setLoadingCurrentFolder(false);
 
     if (folder?.exists()) setCurrentFolder({ ...folder.data(), id: folder.id });
 
     listFolderDocuments(currentUser?.email || "", folder_id).then((res) => {
       if (res.empty) {
         setDocuments([]);
+        setLoadingDocs(false);
         return;
-      }
+      };
 
-      const data: Document[] = [];
-
-      res.forEach((doc) => {
-        const _: Document = {
-          ...doc.data(),
-          id: doc.id,
-          metadata: doc.metadata,
-        } as Document;
-        data.push(_);
-      });
-
-      // console.clear();
-      // console.log(data);
-
-      setDocuments(data);
+      setDocuments(res.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+        metadata: doc.metadata,
+      })));
     });
   }, []);
 
   useEffect(() => {
+    setLoadingDocs(true);
+    setLoadingCurrentFolder(true);
+
     fetchDocuments(params.folder_id || "root").finally(() => {
-      setLoading(false);
+      setLoadingDocs(false);
     });
 
     // fetch default r-drive/root data. i.e data from supposed root director
     return () => {
       setDocuments(null);
     };
-  }, [params, refetchPath]);
-
-  if (loading) return <LoadingPage />;
+  }, [params, refetchDocs]);
 
   return <>{children}</>;
 }

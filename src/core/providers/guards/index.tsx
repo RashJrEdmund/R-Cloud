@@ -4,7 +4,9 @@
 
 export { default as AppWrapper } from "./app-wrapper/app-wrapper";
 
-export { default as AuthGuard } from "./loose-auth-guard/loose-auth-guard";
+export { default as AuthGuard } from "./auth-guard/auth-guard";
+
+// export { default as LooseGuard } from "./loose-auth-guard/loose-auth-guard";
 
 export { default as PathWrapper } from "./path-wrapper/path-wrapper";
 
