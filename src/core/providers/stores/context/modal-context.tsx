@@ -9,10 +9,10 @@ import {
   createContext,
   useContext,
   useState,
-  useMemo,
   useCallback,
   useRef,
 } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import {
   BulkDeleteModal,
   DeleteModal,
@@ -40,8 +40,11 @@ interface IUploadDetails {
 }
 
 interface IModalContext {
+  newFolderDialogOpen: boolean;
+  setNewFolderDialogOpen: Dispatch<SetStateAction<boolean>>;
+
   readyUploadModal: (files: FileList, items?: DataTransferItemList) => void;
-  openNewFolderModal: () => void;
+  // openNewFolderModal: () => void;
   openEditDocumentModal: (_: Document) => void;
   openDeleteDocumentModal: (_: Document) => void;
   openBulkDeleteModal: (selectedDocs: Document[]) => void;
@@ -50,6 +53,11 @@ interface IModalContext {
 const ModalContext = createContext<IModalContext | null>(null);
 
 const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
+  // START MODAL TOGGLE STATES
+  const [newFolderDialogOpen, setNewFolderDialogOpen] =
+    useState<boolean>(false);
+
+  // END MODAL TOGGLE STATES
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [uploadDetails, setUploadDetails] = useState<IUploadDetails | null>(
     null
@@ -69,7 +77,6 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const { currentUser } = useUserStore();
   const { toggleRefetchDocs, currentFolder } = useDocStore();
 
-  const folderModalRef = useRef<ModalWrapperRef>();
   const uploadModalRef = useRef<ModalWrapperRef>();
   const editModalRef = useRef<ModalWrapperRef>();
   const deleteModalRef = useRef<ModalWrapperRef>();
@@ -87,10 +94,6 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
       document.querySelector<HTMLInputElement>("#file-upload-field");
 
     if (fileUploadField) fileUploadField.value = ""; // making sure upload file is cleared after file selection.
-  };
-
-  const openNewFolderModal = () => {
-    folderModalRef.current?.open();
   };
 
   const readyUploadModal = (files: FileList, items?: DataTransferItemList) => {
@@ -195,19 +198,18 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   //   if (progress) console.log('progress changing', progress);
   // }, [progress]);
 
-  const contextValue = useMemo<IModalContext>(
-    () => ({
-      readyUploadModal,
-      openNewFolderModal,
-      openEditDocumentModal,
-      openDeleteDocumentModal,
-      openBulkDeleteModal,
-    }),
-    []
-  );
-
   return (
-    <ModalContext.Provider value={contextValue}>
+    <ModalContext.Provider
+      value={{
+        newFolderDialogOpen,
+        setNewFolderDialogOpen,
+
+        readyUploadModal,
+        openEditDocumentModal,
+        openDeleteDocumentModal,
+        openBulkDeleteModal,
+      }}
+    >
       <>
         <UploadModal
           uploadModalRef={uploadModalRef}
@@ -219,20 +221,26 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
           progress={progress}
           currentUploadIndx={currentUploadIndx}
         />
-        <NewFolderModal folderModalRef={folderModalRef} />
+
+        <NewFolderModal />
+
         <EditModal editModalRef={editModalRef} document={documentToBeEdited} />
+
         <DeleteModal
           deleteModalRef={deleteModalRef}
           document={documentToBeDeleted}
         />
+
         <DeleteModal
           deleteModalRef={deleteModalRef}
           document={documentToBeDeleted}
         />
+
         <BulkDeleteModal
           bulkDeleteModalRef={bulkDeleteModalRef}
           selectedDocs={docsToDelete}
         />
+
         <FileViewer />
         {/* Uses search params to open or close, so has no need for ref, or any other props */}
         {children}

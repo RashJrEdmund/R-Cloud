@@ -14,7 +14,7 @@ import {
 } from "@/core/utils/helpers";
 import { FILE_FOLDER_MAX_NAME_LENGTH } from "@/core/utils/constants";
 import {
-  useContextMenuContext,
+  useContextMenuStore,
   useModalContext,
 } from "@/providers/stores/context";
 import { useAppStore } from "@/providers/stores/zustand";
@@ -146,7 +146,7 @@ function FileCardHoc(
       handleDocCardContextMenu,
 
       selectionStart,
-    } = useContextMenuContext();
+    } = useContextMenuStore();
 
     const { openEditDocumentModal, openDeleteDocumentModal } =
       useModalContext();

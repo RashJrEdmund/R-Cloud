@@ -13,7 +13,7 @@ interface UserStore {
 
   /**
    * Use Profile
-  */
+   */
   userProfile: UserProfile | null;
   setUserProfile: (profile: UserProfile) => void;
 

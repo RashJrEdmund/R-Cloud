@@ -25,7 +25,7 @@ interface Props {
   //
 }
 
-export default function LoginForm({ }: Props) {
+export default function LoginForm({}: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<FieldErrors | null>(null);
   const [formStatus, setFormStatus] = useState<{
@@ -40,7 +40,9 @@ export default function LoginForm({ }: Props) {
   const handleGoogleLogin: MouseEventHandler<HTMLButtonElement> = () => {
     signInOrUpWithGooglePopup().then(async (res) => {
       const user = res?.user;
-      const tokenRes = (res as unknown as { _tokenResponse: { isNewUser: boolean } })._tokenResponse;
+      const tokenRes = (
+        res as unknown as { _tokenResponse: { isNewUser: boolean } }
+      )._tokenResponse;
 
       const _user = await extractUserDetailsFromFirebaseAuth(user!);
 

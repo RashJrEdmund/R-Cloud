@@ -31,12 +31,12 @@ export default function DashboardGuard({ children }: Props) {
   if (!userProfile?.exists()) {
     router.replace("/login?next=" + window.location);
 
-    return <LoadingPage />
+    return <LoadingPage />;
   }
 
   if (!["ADMIN", "SUPER_ADMIN"].includes(userProfile.data().role)) {
     router.replace("/r-drive");
-    return <LoadingPage />
+    return <LoadingPage />;
   }
 
   console.log({ userProfile });
@@ -52,4 +52,4 @@ export default function DashboardGuard({ children }: Props) {
   //   .finally(() => setLoading(false));
 
   return <>{children}</>;
-};
+}

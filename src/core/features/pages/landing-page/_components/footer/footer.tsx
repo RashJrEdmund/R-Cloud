@@ -20,7 +20,7 @@ const Socials = [
     username: "rashjredmund",
     icon: Github,
     url: "https://github.com/rashjredmund",
-  }
+  },
 ];
 
 const R_APPS_URL = "#";
@@ -29,27 +29,32 @@ const MY_EMAIL = "orashusedmund@gmail.com";
 
 export default function Footer() {
   const handleEmailCopy = () => {
-    navigator.clipboard.writeText(MY_EMAIL)
-      .then(() => {
-        toast("Email copied to clipboard", {
-          description: "do write me 🤗"
-        });
+    navigator.clipboard.writeText(MY_EMAIL).then(() => {
+      toast("Email copied to clipboard", {
+        description: "do write me 🤗",
       });
+    });
   };
 
   return (
-    <DivCard as="footer" className="w-full min-h-[400px] flex flex-col items-center justify-center gap-8">
-      <DivCard className="w-primary_app_width justify-between items-start gap-6 flex-col md:flex-row">
+    <DivCard
+      as="footer"
+      className="flex min-h-[400px] w-full flex-col items-center justify-center gap-8"
+    >
+      <DivCard className="w-primary_app_width flex-col items-start justify-between gap-6 md:flex-row">
         <DivCard className="flex-col items-start font-semibold">
-          <TextTag as="h3" className="break-all flex-wrap items-start justify-start text-sm">
-            This is the main application in the {" "}
+          <TextTag
+            as="h3"
+            className="flex-wrap items-start justify-start break-all text-sm"
+          >
+            This is the main application in the{" "}
             <Link
-              className="inline w-fit text-app_blue border-b border-b-app_blue cursor-pointer whitespace-nowrap"
+              className="inline w-fit cursor-pointer whitespace-nowrap border-b border-b-app_blue text-app_blue"
               target="_blank"
               href={R_APPS_URL}
             >
               r-apps
-            </Link> {" "}
+            </Link>{" "}
             Collection
           </TextTag>
 
@@ -65,50 +70,41 @@ export default function Footer() {
         </DivCard>
 
         <DivCard className="flex-col items-start">
-          <TextTag className="text-sm font-semibold">
-            Find Rash
-          </TextTag>
+          <TextTag className="text-sm font-semibold">Find Rash</TextTag>
 
-          <TextTag
-            className="text-sm w-fit my-1"
-          >
+          <TextTag className="my-1 w-fit text-sm">
             <TextTag className="flex-nowrap whitespace-nowrap text-sm">
               <Mail size={15} />
               {MY_EMAIL}
 
               <Copy
                 size={15}
-                className="text-app_text ml-2"
+                className="ml-2 cursor-pointer text-app_text"
                 onClick={handleEmailCopy}
               />
             </TextTag>
           </TextTag>
 
-          {
-            Socials.map(({ username, url, icon: Icon }) => (
-              <Link
-                key={url}
-                href={url}
-                target="_blank"
-                className="text-sm w-fit underline text-app_blue my-1"
-              >
-                <TextTag className="flex-nowrap whitespace-nowrap text-sm text-app_blue">
-                  <Icon size={15} />
-                  @{username}
-                </TextTag>
-              </Link>
-            ))
-          }
+          {Socials.map(({ username, url, icon: Icon }) => (
+            <Link
+              key={url}
+              href={url}
+              target="_blank"
+              className="my-1 w-fit text-sm text-app_blue underline"
+            >
+              <TextTag className="flex-nowrap whitespace-nowrap text-sm text-app_blue">
+                <Icon size={15} />@{username}
+              </TextTag>
+            </Link>
+          ))}
         </DivCard>
       </DivCard>
 
-      <DivCard className="w-primary_app_width text-app_text_grayed text-center text-sm">
+      <DivCard className="w-primary_app_width text-center text-sm text-app_text_grayed">
         &copy; {new Date().getFullYear()} | R - Cloud From r - apps
-
         <br />
-
         All Rights Reserved
       </DivCard>
     </DivCard>
-  )
+  );
 }

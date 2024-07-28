@@ -8,7 +8,10 @@ import {
 } from "@/components/ui/context-menu";
 
 import type { Document } from "@/core/interfaces/entities";
-import { useContextMenuContext, useModalContext } from "@/providers/stores/context";
+import {
+  useContextMenuStore,
+  useModalContext,
+} from "@/providers/stores/context";
 import { BookOpen, Copy, Edit, Trash2, Upload } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useMemo } from "react";
@@ -22,9 +25,7 @@ function FileContextMenu({ doc: file, children }: Props) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const {
-    selectionStart,
-  } = useContextMenuContext();
+  const { selectionStart } = useContextMenuStore();
 
   const {
     openEditDocumentModal,
@@ -71,24 +72,22 @@ function FileContextMenu({ doc: file, children }: Props) {
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger className="bg-app_orange h-fit p-0 w-full">
+      <ContextMenuTrigger className="h-fit w-full p-0">
         {children}
       </ContextMenuTrigger>
 
-      <ContextMenuContent className="p-[10px] pb-8 w-fit min-w-[min(180px,_97vw)]">
-        {
-          FILE_CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon }) => (
-            <ContextMenuItem
-              key={text}
-              onClick={action}
-              className="bg-app_bg lex items-center justify-start gap-2"
-            >
-              <Icon size={18} />
+      <ContextMenuContent className="w-fit min-w-[min(180px,_97vw)] p-[10px] pb-8">
+        {FILE_CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon }) => (
+          <ContextMenuItem
+            key={text}
+            onClick={action}
+            className="lex items-center justify-start gap-2 bg-app_bg"
+          >
+            <Icon size={18} />
 
-              {text}
-            </ContextMenuItem>
-          ))
-        }
+            {text}
+          </ContextMenuItem>
+        ))}
       </ContextMenuContent>
     </ContextMenu>
   );

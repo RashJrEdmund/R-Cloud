@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AppModalWrapper } from "@/components/modals/generics";
-import { TextTag, DivCard } from "@/components/atoms";
+import { DivCard } from "@/components/atoms";
 import { InputField } from "@/components/molecules";
 import { useDocStore, useUserStore } from "@/providers/stores/zustand";
 import { useParams } from "next/navigation";
@@ -11,17 +10,29 @@ import {
   updateFolderSize,
 } from "@/core/config/firebase/fire-store";
 
-import type { MutableRefObject, FormEventHandler } from "react";
-import type { ModalWrapperRef } from "@/components/modals/generics";
+import type { FormEventHandler } from "react";
 import type { Document } from "@/core/interfaces/entities";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { useModalContext } from "@/providers/stores/context";
 
 interface Props {
-  folderModalRef: MutableRefObject<ModalWrapperRef | undefined>;
+  //
 }
 
-export default function NewFolderModal({ folderModalRef }: Props) {
+export default function NewFolderModal({}: Props) {
   const [folderName, setFolderName] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { newFolderDialogOpen, setNewFolderDialogOpen } = useModalContext();
 
   const { toggleRefetchDocs, currentFolder } = useDocStore();
 
@@ -30,14 +41,13 @@ export default function NewFolderModal({ folderModalRef }: Props) {
   const params = useParams<{ folder_id: string }>();
 
   const closeModal = () => {
-    folderModalRef.current?.close();
+    setNewFolderDialogOpen(false);
     setIsLoading(false);
   };
 
-  const uploadFolder: FormEventHandler<HTMLDivElement> = async (e) => {
-    e.preventDefault();
-
+  const uploadFolder = async () => {
     if (!folderName.trim() || !currentUser) return;
+
     try {
       setIsLoading(true);
 
@@ -81,32 +91,56 @@ export default function NewFolderModal({ folderModalRef }: Props) {
     }
   };
 
-  return (
-    <AppModalWrapper
-      ref={folderModalRef as any}
-      use_base_btns_instead
-      isLoading={isLoading}
-      confirmMsg="Create"
-      loadingMsg="Creating..."
-      cancelAction={closeModal}
-      confirmAction={uploadFolder}
-    >
-      <DivCard
-        as="form"
-        className="w-full flex-col items-start justify-start gap-[10px]"
-        onSubmit={uploadFolder}
-      >
-        <TextTag>New Folder</TextTag>
+  const handleFormSubmit: FormEventHandler<HTMLDivElement> = async (e) => {
+    e.preventDefault();
 
-        <InputField
-          leave_active
-          field_title="Folder name"
-          field_name="folder-name"
-          value={folderName}
-          onValueChange={(e) => setFolderName(e.target.value)}
-          error={null}
-        />
-      </DivCard>
-    </AppModalWrapper>
+    uploadFolder();
+  };
+
+  return (
+    <Dialog
+      open={isLoading ? true : newFolderDialogOpen}
+      onOpenChange={setNewFolderDialogOpen}
+    >
+      <DialogContent>
+        <DialogHeader className="w-full">
+          <DialogTitle className="text-app_text">New Folder</DialogTitle>
+          <DialogDescription>Create new empty folder.</DialogDescription>
+        </DialogHeader>
+
+        <DivCard
+          as="form"
+          className="w-full items-start justify-start"
+          onSubmit={handleFormSubmit}
+        >
+          <InputField
+            leave_active
+            placeholder="New Folder"
+            field_title="Folder name"
+            field_name="folder-name"
+            value={folderName}
+            onValueChange={(e) => setFolderName(e.target.value)}
+            error={null}
+          />
+        </DivCard>
+
+        <DialogFooter className="flex w-full items-center justify-end">
+          <DialogClose asChild disabled={isLoading}>
+            <Button className="w-fit outline-none" variant="error">
+              Cancel
+            </Button>
+          </DialogClose>
+
+          <Button
+            variant="blued"
+            disabled={isLoading}
+            onClick={uploadFolder}
+            className="w-fit min-w-[100px]"
+          >
+            {isLoading ? "Creating..." : "Create"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

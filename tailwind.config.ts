@@ -94,7 +94,7 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       screens: {
-        "mdxl": "1000px",
+        mdxl: "1000px",
       },
       spacing: {
         primary_app_width: "var(--primary_app_width)",

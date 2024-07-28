@@ -15,7 +15,7 @@ import { extractUserDetailsFromFirebaseAuth } from "./app-wrapper.service";
 
 interface Props {
   children: React.ReactNode;
-};
+}
 
 export default function AppWrapper({ children }: Props) {
   const {
@@ -57,4 +57,4 @@ export default function AppWrapper({ children }: Props) {
   if (currentUserLoading) return <LoadingPage />;
 
   return <>{children}</>;
-};
+}

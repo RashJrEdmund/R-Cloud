@@ -14,7 +14,7 @@ import {
   LayoutDashboard,
   LogOut,
   Stamp,
-  User
+  User,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -22,7 +22,7 @@ import { useMemo } from "react";
 
 interface Props {
   setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>;
-};
+}
 
 export default function ProfileDropDown({ setShowDropDown }: Props) {
   const { setCurrentUser, userProfile } = useUserStore();
@@ -62,27 +62,30 @@ export default function ProfileDropDown({ setShowDropDown }: Props) {
     ];
 
     if (userProfile && ["ADMIN", "SUPER_ADMIN"].includes(userProfile.role)) {
-      const _data = [...data]
+      const _data = [...data];
 
-      _data.splice(3, 0, ({
+      _data.splice(3, 0, {
         href: "/dashboard",
         text: "Dashboard",
         icon: LayoutDashboard || Gauge,
-      }));
+      });
 
       return _data;
-    };
+    }
 
     return data;
   }, [userProfile]);
 
-  const DROP_DOWN_CONTENT_2 = useMemo(() => ([
-    {
-      action: handleLogOut,
-      text: "Log Out",
-      icon: LogOut,
-    },
-  ]), [router]);
+  const DROP_DOWN_CONTENT_2 = useMemo(
+    () => [
+      {
+        action: handleLogOut,
+        text: "Log Out",
+        icon: LogOut,
+      },
+    ],
+    [router]
+  );
 
   return (
     <DivCard className="min-w-[150px] flex-col items-start gap-1 rounded-[8px] bg-app_white p-[1rem_1rem_10px_10px]">
@@ -110,4 +113,4 @@ export default function ProfileDropDown({ setShowDropDown }: Props) {
       ))}
     </DivCard>
   );
-};
+}

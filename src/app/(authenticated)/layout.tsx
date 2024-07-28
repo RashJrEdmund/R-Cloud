@@ -12,7 +12,7 @@ interface Props {
 
 export default function Layout({ children }: Props) {
   return <AuthGuard>{children}</AuthGuard>;
-};
+}
 
 // function AuthGuard({ children }: { children: React.ReactNode }) {
 //   const { currentUser, userLoading } = useUserStore();

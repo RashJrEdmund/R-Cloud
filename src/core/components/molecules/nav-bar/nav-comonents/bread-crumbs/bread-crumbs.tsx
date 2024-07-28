@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useDocStore } from "@/providers/stores/zustand";
 import { shortenText } from "@/core/utils/helpers";
+import { LoaderCircle } from "lucide-react";
 
 interface Props {
   //
@@ -24,7 +25,22 @@ const StyledBreadCrumbs = styled.div`
 export default function BreadCrumbs({}: Props) {
   const pathname = usePathname();
 
-  const { currentFolder } = useDocStore();
+  const { currentFolder, loadingCurrentFolder } = useDocStore();
+
+  if (loadingCurrentFolder && currentFolder !== "root")
+    return (
+      <StyledBreadCrumbs>
+        <Link href="/r-drive">
+          <TextTag className="ml-1 cursor-pointer">/ r-drive</TextTag>
+        </Link>
+        <Link href="/r-drive/root">
+          <TextTag className="ml-1 cursor-pointer">/ root</TextTag>
+        </Link>
+        <TextTag className="ml-1 cursor-default">
+          / <LoaderCircle size={20} className="animate-spin text-app_blue" />
+        </TextTag>
+      </StyledBreadCrumbs>
+    );
 
   let currentLink = "";
 

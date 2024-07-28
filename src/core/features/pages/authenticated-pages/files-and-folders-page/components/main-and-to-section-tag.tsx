@@ -9,29 +9,24 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import { useContextMenuContext } from "@/providers/stores/context";
 import {
-  BookmarkX,
-  BoxSelectIcon,
-  Folder,
-  Trash2,
-  Upload  
-} from "lucide-react";
+  useContextMenuStore,
+  useModalContext,
+} from "@/providers/stores/context";
+import { BookmarkX, BoxSelectIcon, Folder, Trash2, Upload } from "lucide-react";
 
 interface MainAndTopSectionProps extends ComponentProps<"main"> {
   //
-};
+}
 
 function MainAndTopSection({
   className,
   children,
   ...restProps
 }: MainAndTopSectionProps) {
+  const { setNewFolderDialogOpen } = useModalContext();
 
-  const {
-    selectionStart,
-    selectedDocs,
-  } = useContextMenuContext();
+  const { selectionStart, selectedDocs } = useContextMenuStore();
 
   const CONTEXT_MENU_CONTENT = useMemo(
     () =>
@@ -41,9 +36,9 @@ function MainAndTopSection({
               text: "Delete Selected",
               icon: Trash2,
               action: () => "",
-                // callMenuFunctionThenCloseMenu(() =>
-                //   openBulkDeleteModal(selectedDocs)
-                // ),
+              // callMenuFunctionThenCloseMenu(() =>
+              //   openBulkDeleteModal(selectedDocs)
+              // ),
             },
             {
               text: "Stop Selection",
@@ -56,6 +51,7 @@ function MainAndTopSection({
             {
               text: "New Folder",
               icon: Folder,
+              action: () => setNewFolderDialogOpen(true),
               // action: () =>
               //   callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
             },
@@ -78,27 +74,28 @@ function MainAndTopSection({
   return (
     <ContextMenu>
       <ContextMenuTrigger className="">
-        <MainTag {...(restProps as {})} className={cn("justify-start", className)}>
+        <MainTag
+          {...(restProps as {})}
+          className={cn("justify-start", className)}
+        >
           <TopSection />
 
           {children}
         </MainTag>
       </ContextMenuTrigger>
 
-      <ContextMenuContent className="p-[10px] pb-8 w-fit min-w-[min(180px,_97vw)]">
-        {
-          CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon }) => (
-            <ContextMenuItem
-              key={text}
-              onClick={action}
-              className="bg-app_bg lex items-center justify-start gap-2"
-            >
-              <Icon size={18} />
+      <ContextMenuContent className="w-fit min-w-[min(180px,_97vw)] p-[10px] pb-8">
+        {CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon }) => (
+          <ContextMenuItem
+            key={text}
+            onClick={action}
+            className="lex items-center justify-start gap-2 bg-app_bg"
+          >
+            <Icon size={18} />
 
-              {text}
-            </ContextMenuItem>
-          ))
-        }
+            {text}
+          </ContextMenuItem>
+        ))}
       </ContextMenuContent>
     </ContextMenu>
   );

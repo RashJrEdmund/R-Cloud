@@ -12,14 +12,14 @@ import { useRouter } from "next/navigation";
 import { shortenText } from "@/core/utils/helpers";
 import { FILE_FOLDER_MAX_NAME_LENGTH } from "@/core/utils/constants";
 import {
-  useContextMenuContext,
+  useContextMenuStore,
   useModalContext,
 } from "@/providers/stores/context";
 import { CONTEXT_MENU_ICONS, MEDIA_ICONS } from "@/core/ui/icons";
 import {
   ContextMenu,
   ContextMenuContent,
-  ContextMenuTrigger
+  ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 
 import type { MutableRefObject, MouseEventHandler } from "react";
@@ -145,7 +145,7 @@ function FolderCardHoc(
       handleDocCardContextMenu,
 
       selectionStart,
-    } = useContextMenuContext();
+    } = useContextMenuStore();
 
     const {
       openEditDocumentModal,

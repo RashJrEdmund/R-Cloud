@@ -5,7 +5,7 @@ import { DivCard, TextTag } from "@/components/atoms";
 import StyledFileFolderDisplay from "./styled-file-folder-display";
 import { useDocStore, useAppStore } from "@/providers/stores/zustand";
 import {
-  useContextMenuContext,
+  useContextMenuStore,
   useModalContext,
 } from "@/providers/stores/context";
 import {
@@ -23,17 +23,18 @@ import type { DragEventHandler, MouseEventHandler } from "react";
 import type { ContextMenuContentType } from "@/core/interfaces/app";
 import FilesFolderShimmer from "./sub-components/files-folder-shimmer";
 import MainAndTopSection from "./main-and-to-section-tag";
+import { LoaderCircle } from "lucide-react";
 
 interface Props {
   //
 }
 
-export default function FilesFolderDisplay({ }: Props) {
-  const { documents, loadingDocs, currentFolder } = useDocStore();
+export default function FilesFolderDisplay({}: Props) {
+  const { documents, loadingDocs, currentFolder, loadingCurrentFolder } =
+    useDocStore();
   const { displayLayout } = useAppStore();
 
-  const { readyUploadModal, openNewFolderModal, openBulkDeleteModal } =
-    useModalContext();
+  const { readyUploadModal, openBulkDeleteModal } = useModalContext();
 
   const {
     setContextCoordinates,
@@ -43,54 +44,7 @@ export default function FilesFolderDisplay({ }: Props) {
     selectionStart,
     selectedDocs,
     toggleDocumentSelection,
-  } = useContextMenuContext();
-
-  const callMenuFunctionThenCloseMenu = (call_back: Function) => {
-    call_back();
-    contextMenuRef?.current?.close();
-  };
-
-  // const CONTEXT_MENU_CONTENT: ContextMenuContentType[] = useMemo(
-  //   () =>
-  //     selectionStart
-  //       ? [
-  //           {
-  //             text: "Delete Selected",
-  //             icon_url: CONTEXT_MENU_ICONS.delete,
-  //             action: () =>
-  //               callMenuFunctionThenCloseMenu(() =>
-  //                 openBulkDeleteModal(selectedDocs)
-  //               ),
-  //           },
-  //           {
-  //             text: "Stop Selection",
-  //             icon_url: CONTEXT_MENU_ICONS.select,
-  //             action: () =>
-  //               callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
-  //           },
-  //         ]
-  //       : [
-  //           {
-  //             text: "New Folder",
-  //             icon_url: CONTEXT_MENU_ICONS.new_folder,
-  //             action: () =>
-  //               callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
-  //           },
-  //           {
-  //             text: "Upload File(s)",
-  //             icon_url: CONTEXT_MENU_ICONS.upload,
-  //             action: () =>
-  //               callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
-  //           },
-  //           {
-  //             text: "Start Selection",
-  //             icon_url: CONTEXT_MENU_ICONS.select,
-  //             action: () =>
-  //               callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
-  //           },
-  //         ],
-  //   [selectionStart, selectedDocs]
-  // );
+  } = useContextMenuStore();
 
   // DRAG_DROP_HANDLERS_STARTS_HERE!
 
@@ -161,11 +115,33 @@ export default function FilesFolderDisplay({ }: Props) {
         onDragEnd={handleDragEnd}
       >
         <TextTag className="break-all text-app_text_grayed">
-          {currentFolder === "root" ? "root" : currentFolder.name}
+          {(() => {
+            if (loadingCurrentFolder)
+              return <LoaderCircle size={20} className="animate-spin" />;
+
+            return currentFolder === "root" ? "root" : currentFolder.name;
+          })()}
         </TextTag>
 
-        {/* {documents ? (
-          documents.length ? (
+        {(function () {
+          // anonymous component
+
+          if (loadingDocs)
+            return <FilesFolderShimmer displayLayout={displayLayout} />;
+
+          if (!documents?.length)
+            return (
+              <DivCard className="min-h-[60vh] w-full">
+                <TextTag
+                  as="h3"
+                  className="text-[2rem] font-semibold text-app_text_grayed"
+                >
+                  Folder Is Empty
+                </TextTag>
+              </DivCard>
+            );
+
+          return (
             <StyledFileFolderDisplay
               className={displayLayout.toLowerCase() + "-layout"} // e.g grid-layout or list-layout
             >
@@ -185,63 +161,8 @@ export default function FilesFolderDisplay({ }: Props) {
                     )
                   )}
             </StyledFileFolderDisplay>
-          ) : (
-            <DivCard className="min-h-[60vh] w-full">
-              <TextTag
-                as="h3"
-                className="text-[2rem] font-semibold text-app_text_grayed"
-              >
-                Folder Is Empty
-              </TextTag>
-            </DivCard>
-          )
-        ) : (
-          <FilesFolderShimmer displayLayout={displayLayout} />
-        )} */}
-
-        {
-          (
-            function () { // anonymous component
-
-              if (loadingDocs) return (
-                <FilesFolderShimmer displayLayout={displayLayout} />
-              );
-
-              if (!documents?.length) return (
-                <DivCard className="min-h-[60vh] w-full">
-                  <TextTag
-                    as="h3"
-                    className="text-[2rem] font-semibold text-app_text_grayed"
-                  >
-                    Folder Is Empty
-                  </TextTag>
-                </DivCard>
-              );
-
-              return (
-                <StyledFileFolderDisplay
-                  className={displayLayout.toLowerCase() + "-layout"} // e.g grid-layout or list-layout
-                >
-                  {displayLayout === "GRID"
-                    ? documents.map((doc) =>
-                      doc.type === "FOLDER" ? (
-                        <GridFolderCard key={doc.id} doc={doc} />
-                      ) : (
-                        <GridFileCard key={doc.id} doc={doc} />
-                      )
-                    )
-                    : documents.map((doc) =>
-                      doc.type === "FOLDER" ? (
-                        <ListFolderCard key={doc.id} doc={doc} />
-                      ) : (
-                        <ListFileCard key={doc.id} doc={doc} />
-                      )
-                    )}
-                </StyledFileFolderDisplay>
-              )
-            }
-          )()
-        }
+          );
+        })()}
       </MainAndTopSection>
     </>
   );

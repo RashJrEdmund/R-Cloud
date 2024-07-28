@@ -1,4 +1,3 @@
-
 const MEDIA_ICONS = {
   folder: "/icons/media/folder-icon.svg",
   video: "/icons/media/video-file-icon.svg",

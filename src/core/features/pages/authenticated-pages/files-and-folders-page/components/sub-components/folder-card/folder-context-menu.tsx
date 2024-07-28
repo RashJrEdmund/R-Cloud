@@ -8,7 +8,10 @@ import {
 } from "@/components/ui/context-menu";
 
 import type { Document } from "@/core/interfaces/entities";
-import { useContextMenuContext, useModalContext } from "@/providers/stores/context";
+import {
+  useContextMenuStore,
+  useModalContext,
+} from "@/providers/stores/context";
 import { FolderOpen, FolderPen, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
@@ -21,9 +24,7 @@ interface Props {
 function FolderContextMenu({ doc: folder, children }: Props) {
   const router = useRouter();
 
-  const {
-    selectionStart,
-  } = useContextMenuContext();
+  const { selectionStart } = useContextMenuStore();
 
   const {
     openEditDocumentModal,
@@ -60,24 +61,22 @@ function FolderContextMenu({ doc: folder, children }: Props) {
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger className="h-fit p-0 w-full">
+      <ContextMenuTrigger className="h-fit w-full p-0">
         {children}
       </ContextMenuTrigger>
 
-      <ContextMenuContent className="p-[10px] pb-8 w-fit min-w-[min(180px,_97vw)]">
-        {
-          FOLDER_CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon }) => (
-            <ContextMenuItem
-              key={text}
-              onClick={action}
-              className="bg-app_bg lex items-center justify-start gap-2"
-            >
-              <Icon size={18} />
+      <ContextMenuContent className="w-fit min-w-[min(180px,_97vw)] p-[10px] pb-8">
+        {FOLDER_CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon }) => (
+          <ContextMenuItem
+            key={text}
+            onClick={action}
+            className="lex items-center justify-start gap-2 bg-app_bg"
+          >
+            <Icon size={18} />
 
-              {text}
-            </ContextMenuItem>
-          ))
-        }
+            {text}
+          </ContextMenuItem>
+        ))}
       </ContextMenuContent>
     </ContextMenu>
   );

@@ -17,7 +17,7 @@ const useUserStore = create<UserStore>((set) => ({
 
   /**
    * Use Profile
-  */
+   */
   userProfile: null,
   setUserProfile: (profile) => set({ userProfile: profile }),
 

@@ -15,7 +15,7 @@ interface DocStore {
   // API LOADING STATES
   /**
    * to show that documents are loading on the dom
-  */
+   */
   loadingDocs: boolean;
   setLoadingDocs: (loading: boolean) => void;
 
@@ -24,7 +24,7 @@ interface DocStore {
 
   /**
    * to show that documents are being uploaded on the dom
-  */
+   */
   upLoadingDocs: boolean;
   setUpLoadingDocs: (loading: boolean) => void;
 

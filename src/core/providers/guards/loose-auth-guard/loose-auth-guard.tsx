@@ -18,7 +18,7 @@ import type { User } from "@/core/interfaces/entities";
 
 interface LooseGuardOptions {
   strict?: boolean;
-};
+}
 
 export default function LooseGuard<T>(
   Component: (p: T) => JSX.Element,

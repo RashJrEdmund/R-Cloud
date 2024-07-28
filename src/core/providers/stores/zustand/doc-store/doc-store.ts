@@ -3,7 +3,7 @@ import { create } from "zustand";
 import type { DocStore } from "./doc-store.d";
 
 export const useDocStore = create<DocStore>((set) => ({
-  documents: null,
+  documents: [],
   setDocuments: (documents) => set({ documents }),
 
   currentFolder: "root",
@@ -20,7 +20,8 @@ export const useDocStore = create<DocStore>((set) => ({
   setLoadingDocs: (loadingDocs) => set({ loadingDocs }),
 
   loadingCurrentFolder: true,
-  setLoadingCurrentFolder: (loadingCurrentFolder) => set({ loadingCurrentFolder }),
+  setLoadingCurrentFolder: (loadingCurrentFolder) =>
+    set({ loadingCurrentFolder }),
 
   upLoadingDocs: false,
   setUpLoadingDocs: (upLoadingDocs) => set({ upLoadingDocs }),

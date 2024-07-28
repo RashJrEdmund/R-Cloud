@@ -22,6 +22,4 @@ const extractUserDetailsFromFirebaseAuth = async (user: FirebaseUser) => {
   return _user;
 };
 
-export {
-  extractUserDetailsFromFirebaseAuth,
-};
+export { extractUserDetailsFromFirebaseAuth };

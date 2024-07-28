@@ -1,17 +1,12 @@
 import { DivCard, MainTag, Separator, TextTag } from "@/components/atoms";
-import {
-  Illustrations,
-  CtaButtons,
-  Recordings,
-  Footer
-} from "./_components";
+import { Illustrations, CtaButtons, Recordings, Footer } from "./_components";
 
-interface Props { }
+interface Props {}
 
-export default function LandingPage({ }: Props) {
+export default function LandingPage({}: Props) {
   return (
     <MainTag className="gap-0">
-      <DivCard className="w-full flex-col min-h-screen">
+      <DivCard className="min-h-screen w-full flex-col">
         <DivCard as="section" className="mx-auto mt-8 gap-12">
           <TextTag as="h1">
             <TextTag className="whitespace-nowrap text-[1.25rem] font-semibold">

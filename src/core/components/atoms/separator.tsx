@@ -7,17 +7,11 @@ interface OverlayProps extends ComponentProps<"hr"> {
   //
 }
 
-export default function Separator({
-  className,
-  ...restProps
-}: OverlayProps) {
+export default function Separator({ className, ...restProps }: OverlayProps) {
   return (
     <hr
       {...restProps}
-      className={cn(
-        "w-full my-8 bg-app_bg_light",
-        className,
-      )}
+      className={cn("my-8 w-full bg-app_bg_light", className)}
     />
   );
 }

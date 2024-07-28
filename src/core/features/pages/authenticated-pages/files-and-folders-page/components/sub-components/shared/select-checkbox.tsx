@@ -9,7 +9,7 @@ import { Overlay } from "@/components/atoms";
 import { useEffect, useState } from "react";
 
 import type { Document } from "@/core/interfaces/entities";
-import { useContextMenuContext } from "@/providers/stores/context";
+import { useContextMenuStore } from "@/providers/stores/context";
 
 const {} = THEME_PALETTE;
 
@@ -34,7 +34,7 @@ export default function SelectCheckbox({ document }: Props) {
   const { displayLayout } = useAppStore();
 
   const { selectionStart, selectedDocs, handleDocumentSelection } =
-    useContextMenuContext();
+    useContextMenuStore();
 
   const handleSelection = () => {
     handleDocumentSelection(document);

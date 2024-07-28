@@ -6,4 +6,4 @@ export default function DashboardPage() {
       <TextTag>base dashboard page</TextTag>
     </MainTag>
   );
-};
+}

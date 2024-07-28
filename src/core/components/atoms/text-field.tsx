@@ -7,7 +7,10 @@ export default function TextField({ className, ...restProps }: TextFieldProps) {
   return (
     <input
       {...restProps}
-      className={cn("m-0 w-full rounded-[10px] p-[5px_10px]", className)}
+      className={cn(
+        "m-0 w-full rounded-[10px] border border-app_border p-[5px_10px]",
+        className
+      )}
     />
   );
 }

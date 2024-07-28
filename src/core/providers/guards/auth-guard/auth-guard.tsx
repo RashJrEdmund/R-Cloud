@@ -14,13 +14,10 @@ import { useRouter } from "next/navigation";
 
 interface Props {
   children: React.ReactNode;
-};
+}
 
 export default function AuthGuard({ children }: Props) {
-  const {
-    currentUser,
-    currentUserLoading,
-  } = useUserStore();
+  const { currentUser, currentUserLoading } = useUserStore();
 
   const router = useRouter();
 
@@ -29,8 +26,8 @@ export default function AuthGuard({ children }: Props) {
   if (!currentUser) {
     router.replace("/login?next=" + window.location);
 
-    return <LoadingPage />
+    return <LoadingPage />;
   }
 
   return <>{children}</>;
-};
+}

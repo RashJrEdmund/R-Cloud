@@ -6,6 +6,7 @@ import { THEME_PALETTE, flex_template } from "@/core/ui/theme";
 import {
   ChangeEvent,
   ChangeEventHandler,
+  ComponentProps,
   LegacyRef,
   useRef,
   useState,
@@ -14,7 +15,7 @@ import { cn } from "@/core/lib/utils";
 
 const { colors: COLORS } = THEME_PALETTE;
 
-interface Props {
+interface Props extends ComponentProps<"input"> {
   field_title: string;
   field_name: string;
   value?: string;
@@ -22,6 +23,10 @@ interface Props {
   leave_active?: boolean;
   error?: string | null;
   type?: "text" | "password" | "email" | "date";
+
+  sxFieldSet?: string;
+  sxTitle?: string;
+  sxError?: string;
 }
 
 const StyledInput = styled.fieldset`
@@ -45,7 +50,7 @@ const StyledInput = styled.fieldset`
     font-size: 1rem;
 
     &.active {
-      background-color: ${COLORS.bg_light};
+      background-color: ${COLORS.app_bg};
       top: 0;
       transform: translate(10px, -50%);
       font-size: 0.75rem;
@@ -68,6 +73,12 @@ export default function InputField({
   type = "text",
   field_title = "title",
   leave_active = false,
+  sxFieldSet,
+  sxTitle,
+  sxError,
+
+  className,
+  ...restProps
 }: Props) {
   const [active, setActive] = useState<boolean>(leave_active);
   const [fieldVal, setFieldVal] = useState<string>("");
@@ -84,23 +95,33 @@ export default function InputField({
   };
 
   return (
-    <StyledInput>
+    <StyledInput className={sxFieldSet}>
       <TextTag
-        className={cn("cursor-text", `title ${active ? "active" : ""}`)}
+        className={cn(
+          "cursor-text",
+          `title ${active ? "active" : ""}`,
+          sxTitle
+        )}
         onClick={() => inputRef.current?.focus()}
       >
         {field_title}
       </TextTag>
 
       {error ? (
-        <TextTag className="error-message cursor-text text-app_error">
+        <TextTag
+          className={cn("error-message cursor-text text-app_error", sxError)}
+        >
           {error}
         </TextTag>
       ) : null}
 
       <TextField
+        {...restProps}
         ref={inputRef as LegacyRef<HTMLInputElement>}
-        className="min-h-[2.7rem] w-full text-app_text placeholder:text-app_text_grayed"
+        className={cn(
+          "min-h-[2.7rem] w-full text-app_text placeholder:text-app_text_grayed",
+          className
+        )}
         onFocus={() => setActive(true)}
         onBlur={() =>
           !fieldVal?.trim() && !leave_active ? setActive(false) : null
