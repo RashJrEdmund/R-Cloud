@@ -143,8 +143,6 @@ function FileCardHoc(
     const { displayLayout } = useAppStore();
 
     const {
-      handleDocCardContextMenu,
-
       selectionStart,
     } = useContextMenuStore();
 
@@ -193,27 +191,6 @@ function FileCardHoc(
     const imagePreview = useMemo<{ img: string; isCustom?: boolean }>(() => {
       return deriveDocumentPreviewImage(file, displayLayout);
     }, [displayLayout, file.content_type]);
-
-    // const handleContext = (e: MouseEvent) => {
-    //   handleDocCardContextMenu({
-    //     event: e,
-    //     CONTEXT_MENU_CONTENT: FILE_CONTEXT_MENU_CONTENT,
-    //   });
-    // };
-
-    // useEffect(() => {
-    //   if (!fileRef.current) return;
-
-    //   fileRef.current.addEventListener("contextmenu", handleContext, false);
-
-    //   return () => {
-    //     fileRef.current?.removeEventListener(
-    //       "contextmenu",
-    //       handleContext,
-    //       false
-    //     );
-    //   };
-    // }, [selectionStart]);
 
     return (
       <FileContextMenu doc={file}>

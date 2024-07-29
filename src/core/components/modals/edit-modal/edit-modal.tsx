@@ -1,26 +1,37 @@
 "use client";
 
-import { useMemo, useEffect, useState } from "react";
-import { AppModalWrapper } from "@/components/modals/generics";
-import { TextTag, DivCard } from "@/components/atoms";
-import { InputField } from "@/components/molecules";
-import { useDocStore, useUserStore } from "@/providers/stores/zustand";
-import { renameDocument } from "@/core/config/firebase/fire-store";
-
 import type { MutableRefObject, FormEventHandler } from "react";
 import type { ModalWrapperRef } from "@/components/modals/generics";
 import type { Document } from "@/core/interfaces/entities";
+
+import { useMemo, useEffect, useState } from "react";
+import { DivCard } from "@/components/atoms";
+import { InputField } from "@/components/molecules";
+import { useDocStore, useUserStore } from "@/providers/stores/zustand";
+import { renameDocument } from "@/core/config/firebase/fire-store";
 import { toast } from "sonner";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { useModalContext } from "@/providers/stores/context";
 
 interface Props {
-  editModalRef: MutableRefObject<ModalWrapperRef | undefined>;
   document: Document | null;
 }
 
-export default function EditModal({ editModalRef, document }: Props) {
+export default function EditModal({ document }: Props) {
   const [docName, setDocName] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { documents, setDocuments } = useDocStore();
+
+  const { editDialogOpen, setEditDialogOpen } = useModalContext();
 
   const { currentUser } = useUserStore();
 
@@ -30,14 +41,15 @@ export default function EditModal({ editModalRef, document }: Props) {
   );
 
   const closeModal = () => {
-    editModalRef.current?.close();
+    setEditDialogOpen(false);
     setIsLoading(false);
   };
 
-  const handleEditDocument: FormEventHandler<HTMLDivElement> = async (e) => {
-    e.preventDefault();
-
+  const handleEditDocument = async () => {
     if (!docName.trim() || !currentUser) return;
+
+    if (docName === document?.name) return;
+
     try {
       setIsLoading(true);
 
@@ -59,7 +71,7 @@ export default function EditModal({ editModalRef, document }: Props) {
         });
 
         setDocuments(update as Document[]);
-        toast.info("Update successful", {
+        toast("Update successful", {
           description: `Successfully renamed folder from ${document?.name} to ${docName}`,
         });
       });
@@ -70,36 +82,61 @@ export default function EditModal({ editModalRef, document }: Props) {
     }
   };
 
+  const handleFormSubmit: FormEventHandler<HTMLDivElement> = async (e) => {
+    e.preventDefault();
+
+    handleEditDocument();
+  };
+
   useEffect(() => {
     if (document) setDocName(document.name);
   }, [document]);
 
   return (
-    <AppModalWrapper
-      ref={editModalRef as MutableRefObject<ModalWrapperRef>}
-      use_base_btns_instead
-      isLoading={isLoading}
-      confirmMsg="Accept"
-      loadingMsg="Editing..."
-      cancelAction={closeModal}
-      confirmAction={handleEditDocument}
+    <Dialog
+      open={isLoading ? true : editDialogOpen}
+      onOpenChange={setEditDialogOpen}
     >
-      <DivCard
-        as="form"
-        className="w-full flex-col items-start justify-start gap-3"
-        onSubmit={handleEditDocument}
-      >
-        <TextTag>Rename {doc_type}</TextTag>
+      <DialogContent>
+        <DialogHeader className="w-full">
+          <DialogTitle className="text-app_text">
+            Rename {doc_type}
+          </DialogTitle>
+        </DialogHeader>
 
-        <InputField
-          leave_active
-          field_title={`${doc_type} name`}
-          field_name="document-name"
-          value={docName}
-          onValueChange={(e) => setDocName(e.target.value)}
-          error={null}
-        />
-      </DivCard>
-    </AppModalWrapper>
-  );
+        <DivCard
+          as="form"
+          className="w-full"
+          onSubmit={handleFormSubmit}
+        >
+          <InputField
+            leave_active
+            placeholder={"re name " + doc_type}
+            field_title={`${doc_type} name`}
+            field_name="document-name"
+            value={docName}
+            onValueChange={(e) => setDocName(e.target.value)}
+            error={null}
+          />
+        </DivCard>
+
+        <DialogFooter className="flex w-full items-center justify-end">
+          <DialogClose asChild disabled={isLoading}>
+            <Button className="w-fit outline-none" variant="error">
+              Cancel
+            </Button>
+          </DialogClose>
+
+          <Button
+            variant="blued"
+            disabled={isLoading}
+            onClick={handleEditDocument}
+            className="w-fit min-w-[100px]"
+          >
+            {isLoading ? "Editing..." : "Save"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
 }

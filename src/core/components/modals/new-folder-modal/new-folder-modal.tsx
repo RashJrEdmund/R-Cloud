@@ -1,5 +1,8 @@
 "use client";
 
+import type { FormEventHandler } from "react";
+import type { Document } from "@/core/interfaces/entities";
+
 import { useState } from "react";
 import { DivCard } from "@/components/atoms";
 import { InputField } from "@/components/molecules";
@@ -9,9 +12,6 @@ import {
   createFileDoc,
   updateFolderSize,
 } from "@/core/config/firebase/fire-store";
-
-import type { FormEventHandler } from "react";
-import type { Document } from "@/core/interfaces/entities";
 import {
   Dialog,
   DialogClose,
@@ -26,7 +26,7 @@ import { useModalContext } from "@/providers/stores/context";
 
 interface Props {
   //
-}
+};
 
 export default function NewFolderModal({}: Props) {
   const [folderName, setFolderName] = useState<string>("");
@@ -110,7 +110,7 @@ export default function NewFolderModal({}: Props) {
 
         <DivCard
           as="form"
-          className="w-full items-start justify-start"
+          className="w-full"
           onSubmit={handleFormSubmit}
         >
           <InputField

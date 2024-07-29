@@ -1,24 +1,32 @@
 "use client";
+import type { Document } from "@/core/interfaces/entities";
 
 import { useMemo, useState } from "react";
-import { AppModalWrapper } from "@/components/modals/generics";
 import { TextTag, DivCard } from "@/components/atoms";
 import { useDocStore, useUserStore } from "@/providers/stores/zustand";
 import { deleteFiles, deleteFolders } from "@/core/config/firebase/fire-store";
 
-import type { MutableRefObject } from "react";
-import type { ModalWrapperRef } from "@/components/modals/generics";
-import type { Document } from "@/core/interfaces/entities";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { useModalContext } from "@/providers/stores/context";
 
 interface Props {
-  deleteModalRef: MutableRefObject<ModalWrapperRef | undefined>;
   document: Document | null;
 }
 
-export default function DeleteModal({ deleteModalRef, document }: Props) {
+export default function DeleteModal({ document }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { documents, setDocuments } = useDocStore();
 
+  const { deleteDialogOpen, setDeleteDialogOpen } = useModalContext();
   const { currentUser } = useUserStore();
 
   const doc_type = useMemo(
@@ -27,7 +35,7 @@ export default function DeleteModal({ deleteModalRef, document }: Props) {
   );
 
   const closeModal = () => {
-    deleteModalRef.current?.close();
+    setDeleteDialogOpen(false);
     setIsLoading(false);
   };
 
@@ -56,55 +64,72 @@ export default function DeleteModal({ deleteModalRef, document }: Props) {
       // console.warn(error);
     } finally {
       closeModal();
-      // toggleRefetchDocs();
     }
   };
 
   return (
-    <AppModalWrapper
-      ref={deleteModalRef as MutableRefObject<ModalWrapperRef>}
-      prevent_auto_focus
-      use_base_btns_instead
-      isLoading={isLoading}
-      confirmMsg="Delete"
-      loadingMsg="Deleting..."
-      cancelAction={closeModal}
-      confirmAction={handleDeleteDocument}
+    <Dialog
+      open={isLoading ? true : deleteDialogOpen}
+      onOpenChange={setDeleteDialogOpen}
     >
-      <DivCard className="w-full flex-col items-start justify-start gap-3">
-        <TextTag className="text-left">
-          Are you sure you want to delete this {doc_type}
-        </TextTag>
+      <DialogContent>
+        <DialogHeader className="w-full">
+          <input placeholder="Don't mind me, I'm just here to catch the auto focus on this modal" hidden />
 
-        {document?.type === "FOLDER" && Number(document?.capacity.bytes) > 0 ? (
-          <TextTag className="text-left text-app_error">
-            Deleting this folder will delete all it&apos;s content
-          </TextTag>
-        ) : null}
+          <DialogTitle className="text-app_text">Delete {doc_type}</DialogTitle>
+          <DialogDescription>
+            Are you sure you want to delete this {doc_type} <br />
 
-        <TextTag className="text-left">
-          name:
-          <TextTag className="text-app_text_blue">{document?.name}</TextTag>
-        </TextTag>
+            {document?.type === "FOLDER" && Number(document?.capacity.bytes) > 0 ? (
+              <TextTag className="text-left text-app_error">
+                Deleting this folder will delete all it&apos;s content
+              </TextTag>
+            ) : null}
+          </DialogDescription>
+        </DialogHeader>
 
-        {document?.type === "FILE" ? (
+        <DivCard className="w-full flex-col items-start justify-start gap-3">
           <TextTag className="text-left">
-            size:
-            <TextTag className="text-left text-app_text_blue">
-              {document?.capacity.size}
-            </TextTag>
+            name:
+            <TextTag className="text-app_text_blue">{document?.name}</TextTag>
           </TextTag>
-        ) : (
-          <TextTag className="text-left">
-            Capacity:
-            <TextTag className="text-app_text_blue">
-              {Number(document?.capacity.bytes) <= 0
-                ? "Empty"
-                : document?.capacity.size}
+
+          {document?.type === "FILE" ? (
+            <TextTag className="text-left">
+              size:
+              <TextTag className="text-left text-app_text_blue">
+                {document?.capacity.size}
+              </TextTag>
             </TextTag>
-          </TextTag>
-        )}
-      </DivCard>
-    </AppModalWrapper>
+          ) : (
+            <TextTag className="text-left">
+              Capacity:
+              <TextTag className="text-app_text_blue">
+                {Number(document?.capacity.bytes) <= 0
+                  ? "Empty"
+                  : document?.capacity.size}
+              </TextTag>
+            </TextTag>
+          )}
+        </DivCard>
+
+        <DialogFooter className="flex w-full items-center justify-end">
+          <DialogClose asChild disabled={isLoading} className="outline-none">
+            <Button className="w-fit outline-none" variant="error">
+              Cancel
+            </Button>
+          </DialogClose>
+
+          <Button
+            variant="blued"
+            disabled={isLoading}
+            onClick={handleDeleteDocument}
+            className="w-fit min-w-[100px]"
+          >
+            {isLoading ? "Deleting..." : "Delete"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

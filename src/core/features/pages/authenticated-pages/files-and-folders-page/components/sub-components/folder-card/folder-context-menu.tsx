@@ -19,6 +19,7 @@ import { useMemo } from "react";
 interface Props {
   doc: Document;
   children: React.ReactNode;
+  // handleOpen: () => void;
 }
 
 function FolderContextMenu({ doc: folder, children }: Props) {
@@ -48,12 +49,12 @@ function FolderContextMenu({ doc: folder, children }: Props) {
       {
         text: "Rename Folder",
         icon: FolderPen,
-        // action: () => openEditDocumentModal(folder),
+        action: () => openEditDocumentModal(folder),
       },
       {
         text: "Delete Folder",
         icon: Trash2,
-        // action: () => openDeleteDocumentModal(folder),
+        action: () => openDeleteDocumentModal(folder),
       },
     ],
     [selectionStart]

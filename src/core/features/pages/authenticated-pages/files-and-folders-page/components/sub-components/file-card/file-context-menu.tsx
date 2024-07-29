@@ -19,6 +19,7 @@ import { useMemo } from "react";
 interface Props {
   doc: Document;
   children: React.ReactNode;
+  // handleOpen: () => void;
 }
 
 function FileContextMenu({ doc: file, children }: Props) {
@@ -49,7 +50,7 @@ function FileContextMenu({ doc: file, children }: Props) {
       {
         text: "Rename File",
         icon: Edit,
-        // action: () => openEditDocumentModal(file),
+        action: () => openEditDocumentModal(file),
       },
       {
         text: "New File",
@@ -64,7 +65,7 @@ function FileContextMenu({ doc: file, children }: Props) {
       {
         text: "Delete File",
         icon: Trash2,
-        // action: () => openDeleteDocumentModal(file),
+        action: () => openDeleteDocumentModal(file),
       },
     ],
     []

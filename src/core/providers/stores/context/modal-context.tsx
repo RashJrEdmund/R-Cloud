@@ -43,18 +43,30 @@ interface IModalContext {
   newFolderDialogOpen: boolean;
   setNewFolderDialogOpen: Dispatch<SetStateAction<boolean>>;
 
+  editDialogOpen: boolean;
+  setEditDialogOpen: Dispatch<SetStateAction<boolean>>;
+
+  deleteDialogOpen: boolean;
+  setDeleteDialogOpen: Dispatch<SetStateAction<boolean>>;
+
   readyUploadModal: (files: FileList, items?: DataTransferItemList) => void;
   // openNewFolderModal: () => void;
   openEditDocumentModal: (_: Document) => void;
   openDeleteDocumentModal: (_: Document) => void;
   openBulkDeleteModal: (selectedDocs: Document[]) => void;
-}
+};
 
 const ModalContext = createContext<IModalContext | null>(null);
 
 const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   // START MODAL TOGGLE STATES
   const [newFolderDialogOpen, setNewFolderDialogOpen] =
+    useState<boolean>(false);
+
+  const [editDialogOpen, setEditDialogOpen] =
+    useState<boolean>(false);
+
+  const [deleteDialogOpen, setDeleteDialogOpen] =
     useState<boolean>(false);
 
   // END MODAL TOGGLE STATES
@@ -78,8 +90,6 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const { toggleRefetchDocs, currentFolder } = useDocStore();
 
   const uploadModalRef = useRef<ModalWrapperRef>();
-  const editModalRef = useRef<ModalWrapperRef>();
-  const deleteModalRef = useRef<ModalWrapperRef>();
   const bulkDeleteModalRef = useRef<ModalWrapperRef>();
 
   const params = useParams<{ folder_id: string }>();
@@ -114,12 +124,12 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   const openEditDocumentModal = (document: Document) => {
     setDocumentToBeEdited(document);
-    editModalRef.current?.open();
+    setEditDialogOpen(true);
   };
 
   const openDeleteDocumentModal = (document: Document) => {
     setDocumentToBeDeleted(document);
-    deleteModalRef.current?.open();
+    setDeleteDialogOpen(true);
   };
 
   const openBulkDeleteModal = (selectedDocs: Document[]) => {
@@ -201,8 +211,11 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ModalContext.Provider
       value={{
-        newFolderDialogOpen,
-        setNewFolderDialogOpen,
+        newFolderDialogOpen, setNewFolderDialogOpen,
+
+        editDialogOpen, setEditDialogOpen,
+
+        deleteDialogOpen, setDeleteDialogOpen,
 
         readyUploadModal,
         openEditDocumentModal,
@@ -224,15 +237,11 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
 
         <NewFolderModal />
 
-        <EditModal editModalRef={editModalRef} document={documentToBeEdited} />
-
-        <DeleteModal
-          deleteModalRef={deleteModalRef}
-          document={documentToBeDeleted}
+        <EditModal
+          document={documentToBeEdited}
         />
 
         <DeleteModal
-          deleteModalRef={deleteModalRef}
           document={documentToBeDeleted}
         />
 

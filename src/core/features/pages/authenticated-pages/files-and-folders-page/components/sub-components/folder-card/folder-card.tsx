@@ -15,7 +15,7 @@ import {
   useContextMenuStore,
   useModalContext,
 } from "@/providers/stores/context";
-import { CONTEXT_MENU_ICONS, MEDIA_ICONS } from "@/core/ui/icons";
+import { MEDIA_ICONS } from "@/core/ui/icons";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -142,8 +142,6 @@ function FolderCardHoc(
     const folderRef = useRef<HTMLDivElement>();
 
     const {
-      handleDocCardContextMenu,
-
       selectionStart,
     } = useContextMenuStore();
 
@@ -186,20 +184,6 @@ function FolderCardHoc(
     //     CONTEXT_MENU_CONTENT: FOLDER_CONTEXT_MENU_CONTENT,
     //   });
     // };
-
-    // useEffect(() => {
-    //   if (!folderRef.current) return;
-
-    //   folderRef.current.addEventListener("contextmenu", handleContext, false);
-
-    //   return () => {
-    //     folderRef.current?.removeEventListener(
-    //       "contextmenu",
-    //       handleContext,
-    //       false
-    //     );
-    //   };
-    // }, [selectionStart]);
 
     return (
       <FolderContextMenu doc={folder}>

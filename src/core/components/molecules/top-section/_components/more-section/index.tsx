@@ -1,19 +1,14 @@
 "use client";
 
-import { useRef, useMemo, useState, MouseEventHandler } from "react";
-import { DivCard, TextTag } from "@/components/atoms";
+import {  useMemo } from "react";
+import { TextTag } from "@/components/atoms";
 import {
-  getResponsiveMenuPosition,
   openFileUploadDialog,
 } from "@/core/utils/helpers";
 import {
   useContextMenuStore,
   useModalContext,
 } from "@/providers/stores/context";
-import Image from "next/image";
-
-import type { ModalWrapperRef } from "@/components/modals/generics";
-import type { ContextMenuContentType } from "@/core/interfaces/app";
 import { MoreVertical } from "lucide-react";
 import { BookmarkX, BoxSelectIcon, Folder, Trash2, Upload } from "lucide-react";
 import {
