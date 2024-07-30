@@ -1,9 +1,20 @@
 "use client";
 
 import { DivCard } from "@/components/atoms";
-import { useEffect, useMemo, useState } from "react";
-import { THEME_PALETTE } from "@/core/ui/theme";
+import { useEffect, useState } from "react";
 import { cn } from "@/core/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
+
+function ProgressBarShimmer({ className }: { className?: string }) {
+  return (
+    <Skeleton
+      className={cn(
+        "h-[20px] w-full rounded-[8px]",
+        className
+      )}
+    />
+  );
+}
 
 interface Props {
   sx?: string;
@@ -14,7 +25,7 @@ interface Props {
   show_usage_colors?: boolean; // weather or not to show usage colors;
 }
 
-export default function ProgressBar({
+function ProgressBar({
   progress_in_percentage,
 
   sx = "",
@@ -53,4 +64,9 @@ export default function ProgressBar({
       />
     </DivCard>
   );
-}
+};
+
+export {
+  ProgressBarShimmer,
+  ProgressBar,
+};

@@ -9,11 +9,9 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import {
-  useContextMenuStore,
-  useModalContext,
-} from "@/providers/stores/context";
-import { BookmarkX, BoxSelectIcon, Folder, Trash2, Upload } from "lucide-react";
+import { useModalContext } from "@/providers/stores/context";
+import { BoxSelectIcon, SquareCheckBig, Folder, Trash2, Upload } from "lucide-react";
+import { useSelectionStore } from "@/providers/stores/zustand";
 
 interface MainAndTopSectionProps extends ComponentProps<"main"> {
   //
@@ -26,48 +24,46 @@ function MainAndTopSection({
 }: MainAndTopSectionProps) {
   const { setNewFolderDialogOpen } = useModalContext();
 
-  const { selectionStart, selectedDocs } = useContextMenuStore();
+  const { selectionStart, selectedDocs, toggleDocumentSelection } = useSelectionStore();
 
   const CONTEXT_MENU_CONTENT = useMemo(
     () =>
       selectionStart
         ? [
-            {
-              text: "Delete Selected",
-              icon: Trash2,
-              action: () => "",
-              // callMenuFunctionThenCloseMenu(() =>
-              //   openBulkDeleteModal(selectedDocs)
-              // ),
-            },
-            {
-              text: "Stop Selection",
-              icon: BookmarkX,
-              // action: () =>
-              //   callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
-            },
-          ]
+          {
+            text: "Delete Selected",
+            icon: Trash2,
+            action: () => "",
+            // callMenuFunctionThenCloseMenu(() =>
+            //   openBulkDeleteModal(selectedDocs)
+            // ),
+          },
+          {
+            text: "Stop Selection",
+            icon: BoxSelectIcon,
+            action: toggleDocumentSelection,
+          },
+        ]
         : [
-            {
-              text: "New Folder",
-              icon: Folder,
-              action: () => setNewFolderDialogOpen(true),
-              // action: () =>
-              //   callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
-            },
-            {
-              text: "Upload File(s)",
-              icon: Upload,
-              // action: () =>
-              //   callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
-            },
-            {
-              text: "Start Selection",
-              icon: BoxSelectIcon,
-              // action: () =>
-              //   callMenuFunctionThenCloseMenu(() => toggleDocumentSelection()),
-            },
-          ],
+          {
+            text: "New Folder",
+            icon: Folder,
+            action: () => setNewFolderDialogOpen(true),
+            // action: () =>
+            //   callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
+          },
+          {
+            text: "Upload File(s)",
+            icon: Upload,
+            // action: () =>
+            //   callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
+          },
+          {
+            text: "Start Selection",
+            icon: SquareCheckBig,
+            action: toggleDocumentSelection,
+          },
+        ],
     [selectionStart, selectedDocs]
   );
 

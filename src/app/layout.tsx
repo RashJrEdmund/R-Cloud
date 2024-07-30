@@ -5,6 +5,7 @@ import { NavBar } from "@/components/molecules";
 import { ReactQueryClientProvider } from "@/features/react-query";
 import { Toaster } from "sonner";
 import { AppWrapper } from "@/providers/guards";
+import { UploadModalContextProvider } from "@/providers/stores/context";
 
 const appDescription =
   "Cloud storage web application. Upload, manage and download files";
@@ -74,11 +75,13 @@ export default function RootLayout({ children }: Props) {
       <body className={inter.className}>
         <ReactQueryClientProvider>
           <AppWrapper>
-            <Toaster richColors />
+            <UploadModalContextProvider>
+              <Toaster richColors />
 
-            <NavBar />
+              <NavBar />
 
-            <>{children}</>
+              <>{children}</>
+            </UploadModalContextProvider>
           </AppWrapper>
         </ReactQueryClientProvider>
       </body>

@@ -1,20 +1,19 @@
 "use client";
 
+import type { Document } from "@/core/interfaces/entities";
+
+import { useMemo } from "react";
+import { useModalContext } from "@/providers/stores/context";
+import { useAppStore, useSelectionStore } from "@/providers/stores/zustand";
+import { BookOpen, SquareCheckBig, Copy, Edit, Trash2, Upload } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-
-import type { Document } from "@/core/interfaces/entities";
-import {
-  useContextMenuStore,
-  useModalContext,
-} from "@/providers/stores/context";
-import { BookOpen, Copy, Edit, Trash2, Upload } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { cn } from "@/core/lib/utils";
 
 interface Props {
   doc: Document;
@@ -26,7 +25,8 @@ function FileContextMenu({ doc: file, children }: Props) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const { selectionStart } = useContextMenuStore();
+  const { displayLayout } = useAppStore();
+  const { selectionStart, handleDocumentSelection } = useSelectionStore();
 
   const {
     openEditDocumentModal,
@@ -41,39 +41,51 @@ function FileContextMenu({ doc: file, children }: Props) {
   };
 
   const FILE_CONTEXT_MENU_CONTENT = useMemo(
-    () => [
-      {
-        text: "Open File",
-        icon: BookOpen,
-        action: handleOpen,
-      },
-      {
-        text: "Rename File",
-        icon: Edit,
-        action: () => openEditDocumentModal(file),
-      },
-      {
-        text: "New File",
-        icon: Upload,
-        // action: openFileUploadDialog,
-      },
-      {
-        text: "Copy File",
-        icon: Copy,
-        action: () => null,
-      },
-      {
-        text: "Delete File",
-        icon: Trash2,
-        action: () => openDeleteDocumentModal(file),
-      },
-    ],
-    []
+    () => {
+      const _data = [
+        {
+          text: "Open File",
+          icon: BookOpen,
+          action: handleOpen,
+        },
+        {
+          text: "Rename File",
+          icon: Edit,
+          action: () => openEditDocumentModal(file),
+        },
+        {
+          text: "New File",
+          icon: Upload,
+          // action: openFileUploadDialog,
+        },
+        {
+          text: "Copy File",
+          icon: Copy,
+          action: () => null,
+        },
+        {
+          text: "Delete File",
+          icon: Trash2,
+          action: () => openDeleteDocumentModal(file),
+        },
+      ];
+
+      if (selectionStart) return _data;
+
+      _data.splice(2, 0, {
+        text: "Selection File",
+        icon: SquareCheckBig,
+        action: () => handleDocumentSelection(file),
+      });
+
+      return _data;
+    },
+    [selectionStart]
   );
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger className="h-fit w-full p-0">
+      <ContextMenuTrigger className={cn("h-fit p-0", displayLayout === "GRID" ? "w-full md:w-fit mx-auto" : "w-full")}>
         {children}
       </ContextMenuTrigger>
 

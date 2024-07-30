@@ -1,40 +1,26 @@
 "use client";
 
-"use client";
+import type { Document } from "@/core/interfaces/entities";
 
-import styled from "@emotion/styled";
 import { THEME_PALETTE } from "@/core/ui/theme";
-import { useAppStore } from "@/providers/stores/zustand";
 import { Overlay } from "@/components/atoms";
 import { useEffect, useState } from "react";
 
-import type { Document } from "@/core/interfaces/entities";
-import { useContextMenuStore } from "@/providers/stores/context";
+import { useSelectionStore } from "@/providers/stores/zustand";
+import { cn } from "@/core/lib/utils";
 
-const {} = THEME_PALETTE;
-
-interface _props {
-  absolute: boolean;
-}
-
-const StyledCheckBox = styled.input<_props>`
-  position: ${({ absolute }) =>
-    absolute ? "absolute" : "unset"}; // parents have position relative
-  margin-right: 5px;
-  z-index: 5;
-  cursor: pointer;
-`;
+const { } = THEME_PALETTE;
 
 interface Props {
   document: Document;
+  className?: string;
 }
 
-export default function SelectCheckbox({ document }: Props) {
+export default function SelectCheckbox({ document, className }: Props) {
   const [checked, setChecked] = useState<boolean>(false);
-  const { displayLayout } = useAppStore();
 
   const { selectionStart, selectedDocs, handleDocumentSelection } =
-    useContextMenuStore();
+    useSelectionStore();
 
   const handleSelection = () => {
     handleDocumentSelection(document);
@@ -48,7 +34,7 @@ export default function SelectCheckbox({ document }: Props) {
     // console.log(selectedDocs);
   }, [document, selectedDocs]);
 
-  return selectionStart ? (
+  return !selectionStart ? (
     <>
       <Overlay
         isOpen
@@ -56,9 +42,13 @@ export default function SelectCheckbox({ document }: Props) {
         onClick={handleSelection}
       />
 
-      <StyledCheckBox
-        absolute={displayLayout === "GRID"}
+      <input
+        className={cn(
+          "z-[5] cursor-pointer top-0 left-0",
+          className
+        )}
         type="checkbox"
+        title="toggle display layout"
         checked={checked}
         onClick={handleSelection}
       />

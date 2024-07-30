@@ -1,5 +1,8 @@
 "use client";
 
+import type { Document } from "@/core/interfaces/entities";
+
+import { useMemo } from "react";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -7,14 +10,11 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 
-import type { Document } from "@/core/interfaces/entities";
-import {
-  useContextMenuStore,
-  useModalContext,
-} from "@/providers/stores/context";
-import { FolderOpen, FolderPen, Trash2 } from "lucide-react";
+import { useModalContext } from "@/providers/stores/context";
+import { useAppStore, useSelectionStore } from "@/providers/stores/zustand";
+import { SquareCheckBig, FolderOpen, FolderPen, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { cn } from "@/core/lib/utils";
 
 interface Props {
   doc: Document;
@@ -25,7 +25,8 @@ interface Props {
 function FolderContextMenu({ doc: folder, children }: Props) {
   const router = useRouter();
 
-  const { selectionStart } = useContextMenuStore();
+  const { selectionStart, handleDocumentSelection } = useSelectionStore();
+  const { displayLayout } = useAppStore();
 
   const {
     openEditDocumentModal,
@@ -40,29 +41,41 @@ function FolderContextMenu({ doc: folder, children }: Props) {
   };
 
   const FOLDER_CONTEXT_MENU_CONTENT = useMemo(
-    () => [
-      {
-        text: "Open Folder",
-        icon: FolderOpen,
-        action: handleOpen,
-      },
-      {
-        text: "Rename Folder",
-        icon: FolderPen,
-        action: () => openEditDocumentModal(folder),
-      },
-      {
-        text: "Delete Folder",
-        icon: Trash2,
-        action: () => openDeleteDocumentModal(folder),
-      },
-    ],
+    () => {
+      const _data = [
+        {
+          text: "Open Folder",
+          icon: FolderOpen,
+          action: handleOpen,
+        },
+        {
+          text: "Rename Folder",
+          icon: FolderPen,
+          action: () => openEditDocumentModal(folder),
+        },
+        {
+          text: "Delete Folder",
+          icon: Trash2,
+          action: () => openDeleteDocumentModal(folder),
+        },
+      ];
+
+      if (selectionStart) return _data;
+
+      _data.splice(2, 0, {
+        text: "Selection Folder",
+        icon: SquareCheckBig,
+        action: () => handleDocumentSelection(folder),
+      });
+
+      return _data;
+    },
     [selectionStart]
   );
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger className="h-fit w-full p-0">
+      <ContextMenuTrigger className={cn("h-fit p-0", displayLayout === "GRID" ? "w-full md:w-fit mx-auto" : "w-full")}>
         {children}
       </ContextMenuTrigger>
 

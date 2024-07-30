@@ -1,28 +1,35 @@
 "use client";
 
+import type { Document } from "@/core/interfaces/entities";
+
 import { useMemo, useState } from "react";
-import { AppModalWrapper } from "@/components/modals/generics";
 import { TextTag, DivCard } from "@/components/atoms";
 import { useDocStore, useUserStore } from "@/providers/stores/zustand";
 import { deleteDocuments } from "@/core/config/firebase/fire-store";
 import { getSizeFromBytes } from "@/core/utils/file-utils";
-
-import type { MutableRefObject } from "react";
-import type { ModalWrapperRef } from "@/components/modals/generics";
-import type { Document } from "@/core/interfaces/entities";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { useModalContext } from "@/providers/stores/context";
 
 interface Props {
-  bulkDeleteModalRef: MutableRefObject<ModalWrapperRef | undefined>;
   selectedDocs: Document[];
 }
 
 export default function BulkDeleteModal({
-  bulkDeleteModalRef,
   selectedDocs,
 }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toggleRefetchDocs } = useDocStore();
 
+  const { bulkDeleteDialogOpen, setBulkDeleteDialogOpen } = useModalContext();
   const { currentUser } = useUserStore();
 
   const selectedDocDetails = useMemo(() => {
@@ -44,7 +51,7 @@ export default function BulkDeleteModal({
   }, [selectedDocs]);
 
   const closeModal = () => {
-    bulkDeleteModalRef.current?.close();
+    setBulkDeleteDialogOpen(false);
     setIsLoading(false);
   };
 
@@ -70,56 +77,72 @@ export default function BulkDeleteModal({
   };
 
   return (
-    <AppModalWrapper
-      ref={bulkDeleteModalRef as MutableRefObject<ModalWrapperRef>}
-      prevent_auto_focus
-      use_base_btns_instead
-      isLoading={isLoading}
-      confirmMsg="Delete"
-      loadingMsg="Deleting..."
-      cancelAction={closeModal}
-      confirmAction={handleDeleteDocuments}
+    <Dialog
+      open={isLoading ? true : bulkDeleteDialogOpen}
+      onOpenChange={setBulkDeleteDialogOpen}
     >
-      <DivCard className="w-full flex-col items-start justify-start gap-3">
-        <TextTag className="text-left">
-          Are you sure you want to the delete selected
-        </TextTag>
+      <DialogContent>
+        <DialogHeader className="w-full">
+          <DialogTitle className="text-app_text">Delete Selected</DialogTitle>
+          <DialogDescription>
+            Are you sure you want to the delete selected <br />
 
-        {selectedDocDetails.has_folders ? (
-          <TextTag className="text-left text-app_error">
-            Folders detected. Deleting folders will delete their content
-          </TextTag>
-        ) : null}
+            {selectedDocDetails.has_folders ? (
+              <TextTag className="text-left text-app_error">
+                Folders detected. Deleting folders will delete their content
+              </TextTag>
+            ) : null}
+          </DialogDescription>
+        </DialogHeader>
 
-        <TextTag className="text-left">
-          Files:
-          <TextTag className="text-app_text_blue">
-            {selectedDocDetails.num_files}
-          </TextTag>
-        </TextTag>
-
-        <TextTag className="text-left">
-          Folders:
-          <TextTag className="text-app_text_blue">
-            {selectedDocDetails.num_folders}
-          </TextTag>
-        </TextTag>
-
-        <TextTag className="text-left">
-          Size,{" "}
-          {selectedDocDetails.has_folders ? (
-            <TextTag className="text-left text-app_text_blue">
-              Excluding sub folders
+        <DivCard className="w-full flex-col items-start justify-start gap-3">
+          <TextTag className="text-left">
+            Files:
+            <TextTag className="text-app_text_blue">
+              {selectedDocDetails.num_files}
             </TextTag>
-          ) : (
-            ""
-          )}
-          :
-          <TextTag className="text-app_text_blue">
-            {selectedDocDetails.capacity.merged}
           </TextTag>
-        </TextTag>
-      </DivCard>
-    </AppModalWrapper>
+
+          <TextTag className="text-left">
+            Folders:
+            <TextTag className="text-app_text_blue">
+              {selectedDocDetails.num_folders}
+            </TextTag>
+          </TextTag>
+
+          <TextTag className="text-left">
+            Size,{" "}
+            {selectedDocDetails.has_folders ? (
+              <TextTag className="text-left text-app_text_blue">
+                Excluding sub folders
+              </TextTag>
+            ) : (
+              ""
+            )}
+            :
+            <TextTag className="text-app_text_blue">
+              {selectedDocDetails.capacity.merged}
+            </TextTag>
+          </TextTag>
+        </DivCard>
+
+        <DialogFooter className="flex w-full items-center justify-end">
+          <DialogClose asChild disabled={isLoading}>
+            <Button className="w-fit outline-none" variant="error">
+              Cancel
+            </Button>
+          </DialogClose>
+
+          <Button
+            variant="blued"
+            disabled={isLoading}
+            onClick={handleDeleteDocuments}
+            className="w-fit min-w-[100px]"
+          >
+            {isLoading ? "Deleting..." : "Delete"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

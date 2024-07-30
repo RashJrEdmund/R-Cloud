@@ -3,24 +3,17 @@
 import { useEffect, useCallback, useMemo } from "react";
 import { DivCard, TextTag } from "@/components/atoms";
 import StyledFileFolderDisplay from "./styled-file-folder-display";
-import { useDocStore, useAppStore } from "@/providers/stores/zustand";
-import {
-  useContextMenuStore,
-  useModalContext,
-} from "@/providers/stores/context";
+import { useDocStore, useAppStore, useSelectionStore } from "@/providers/stores/zustand";
+import { useModalContext, useUploadModalContext } from "@/providers/stores/context";
 import {
   GridFileCard,
   GridFolderCard,
   ListFileCard,
   ListFolderCard,
 } from "./sub-components";
-import {
-  getResponsiveMenuPosition,
-  openFileUploadDialog,
-} from "@/core/utils/helpers";
+import { openFileUploadDialog } from "@/core/utils/helpers";
 
-import type { DragEventHandler, MouseEventHandler } from "react";
-import type { ContextMenuContentType } from "@/core/interfaces/app";
+import type { DragEventHandler } from "react";
 import FilesFolderShimmer from "./sub-components/files-folder-shimmer";
 import MainAndTopSection from "./main-and-to-section-tag";
 import { LoaderCircle } from "lucide-react";
@@ -29,22 +22,19 @@ interface Props {
   //
 }
 
-export default function FilesFolderDisplay({}: Props) {
+export default function FilesFolderDisplay({ }: Props) {
   const { documents, loadingDocs, currentFolder, loadingCurrentFolder } =
     useDocStore();
   const { displayLayout } = useAppStore();
 
-  const { readyUploadModal, openBulkDeleteModal } = useModalContext();
+  const { openBulkDeleteModal } = useModalContext();
+  const { readyUploadModal } = useUploadModalContext();
 
   const {
-    setContextCoordinates,
-    setContextContent,
-    contextMenuRef,
-
     selectionStart,
     selectedDocs,
     toggleDocumentSelection,
-  } = useContextMenuStore();
+  } = useSelectionStore();
 
   // DRAG_DROP_HANDLERS_STARTS_HERE!
 
@@ -147,19 +137,19 @@ export default function FilesFolderDisplay({}: Props) {
             >
               {displayLayout === "GRID"
                 ? documents.map((doc) =>
-                    doc.type === "FOLDER" ? (
-                      <GridFolderCard key={doc.id} doc={doc} />
-                    ) : (
-                      <GridFileCard key={doc.id} doc={doc} />
-                    )
+                  doc.type === "FOLDER" ? (
+                    <GridFolderCard key={doc.id} doc={doc} />
+                  ) : (
+                    <GridFileCard key={doc.id} doc={doc} />
                   )
+                )
                 : documents.map((doc) =>
-                    doc.type === "FOLDER" ? (
-                      <ListFolderCard key={doc.id} doc={doc} />
-                    ) : (
-                      <ListFileCard key={doc.id} doc={doc} />
-                    )
-                  )}
+                  doc.type === "FOLDER" ? (
+                    <ListFolderCard key={doc.id} doc={doc} />
+                  ) : (
+                    <ListFileCard key={doc.id} doc={doc} />
+                  )
+                )}
             </StyledFileFolderDisplay>
           );
         })()}

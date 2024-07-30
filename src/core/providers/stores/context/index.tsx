@@ -1,3 +1,3 @@
 export * from "./modal-context";
 
-export * from "./context-menu-context";
+export * from "./upload-modal-context";

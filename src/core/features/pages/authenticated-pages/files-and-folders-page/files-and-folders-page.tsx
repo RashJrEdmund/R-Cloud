@@ -10,16 +10,13 @@
 import { FilesFolderDisplay } from "./components";
 import { PathWrapper } from "@/providers/guards";
 
-import {
-  ModalContextProvider,
-  ContextMenuContextProvider,
-} from "@/providers/stores/context";
+import { ModalContextProvider } from "@/providers/stores/context";
 
 interface Props {
   //
 }
 
-export default function FilesFolderDisplayPage({}: Props) {
+export default function FilesFolderDisplayPage({ }: Props) {
   return (
     <>
       {/* INPUT_DES +=> ========================================================================
@@ -33,11 +30,9 @@ export default function FilesFolderDisplayPage({}: Props) {
       <PathWrapper>
         {/* IT'S HERE DOCUMENTS ARE FETCHED AS PARAMS CHANGE */}
         <ModalContextProvider>
-          <ContextMenuContextProvider>
-            <input hidden multiple type="file" id="file-upload-field" />
+          <input hidden multiple type="file" id="file-upload-field" />
 
-            <FilesFolderDisplay />
-          </ContextMenuContextProvider>
+          <FilesFolderDisplay />
         </ModalContextProvider>
       </PathWrapper>
     </>

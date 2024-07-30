@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { MutableRefObject } from "react";
-import type { ModalWrapperRef } from "@/components/modals/generics";
 import type { Document } from "@/core/interfaces/entities";
 
-import AppModalWrapper from "../generics/app-modal-wrapper";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDocStore } from "@/providers/stores/zustand";
 import Image from "next/image";
@@ -20,7 +18,7 @@ export default function FileViewer() {
   const [currenFile, setCurrentFile] = useState<Document>({} as Document);
   const [currentIndx, setCurrentIndx] = useState<number>(0);
 
-  const fileViewerRef = useRef<ModalWrapperRef>();
+  const fileViewerRef = useRef<any>();
 
   const { documents } = useDocStore();
 
@@ -96,6 +94,8 @@ export default function FileViewer() {
   // searchParams.set()
 
   // console.log({ currenFile });
+
+  return "abeg"
 
   return (
     <AppModalWrapper

@@ -1,31 +1,22 @@
 "use client";
 
 import {
-  SelectCheckbox,
   GridCardContainer,
   ListCardContainer,
 } from "../shared";
 import Image from "next/image";
 import { DivCard, TextTag } from "@/core/components/atoms";
-import { useMemo, useEffect, useRef } from "react";
+import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { shortenText } from "@/core/utils/helpers";
 import { FILE_FOLDER_MAX_NAME_LENGTH } from "@/core/utils/constants";
-import {
-  useContextMenuStore,
-  useModalContext,
-} from "@/providers/stores/context";
+import { useModalContext } from "@/providers/stores/context";
 import { MEDIA_ICONS } from "@/core/ui/icons";
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu";
 
-import type { MutableRefObject, MouseEventHandler } from "react";
+import type { MouseEventHandler } from "react";
 import type { SharedCardProps } from "../shared";
-import type { ContextMenuContentType } from "@/core/interfaces/app";
 import { FolderContextMenu } from "./folder-context-menu";
+import { useSelectionStore } from "@/providers/stores/zustand";
 
 interface Props extends SharedCardProps {
   //
@@ -34,20 +25,16 @@ interface Props extends SharedCardProps {
 interface CardComponentProps extends Props {
   // doc: Document already exists as type here.
   handleOpen: MouseEventHandler<HTMLDivElement>;
-  folderRef: MutableRefObject<HTMLDivElement | undefined>;
   folderLength: number;
 }
 
 function _GridFolderCard({
   doc: folder,
   folderLength,
-  folderRef,
   handleOpen,
 }: CardComponentProps) {
   return (
-    <GridCardContainer ref={folderRef as any} onDoubleClick={handleOpen}>
-      <SelectCheckbox document={folder} />
-
+    <GridCardContainer document={folder} onDoubleClick={handleOpen} >
       <Image
         src={MEDIA_ICONS.folder}
         alt="file icon"
@@ -81,14 +68,11 @@ function _GridFolderCard({
 function _ListFolderCard({
   doc: folder,
   folderLength,
-  folderRef,
   handleOpen,
 }: CardComponentProps) {
   return (
     <>
-      <ListCardContainer ref={folderRef as any} onDoubleClick={handleOpen}>
-        <SelectCheckbox document={folder} />
-
+      <ListCardContainer document={folder} onDoubleClick={handleOpen}>
         <span className="inline-block min-w-[40px]">
           <Image
             src={MEDIA_ICONS.folder}
@@ -139,11 +123,8 @@ function FolderCardHoc(
       () => Number(folder?.capacity?.length),
       [folder?.capacity?.length]
     );
-    const folderRef = useRef<HTMLDivElement>();
 
-    const {
-      selectionStart,
-    } = useContextMenuStore();
+    const { selectionStart } = useSelectionStore();
 
     const {
       openEditDocumentModal,
@@ -190,7 +171,6 @@ function FolderCardHoc(
         <CardComponent
           doc={folder}
           handleOpen={handleOpen}
-          folderRef={folderRef}
           folderLength={folderLength}
         />
       </FolderContextMenu>

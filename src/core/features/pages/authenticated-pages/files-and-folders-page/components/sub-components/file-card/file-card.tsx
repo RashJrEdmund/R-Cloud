@@ -13,20 +13,17 @@ import {
   shortenText,
 } from "@/core/utils/helpers";
 import { FILE_FOLDER_MAX_NAME_LENGTH } from "@/core/utils/constants";
-import {
-  useContextMenuStore,
-  useModalContext,
-} from "@/providers/stores/context";
-import { useAppStore } from "@/providers/stores/zustand";
+import { useModalContext } from "@/providers/stores/context";
+import { useAppStore, useSelectionStore } from "@/providers/stores/zustand";
 import { MEDIA_ICONS } from "@/core/ui/icons";
-import Image from "next/image";
-
-import type { MouseEventHandler, MutableRefObject } from "react";
-import type { SharedCardProps } from "../shared";
-import type { ContextMenuContentType } from "@/core/interfaces/app";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/core/lib/utils";
 import { FileContextMenu } from "./file-context-menu";
+import Image from "next/image";
+
+import type { MouseEventHandler } from "react";
+import type { Document } from "@/core/interfaces/entities";
+import type { SharedCardProps } from "../shared";
 
 interface Props extends SharedCardProps {
   // PROPS
@@ -36,21 +33,19 @@ interface CardComponentProps extends Props {
   // doc: Document already exists as type here.
   handleOpen: MouseEventHandler<HTMLDivElement>;
   imagePreview: { img: string; isCustom?: boolean }; // This helps to know weather or not to add the object-fit: cover; css style.
-  fileRef: MutableRefObject<HTMLDivElement | undefined>;
+  document: Document;
 }
 
 function _GridFileCard({
   doc: file,
   imagePreview,
-  fileRef,
+  document,
   handleOpen,
 }: CardComponentProps) {
   const [backupImage, setBackupImage] = useState<string | null>("");
 
   return (
-    <GridCardContainer ref={fileRef as any} onDoubleClick={handleOpen}>
-      <SelectCheckbox document={file} />
-
+    <GridCardContainer document={document} onDoubleClick={handleOpen}>
       <Image
         src={backupImage || imagePreview.img}
         className={cn(
@@ -92,13 +87,11 @@ function _GridFileCard({
 function _ListFileCard({
   doc: file,
   imagePreview,
-  fileRef,
+  document,
   handleOpen,
 }: CardComponentProps) {
   return (
-    <ListCardContainer ref={fileRef as any} onDoubleClick={handleOpen}>
-      <SelectCheckbox document={file} />
-
+    <ListCardContainer document={document} onDoubleClick={handleOpen}>
       <span className="inline-block min-w-[40px]">
         <Image src={imagePreview.img} alt="file icon" width={25} height={25} />
       </span>
@@ -144,7 +137,7 @@ function FileCardHoc(
 
     const {
       selectionStart,
-    } = useContextMenuStore();
+    } = useSelectionStore();
 
     const { openEditDocumentModal, openDeleteDocumentModal } =
       useModalContext();
