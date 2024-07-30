@@ -27,14 +27,11 @@ export default function SelectCheckbox({ document, className }: Props) {
   };
 
   useEffect(() => {
-    if (selectedDocs.find((doc) => doc.id === document.id)) setChecked(true);
+    if (selectedDocs.find((doc) => doc.id === document?.id)) setChecked(true);
     else setChecked(false);
-
-    // console.clear();
-    // console.log(selectedDocs);
   }, [document, selectedDocs]);
 
-  return !selectionStart ? (
+  return selectionStart ? (
     <>
       <Overlay
         isOpen

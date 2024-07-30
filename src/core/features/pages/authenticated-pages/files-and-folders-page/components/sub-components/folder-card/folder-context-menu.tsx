@@ -12,7 +12,7 @@ import {
 
 import { useModalContext } from "@/providers/stores/context";
 import { useAppStore, useSelectionStore } from "@/providers/stores/zustand";
-import { SquareCheckBig, FolderOpen, FolderPen, Trash2 } from "lucide-react";
+import { SquareCheckBig, FolderOpen, FolderPen, Trash2, BoxSelectIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/core/lib/utils";
 
@@ -25,7 +25,11 @@ interface Props {
 function FolderContextMenu({ doc: folder, children }: Props) {
   const router = useRouter();
 
-  const { selectionStart, handleDocumentSelection } = useSelectionStore();
+  const {
+    selectionStart,
+    selectedDocs,
+    handleDocumentSelection
+  } = useSelectionStore();
   const { displayLayout } = useAppStore();
 
   const {
@@ -40,38 +44,46 @@ function FolderContextMenu({ doc: folder, children }: Props) {
     router.push("/r-drive/root/" + folder.id);
   };
 
-  const FOLDER_CONTEXT_MENU_CONTENT = useMemo(
-    () => {
-      const _data = [
-        {
-          text: "Open Folder",
-          icon: FolderOpen,
-          action: handleOpen,
-        },
-        {
-          text: "Rename Folder",
-          icon: FolderPen,
-          action: () => openEditDocumentModal(folder),
-        },
-        {
-          text: "Delete Folder",
-          icon: Trash2,
-          action: () => openDeleteDocumentModal(folder),
-        },
-      ];
+  const FOLDER_CONTEXT_MENU_CONTENT = useMemo(() => {
+    if (selectedDocs.length && selectedDocs.find((doc) => doc.id === folder.id)) return [
+      {
+        text: "Deselect Folder",
+        icon: BoxSelectIcon,
+        action: () => handleDocumentSelection(folder),
+      }
+    ];
 
-      if (selectionStart) return _data;
-
-      _data.splice(2, 0, {
-        text: "Selection Folder",
+    if (selectionStart) return [
+      {
+        text: "Select Folder",
         icon: SquareCheckBig,
         action: () => handleDocumentSelection(folder),
-      });
+      }
+    ];
 
-      return _data;
-    },
-    [selectionStart]
-  );
+    return [
+      {
+        text: "Open Folder",
+        icon: FolderOpen,
+        action: handleOpen,
+      },
+      {
+        text: "Rename Folder",
+        icon: FolderPen,
+        action: () => openEditDocumentModal(folder),
+      },
+      {
+        text: "Select Folder",
+        icon: SquareCheckBig,
+        action: () => handleDocumentSelection(folder),
+      },
+      {
+        text: "Delete Folder",
+        icon: Trash2,
+        action: () => openDeleteDocumentModal(folder),
+      },
+    ];
+  }, [selectionStart, selectedDocs]);
 
   return (
     <ContextMenu>

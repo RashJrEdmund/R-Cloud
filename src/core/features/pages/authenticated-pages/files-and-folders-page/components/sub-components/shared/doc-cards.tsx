@@ -25,7 +25,7 @@ function GridCardContainer({ className, children, document, ...restProps }: Card
       )}
     >
       <SelectCheckbox
-        className="absolute m-[10px] sm:m-[5px]"
+        className="absolute m-[10px]"
         document={document}
       />
 

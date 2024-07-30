@@ -27,44 +27,45 @@ function MainAndTopSection({
   const { selectionStart, selectedDocs, toggleDocumentSelection } = useSelectionStore();
 
   const CONTEXT_MENU_CONTENT = useMemo(
-    () =>
-      selectionStart
-        ? [
-          {
-            text: "Delete Selected",
-            icon: Trash2,
-            action: () => "",
-            // callMenuFunctionThenCloseMenu(() =>
-            //   openBulkDeleteModal(selectedDocs)
-            // ),
-          },
-          {
-            text: "Stop Selection",
-            icon: BoxSelectIcon,
-            action: toggleDocumentSelection,
-          },
-        ]
-        : [
-          {
-            text: "New Folder",
-            icon: Folder,
-            action: () => setNewFolderDialogOpen(true),
-            // action: () =>
-            //   callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
-          },
-          {
-            text: "Upload File(s)",
-            icon: Upload,
-            // action: () =>
-            //   callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
-          },
-          {
-            text: "Start Selection",
-            icon: SquareCheckBig,
-            action: toggleDocumentSelection,
-          },
-        ],
-    [selectionStart, selectedDocs]
+    () => {
+      if (selectionStart) return [
+        {
+          text: "Delete Selected",
+          icon: Trash2,
+          action: () => "",
+          // callMenuFunctionThenCloseMenu(() =>
+          //   openBulkDeleteModal(selectedDocs)
+          // ),
+        },
+        {
+          text: "Stop Selection",
+          icon: BoxSelectIcon,
+          action: toggleDocumentSelection,
+        },
+      ];
+
+      return [
+        {
+          text: "New Folder",
+          icon: Folder,
+          action: () => setNewFolderDialogOpen(true),
+          // action: () =>
+          //   callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
+        },
+        {
+          text: "Upload File(s)",
+          icon: Upload,
+          // action: () =>
+          //   callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
+        },
+        {
+          text: "Start Selection",
+          icon: SquareCheckBig,
+          action: toggleDocumentSelection,
+        },
+      ];
+    },
+    [selectionStart, selectedDocs],
   );
 
   return (

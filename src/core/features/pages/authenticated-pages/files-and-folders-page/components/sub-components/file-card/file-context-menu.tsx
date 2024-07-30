@@ -5,7 +5,7 @@ import type { Document } from "@/core/interfaces/entities";
 import { useMemo } from "react";
 import { useModalContext } from "@/providers/stores/context";
 import { useAppStore, useSelectionStore } from "@/providers/stores/zustand";
-import { BookOpen, SquareCheckBig, Copy, Edit, Trash2, Upload } from "lucide-react";
+import { BookOpen, SquareCheckBig, Copy, Edit, Trash2, Upload, BoxSelectIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import {
   ContextMenu,
@@ -26,7 +26,11 @@ function FileContextMenu({ doc: file, children }: Props) {
   const pathname = usePathname();
 
   const { displayLayout } = useAppStore();
-  const { selectionStart, handleDocumentSelection } = useSelectionStore();
+  const {
+    selectionStart,
+    handleDocumentSelection,
+    selectedDocs,
+  } = useSelectionStore();
 
   const {
     openEditDocumentModal,
@@ -40,48 +44,56 @@ function FileContextMenu({ doc: file, children }: Props) {
     router.push(`${pathname}?viewing=${file.id}`);
   };
 
-  const FILE_CONTEXT_MENU_CONTENT = useMemo(
-    () => {
-      const _data = [
-        {
-          text: "Open File",
-          icon: BookOpen,
-          action: handleOpen,
-        },
-        {
-          text: "Rename File",
-          icon: Edit,
-          action: () => openEditDocumentModal(file),
-        },
-        {
-          text: "New File",
-          icon: Upload,
-          // action: openFileUploadDialog,
-        },
-        {
-          text: "Copy File",
-          icon: Copy,
-          action: () => null,
-        },
-        {
-          text: "Delete File",
-          icon: Trash2,
-          action: () => openDeleteDocumentModal(file),
-        },
-      ];
+  const FILE_CONTEXT_MENU_CONTENT = useMemo(() => {
+    if (selectedDocs.length && selectedDocs.find((doc) => doc.id === file.id)) return [
+      {
+        text: "Deselect File",
+        icon: BoxSelectIcon,
+        action: () => handleDocumentSelection(file),
+      }
+    ];
 
-      if (selectionStart) return _data;
-
-      _data.splice(2, 0, {
-        text: "Selection File",
+    if (selectionStart) return [
+      {
+        text: "Select File",
         icon: SquareCheckBig,
         action: () => handleDocumentSelection(file),
-      });
+      }
+    ];
 
-      return _data;
-    },
-    [selectionStart]
-  );
+    return [
+      {
+        text: "Open File",
+        icon: BookOpen,
+        action: handleOpen,
+      },
+      {
+        text: "Rename File",
+        icon: Edit,
+        action: () => openEditDocumentModal(file),
+      },
+      {
+        text: "New File",
+        icon: Upload,
+        // action: openFileUploadDialog,
+      },
+      {
+        text: "Copy File",
+        icon: Copy,
+        action: () => null,
+      },
+      {
+        text: "Select File",
+        icon: SquareCheckBig,
+        action: () => handleDocumentSelection(file),
+      },
+      {
+        text: "Delete File",
+        icon: Trash2,
+        action: () => openDeleteDocumentModal(file),
+      },
+    ];
+  }, [selectionStart, selectedDocs]);
 
   return (
     <ContextMenu>

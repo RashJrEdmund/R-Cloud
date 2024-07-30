@@ -1,8 +1,7 @@
 "use client";
 
-import { useMemo, useRef, useEffect, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
-  SelectCheckbox,
   GridCardContainer,
   ListCardContainer,
 } from "../shared";
@@ -13,7 +12,6 @@ import {
   shortenText,
 } from "@/core/utils/helpers";
 import { FILE_FOLDER_MAX_NAME_LENGTH } from "@/core/utils/constants";
-import { useModalContext } from "@/providers/stores/context";
 import { useAppStore, useSelectionStore } from "@/providers/stores/zustand";
 import { MEDIA_ICONS } from "@/core/ui/icons";
 import { usePathname, useRouter } from "next/navigation";
@@ -22,7 +20,6 @@ import { FileContextMenu } from "./file-context-menu";
 import Image from "next/image";
 
 import type { MouseEventHandler } from "react";
-import type { Document } from "@/core/interfaces/entities";
 import type { SharedCardProps } from "../shared";
 
 interface Props extends SharedCardProps {
@@ -33,19 +30,17 @@ interface CardComponentProps extends Props {
   // doc: Document already exists as type here.
   handleOpen: MouseEventHandler<HTMLDivElement>;
   imagePreview: { img: string; isCustom?: boolean }; // This helps to know weather or not to add the object-fit: cover; css style.
-  document: Document;
 }
 
 function _GridFileCard({
   doc: file,
   imagePreview,
-  document,
   handleOpen,
 }: CardComponentProps) {
   const [backupImage, setBackupImage] = useState<string | null>("");
 
   return (
-    <GridCardContainer document={document} onDoubleClick={handleOpen}>
+    <GridCardContainer document={file} onDoubleClick={handleOpen}>
       <Image
         src={backupImage || imagePreview.img}
         className={cn(
@@ -87,11 +82,10 @@ function _GridFileCard({
 function _ListFileCard({
   doc: file,
   imagePreview,
-  document,
   handleOpen,
 }: CardComponentProps) {
   return (
-    <ListCardContainer document={document} onDoubleClick={handleOpen}>
+    <ListCardContainer document={file} onDoubleClick={handleOpen}>
       <span className="inline-block min-w-[40px]">
         <Image src={imagePreview.img} alt="file icon" width={25} height={25} />
       </span>
@@ -139,47 +133,11 @@ function FileCardHoc(
       selectionStart,
     } = useSelectionStore();
 
-    const { openEditDocumentModal, openDeleteDocumentModal } =
-      useModalContext();
-
-    // console.log({ selectedDocs });
-
-    // console.log('is file include?', selectedDocs.includes(file.id));
-
     const handleOpen: MouseEventHandler<HTMLDivElement> = () => {
+      if (selectionStart) return;
+
       router.push(`${pathname}?viewing=${file.id}`);
     };
-
-    // const FILE_CONTEXT_MENU_CONTENT = useMemo<ContextMenuContentType[]>(
-    //   () => [
-    //     {
-    //       text: "Open File",
-    //       icon_url: CONTEXT_MENU_ICONS.open,
-    //       action: handleOpen,
-    //     },
-    //     {
-    //       text: "Rename File",
-    //       icon_url: CONTEXT_MENU_ICONS.rename,
-    //       action: () => openEditDocumentModal(file),
-    //     },
-    //     {
-    //       text: "New File",
-    //       icon_url: CONTEXT_MENU_ICONS.upload,
-    //       action: openFileUploadDialog,
-    //     },
-    //     {
-    //       text: "Copy File",
-    //       icon_url: CONTEXT_MENU_ICONS.copy,
-    //       action: () => null,
-    //     },
-    //     {
-    //       text: "Delete File",
-    //       icon_url: CONTEXT_MENU_ICONS.delete,
-    //       action: () => openDeleteDocumentModal(file),
-    //     },
-    //   ],
-    //   []
-    // );
 
     const imagePreview = useMemo<{ img: string; isCustom?: boolean }>(() => {
       return deriveDocumentPreviewImage(file, displayLayout);
@@ -190,13 +148,12 @@ function FileCardHoc(
         <CardComponent
           doc={file}
           handleOpen={handleOpen}
-          fileRef={fileRef}
           imagePreview={imagePreview}
         />
       </FileContextMenu>
     );
   };
-}
+};
 
 const GridFileCard = FileCardHoc(_GridFileCard);
 

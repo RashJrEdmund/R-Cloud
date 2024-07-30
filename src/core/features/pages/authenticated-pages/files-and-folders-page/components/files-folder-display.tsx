@@ -27,14 +27,7 @@ export default function FilesFolderDisplay({ }: Props) {
     useDocStore();
   const { displayLayout } = useAppStore();
 
-  const { openBulkDeleteModal } = useModalContext();
   const { readyUploadModal } = useUploadModalContext();
-
-  const {
-    selectionStart,
-    selectedDocs,
-    toggleDocumentSelection,
-  } = useSelectionStore();
 
   // DRAG_DROP_HANDLERS_STARTS_HERE!
 

@@ -74,7 +74,6 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const openBulkDeleteModal = (selectedDocs: Document[]) => {
-    setDocsToDelete(selectedDocs);
     setBulkDeleteDialogOpen(true);
   };
 
@@ -105,9 +104,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
           document={documentToBeDeleted}
         />
 
-        <BulkDeleteModal
-          selectedDocs={docsToDelete}
-        />
+        <BulkDeleteModal />
 
         <FileViewer />
         {/* Uses search params to open or close, so has no need for ref, or any other props */}

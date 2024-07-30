@@ -4,14 +4,13 @@ import {
   GridCardContainer,
   ListCardContainer,
 } from "../shared";
-import Image from "next/image";
 import { DivCard, TextTag } from "@/core/components/atoms";
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { shortenText } from "@/core/utils/helpers";
 import { FILE_FOLDER_MAX_NAME_LENGTH } from "@/core/utils/constants";
-import { useModalContext } from "@/providers/stores/context";
 import { MEDIA_ICONS } from "@/core/ui/icons";
+import Image from "next/image";
 
 import type { MouseEventHandler } from "react";
 import type { SharedCardProps } from "../shared";
@@ -126,45 +125,11 @@ function FolderCardHoc(
 
     const { selectionStart } = useSelectionStore();
 
-    const {
-      openEditDocumentModal,
-
-      openDeleteDocumentModal,
-    } = useModalContext();
-
     const handleOpen = () => {
       if (selectionStart) return; // to prevent opening folders when selection has started
 
       router.push("/r-drive/root/" + folder.id);
     };
-
-    // const FOLDER_CONTEXT_MENU_CONTENT: ContextMenuContentType[] = useMemo(
-    //   () => [
-    //     {
-    //       text: "Open Folder",
-    //       icon_url: CONTEXT_MENU_ICONS.open,
-    //       action: handleOpen,
-    //     },
-    //     {
-    //       text: "Rename Folder",
-    //       icon_url: CONTEXT_MENU_ICONS.rename,
-    //       action: () => openEditDocumentModal(folder),
-    //     },
-    //     {
-    //       text: "Delete Folder",
-    //       icon_url: CONTEXT_MENU_ICONS.delete,
-    //       action: () => openDeleteDocumentModal(folder),
-    //     },
-    //   ],
-    //   [selectionStart]
-    // );
-
-    // const handleContext = (e: MouseEvent) => {
-    //   handleDocCardContextMenu({
-    //     event: e,
-    //     CONTEXT_MENU_CONTENT: FOLDER_CONTEXT_MENU_CONTENT,
-    //   });
-    // };
 
     return (
       <FolderContextMenu doc={folder}>
@@ -176,7 +141,7 @@ function FolderCardHoc(
       </FolderContextMenu>
     );
   };
-}
+};
 
 const GridFolderCard = FolderCardHoc(_GridFolderCard);
 

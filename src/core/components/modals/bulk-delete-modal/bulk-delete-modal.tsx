@@ -4,7 +4,7 @@ import type { Document } from "@/core/interfaces/entities";
 
 import { useMemo, useState } from "react";
 import { TextTag, DivCard } from "@/components/atoms";
-import { useDocStore, useUserStore } from "@/providers/stores/zustand";
+import { useDocStore, useSelectionStore, useUserStore } from "@/providers/stores/zustand";
 import { deleteDocuments } from "@/core/config/firebase/fire-store";
 import { getSizeFromBytes } from "@/core/utils/file-utils";
 import {
@@ -20,16 +20,15 @@ import { Button } from "@/components/ui/button";
 import { useModalContext } from "@/providers/stores/context";
 
 interface Props {
-  selectedDocs: Document[];
+  //
 }
 
-export default function BulkDeleteModal({
-  selectedDocs,
-}: Props) {
+export default function BulkDeleteModal({ }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toggleRefetchDocs } = useDocStore();
 
   const { bulkDeleteDialogOpen, setBulkDeleteDialogOpen } = useModalContext();
+  const { selectedDocs } = useSelectionStore();
   const { currentUser } = useUserStore();
 
   const selectedDocDetails = useMemo(() => {
@@ -73,12 +72,20 @@ export default function BulkDeleteModal({
     } finally {
       closeModal();
       // toggleRefetchDocs();
-    }
+    };
   };
+
+  const isDialogOpened = useMemo(() => {
+    if (isLoading) return true;
+
+    if (!selectedDocs.length) return false;
+
+    return bulkDeleteDialogOpen;
+  }, [isLoading, bulkDeleteDialogOpen, selectedDocs])
 
   return (
     <Dialog
-      open={isLoading ? true : bulkDeleteDialogOpen}
+      open={isDialogOpened}
       onOpenChange={setBulkDeleteDialogOpen}
     >
       <DialogContent>
