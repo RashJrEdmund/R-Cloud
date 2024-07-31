@@ -11,41 +11,31 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useModalContext } from "@/providers/stores/context";
+import { useUploadModalContext } from "@/providers/stores/context";
 
 interface Props {
-  uploading: boolean;
-
-  selectedFiles: File[];
-  uploadDetails: {
-    total_size: number;
-    count: number;
-  } | null;
-
-  progress: { [key: number]: number } | null;
-  currentUploadIndx: number;
-
-  closeModal: () => void;
-
-  uploadFiles: () => Promise<void>;
+  //
 }
 
-export default function UploadModal({
-  uploading,
-  selectedFiles,
+export default function UploadModal({ }: Props) {
+  const {
+    uploadDialogOpen, setUploadDialogOpen,
 
-  uploadDetails,
-  progress,
-  currentUploadIndx,
+    uploading,
+    selectedFiles,
 
-  closeModal,
-  uploadFiles,
-}: Props) {
+    uploadDetails,
+    progress,
+    currentUploadIndx,
+
+    closeUploadModal,
+    uploadFiles,
+  } = useUploadModalContext();
 
   return (
     <Dialog
-    // open={uploading ? true : newFolderDialogOpen}
-    // onOpenChange={setNewFolderDialogOpen}
+      open={uploading ? true : uploadDialogOpen}
+      onOpenChange={setUploadDialogOpen}
     >
       <DialogContent>
         <DialogHeader className="w-full">
@@ -82,7 +72,7 @@ export default function UploadModal({
               />
             ) : <ProgressBarShimmer />}
           </DivCard>
-        )};
+        )}
 
         <DialogFooter className="flex w-full items-center justify-end">
           <DialogClose asChild disabled={uploading}>

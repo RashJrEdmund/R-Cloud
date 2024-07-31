@@ -18,10 +18,10 @@ import {
 
 interface Props {
   //
-}
+};
 
 export default function MoreSection({ }: Props) {
-  const { setNewFolderDialogOpen, openBulkDeleteModal } = useModalContext();
+  const { setNewFolderDialogOpen, setBulkDeleteDialogOpen } = useModalContext();
 
   const {
     selectedDocs,
@@ -37,10 +37,7 @@ export default function MoreSection({ }: Props) {
           {
             text: "Delete Selected",
             icon: Trash2,
-            action: () => "",
-            //  callMenuFunctionThenCloseMenu(() =>
-            //    openBulkDeleteModal(selectedDocs)
-            //  ),
+            action: () => setBulkDeleteDialogOpen(!!selectedDocs.length),
           },
           {
             text: "Stop Selection",

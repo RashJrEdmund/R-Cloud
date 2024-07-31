@@ -1,8 +1,6 @@
-import { ComponentProps, useMemo } from "react";
-import { cn } from "@/core/lib/utils";
-import { MainTag } from "@/components/atoms";
-import { TopSection } from "@/components/molecules";
+"use client";
 
+import { useMemo } from "react";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -13,16 +11,16 @@ import { useModalContext } from "@/providers/stores/context";
 import { BoxSelectIcon, SquareCheckBig, Folder, Trash2, Upload } from "lucide-react";
 import { useSelectionStore } from "@/providers/stores/zustand";
 
-interface MainAndTopSectionProps extends ComponentProps<"main"> {
-  //
+interface MainAndTopContextMenuProps {
+  children: React.ReactNode;
+  className?: string;
 }
 
-function MainAndTopSection({
+function MainAndContextMenu({
   className,
   children,
-  ...restProps
-}: MainAndTopSectionProps) {
-  const { setNewFolderDialogOpen } = useModalContext();
+}: MainAndTopContextMenuProps) {
+  const { setNewFolderDialogOpen, setBulkDeleteDialogOpen } = useModalContext();
 
   const { selectionStart, selectedDocs, toggleDocumentSelection } = useSelectionStore();
 
@@ -32,10 +30,7 @@ function MainAndTopSection({
         {
           text: "Delete Selected",
           icon: Trash2,
-          action: () => "",
-          // callMenuFunctionThenCloseMenu(() =>
-          //   openBulkDeleteModal(selectedDocs)
-          // ),
+          action: () => setBulkDeleteDialogOpen(!!selectedDocs.length),
         },
         {
           text: "Stop Selection",
@@ -70,15 +65,8 @@ function MainAndTopSection({
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger className="">
-        <MainTag
-          {...(restProps as {})}
-          className={cn("justify-start", className)}
-        >
-          <TopSection />
-
-          {children}
-        </MainTag>
+      <ContextMenuTrigger className={className}>
+        {children}
       </ContextMenuTrigger>
 
       <ContextMenuContent className="w-fit min-w-[min(180px,_97vw)] p-[10px] pb-8">
@@ -98,4 +86,4 @@ function MainAndTopSection({
   );
 }
 
-export default MainAndTopSection;
+export { MainAndContextMenu };

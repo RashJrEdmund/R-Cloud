@@ -33,6 +33,22 @@ interface UploadModalContextType {
   readyUploadModal: (files: FileList, items?: DataTransferItemList) => void;
   uploadDialogOpen: boolean;
   setUploadDialogOpen: Dispatch<SetStateAction<boolean>>;
+
+  // data
+  uploading: boolean;
+
+  selectedFiles: File[];
+  uploadDetails: {
+    total_size: number;
+    count: number;
+  } | null;
+
+  progress: { [key: number]: number } | null;
+  currentUploadIndx: number;
+
+  closeUploadModal: () => void;
+
+  uploadFiles: () => Promise<void>;
 };
 
 const UploadModalContext = createContext<UploadModalContextType | null>(null);
@@ -61,7 +77,7 @@ const UploadModalContextProvider = ({ children }: { children: React.ReactNode })
   const params = useParams<{ folder_id: string }>();
 
   const closeUploadModal = () => {
-    // uploadModalRef.current?.close();
+    setUploadDialogOpen(false);
     setSelectedFiles([]);
     setUploadDetails(null);
     setProgress(null);
@@ -75,17 +91,18 @@ const UploadModalContextProvider = ({ children }: { children: React.ReactNode })
   const readyUploadModal = (files: FileList, items?: DataTransferItemList) => {
     const file_arr = [];
     let total_size = 0;
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (!file.type) continue;
       file_arr.push(file);
       total_size += file.size;
-    }
+    };
 
     setSelectedFiles(file_arr);
     setUploadDetails({ total_size, count: file_arr.length });
 
-    // uploadModalRef.current?.open();
+    setUploadDialogOpen(true);
   };
 
   const uploadFiles = useCallback(async () => {
@@ -164,19 +181,20 @@ const UploadModalContextProvider = ({ children }: { children: React.ReactNode })
       value={{
         readyUploadModal,
 
-        uploadDialogOpen, setUploadDialogOpen
+        uploadDialogOpen, setUploadDialogOpen,
+
+        // data;
+        uploading,
+        selectedFiles,
+        uploadDetails,
+        progress,
+        currentUploadIndx,
+        closeUploadModal,
+        uploadFiles,
       }}
     >
       <>
-        <UploadModal
-          uploading={uploading}
-          closeModal={closeUploadModal}
-          uploadFiles={uploadFiles}
-          selectedFiles={selectedFiles}
-          uploadDetails={uploadDetails}
-          progress={progress}
-          currentUploadIndx={currentUploadIndx}
-        />
+        <UploadModal />
 
         {children}
       </>

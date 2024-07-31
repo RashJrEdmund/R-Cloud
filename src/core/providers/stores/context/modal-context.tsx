@@ -36,7 +36,6 @@ interface ModalContextType {
   // openNewFolderModal: () => void;
   openEditDocumentModal: (_: Document) => void;
   openDeleteDocumentModal: (_: Document) => void;
-  openBulkDeleteModal: (selectedDocs: Document[]) => void;
 };
 
 const ModalContext = createContext<ModalContextType | null>(null);
@@ -73,10 +72,6 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
     setDeleteDialogOpen(true);
   };
 
-  const openBulkDeleteModal = (selectedDocs: Document[]) => {
-    setBulkDeleteDialogOpen(true);
-  };
-
   return (
     <ModalContext.Provider
       value={{
@@ -90,7 +85,6 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
 
         openEditDocumentModal,
         openDeleteDocumentModal,
-        openBulkDeleteModal,
       }}
     >
       <>
