@@ -18,6 +18,7 @@ import {
   FolderPen,
   Trash2,
   BoxSelectIcon,
+  FileArchive,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/core/lib/utils";
@@ -78,6 +79,12 @@ function FolderContextMenu({ doc: folder, children }: Props) {
         action: () => openEditDocumentModal(folder),
       },
       {
+        text: "Create Achieve",
+        icon: FileArchive,
+        // action: () => null,
+        disabled: true,
+      },
+      {
         text: "Select Folder",
         icon: SquareCheckBig,
         action: () => handleDocumentSelection(folder),
@@ -102,10 +109,11 @@ function FolderContextMenu({ doc: folder, children }: Props) {
       </ContextMenuTrigger>
 
       <ContextMenuContent className="w-fit min-w-[min(180px,_97vw)] p-[10px] pb-8">
-        {FOLDER_CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon }) => (
+        {FOLDER_CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon, disabled }) => (
           <ContextMenuItem
             key={text}
             onClick={action}
+            disabled={!!disabled}
             className="lex items-center justify-start gap-2 bg-app_bg"
           >
             <Icon size={18} />

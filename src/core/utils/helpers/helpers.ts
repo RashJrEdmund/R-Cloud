@@ -35,4 +35,25 @@ const openFileUploadDialog = () => {
   fileUploadField.click();
 };
 
-export { shortenText, calculatePercentage, openFileUploadDialog };
+const triggerFileDownload = (url: string, filename: string) => {
+  const anchor = document.createElement('a');
+  anchor.href = url;
+
+  // Set the download attribute with a default filename
+  // You can customize the filename if you want
+  anchor.download = "filename.png";
+
+  // Append the anchor to the document body
+  // document.body.appendChild(anchor);
+
+  anchor.click();
+
+  document.body.removeChild(anchor);
+};
+
+export {
+  shortenText,
+  calculatePercentage,
+  openFileUploadDialog,
+  triggerFileDownload,
+};

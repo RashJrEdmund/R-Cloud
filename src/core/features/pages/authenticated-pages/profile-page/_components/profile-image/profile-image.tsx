@@ -83,19 +83,14 @@ export default function ProfileImage({}: Props) {
               value="" // to not allow the name of the file from block the immediate selection of the same prev file.
               id="image-upload-field"
               className="image-upload-field"
+              hidden
               type="file"
               placeholder="upload profile image"
               accept="image/png, image/gif, image/jpeg, image/svg"
               onChange={handleFileInput}
             />
           </label>
-          <Image
-            src="/icons/modal-icons/upload-icon.svg"
-            alt={`image of ${currentUser?.username}`}
-            width={17}
-            height={17}
-            draggable={false}
-          />
+
           Change image
         </TextTag>
       </DivCard>

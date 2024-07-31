@@ -16,6 +16,7 @@ import {
   Upload,
 } from "lucide-react";
 import { useSelectionStore } from "@/providers/stores/zustand";
+import { openFileUploadDialog } from "@/core/utils/helpers";
 
 interface MainAndTopContextMenuProps {
   children: React.ReactNode;
@@ -51,14 +52,11 @@ function MainAndContextMenu({
         text: "New Folder",
         icon: Folder,
         action: () => setNewFolderDialogOpen(true),
-        // action: () =>
-        //   callMenuFunctionThenCloseMenu(() => openNewFolderModal()),
       },
       {
         text: "Upload File(s)",
         icon: Upload,
-        // action: () =>
-        //   callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
+        action: openFileUploadDialog
       },
       {
         text: "Start Selection",

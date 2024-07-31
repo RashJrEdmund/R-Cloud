@@ -1,14 +1,18 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { MutableRefObject } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Document } from "@/core/interfaces/entities";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDocStore } from "@/providers/stores/zustand";
-import Image from "next/image";
 import Viewer from "./viewer";
-import { StyledViewerContainer } from "./styles";
-import { APP_ICONS } from "@/core/ui/icons";
-import { TextTag } from "@/components/atoms";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogDescription,
+} from "@/components/ui/dialog";
+
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function FileViewer() {
   const pathname = usePathname();
@@ -17,8 +21,7 @@ export default function FileViewer() {
 
   const [currenFile, setCurrentFile] = useState<Document>({} as Document);
   const [currentIndx, setCurrentIndx] = useState<number>(0);
-
-  const fileViewerRef = useRef<any>();
+  const [viewerOpen, setViewerOpen] = useState<boolean>(false);
 
   const { documents } = useDocStore();
 
@@ -48,7 +51,7 @@ export default function FileViewer() {
         break;
       default:
         break;
-    }
+    };
 
     if (!files[newIndx]) return;
 
@@ -70,14 +73,26 @@ export default function FileViewer() {
     [files]
   );
 
+  const handleModalClose = (open: boolean) => {
+    if (!open) { // meaning trying to close modal
+      router.push(pathname);
+
+      setViewerOpen(false);
+      return;
+    };
+
+    console.log({ open })
+
+    setViewerOpen(true);
+  }
+
   useEffect(() => {
-    // searchParams.set()
     const fileId = searchParams.get("viewing"); // this params is set whenever a file is opened, and it's value set to the file's Id.
 
     if (!files || !fileId?.trim()) {
-      if (fileViewerRef.current?.isOpen) fileViewerRef.current?.close();
+      if (viewerOpen) setViewerOpen(false);
       return;
-    }
+    };
 
     const curIndx = getCurrentIdex(fileId);
 
@@ -85,59 +100,43 @@ export default function FileViewer() {
 
     setCurrentFile(files[curIndx]);
 
-    if (!fileViewerRef.current?.isOpen) {
+    if (!viewerOpen) {
       // if it's closed, we open it here
-      fileViewerRef.current?.open();
+      setViewerOpen(true);
     }
   }, [searchParams, files, getCurrentIdex]);
 
-  // searchParams.set()
+  return (
+    <Dialog
+      open={viewerOpen}
+      onOpenChange={handleModalClose}
+    >
+      <DialogContent className="w-full max-w-[min(97vw,_1300px)] h-[min(80vh,_1000px)] bg-transparent border border-app_border flex flex-col items-center justify-center">
+        <DialogHeader className="w-fit">
+          <DialogDescription className="w-fit text-center">
+            {currenFile?.name}
+          </DialogDescription>
+        </DialogHeader>
 
-  // console.log({ currenFile });
+        {!!(files && files[currentIndx - 1]) ? (
+          <ChevronLeft
+            size={20}
+            height={35}
+            onClick={() => handMotion("PREV")}
+            className="absolute top-1/2 left-0 cursor-pointer text-app_text_white bg-app_blue rounded-full h-7 w-7 xl:h-9 xl:w-9"
+          />
+        ) : null}
 
-  return "abeg";
+        <Viewer fileInView={currenFile} />
 
-  // return (
-  //   <AppModalWrapper
-  //     ref={fileViewerRef as MutableRefObject<ModalWrapperRef>}
-  //     use_base_btns_instead={false}
-  //     prevent_auto_focus
-  //     cancelAction={handleCancelAction}
-  //     sxContainer="min-width: unset; background: none; border: 0.5px solid grey;"
-  //   >
-  //     <StyledViewerContainer>
-  //       {!!(files && files[currentIndx - 1]) ? (
-  //         <Image
-  //           src={APP_ICONS.ctrlLeft}
-  //           draggable={false}
-  //           alt="control left"
-  //           width={35}
-  //           height={35}
-  //           onClick={() => handMotion("PREV")}
-  //           className="control-left"
-  //         />
-  //       ) : null}
-
-  //       {currenFile ? (
-  //         <TextTag className="file-info left-1/2 top-0 z-[6] m-0 mt-[10px] text-[1rem] font-[500] text-app_text_invert md:absolute md:-translate-x-1/2">
-  //           {currenFile?.name}
-  //         </TextTag>
-  //       ) : null}
-
-  //       <Viewer fileInView={currenFile} />
-
-  //       {!!(files && files[currentIndx + 1]) ? (
-  //         <Image
-  //           src={APP_ICONS.ctrlRight}
-  //           draggable={false}
-  //           alt="control right"
-  //           width={35}
-  //           height={35}
-  //           onClick={() => handMotion("NEXT")}
-  //           className="control-right"
-  //         />
-  //       ) : null}
-  //     </StyledViewerContainer>
-  //   </AppModalWrapper>
-  // );
-}
+        {!!(files && files[currentIndx + 1]) ? (
+          <ChevronRight
+            size={20}
+            onClick={() => handMotion("NEXT")}
+            className="absolute top-1/2 right-0 cursor-pointer text-app_text_white bg-app_blue rounded-full h-7 w-7 xl:h-9 xl:w-9"
+          />
+        ) : null}
+      </DialogContent>
+    </Dialog>
+  );
+};

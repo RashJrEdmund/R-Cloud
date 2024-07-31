@@ -29,6 +29,7 @@ export default function PathWrapper({ children }: Props) {
 
   const { currentUser } = useUserStore();
   const {
+    documents,
     setDocuments,
     setLoadingDocs,
 
@@ -75,16 +76,25 @@ export default function PathWrapper({ children }: Props) {
   }, []);
 
   useEffect(() => {
-    if (searchParams.get("viewing")) return; // meaning a file is currently opened.
+    if (searchParams.get("viewing") && documents.length) {
+      /**
+       * meaning a file is currently opened. so we shouldn't refetch path
+      */
+      setLoadingDocs(false);
+      setLoadingCurrentFolder(false);
+
+      return;
+    };
 
     setLoadingDocs(true);
     setLoadingCurrentFolder(true);
 
     fetchDocuments(params.folder_id || "root");
+
     return () => {
-      setDocuments(null);
+      // setDocuments(null);
     };
   }, [params, refetchDocs, searchParams]);
 
   return <>{children}</>;
-}
+};

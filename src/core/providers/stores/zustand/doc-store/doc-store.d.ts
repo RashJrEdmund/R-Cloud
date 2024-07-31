@@ -1,9 +1,9 @@
 import type { Document } from "@/core/interfaces/entities";
 
 interface DocStore {
-  documents: Document[] | null;
+  documents: Document[];
   // eslint-disable-next-line no-unused-vars
-  setDocuments: (documents: Document[] | null) => void;
+  setDocuments: (documents: Document[]) => void;
 
   currentFolder: Document | "root";
   // eslint-disable-next-line no-unused-vars

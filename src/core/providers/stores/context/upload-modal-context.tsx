@@ -169,10 +169,6 @@ const UploadModalContextProvider = ({
     toggleRefetchDocs,
   ]);
 
-  // useEffect(() => {
-  //   if (progress) console.log('progress changing', progress);
-  // }, [progress]);
-
   return (
     <UploadModalContext.Provider
       value={{

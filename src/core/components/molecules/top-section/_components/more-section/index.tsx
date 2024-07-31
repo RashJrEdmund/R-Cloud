@@ -58,8 +58,7 @@ export default function MoreSection({}: Props) {
             {
               text: "Upload File(s)",
               icon: Upload,
-              // action: () =>
-              //   callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
+              action: openFileUploadDialog,
             },
             {
               text: "Start Selection",

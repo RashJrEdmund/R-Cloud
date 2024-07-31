@@ -97,4 +97,4 @@ export default function UploadModal({}: Props) {
       </DialogContent>
     </Dialog>
   );
-}
+};

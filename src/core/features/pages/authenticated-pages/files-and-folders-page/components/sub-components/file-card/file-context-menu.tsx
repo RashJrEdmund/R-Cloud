@@ -11,8 +11,9 @@ import {
   Copy,
   Edit,
   Trash2,
-  Upload,
+  Download,
   BoxSelectIcon,
+  FileLock2,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -22,12 +23,14 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { cn } from "@/core/lib/utils";
+import { toast } from "sonner";
+import { triggerFileDownload } from "@/core/utils/helpers";
 
 interface Props {
   doc: Document;
   children: React.ReactNode;
   // handleOpen: () => void;
-}
+};
 
 function FileContextMenu({ doc: file, children }: Props) {
   const router = useRouter();
@@ -48,6 +51,43 @@ function FileContextMenu({ doc: file, children }: Props) {
 
     router.push(`${pathname}?viewing=${file.id}`);
   };
+
+  // const copyFileFromUrlToClipboard = () => toast.promise(async () => {
+  //   // Fetch the file from the download URL
+  //   const response = await fetch(file.download_url!);
+
+  //   console.log(response, file.download_url);
+
+  //   // Check if the fetch was successful
+  //   if (!response.ok) {
+  //     throw new Error('Failed to fetch the file');
+  //   }
+
+  //   // Convert the response to a Blob
+  //   const blob = await response.blob();
+
+  //   // Determine the MIME type of the blob
+  //   const mimeType = blob.type;
+
+  //   // Create a ClipboardItem with the Blob
+  //   const clipboardItem = new ClipboardItem({
+  //     [mimeType]: blob
+  //   });
+
+  //   // Write the ClipboardItem to the clipboard
+  //   await navigator.clipboard.write([clipboardItem]);
+  // },
+  //   {
+  //     loading: "Downloading & converting file data",
+  //     success: (v) => {
+
+  //       return "File Downloaded";
+  //     },
+  //     error: () => {
+  //       return "Error Downloading & Copying file"
+  //     }
+  //   }
+  // );
 
   const FILE_CONTEXT_MENU_CONTENT = useMemo(() => {
     if (selectedDocs.length && selectedDocs.find((doc) => doc.id === file.id))
@@ -80,14 +120,22 @@ function FileContextMenu({ doc: file, children }: Props) {
         action: () => openEditDocumentModal(file),
       },
       {
-        text: "New File",
-        icon: Upload,
-        // action: openFileUploadDialog,
+        text: "Download File",
+        icon: Download,
+        action: () => triggerFileDownload(file.download_url!, file.name),
+        disabled: true,
       },
       {
         text: "Copy File",
         icon: Copy,
-        action: () => null,
+        // action: copyFileFromUrlToClipboard,
+        disabled: true,
+      },
+      {
+        text: "Share File",
+        icon: FileLock2,
+        // action: () => null,
+        disabled: true,
       },
       {
         text: "Select File",
@@ -114,10 +162,11 @@ function FileContextMenu({ doc: file, children }: Props) {
       </ContextMenuTrigger>
 
       <ContextMenuContent className="w-fit min-w-[min(180px,_97vw)] p-[10px] pb-8">
-        {FILE_CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon }) => (
+        {FILE_CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon, disabled }) => (
           <ContextMenuItem
             key={text}
             onClick={action}
+            disabled={!!disabled}
             className="lex items-center justify-start gap-2 bg-app_bg"
           >
             <Icon size={18} />

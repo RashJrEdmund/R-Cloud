@@ -55,8 +55,6 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [documentToBeDeleted, setDocumentToBeDeleted] =
     useState<Document | null>(null);
 
-  const [docsToDelete, setDocsToDelete] = useState<Document[]>([]);
-
   const openEditDocumentModal = (document: Document) => {
     setDocumentToBeEdited(document);
     setEditDialogOpen(true);
