@@ -1,5 +1,4 @@
-import { TextTag, DivCard } from "@/components/atoms";
-import { ProgressBar, ProgressBarShimmer } from "@/components/molecules";
+import { TextTag } from "@/components/atoms";
 import { getSizeFromBytes } from "@/core/utils/file-utils";
 import {
   Dialog,
@@ -12,15 +11,19 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useUploadModalContext } from "@/providers/stores/context";
+import { Minus } from "lucide-react";
+import { useMemo } from "react";
+import { UploadProgress } from "./upload-progress";
 
 interface Props {
   //
-}
+};
 
-export default function UploadModal({}: Props) {
+export default function UploadModal({ }: Props) {
   const {
-    uploadDialogOpen,
-    setUploadDialogOpen,
+    uploadDialogOpen, setUploadDialogOpen,
+
+    uploadTaskMinimized, minimizeTask,
 
     uploading,
     selectedFiles,
@@ -33,16 +36,34 @@ export default function UploadModal({}: Props) {
     uploadFiles,
   } = useUploadModalContext();
 
+  const isDialogOpened = useMemo(() => {
+
+    if (uploadTaskMinimized) return false;
+
+    if (uploading) return true;
+
+    return uploadDialogOpen;
+  }, [uploadTaskMinimized, uploading, uploadDialogOpen]);
+
   return (
     <Dialog
-      open={uploading ? true : uploadDialogOpen}
+      open={isDialogOpened}
       onOpenChange={setUploadDialogOpen}
     >
       <DialogContent>
+        <span
+          title="minimize task"
+          className="w-fit absolute top-3 right-9 text-app_text_grayed cursor-pointer"
+          onClick={minimizeTask}
+        >
+          <Minus />
+        </span>
+
         <DialogHeader className="w-full">
           <DialogTitle className="text-app_text">
             Upload new content
           </DialogTitle>
+
           <DialogDescription>
             You&apos;ve selected
             <TextTag className="text-app_text_blue">
@@ -56,27 +77,7 @@ export default function UploadModal({}: Props) {
           </DialogDescription>
         </DialogHeader>
 
-        {progress && (
-          <DivCard className="w-full flex-col items-start justify-start gap-[10px]">
-            <DivCard className="flex-nowrap gap-[10px]">
-              <TextTag>
-                uploading {currentUploadIndx + 1} / {selectedFiles.length}
-              </TextTag>
-
-              <TextTag className="text-app_text_blue">
-                {progress[currentUploadIndx].toFixed(1) + " %"}
-              </TextTag>
-            </DivCard>
-
-            {progress[currentUploadIndx] ? (
-              <ProgressBar
-                progress_in_percentage={+progress[currentUploadIndx].toFixed(1)}
-              />
-            ) : (
-              <ProgressBarShimmer />
-            )}
-          </DivCard>
-        )}
+        <UploadProgress />
 
         <DialogFooter className="flex w-full items-center justify-end">
           <DialogClose asChild disabled={uploading}>

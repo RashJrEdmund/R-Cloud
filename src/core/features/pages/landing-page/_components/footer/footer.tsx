@@ -1,7 +1,7 @@
 "use client";
 
 import { DivCard, TextTag } from "@/components/atoms";
-import { Copy, Github, Linkedin, Mail, Twitter, X } from "lucide-react";
+import { Copy, Github, Linkedin, Mail, X } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 

@@ -21,10 +21,11 @@ import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 
 interface Props {
-  setShowDropDown: React.Dispatch<React.SetStateAction<boolean>>;
-}
+  //
+};
 
-export default function ProfileDropDown({ setShowDropDown }: Props) {
+
+export default function ProfileDropDown({ }: Props) {
   const { setCurrentUser, userProfile } = useUserStore();
   const { setDocuments } = useDocStore();
   const router = useRouter();

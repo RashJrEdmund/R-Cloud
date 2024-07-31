@@ -76,7 +76,7 @@ export default function RootLayout({ children }: Props) {
         <ReactQueryClientProvider>
           <AppWrapper>
             <UploadModalContextProvider>
-              <Toaster richColors />
+              <Toaster richColors pauseWhenPageIsHidden />
 
               <NavBar />
 

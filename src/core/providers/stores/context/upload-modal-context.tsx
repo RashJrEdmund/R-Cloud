@@ -18,6 +18,8 @@ import {
 } from "@/core/config/firebase/fire-store";
 import { getFileName, getSizeFromBytes } from "@/core/utils/file-utils";
 import { useParams } from "next/navigation";
+import { toast } from "sonner";
+import { UploadProgress } from "@/components/modals/upload-modal/upload-progress";
 
 interface UploadDetails {
   total_size: number;
@@ -28,6 +30,9 @@ interface UploadModalContextType {
   readyUploadModal: (files: FileList, items?: DataTransferItemList) => void;
   uploadDialogOpen: boolean;
   setUploadDialogOpen: Dispatch<SetStateAction<boolean>>;
+
+  uploadTaskMinimized: boolean;
+  minimizeTask: () => void;
 
   // data
   uploading: boolean;
@@ -55,6 +60,7 @@ const UploadModalContextProvider = ({
 }) => {
   // START MODAL TOGGLE STATES
   const [uploadDialogOpen, setUploadDialogOpen] = useState<boolean>(false);
+  const [uploadTaskMinimized, setUploadTaskMinimized] = useState<boolean>(false);
 
   // END MODAL TOGGLE STATES
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -78,6 +84,7 @@ const UploadModalContextProvider = ({
     setSelectedFiles([]);
     setUploadDetails(null);
     setProgress(null);
+    setUploadTaskMinimized(false);
 
     const fileUploadField =
       document.querySelector<HTMLInputElement>("#file-upload-field");
@@ -94,13 +101,21 @@ const UploadModalContextProvider = ({
       if (!file.type) continue;
       file_arr.push(file);
       total_size += file.size;
-    }
+    };
 
     setSelectedFiles(file_arr);
     setUploadDetails({ total_size, count: file_arr.length });
 
     setUploadDialogOpen(true);
   };
+
+  const minimizeTask = () => {
+    toast.custom((t) => (
+      <UploadProgress />
+    ), { duration: Infinity });
+
+    setUploadTaskMinimized(true);
+  }
 
   const uploadFiles = useCallback(async () => {
     if (!currentUser) return;
@@ -174,8 +189,9 @@ const UploadModalContextProvider = ({
       value={{
         readyUploadModal,
 
-        uploadDialogOpen,
-        setUploadDialogOpen,
+        uploadDialogOpen, setUploadDialogOpen,
+
+        uploadTaskMinimized, minimizeTask,
 
         // data;
         uploading,

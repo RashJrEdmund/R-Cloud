@@ -66,10 +66,10 @@ export default function ProfileSection({}: Props) {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent className="-translate-x-[5px] translate-y-[10px]">
-            <ProfileDropDown setShowDropDown={setShowDropDown} />
+            <ProfileDropDown />
           </DropdownMenuContent>
         </DropdownMenu>
       )}
     </div>
   );
-}
+};
