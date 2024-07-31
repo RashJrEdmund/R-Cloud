@@ -32,7 +32,7 @@ export default function ProfileDropDown({ setShowDropDown }: Props) {
   const handleLogOut = () => {
     logOut().then(() => {
       setCurrentUser(null);
-      setDocuments(null);
+      setDocuments([]);
       router.replace("/");
     });
   };
