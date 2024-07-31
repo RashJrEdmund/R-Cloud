@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useSelectionStore } from "@/providers/stores/zustand";
 import { cn } from "@/core/lib/utils";
 
-const { } = THEME_PALETTE;
+const {} = THEME_PALETTE;
 
 interface Props {
   document: Document;
@@ -40,10 +40,7 @@ export default function SelectCheckbox({ document, className }: Props) {
       />
 
       <input
-        className={cn(
-          "z-[5] cursor-pointer top-0 left-0",
-          className
-        )}
+        className={cn("left-0 top-0 z-[5] cursor-pointer", className)}
         type="checkbox"
         title="toggle display layout"
         checked={checked}

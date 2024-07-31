@@ -95,49 +95,49 @@ export default function FileViewer() {
 
   // console.log({ currenFile });
 
-  return "abeg"
+  return "abeg";
 
-  return (
-    <AppModalWrapper
-      ref={fileViewerRef as MutableRefObject<ModalWrapperRef>}
-      use_base_btns_instead={false}
-      prevent_auto_focus
-      cancelAction={handleCancelAction}
-      sxContainer="min-width: unset; background: none; border: 0.5px solid grey;"
-    >
-      <StyledViewerContainer>
-        {!!(files && files[currentIndx - 1]) ? (
-          <Image
-            src={APP_ICONS.ctrlLeft}
-            draggable={false}
-            alt="control left"
-            width={35}
-            height={35}
-            onClick={() => handMotion("PREV")}
-            className="control-left"
-          />
-        ) : null}
+  // return (
+  //   <AppModalWrapper
+  //     ref={fileViewerRef as MutableRefObject<ModalWrapperRef>}
+  //     use_base_btns_instead={false}
+  //     prevent_auto_focus
+  //     cancelAction={handleCancelAction}
+  //     sxContainer="min-width: unset; background: none; border: 0.5px solid grey;"
+  //   >
+  //     <StyledViewerContainer>
+  //       {!!(files && files[currentIndx - 1]) ? (
+  //         <Image
+  //           src={APP_ICONS.ctrlLeft}
+  //           draggable={false}
+  //           alt="control left"
+  //           width={35}
+  //           height={35}
+  //           onClick={() => handMotion("PREV")}
+  //           className="control-left"
+  //         />
+  //       ) : null}
 
-        {currenFile ? (
-          <TextTag className="file-info left-1/2 top-0 z-[6] m-0 mt-[10px] text-[1rem] font-[500] text-app_text_invert md:absolute md:-translate-x-1/2">
-            {currenFile?.name}
-          </TextTag>
-        ) : null}
+  //       {currenFile ? (
+  //         <TextTag className="file-info left-1/2 top-0 z-[6] m-0 mt-[10px] text-[1rem] font-[500] text-app_text_invert md:absolute md:-translate-x-1/2">
+  //           {currenFile?.name}
+  //         </TextTag>
+  //       ) : null}
 
-        <Viewer fileInView={currenFile} />
+  //       <Viewer fileInView={currenFile} />
 
-        {!!(files && files[currentIndx + 1]) ? (
-          <Image
-            src={APP_ICONS.ctrlRight}
-            draggable={false}
-            alt="control right"
-            width={35}
-            height={35}
-            onClick={() => handMotion("NEXT")}
-            className="control-right"
-          />
-        ) : null}
-      </StyledViewerContainer>
-    </AppModalWrapper>
-  );
+  //       {!!(files && files[currentIndx + 1]) ? (
+  //         <Image
+  //           src={APP_ICONS.ctrlRight}
+  //           draggable={false}
+  //           alt="control right"
+  //           width={35}
+  //           height={35}
+  //           onClick={() => handMotion("NEXT")}
+  //           className="control-right"
+  //         />
+  //       ) : null}
+  //     </StyledViewerContainer>
+  //   </AppModalWrapper>
+  // );
 }

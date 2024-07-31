@@ -26,7 +26,7 @@ import { useModalContext } from "@/providers/stores/context";
 
 interface Props {
   //
-};
+}
 
 export default function NewFolderModal({}: Props) {
   const [folderName, setFolderName] = useState<string>("");
@@ -108,11 +108,7 @@ export default function NewFolderModal({}: Props) {
           <DialogDescription>Create new empty folder.</DialogDescription>
         </DialogHeader>
 
-        <DivCard
-          as="form"
-          className="w-full"
-          onSubmit={handleFormSubmit}
-        >
+        <DivCard as="form" className="w-full" onSubmit={handleFormSubmit}>
           <InputField
             leave_active
             placeholder="New Folder"

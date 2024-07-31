@@ -16,7 +16,7 @@ interface Props {
   //
 }
 
-export default function FilesFolderDisplayPage({ }: Props) {
+export default function FilesFolderDisplayPage({}: Props) {
   return (
     <>
       {/* INPUT_DES +=> ========================================================================
@@ -37,4 +37,4 @@ export default function FilesFolderDisplayPage({ }: Props) {
       </PathWrapper>
     </>
   );
-};
+}

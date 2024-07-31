@@ -10,6 +10,6 @@ interface SelectionStore {
 
   handleDocumentSelection: (doc: Document) => void;
   toggleDocumentSelection: () => void;
-};
+}
 
 export type { SelectionStore };

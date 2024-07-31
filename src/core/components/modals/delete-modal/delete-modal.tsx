@@ -74,13 +74,16 @@ export default function DeleteModal({ document }: Props) {
     >
       <DialogContent>
         <DialogHeader className="w-full">
-          <input placeholder="Don't mind me, I'm just here to catch the auto focus on this modal" hidden />
+          <input
+            placeholder="Don't mind me, I'm just here to catch the auto focus on this modal"
+            hidden
+          />
 
           <DialogTitle className="text-app_text">Delete {doc_type}</DialogTitle>
           <DialogDescription>
             Are you sure you want to delete this {doc_type} <br />
-
-            {document?.type === "FOLDER" && Number(document?.capacity.bytes) > 0 ? (
+            {document?.type === "FOLDER" &&
+            Number(document?.capacity.bytes) > 0 ? (
               <TextTag className="text-left text-app_error">
                 Deleting this folder will delete all it&apos;s content
               </TextTag>

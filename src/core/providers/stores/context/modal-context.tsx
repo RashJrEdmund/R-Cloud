@@ -7,11 +7,7 @@
 import type { Dispatch, SetStateAction } from "react";
 import type { Document } from "@/core/interfaces/entities";
 
-import {
-  createContext,
-  useContext,
-  useState,
-} from "react";
+import { createContext, useContext, useState } from "react";
 import {
   BulkDeleteModal,
   DeleteModal,
@@ -36,7 +32,7 @@ interface ModalContextType {
   // openNewFolderModal: () => void;
   openEditDocumentModal: (_: Document) => void;
   openDeleteDocumentModal: (_: Document) => void;
-};
+}
 
 const ModalContext = createContext<ModalContextType | null>(null);
 
@@ -45,13 +41,12 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [newFolderDialogOpen, setNewFolderDialogOpen] =
     useState<boolean>(false);
 
-  const [editDialogOpen, setEditDialogOpen] =
-    useState<boolean>(false);
+  const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
 
-  const [deleteDialogOpen, setDeleteDialogOpen] =
-    useState<boolean>(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
 
-  const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState<boolean>(false);
+  const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] =
+    useState<boolean>(false);
 
   // END MODAL TOGGLE STATES
   const [documentToBeEdited, setDocumentToBeEdited] = useState<Document | null>(
@@ -75,13 +70,17 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ModalContext.Provider
       value={{
-        newFolderDialogOpen, setNewFolderDialogOpen,
+        newFolderDialogOpen,
+        setNewFolderDialogOpen,
 
-        editDialogOpen, setEditDialogOpen,
+        editDialogOpen,
+        setEditDialogOpen,
 
-        deleteDialogOpen, setDeleteDialogOpen,
+        deleteDialogOpen,
+        setDeleteDialogOpen,
 
-        bulkDeleteDialogOpen, setBulkDeleteDialogOpen,
+        bulkDeleteDialogOpen,
+        setBulkDeleteDialogOpen,
 
         openEditDocumentModal,
         openDeleteDocumentModal,
@@ -90,13 +89,9 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
       <>
         <NewFolderModal />
 
-        <EditModal
-          document={documentToBeEdited}
-        />
+        <EditModal document={documentToBeEdited} />
 
-        <DeleteModal
-          document={documentToBeDeleted}
-        />
+        <DeleteModal document={documentToBeDeleted} />
 
         <BulkDeleteModal />
 

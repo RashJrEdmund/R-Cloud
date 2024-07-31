@@ -4,7 +4,11 @@ import type { Document } from "@/core/interfaces/entities";
 
 import { useMemo, useState } from "react";
 import { TextTag, DivCard } from "@/components/atoms";
-import { useDocStore, useSelectionStore, useUserStore } from "@/providers/stores/zustand";
+import {
+  useDocStore,
+  useSelectionStore,
+  useUserStore,
+} from "@/providers/stores/zustand";
 import { deleteDocuments } from "@/core/config/firebase/fire-store";
 import { getSizeFromBytes } from "@/core/utils/file-utils";
 import {
@@ -23,7 +27,7 @@ interface Props {
   //
 }
 
-export default function BulkDeleteModal({ }: Props) {
+export default function BulkDeleteModal({}: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toggleRefetchDocs } = useDocStore();
 
@@ -72,7 +76,7 @@ export default function BulkDeleteModal({ }: Props) {
     } finally {
       closeModal();
       // toggleRefetchDocs();
-    };
+    }
   };
 
   const isDialogOpened = useMemo(() => {
@@ -81,19 +85,15 @@ export default function BulkDeleteModal({ }: Props) {
     if (!selectedDocs.length) return false;
 
     return bulkDeleteDialogOpen;
-  }, [isLoading, bulkDeleteDialogOpen, selectedDocs])
+  }, [isLoading, bulkDeleteDialogOpen, selectedDocs]);
 
   return (
-    <Dialog
-      open={isDialogOpened}
-      onOpenChange={setBulkDeleteDialogOpen}
-    >
+    <Dialog open={isDialogOpened} onOpenChange={setBulkDeleteDialogOpen}>
       <DialogContent>
         <DialogHeader className="w-full">
           <DialogTitle className="text-app_text">Delete Selected</DialogTitle>
           <DialogDescription>
             Are you sure you want to the delete selected <br />
-
             {selectedDocDetails.has_folders ? (
               <TextTag className="text-left text-app_error">
                 Folders detected. Deleting folders will delete their content

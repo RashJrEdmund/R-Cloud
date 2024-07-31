@@ -12,10 +12,15 @@ import { cn } from "@/core/lib/utils";
 import SelectCheckbox from "./select-checkbox";
 
 interface CardContainerProps extends ComponentProps<"div"> {
-  document: Document
-};
+  document: Document;
+}
 
-function GridCardContainer({ className, children, document, ...restProps }: CardContainerProps) {
+function GridCardContainer({
+  className,
+  children,
+  document,
+  ...restProps
+}: CardContainerProps) {
   return (
     <div
       {...restProps}
@@ -24,19 +29,19 @@ function GridCardContainer({ className, children, document, ...restProps }: Card
         className
       )}
     >
-      <SelectCheckbox
-        className="absolute m-[10px]"
-        document={document}
-      />
+      <SelectCheckbox className="absolute m-[10px]" document={document} />
 
-      <>
-        {children}
-      </>
+      <>{children}</>
     </div>
   );
-};
+}
 
-function ListCardContainer({ className, children, document, ...restProps }: CardContainerProps) {
+function ListCardContainer({
+  className,
+  children,
+  document,
+  ...restProps
+}: CardContainerProps) {
   return (
     <div
       {...restProps}
@@ -45,17 +50,12 @@ function ListCardContainer({ className, children, document, ...restProps }: Card
         className
       )}
     >
-      <SelectCheckbox
-        className="mr-[5px]"
-        document={document}
-      />
+      <SelectCheckbox className="mr-[5px]" document={document} />
 
-      <>
-        {children}
-      </>
+      <>{children}</>
     </div>
   );
-};
+}
 
 // SHIMMER CARDS
 

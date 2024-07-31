@@ -17,9 +17,10 @@ interface Props {
   //
 }
 
-export default function UploadModal({ }: Props) {
+export default function UploadModal({}: Props) {
   const {
-    uploadDialogOpen, setUploadDialogOpen,
+    uploadDialogOpen,
+    setUploadDialogOpen,
 
     uploading,
     selectedFiles,
@@ -39,14 +40,15 @@ export default function UploadModal({ }: Props) {
     >
       <DialogContent>
         <DialogHeader className="w-full">
-          <DialogTitle className="text-app_text">Upload new content</DialogTitle>
+          <DialogTitle className="text-app_text">
+            Upload new content
+          </DialogTitle>
           <DialogDescription>
             You&apos;ve selected
             <TextTag className="text-app_text_blue">
               {selectedFiles.length} file{selectedFiles.length > 0 ? "s" : ""}
             </TextTag>
             <br />
-
             Total upload size{" "}
             <TextTag className="text-app_text_blue">
               {getSizeFromBytes(Number(uploadDetails?.total_size ?? 0)).merged}
@@ -70,7 +72,9 @@ export default function UploadModal({ }: Props) {
               <ProgressBar
                 progress_in_percentage={+progress[currentUploadIndx].toFixed(1)}
               />
-            ) : <ProgressBarShimmer />}
+            ) : (
+              <ProgressBarShimmer />
+            )}
           </DivCard>
         )}
 

@@ -1,10 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import {
-  GridCardContainer,
-  ListCardContainer,
-} from "../shared";
+import { GridCardContainer, ListCardContainer } from "../shared";
 import { DivCard, TextTag } from "@/components/atoms";
 import {
   deriveDocumentPreviewImage,
@@ -129,9 +126,7 @@ function FileCardHoc(
 
     const { displayLayout } = useAppStore();
 
-    const {
-      selectionStart,
-    } = useSelectionStore();
+    const { selectionStart } = useSelectionStore();
 
     const handleOpen: MouseEventHandler<HTMLDivElement> = () => {
       if (selectionStart) return;
@@ -153,7 +148,7 @@ function FileCardHoc(
       </FileContextMenu>
     );
   };
-};
+}
 
 const GridFileCard = FileCardHoc(_GridFileCard);
 

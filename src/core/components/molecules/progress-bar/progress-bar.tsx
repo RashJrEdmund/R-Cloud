@@ -7,12 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function ProgressBarShimmer({ className }: { className?: string }) {
   return (
-    <Skeleton
-      className={cn(
-        "h-[20px] w-full rounded-[8px]",
-        className
-      )}
-    />
+    <Skeleton className={cn("h-[20px] w-full rounded-[8px]", className)} />
   );
 }
 
@@ -64,9 +59,6 @@ function ProgressBar({
       />
     </DivCard>
   );
-};
+}
 
-export {
-  ProgressBarShimmer,
-  ProgressBar,
-};
+export { ProgressBarShimmer, ProgressBar };

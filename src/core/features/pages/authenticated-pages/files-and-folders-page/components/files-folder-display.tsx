@@ -18,7 +18,7 @@ interface Props {
   //
 }
 
-export default function FilesFolderDisplay({ }: Props) {
+export default function FilesFolderDisplay({}: Props) {
   const { documents, loadingDocs, currentFolder, loadingCurrentFolder } =
     useDocStore();
   const { displayLayout } = useAppStore();
@@ -26,7 +26,7 @@ export default function FilesFolderDisplay({ }: Props) {
   // return <FilesFolderShimmer displayLayout={displayLayout} />;
 
   return (
-    <MainAndTopSection >
+    <MainAndTopSection>
       <TextTag className="break-all text-app_text_grayed">
         {(() => {
           if (loadingCurrentFolder)
@@ -60,22 +60,22 @@ export default function FilesFolderDisplay({ }: Props) {
           >
             {displayLayout === "GRID"
               ? documents.map((doc) =>
-                doc.type === "FOLDER" ? (
-                  <GridFolderCard key={doc.id} doc={doc} />
-                ) : (
-                  <GridFileCard key={doc.id} doc={doc} />
+                  doc.type === "FOLDER" ? (
+                    <GridFolderCard key={doc.id} doc={doc} />
+                  ) : (
+                    <GridFileCard key={doc.id} doc={doc} />
+                  )
                 )
-              )
               : documents.map((doc) =>
-                doc.type === "FOLDER" ? (
-                  <ListFolderCard key={doc.id} doc={doc} />
-                ) : (
-                  <ListFileCard key={doc.id} doc={doc} />
-                )
-              )}
+                  doc.type === "FOLDER" ? (
+                    <ListFolderCard key={doc.id} doc={doc} />
+                  ) : (
+                    <ListFileCard key={doc.id} doc={doc} />
+                  )
+                )}
           </StyledFileFolderDisplay>
         );
       })()}
     </MainAndTopSection>
   );
-};
+}

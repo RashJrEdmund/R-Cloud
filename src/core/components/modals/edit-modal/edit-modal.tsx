@@ -1,7 +1,6 @@
 "use client";
 
-import type { MutableRefObject, FormEventHandler } from "react";
-import type { ModalWrapperRef } from "@/components/modals/generics";
+import type { FormEventHandler } from "react";
 import type { Document } from "@/core/interfaces/entities";
 
 import { useMemo, useEffect, useState } from "react";
@@ -99,16 +98,10 @@ export default function EditModal({ document }: Props) {
     >
       <DialogContent>
         <DialogHeader className="w-full">
-          <DialogTitle className="text-app_text">
-            Rename {doc_type}
-          </DialogTitle>
+          <DialogTitle className="text-app_text">Rename {doc_type}</DialogTitle>
         </DialogHeader>
 
-        <DivCard
-          as="form"
-          className="w-full"
-          onSubmit={handleFormSubmit}
-        >
+        <DivCard as="form" className="w-full" onSubmit={handleFormSubmit}>
           <InputField
             leave_active
             placeholder={"re name " + doc_type}
@@ -138,5 +131,5 @@ export default function EditModal({ document }: Props) {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

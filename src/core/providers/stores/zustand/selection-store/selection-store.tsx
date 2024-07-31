@@ -8,41 +8,43 @@ const useSelectionStore = create<SelectionStore>((set) => ({
   selectedDocs: [],
   setSelectedDocs: (selectedDocs) => set({ selectedDocs }),
 
-  handleDocumentSelection: (document) => set((_) => {
-    const { selectionStart, selectedDocs, } = _;
+  handleDocumentSelection: (document) =>
+    set((_) => {
+      const { selectionStart, selectedDocs } = _;
 
-    const prev = { ..._ };
+      const prev = { ..._ };
 
-    if (!selectionStart) prev.selectionStart = true;
+      if (!selectionStart) prev.selectionStart = true;
 
-    if (selectedDocs.find((doc) => doc.id === document.id)) {
-      const update = selectedDocs.filter((doc) => doc.id !== document.id);
+      if (selectedDocs.find((doc) => doc.id === document.id)) {
+        const update = selectedDocs.filter((doc) => doc.id !== document.id);
 
-      prev.selectedDocs = update;
-      return { ...prev };
-    };
+        prev.selectedDocs = update;
+        return { ...prev };
+      }
 
-    return {
-      ...prev,
-      selectedDocs: [...selectedDocs, document],
-    };
-  }),
-
-  toggleDocumentSelection: () => set((prev) => {
-    if (prev.selectionStart) {
-      // then we should stop selection
       return {
         ...prev,
-        selectionStart: false,
-        selectedDocs: [],
+        selectedDocs: [...selectedDocs, document],
       };
-    };
+    }),
 
-    return {
-      ...prev,
-      selectionStart: true,
-    };
-  }),
+  toggleDocumentSelection: () =>
+    set((prev) => {
+      if (prev.selectionStart) {
+        // then we should stop selection
+        return {
+          ...prev,
+          selectionStart: false,
+          selectedDocs: [],
+        };
+      }
+
+      return {
+        ...prev,
+        selectionStart: true,
+      };
+    }),
 }));
 
 export { useSelectionStore };

@@ -7,12 +7,7 @@
 import type { Dispatch, SetStateAction } from "react";
 import type { Document } from "@/core/interfaces/entities";
 
-import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-} from "react";
+import { createContext, useContext, useState, useCallback } from "react";
 import { UploadModal } from "@/components/modals";
 import { uploadFile } from "@/core/config/firebase";
 import { useDocStore, useUserStore } from "../zustand";
@@ -27,7 +22,7 @@ import { useParams } from "next/navigation";
 interface UploadDetails {
   total_size: number;
   count: number;
-};
+}
 
 interface UploadModalContextType {
   readyUploadModal: (files: FileList, items?: DataTransferItemList) => void;
@@ -49,14 +44,17 @@ interface UploadModalContextType {
   closeUploadModal: () => void;
 
   uploadFiles: () => Promise<void>;
-};
+}
 
 const UploadModalContext = createContext<UploadModalContextType | null>(null);
 
-const UploadModalContextProvider = ({ children }: { children: React.ReactNode }) => {
+const UploadModalContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   // START MODAL TOGGLE STATES
-  const [uploadDialogOpen, setUploadDialogOpen] =
-    useState<boolean>(false);
+  const [uploadDialogOpen, setUploadDialogOpen] = useState<boolean>(false);
 
   // END MODAL TOGGLE STATES
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -72,7 +70,6 @@ const UploadModalContextProvider = ({ children }: { children: React.ReactNode })
 
   const { currentUser } = useUserStore();
   const { toggleRefetchDocs, currentFolder } = useDocStore();
-
 
   const params = useParams<{ folder_id: string }>();
 
@@ -97,7 +94,7 @@ const UploadModalContextProvider = ({ children }: { children: React.ReactNode })
       if (!file.type) continue;
       file_arr.push(file);
       total_size += file.size;
-    };
+    }
 
     setSelectedFiles(file_arr);
     setUploadDetails({ total_size, count: file_arr.length });
@@ -150,11 +147,11 @@ const UploadModalContextProvider = ({ children }: { children: React.ReactNode })
         await createFileDoc(currentUser.email, document as Document);
         completed.bytes += file.size;
         completed.length += 1;
-      };
+      }
 
       if (params.folder_id) {
         await updateFolderSize(currentUser.email, params.folder_id, completed);
-      };
+      }
 
       await updateUsedSpace(currentUser.email, completed.bytes);
     } catch (error) {
@@ -181,7 +178,8 @@ const UploadModalContextProvider = ({ children }: { children: React.ReactNode })
       value={{
         readyUploadModal,
 
-        uploadDialogOpen, setUploadDialogOpen,
+        uploadDialogOpen,
+        setUploadDialogOpen,
 
         // data;
         uploading,

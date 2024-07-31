@@ -2,13 +2,17 @@
 
 import { useMemo } from "react";
 import { TextTag } from "@/components/atoms";
-import {
-  openFileUploadDialog,
-} from "@/core/utils/helpers";
+import { openFileUploadDialog } from "@/core/utils/helpers";
 import { useModalContext } from "@/providers/stores/context";
 import { useSelectionStore } from "@/providers/stores/zustand";
 import { MoreVertical } from "lucide-react";
-import { BoxSelectIcon, SquareCheckBig, Folder, Trash2, Upload } from "lucide-react";
+import {
+  BoxSelectIcon,
+  SquareCheckBig,
+  Folder,
+  Trash2,
+  Upload,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,9 +22,9 @@ import {
 
 interface Props {
   //
-};
+}
 
-export default function MoreSection({ }: Props) {
+export default function MoreSection({}: Props) {
   const { setNewFolderDialogOpen, setBulkDeleteDialogOpen } = useModalContext();
 
   const {
@@ -34,35 +38,35 @@ export default function MoreSection({ }: Props) {
     () =>
       selectionStart
         ? [
-          {
-            text: "Delete Selected",
-            icon: Trash2,
-            action: () => setBulkDeleteDialogOpen(!!selectedDocs.length),
-          },
-          {
-            text: "Stop Selection",
-            icon: BoxSelectIcon,
-            action: toggleDocumentSelection,
-          },
-        ]
+            {
+              text: "Delete Selected",
+              icon: Trash2,
+              action: () => setBulkDeleteDialogOpen(!!selectedDocs.length),
+            },
+            {
+              text: "Stop Selection",
+              icon: BoxSelectIcon,
+              action: toggleDocumentSelection,
+            },
+          ]
         : [
-          {
-            text: "New Folder",
-            icon: Folder,
-            action: () => setNewFolderDialogOpen(true),
-          },
-          {
-            text: "Upload File(s)",
-            icon: Upload,
-            // action: () =>
-            //   callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
-          },
-          {
-            text: "Start Selection",
-            icon: SquareCheckBig,
-            action: toggleDocumentSelection,
-          },
-        ],
+            {
+              text: "New Folder",
+              icon: Folder,
+              action: () => setNewFolderDialogOpen(true),
+            },
+            {
+              text: "Upload File(s)",
+              icon: Upload,
+              // action: () =>
+              //   callMenuFunctionThenCloseMenu(() => openFileUploadDialog()),
+            },
+            {
+              text: "Start Selection",
+              icon: SquareCheckBig,
+              action: toggleDocumentSelection,
+            },
+          ],
     [selectionStart, selectedDocs]
   );
 

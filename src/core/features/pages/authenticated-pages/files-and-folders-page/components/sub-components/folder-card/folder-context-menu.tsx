@@ -12,7 +12,13 @@ import {
 
 import { useModalContext } from "@/providers/stores/context";
 import { useAppStore, useSelectionStore } from "@/providers/stores/zustand";
-import { SquareCheckBig, FolderOpen, FolderPen, Trash2, BoxSelectIcon } from "lucide-react";
+import {
+  SquareCheckBig,
+  FolderOpen,
+  FolderPen,
+  Trash2,
+  BoxSelectIcon,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/core/lib/utils";
 
@@ -25,11 +31,8 @@ interface Props {
 function FolderContextMenu({ doc: folder, children }: Props) {
   const router = useRouter();
 
-  const {
-    selectionStart,
-    selectedDocs,
-    handleDocumentSelection
-  } = useSelectionStore();
+  const { selectionStart, selectedDocs, handleDocumentSelection } =
+    useSelectionStore();
   const { displayLayout } = useAppStore();
 
   const {
@@ -45,21 +48,23 @@ function FolderContextMenu({ doc: folder, children }: Props) {
   };
 
   const FOLDER_CONTEXT_MENU_CONTENT = useMemo(() => {
-    if (selectedDocs.length && selectedDocs.find((doc) => doc.id === folder.id)) return [
-      {
-        text: "Deselect Folder",
-        icon: BoxSelectIcon,
-        action: () => handleDocumentSelection(folder),
-      }
-    ];
+    if (selectedDocs.length && selectedDocs.find((doc) => doc.id === folder.id))
+      return [
+        {
+          text: "Deselect Folder",
+          icon: BoxSelectIcon,
+          action: () => handleDocumentSelection(folder),
+        },
+      ];
 
-    if (selectionStart) return [
-      {
-        text: "Select Folder",
-        icon: SquareCheckBig,
-        action: () => handleDocumentSelection(folder),
-      }
-    ];
+    if (selectionStart)
+      return [
+        {
+          text: "Select Folder",
+          icon: SquareCheckBig,
+          action: () => handleDocumentSelection(folder),
+        },
+      ];
 
     return [
       {
@@ -87,7 +92,12 @@ function FolderContextMenu({ doc: folder, children }: Props) {
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger className={cn("h-fit p-0", displayLayout === "GRID" ? "w-full md:w-fit mx-auto" : "w-full")}>
+      <ContextMenuTrigger
+        className={cn(
+          "h-fit p-0",
+          displayLayout === "GRID" ? "mx-auto w-full md:w-fit" : "w-full"
+        )}
+      >
         {children}
       </ContextMenuTrigger>
 

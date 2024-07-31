@@ -12,10 +12,9 @@ import { openFileUploadDialog } from "@/core/utils/helpers";
 
 import type { DragEventHandler, ComponentProps } from "react";
 
-
 interface MainAndTopSectionProps extends ComponentProps<"main"> {
   //
-};
+}
 
 function MainAndTopSection({
   className,
@@ -84,7 +83,6 @@ function MainAndTopSection({
       <MainTag
         {...(restProps as {})}
         className={cn("justify-start", className)}
-
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
@@ -96,6 +94,6 @@ function MainAndTopSection({
       </MainTag>
     </MainAndContextMenu>
   );
-};
+}
 
 export { MainAndTopSection };

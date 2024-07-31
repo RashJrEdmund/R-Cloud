@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  GridCardContainer,
-  ListCardContainer,
-} from "../shared";
+import { GridCardContainer, ListCardContainer } from "../shared";
 import { DivCard, TextTag } from "@/core/components/atoms";
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
@@ -33,7 +30,7 @@ function _GridFolderCard({
   handleOpen,
 }: CardComponentProps) {
   return (
-    <GridCardContainer document={folder} onDoubleClick={handleOpen} >
+    <GridCardContainer document={folder} onDoubleClick={handleOpen}>
       <Image
         src={MEDIA_ICONS.folder}
         alt="file icon"
@@ -141,7 +138,7 @@ function FolderCardHoc(
       </FolderContextMenu>
     );
   };
-};
+}
 
 const GridFolderCard = FolderCardHoc(_GridFolderCard);
 

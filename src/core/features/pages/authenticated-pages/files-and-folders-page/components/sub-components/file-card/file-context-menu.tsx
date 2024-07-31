@@ -5,7 +5,15 @@ import type { Document } from "@/core/interfaces/entities";
 import { useMemo } from "react";
 import { useModalContext } from "@/providers/stores/context";
 import { useAppStore, useSelectionStore } from "@/providers/stores/zustand";
-import { BookOpen, SquareCheckBig, Copy, Edit, Trash2, Upload, BoxSelectIcon } from "lucide-react";
+import {
+  BookOpen,
+  SquareCheckBig,
+  Copy,
+  Edit,
+  Trash2,
+  Upload,
+  BoxSelectIcon,
+} from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import {
   ContextMenu,
@@ -26,11 +34,8 @@ function FileContextMenu({ doc: file, children }: Props) {
   const pathname = usePathname();
 
   const { displayLayout } = useAppStore();
-  const {
-    selectionStart,
-    handleDocumentSelection,
-    selectedDocs,
-  } = useSelectionStore();
+  const { selectionStart, handleDocumentSelection, selectedDocs } =
+    useSelectionStore();
 
   const {
     openEditDocumentModal,
@@ -45,21 +50,23 @@ function FileContextMenu({ doc: file, children }: Props) {
   };
 
   const FILE_CONTEXT_MENU_CONTENT = useMemo(() => {
-    if (selectedDocs.length && selectedDocs.find((doc) => doc.id === file.id)) return [
-      {
-        text: "Deselect File",
-        icon: BoxSelectIcon,
-        action: () => handleDocumentSelection(file),
-      }
-    ];
+    if (selectedDocs.length && selectedDocs.find((doc) => doc.id === file.id))
+      return [
+        {
+          text: "Deselect File",
+          icon: BoxSelectIcon,
+          action: () => handleDocumentSelection(file),
+        },
+      ];
 
-    if (selectionStart) return [
-      {
-        text: "Select File",
-        icon: SquareCheckBig,
-        action: () => handleDocumentSelection(file),
-      }
-    ];
+    if (selectionStart)
+      return [
+        {
+          text: "Select File",
+          icon: SquareCheckBig,
+          action: () => handleDocumentSelection(file),
+        },
+      ];
 
     return [
       {
@@ -97,7 +104,12 @@ function FileContextMenu({ doc: file, children }: Props) {
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger className={cn("h-fit p-0", displayLayout === "GRID" ? "w-full md:w-fit mx-auto" : "w-full")}>
+      <ContextMenuTrigger
+        className={cn(
+          "h-fit p-0",
+          displayLayout === "GRID" ? "mx-auto w-full md:w-fit" : "w-full"
+        )}
+      >
         {children}
       </ContextMenuTrigger>
 
