@@ -1,6 +1,7 @@
 "use client";
 
 import { DivCard, TextTag } from "@/components/atoms";
+import { APP_CONFIG } from "@/core/config/app";
 import { Copy, Github, Linkedin, Mail, X } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -23,13 +24,9 @@ const Socials = [
   },
 ];
 
-const R_APPS_URL = "#";
-
-const MY_EMAIL = "orashusedmund@gmail.com";
-
 export default function Footer() {
   const handleEmailCopy = () => {
-    navigator.clipboard.writeText(MY_EMAIL).then(() => {
+    navigator.clipboard.writeText(APP_CONFIG.my_email).then(() => {
       toast("Email copied to clipboard", {
         description: "do write me 🤗",
       });
@@ -51,7 +48,7 @@ export default function Footer() {
             <Link
               className="inline w-fit cursor-pointer whitespace-nowrap border-b border-b-app_blue text-app_blue"
               target="_blank"
-              href={R_APPS_URL}
+              href={APP_CONFIG.r_apps_url}
             >
               r-apps
             </Link>{" "}
@@ -75,7 +72,7 @@ export default function Footer() {
           <TextTag className="my-1 w-fit text-sm">
             <TextTag className="flex-nowrap whitespace-nowrap text-sm">
               <Mail size={15} />
-              {MY_EMAIL}
+              {APP_CONFIG.my_email}
 
               <Copy
                 size={15}
