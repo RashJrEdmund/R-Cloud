@@ -30,7 +30,7 @@ const DemoData: RecordingData[] = [
   },
   {
     heading: "Modify and Delete Files",
-    source: "/recordings/r-cloud-view-and-download-files-recording.webm",
+    source: "/recordings/r-cloud-modify-and-delete-files-recording.webm",
   },
   {
     heading: "Share Files and set View Permissions",
