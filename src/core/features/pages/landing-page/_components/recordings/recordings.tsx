@@ -14,19 +14,38 @@ import {
 const DemoData: RecordingData[] = [
   {
     heading: "Get Authenticated",
-    source: "/recordings/r-cloud-not-signed-in-recording.webm",
+    source: "/recordings/r-cloud-get-authenticated-recording.webm",
   },
   {
     heading: "Update Profile",
-    source: "/recordings/r-cloud-not-signed-in-recording.webm",
+    source: "/recordings/r-cloud-update-profile-recording.webm",
   },
   {
     heading: "Organize & Save Files",
-    source: "/recordings/r-cloud-not-signed-in-recording.webm",
+    source: "/recordings/r-cloud-organize-files-recording.webm",
+  },
+  {
+    heading: "View and Download Files",
+    source: "/recordings/r-cloud-view-and-download-files-recording.webm",
+  },
+  {
+    heading: "Modify and Delete Files",
+    source: "/recordings/r-cloud-view-and-download-files-recording.webm",
   },
   {
     heading: "Share Files and set View Permissions",
-    source: "/recordings/r-cloud-not-signed-in-recording.webm",
+    source: "/recordings/r-cloud-get-authenticated-recording.webm",
+    comingSoon: true,
+  },
+  {
+    heading: "Create Achieves from Folders",
+    source: "/recordings/r-cloud-get-authenticated-recording.webm",
+    comingSoon: true,
+  },
+  {
+    heading: "Buy and Use New Subscriptions",
+    source: "/recordings/r-cloud-get-authenticated-recording.webm",
+    comingSoon: true,
   },
 ];
 
@@ -34,12 +53,12 @@ async function RecordingsDisplay() {
   return (
     <Carousel className="w-full">
       <CarouselContent className="w-fit sm:p-[10px]">
-        {DemoData.map(({ heading, source }, i, arr) => (
+        {DemoData.map(({ heading, source, comingSoon }, i, arr) => (
           <CarouselItem
             key={heading}
             className={i + 1 === arr.length ? "sm:mr-[10px]" : ""}
           >
-            <RecordingsCard data={{ heading, source }} />
+            <RecordingsCard data={{ heading, source, comingSoon }} />
           </CarouselItem>
         ))}
       </CarouselContent>

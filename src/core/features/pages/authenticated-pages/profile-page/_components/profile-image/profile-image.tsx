@@ -90,7 +90,6 @@ export default function ProfileImage({}: Props) {
               onChange={handleFileInput}
             />
           </label>
-
           Change image
         </TextTag>
       </DivCard>

@@ -17,13 +17,15 @@ import { UploadProgress } from "./upload-progress";
 
 interface Props {
   //
-};
+}
 
-export default function UploadModal({ }: Props) {
+export default function UploadModal({}: Props) {
   const {
-    uploadDialogOpen, setUploadDialogOpen,
+    uploadDialogOpen,
+    setUploadDialogOpen,
 
-    uploadTaskMinimized, minimizeTask,
+    uploadTaskMinimized,
+    minimizeTask,
 
     uploading,
     selectedFiles,
@@ -37,7 +39,6 @@ export default function UploadModal({ }: Props) {
   } = useUploadModalContext();
 
   const isDialogOpened = useMemo(() => {
-
     if (uploadTaskMinimized) return false;
 
     if (uploading) return true;
@@ -46,20 +47,22 @@ export default function UploadModal({ }: Props) {
   }, [uploadTaskMinimized, uploading, uploadDialogOpen]);
 
   return (
-    <Dialog
-      open={isDialogOpened}
-      onOpenChange={setUploadDialogOpen}
-    >
+    <Dialog open={isDialogOpened} onOpenChange={setUploadDialogOpen}>
       <DialogContent>
         <span
           title="minimize task"
-          className="w-fit absolute top-3 right-9 text-app_text_grayed cursor-pointer"
+          className="absolute right-9 top-3 w-fit cursor-pointer text-app_text_grayed"
           onClick={minimizeTask}
         >
           <Minus />
         </span>
 
         <DialogHeader className="w-full">
+          <input
+            placeholder="Don't mind me, I'm just here to catch the auto focus on this modal"
+            hidden
+          />
+
           <DialogTitle className="text-app_text">
             Upload new content
           </DialogTitle>
@@ -98,4 +101,4 @@ export default function UploadModal({ }: Props) {
       </DialogContent>
     </Dialog>
   );
-};
+}

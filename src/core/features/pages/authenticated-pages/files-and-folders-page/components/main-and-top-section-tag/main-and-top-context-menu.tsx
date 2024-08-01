@@ -56,7 +56,7 @@ function MainAndContextMenu({
       {
         text: "Upload File(s)",
         icon: Upload,
-        action: openFileUploadDialog
+        action: openFileUploadDialog,
       },
       {
         text: "Start Selection",
@@ -68,7 +68,11 @@ function MainAndContextMenu({
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger className={className}>{children}</ContextMenuTrigger>
+      <ContextMenuTrigger className={className}>
+        <>
+          {children}
+        </>
+      </ContextMenuTrigger>
 
       <ContextMenuContent className="w-fit min-w-[min(180px,_97vw)] p-[10px] pb-8">
         {CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon }) => (

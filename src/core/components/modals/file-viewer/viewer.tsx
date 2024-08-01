@@ -3,12 +3,12 @@ import type { Document } from "@/core/interfaces/entities";
 export default function Viewer({ fileInView }: { fileInView: Document }) {
   if (fileInView?.content_type?.includes("video")) {
     return (
-      <video controls className="max-w-[90%] max-h-full w-fit">
+      <video controls className="max-h-full w-fit max-w-[90%]">
         <source src={fileInView.download_url || ""} />
         your browser does not support videos
       </video>
     );
-  };
+  }
 
   if (fileInView?.content_type?.includes("audio")) {
     return (
@@ -20,7 +20,7 @@ export default function Viewer({ fileInView }: { fileInView: Document }) {
         Your browser does not support the audio tag.
       </audio>
     );
-  };
+  }
 
   if (fileInView?.content_type?.includes("image")) {
     return (
@@ -40,10 +40,10 @@ export default function Viewer({ fileInView }: { fileInView: Document }) {
         //   justifyContent: "center",
         //   objectFit: "contain",
         // }}
-        className="w-fit max-w-[min(90%,_1000px)] max-h-full"
+        className="max-h-full w-fit max-w-[min(90%,_1000px)]"
       />
     );
-  };
+  }
 
   return (
     <embed

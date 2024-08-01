@@ -109,18 +109,20 @@ function FolderContextMenu({ doc: folder, children }: Props) {
       </ContextMenuTrigger>
 
       <ContextMenuContent className="w-fit min-w-[min(180px,_97vw)] p-[10px] pb-8">
-        {FOLDER_CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon, disabled }) => (
-          <ContextMenuItem
-            key={text}
-            onClick={action}
-            disabled={!!disabled}
-            className="lex items-center justify-start gap-2 bg-app_bg"
-          >
-            <Icon size={18} />
+        {FOLDER_CONTEXT_MENU_CONTENT.map(
+          ({ text, action, icon: Icon, disabled }) => (
+            <ContextMenuItem
+              key={text}
+              onClick={action}
+              disabled={!!disabled}
+              className="lex items-center justify-start gap-2 bg-app_bg"
+            >
+              <Icon size={18} />
 
-            {text}
-          </ContextMenuItem>
-        ))}
+              {text}
+            </ContextMenuItem>
+          )
+        )}
       </ContextMenuContent>
     </ContextMenu>
   );

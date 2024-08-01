@@ -36,7 +36,7 @@ const openFileUploadDialog = () => {
 };
 
 const triggerFileDownload = (url: string, filename: string) => {
-  const anchor = document.createElement('a');
+  const anchor = document.createElement("a");
   anchor.href = url;
 
   // Set the download attribute with a default filename

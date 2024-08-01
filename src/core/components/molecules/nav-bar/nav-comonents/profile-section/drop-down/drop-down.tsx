@@ -22,10 +22,9 @@ import { useMemo } from "react";
 
 interface Props {
   //
-};
+}
 
-
-export default function ProfileDropDown({ }: Props) {
+export default function ProfileDropDown({}: Props) {
   const { setCurrentUser, userProfile } = useUserStore();
   const { setDocuments } = useDocStore();
   const router = useRouter();
@@ -72,7 +71,7 @@ export default function ProfileDropDown({ }: Props) {
       });
 
       return _data;
-    }
+    };
 
     return data;
   }, [userProfile]);
@@ -114,4 +113,4 @@ export default function ProfileDropDown({ }: Props) {
       ))}
     </DivCard>
   );
-}
+};

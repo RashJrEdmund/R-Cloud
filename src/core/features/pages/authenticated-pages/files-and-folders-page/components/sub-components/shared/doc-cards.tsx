@@ -46,7 +46,7 @@ function ListCardContainer({
     <div
       {...restProps}
       className={cn(
-        "card flex w-full cursor-pointer flex-nowrap justify-start border p-[12px_10px] duration-200 md:gap-1",
+        "relative flex w-full cursor-pointer flex-nowrap justify-start border p-[12px_10px] duration-200 md:gap-1",
         className
       )}
     >

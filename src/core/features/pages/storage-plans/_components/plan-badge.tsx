@@ -1,7 +1,7 @@
 import type { StoragePlan } from "@/core/interfaces/entities";
 
 import { TextTag } from "@/components/atoms";
-import { BadgeCheck, Crown } from "lucide-react";
+import { BadgeCheck, Crown, Sparkles } from "lucide-react";
 import { cn } from "@/core/lib/utils";
 
 interface PlanBadgeTextProps {
@@ -46,7 +46,14 @@ function PlanBadge({ className, plan }: PlanBadgeProps) {
   if (getPlanBadgeColor(plan.id))
     return (
       <PlanBadgeText className={cn(getPlanBadgeColor(plan.id), className)}>
-        <Crown size={20} />
+        {plan.id === "5" ? (
+          <>
+            <Crown size={20} />
+            <Sparkles size={20} />
+          </>
+        ) : (
+          <Crown size={20} />
+        )}
       </PlanBadgeText>
     );
 

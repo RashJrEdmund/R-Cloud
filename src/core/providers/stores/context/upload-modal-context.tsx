@@ -60,7 +60,8 @@ const UploadModalContextProvider = ({
 }) => {
   // START MODAL TOGGLE STATES
   const [uploadDialogOpen, setUploadDialogOpen] = useState<boolean>(false);
-  const [uploadTaskMinimized, setUploadTaskMinimized] = useState<boolean>(false);
+  const [uploadTaskMinimized, setUploadTaskMinimized] =
+    useState<boolean>(false);
 
   // END MODAL TOGGLE STATES
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -101,7 +102,7 @@ const UploadModalContextProvider = ({
       if (!file.type) continue;
       file_arr.push(file);
       total_size += file.size;
-    };
+    }
 
     setSelectedFiles(file_arr);
     setUploadDetails({ total_size, count: file_arr.length });
@@ -110,12 +111,10 @@ const UploadModalContextProvider = ({
   };
 
   const minimizeTask = () => {
-    toast.custom((t) => (
-      <UploadProgress />
-    ), { duration: Infinity });
+    toast.custom((t) => <UploadProgress />, { duration: Infinity });
 
     setUploadTaskMinimized(true);
-  }
+  };
 
   const uploadFiles = useCallback(async () => {
     if (!currentUser) return;
@@ -189,9 +188,11 @@ const UploadModalContextProvider = ({
       value={{
         readyUploadModal,
 
-        uploadDialogOpen, setUploadDialogOpen,
+        uploadDialogOpen,
+        setUploadDialogOpen,
 
-        uploadTaskMinimized, minimizeTask,
+        uploadTaskMinimized,
+        minimizeTask,
 
         // data;
         uploading,

@@ -18,18 +18,22 @@ import { handleCreateUserProfile } from "../../auth-helpers";
 import type { MouseEventHandler } from "react";
 import type { FieldErrors } from "../../services/form-validations/form-interfaces";
 import { cn } from "@/core/lib/utils";
+import { extractUserDetailsFromFirebaseAuth } from "@/providers/guards/app-wrapper/app-wrapper.service";
+import { useUserStore } from "@/providers/stores/zustand";
 
 interface Props {
   //
 }
 
-export default function SignUpForm({}: Props) {
+export default function SignUpForm({ }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<FieldErrors | null>(null);
   const [formStatus, setFormStatus] = useState<{
     status: number;
     message: string;
   } | null>(null);
+
+  const { setCurrentUser } = useUserStore();
   const router = useRouter();
 
   const handleGoogleSignUp: MouseEventHandler<HTMLButtonElement> = () => {
@@ -37,6 +41,10 @@ export default function SignUpForm({}: Props) {
       await handleCreateUserProfile(res?.user, null, {
         setFormStatus,
       });
+
+      const _user = await extractUserDetailsFromFirebaseAuth(res!.user);
+
+      setCurrentUser(_user);
 
       router.push("/r-drive");
     });
@@ -75,6 +83,11 @@ export default function SignUpForm({}: Props) {
           validation?.data as { [key: string]: string },
           { setFormStatus }
         );
+
+        const _user = await extractUserDetailsFromFirebaseAuth(user!);
+
+        setCurrentUser(_user);
+
         router.push("/r-drive");
       })
       .catch((er) => {

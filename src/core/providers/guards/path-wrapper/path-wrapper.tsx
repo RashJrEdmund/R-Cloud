@@ -79,12 +79,12 @@ export default function PathWrapper({ children }: Props) {
     if (searchParams.get("viewing") && documents.length) {
       /**
        * meaning a file is currently opened. so we shouldn't refetch path
-      */
+       */
       setLoadingDocs(false);
       setLoadingCurrentFolder(false);
 
       return;
-    };
+    }
 
     setLoadingDocs(true);
     setLoadingCurrentFolder(true);
@@ -97,4 +97,4 @@ export default function PathWrapper({ children }: Props) {
   }, [params, refetchDocs, searchParams]);
 
   return <>{children}</>;
-};
+}

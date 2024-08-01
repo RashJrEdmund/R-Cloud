@@ -51,7 +51,7 @@ export default function FileViewer() {
         break;
       default:
         break;
-    };
+    }
 
     if (!files[newIndx]) return;
 
@@ -74,17 +74,18 @@ export default function FileViewer() {
   );
 
   const handleModalClose = (open: boolean) => {
-    if (!open) { // meaning trying to close modal
+    if (!open) {
+      // meaning trying to close modal
       router.push(pathname);
 
       setViewerOpen(false);
       return;
-    };
+    }
 
-    console.log({ open })
+    console.log({ open });
 
     setViewerOpen(true);
-  }
+  };
 
   useEffect(() => {
     const fileId = searchParams.get("viewing"); // this params is set whenever a file is opened, and it's value set to the file's Id.
@@ -92,7 +93,7 @@ export default function FileViewer() {
     if (!files || !fileId?.trim()) {
       if (viewerOpen) setViewerOpen(false);
       return;
-    };
+    }
 
     const curIndx = getCurrentIdex(fileId);
 
@@ -107,11 +108,8 @@ export default function FileViewer() {
   }, [searchParams, files, getCurrentIdex]);
 
   return (
-    <Dialog
-      open={viewerOpen}
-      onOpenChange={handleModalClose}
-    >
-      <DialogContent className="w-full max-w-[min(97vw,_1300px)] h-[min(80vh,_1000px)] bg-transparent border border-app_border flex flex-col items-center justify-center">
+    <Dialog open={viewerOpen} onOpenChange={handleModalClose}>
+      <DialogContent className="flex h-[min(80vh,_1000px)] w-full max-w-[min(97vw,_1300px)] flex-col items-center justify-center border border-app_border bg-transparent">
         <DialogHeader className="w-fit">
           <DialogDescription className="w-fit text-center">
             {currenFile?.name}
@@ -123,7 +121,7 @@ export default function FileViewer() {
             size={20}
             height={35}
             onClick={() => handMotion("PREV")}
-            className="absolute top-1/2 left-0 cursor-pointer text-app_text_white bg-app_blue rounded-full h-7 w-7 xl:h-9 xl:w-9"
+            className="absolute left-0 top-1/2 h-7 w-7 cursor-pointer rounded-full bg-app_blue text-app_text_white xl:h-9 xl:w-9"
           />
         ) : null}
 
@@ -133,10 +131,10 @@ export default function FileViewer() {
           <ChevronRight
             size={20}
             onClick={() => handMotion("NEXT")}
-            className="absolute top-1/2 right-0 cursor-pointer text-app_text_white bg-app_blue rounded-full h-7 w-7 xl:h-9 xl:w-9"
+            className="absolute right-0 top-1/2 h-7 w-7 cursor-pointer rounded-full bg-app_blue text-app_text_white xl:h-9 xl:w-9"
           />
         ) : null}
       </DialogContent>
     </Dialog>
   );
-};
+}

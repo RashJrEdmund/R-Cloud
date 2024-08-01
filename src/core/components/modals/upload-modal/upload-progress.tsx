@@ -6,41 +6,39 @@ import { cn } from "@/core/lib/utils";
 import { useUploadModalContext } from "@/providers/stores/context";
 
 function UploadProgress() {
-  const {
-    uploadTaskMinimized,
-    selectedFiles,
-    progress,
-    currentUploadIndx,
-  } = useUploadModalContext();
+  const { uploadTaskMinimized, selectedFiles, progress, currentUploadIndx } =
+    useUploadModalContext();
 
-  return progress && (
-    <DivCard
-      className={cn(
-        "w-full flex-col items-start justify-start gap-[10px]",
-        uploadTaskMinimized ? "bg-app_white p-3 shadow-lg w-[min(90vw,_350px)] rounded-lg" : "",
-      )}
-    >
-      <DivCard className="flex-nowrap gap-[10px]">
-        <TextTag>
-          uploading {currentUploadIndx + 1} / {selectedFiles.length}
-        </TextTag>
+  return (
+    progress && (
+      <DivCard
+        className={cn(
+          "w-full flex-col items-start justify-start gap-[10px]",
+          uploadTaskMinimized
+            ? "w-[min(90vw,_350px)] rounded-lg bg-app_white p-3 shadow-lg"
+            : ""
+        )}
+      >
+        <DivCard className="flex-nowrap gap-[10px]">
+          <TextTag>
+            uploading {currentUploadIndx + 1} / {selectedFiles.length}
+          </TextTag>
 
-        <TextTag className="text-app_text_blue">
-          {progress[currentUploadIndx].toFixed(1) + " %"}
-        </TextTag>
-      </DivCard>
+          <TextTag className="text-app_text_blue">
+            {progress[currentUploadIndx].toFixed(1) + " %"}
+          </TextTag>
+        </DivCard>
 
-      {
-        progress[currentUploadIndx] ? (
+        {progress[currentUploadIndx] ? (
           <ProgressBar
             progress_in_percentage={+progress[currentUploadIndx].toFixed(1)}
           />
         ) : (
           <ProgressBarShimmer />
-        )
-      }
-    </DivCard >
-  )
-};
+        )}
+      </DivCard>
+    )
+  );
+}
 
 export { UploadProgress };

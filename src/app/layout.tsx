@@ -8,7 +8,7 @@ import { AppWrapper } from "@/providers/guards";
 import { UploadModalContextProvider } from "@/providers/stores/context";
 
 const appDescription =
-  "Cloud storage web application. Upload, manage and download files";
+  "Cloud storage web application. Upload, organize, manage and download files";
 
 export const metadata: Metadata = {
   title: {
