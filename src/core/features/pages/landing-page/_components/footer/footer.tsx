@@ -2,15 +2,20 @@
 
 import { DivCard, TextTag } from "@/components/atoms";
 import { APP_CONFIG } from "@/core/config/app";
-import { Copy, Github, Linkedin, Mail, X } from "lucide-react";
+import { Copy, Github, Linkedin, Mail, UserRoundCheck, X } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 
 const Socials = [
   {
-    username: "orashus",
-    icon: X,
-    url: "https://twitter.com/orashus",
+    username: "portfolio",
+    icon: UserRoundCheck,
+    url: "https://rash-edmund.vercel.app",
+  },
+  {
+    username: "rashjredmund",
+    icon: Github,
+    url: "https://github.com/rashjredmund",
   },
   {
     username: "orashus",
@@ -18,10 +23,10 @@ const Socials = [
     url: "https://www.linkedin.com/in/orashus/",
   },
   {
-    username: "rashjredmund",
-    icon: Github,
-    url: "https://github.com/rashjredmund",
-  },
+    username: "orashus",
+    icon: X,
+    url: "https://twitter.com/orashus",
+  }
 ];
 
 export default function Footer() {
@@ -47,8 +52,7 @@ export default function Footer() {
             This is the main application in the{" "}
             <Link
               className="inline w-fit cursor-pointer whitespace-nowrap border-b border-b-app_blue text-app_blue"
-              target="_blank"
-              href={APP_CONFIG.r_apps_url}
+              href={APP_CONFIG.r_apps_url + "?from=" + APP_CONFIG.app_link}
             >
               r-apps
             </Link>{" "}

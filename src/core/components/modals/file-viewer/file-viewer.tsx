@@ -76,7 +76,7 @@ export default function FileViewer() {
   const handleModalClose = (open: boolean) => {
     if (!open) {
       // meaning trying to close modal
-      router.push(pathname);
+      router.replace(pathname);
 
       setViewerOpen(false);
       return;
