@@ -9,3 +9,5 @@ export { default as DeleteModal } from "./delete-modal/delete-modal";
 export { default as BulkDeleteModal } from "./bulk-delete-modal/bulk-delete-modal";
 
 export { default as FileViewer } from "./file-viewer/file-viewer";
+
+export { default as ShareModal } from "./share-modal/share-modal";

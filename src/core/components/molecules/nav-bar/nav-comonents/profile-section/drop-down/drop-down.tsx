@@ -8,6 +8,7 @@ import {
 import { logOut } from "@/core/config/firebase";
 import { useDocStore, useUserStore } from "@/providers/stores/zustand";
 import {
+  Blend,
   FolderRoot,
   Gauge,
   HardDrive,
@@ -53,6 +54,11 @@ export default function ProfileDropDown({}: Props) {
         href: "/profile",
         text: "My Profile",
         icon: User,
+      },
+      {
+        href: "/shared/me",
+        text: "Shared With Me",
+        icon: Blend,
       },
       {
         href: "/storage-plans",

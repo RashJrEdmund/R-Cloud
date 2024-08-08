@@ -5,18 +5,6 @@
 
 type DocumentType = "FILE" | "FOLDER";
 
-type StorageUnit = "Bytes" | "Kb" | "Mb" | "Gb" | "Tb" | "Pb";
-
-type StoragePlanLabels =
-  | "SIGMA"
-  | "OMEGA"
-  | "ZETA"
-  | "GAMMA"
-  | "BETA"
-  | "ALPHA";
-
-type StoragePlanIds = "0" | "1" | "2" | "3" | "4" | "5";
-
 interface Document {
   id: string;
   user_id: string;
@@ -37,67 +25,31 @@ interface Document {
   updatedAt?: Date | string;
 }
 
-const Roles = {
-  USER: "USER",
-  ADMIN: "ADMIN",
-  SUPER_ADMIN: "SUPER_ADMIN",
+const Access =  {
+  READ: "READ",
+  WRITE: "WRITE",
 } as const;
 
-type UserRoles = keyof typeof Roles;
+type DocumentAccess = keyof typeof Access;
 
-interface User {
-  id: string;
-  email: string;
-  username: string;
-  displayName?: string;
-  date_of_birth: Date | string;
-  phone_number: string;
-  photo_url: string;
-  accessToken: string;
-  metadata: {
-    createdAt: Date | string;
-    creationTime: Date | string;
-    lastLoginAt: Date | string;
-    lastSignInTime: Date | string;
-  };
+interface SharedDocument {
+  doc_id: string;
+  /**
+   * sharer's email
+  */
+  shared_by: string;
+  access: DocumentAccess;
+  type: DocumentType;
 }
 
-interface UserPlan extends StoragePlan {
-  used_bytes: number;
-}
-
-interface UserProfile {
-  id: string;
-  email: string;
-  date_of_birth: Date | string;
-  role: UserRoles;
-  phone_number: string;
-  plan: UserPlan;
-}
-
-interface StoragePlan {
-  id?: string;
-  label: StoragePlanLabels;
-  icon_url: string;
-  capacity: string; // e.g 1.5 GB
-  bytes: number; // eg 1610612736 in bytes
-  rate: string;
-  is_free: boolean;
-}
-
-export { Roles };
+export {
+  Access,
+};
 
 export type {
   Document,
-  StorageUnit,
-  StoragePlanIds,
-  UserRoles,
-  User,
-  UserPlan,
-  UserProfile,
   DocumentType,
 
-  // storage plan
-  StoragePlan,
-  StoragePlanLabels,
+  DocumentAccess,
+  SharedDocument,
 };

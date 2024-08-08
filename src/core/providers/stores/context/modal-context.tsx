@@ -14,6 +14,7 @@ import {
   EditModal,
   FileViewer,
   NewFolderModal,
+  ShareModal,
 } from "@/components/modals";
 
 interface ModalContextType {
@@ -29,9 +30,13 @@ interface ModalContextType {
   bulkDeleteDialogOpen: boolean;
   setBulkDeleteDialogOpen: Dispatch<SetStateAction<boolean>>;
 
+  shareModalOpen: boolean;
+  setShareModalOpen: Dispatch<SetStateAction<boolean>>;
+
   // openNewFolderModal: () => void;
   openEditDocumentModal: (_: Document) => void;
   openDeleteDocumentModal: (_: Document) => void;
+  openShareModal: (_: Document) => void;
 }
 
 const ModalContext = createContext<ModalContextType | null>(null);
@@ -48,12 +53,16 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] =
     useState<boolean>(false);
 
+  const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
+
   // END MODAL TOGGLE STATES
   const [documentToBeEdited, setDocumentToBeEdited] = useState<Document | null>(
     null
   );
   const [documentToBeDeleted, setDocumentToBeDeleted] =
     useState<Document | null>(null);
+
+  const [fileToBeShared, setFileToBeShare] = useState<Document | null>(null);
 
   const openEditDocumentModal = (document: Document) => {
     setDocumentToBeEdited(document);
@@ -63,6 +72,11 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const openDeleteDocumentModal = (document: Document) => {
     setDocumentToBeDeleted(document);
     setDeleteDialogOpen(true);
+  };
+
+  const openShareModal = (file: Document) => {
+    setFileToBeShare(file);
+    setShareModalOpen(true);
   };
 
   return (
@@ -80,8 +94,12 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
         bulkDeleteDialogOpen,
         setBulkDeleteDialogOpen,
 
+        shareModalOpen,
+        setShareModalOpen,
+
         openEditDocumentModal,
         openDeleteDocumentModal,
+        openShareModal,
       }}
     >
       <>
@@ -92,6 +110,8 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
         <DeleteModal document={documentToBeDeleted} />
 
         <BulkDeleteModal />
+
+        <ShareModal file={fileToBeShared} />
 
         <FileViewer />
         {/* Uses search params to open or close, so has no need for ref, or any other props */}

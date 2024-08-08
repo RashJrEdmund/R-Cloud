@@ -38,7 +38,6 @@ export default function FilesFolderDisplay({}: Props) {
 
       {(function () {
         // anonymous component
-
         if (loadingDocs)
           return <FilesFolderShimmer displayLayout={displayLayout} />;
 
@@ -47,7 +46,7 @@ export default function FilesFolderDisplay({}: Props) {
             <DivCard className="min-h-[60vh] w-full">
               <TextTag
                 as="h3"
-                className="text-[2rem] font-semibold text-app_text_grayed"
+                className="text-[2rem] font-semibold text-app_text_grayed text-center"
               >
                 Folder Is Empty
               </TextTag>

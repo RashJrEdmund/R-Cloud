@@ -44,6 +44,7 @@ function FileContextMenu({ doc: file, children }: Props) {
     openEditDocumentModal,
 
     openDeleteDocumentModal,
+    openShareModal,
   } = useModalContext();
 
   const handleOpen = () => {
@@ -134,8 +135,7 @@ function FileContextMenu({ doc: file, children }: Props) {
       {
         text: "Share File",
         icon: FileLock2,
-        // action: () => null,
-        disabled: true,
+        action: () => openShareModal(file),
       },
       {
         text: "Select File",
