@@ -16,6 +16,8 @@ import {
   NewFolderModal,
   ShareModal,
 } from "@/components/modals";
+import { copyToClipboard } from "@/core/lib/utils";
+import { APP_CONFIG } from "@/core/config/app";
 
 interface ModalContextType {
   newFolderDialogOpen: boolean;
@@ -37,6 +39,8 @@ interface ModalContextType {
   openEditDocumentModal: (_: Document) => void;
   openDeleteDocumentModal: (_: Document) => void;
   openShareModal: (_: Document) => void;
+
+  copyFileShareLink: (_: Document, isPublic?: boolean) => void;
 }
 
 const ModalContext = createContext<ModalContextType | null>(null);
@@ -59,6 +63,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [documentToBeEdited, setDocumentToBeEdited] = useState<Document | null>(
     null
   );
+
   const [documentToBeDeleted, setDocumentToBeDeleted] =
     useState<Document | null>(null);
 
@@ -77,6 +82,13 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const openShareModal = (file: Document) => {
     setFileToBeShare(file);
     setShareModalOpen(true);
+  };
+
+  const copyFileShareLink = (file: Document, isPublic: boolean = false) => {
+    const url = `${APP_CONFIG.app_link}/shared/me/${file.id}`
+    const msg = `${isPublic ? "Public" : "Private"} share url copied to clipboard`;
+
+    copyToClipboard({ data: url, toast_header: msg });
   };
 
   return (
@@ -100,6 +112,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
         openEditDocumentModal,
         openDeleteDocumentModal,
         openShareModal,
+        copyFileShareLink,
       }}
     >
       <>

@@ -6,6 +6,7 @@ import { ReactQueryClientProvider } from "@/features/react-query";
 import { Toaster } from "sonner";
 import { AppWrapper } from "@/providers/guards";
 import { UploadModalContextProvider } from "@/providers/stores/context";
+import { LoaderCircle } from "lucide-react";
 
 const appDescription =
   "Cloud storage web application. Upload, organize, manage and download files";
@@ -76,7 +77,13 @@ export default function RootLayout({ children }: Props) {
         <ReactQueryClientProvider>
           <AppWrapper>
             <UploadModalContextProvider>
-              <Toaster richColors pauseWhenPageIsHidden />
+              <Toaster
+                richColors
+                pauseWhenPageIsHidden
+                icons={{
+                  loading: <LoaderCircle className="animate-spin text-app_blue" size={18} />
+                }}
+              />
 
               <NavBar />
 

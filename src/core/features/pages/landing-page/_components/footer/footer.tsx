@@ -2,9 +2,9 @@
 
 import { DivCard, TextTag } from "@/components/atoms";
 import { APP_CONFIG } from "@/core/config/app";
+import { copyToClipboard } from "@/core/lib/utils";
 import { Copy, Github, Linkedin, Mail, UserRoundCheck, X } from "lucide-react";
 import Link from "next/link";
-import { toast } from "sonner";
 
 const Socials = [
   {
@@ -31,10 +31,10 @@ const Socials = [
 
 export default function Footer() {
   const handleEmailCopy = () => {
-    navigator.clipboard.writeText(APP_CONFIG.my_email).then(() => {
-      toast("Email copied to clipboard", {
-        description: "do write me 🤗",
-      });
+    copyToClipboard({
+      data: APP_CONFIG.my_email,
+      toast_header: "Email copied to clipboard",
+      toast_desc: "do write me 🤗"
     });
   };
 

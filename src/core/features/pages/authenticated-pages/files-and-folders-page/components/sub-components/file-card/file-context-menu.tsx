@@ -14,12 +14,17 @@ import {
   Download,
   BoxSelectIcon,
   FileLock2,
+  Users,
+  Link2,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { cn } from "@/core/lib/utils";
@@ -45,6 +50,7 @@ function FileContextMenu({ doc: file, children }: Props) {
 
     openDeleteDocumentModal,
     openShareModal,
+    copyFileShareLink,
   } = useModalContext();
 
   const handleOpen = () => {
@@ -135,7 +141,18 @@ function FileContextMenu({ doc: file, children }: Props) {
       {
         text: "Share File",
         icon: FileLock2,
-        action: () => openShareModal(file),
+        sub_content: [
+          {
+            sub_text: "Share",
+            sub_icon: Users,
+            sub_action: () => openShareModal(file),
+          },
+          {
+            sub_text: "Copy link",
+            sub_icon: Link2,
+            sub_action: () => copyFileShareLink(file),
+          },
+        ],
       },
       {
         text: "Select File",
@@ -163,18 +180,45 @@ function FileContextMenu({ doc: file, children }: Props) {
 
       <ContextMenuContent className="w-fit min-w-[min(180px,_97vw)] p-[10px] pb-8">
         {FILE_CONTEXT_MENU_CONTENT.map(
-          ({ text, action, icon: Icon, disabled }) => (
-            <ContextMenuItem
-              key={text}
-              onClick={action}
-              disabled={!!disabled}
-              className="lex items-center justify-start gap-2 bg-app_bg"
-            >
-              <Icon size={18} />
+          ({ text, action, icon: Icon, disabled, sub_content, }) => {
+            if (!sub_content) return (
+              <ContextMenuItem
+                key={text}
+                onClick={action}
+                disabled={!!disabled}
+                className="flex items-center justify-start gap-2"
+              >
+                <Icon size={18} />
 
-              {text}
-            </ContextMenuItem>
-          )
+                {text}
+              </ContextMenuItem>
+            );
+
+            return (
+              <ContextMenuSub>
+                <ContextMenuSubTrigger className="flex items-center justify-start gap-2">
+                  <Icon size={18} />
+
+                  {text}
+                </ContextMenuSubTrigger>
+                <ContextMenuSubContent className="w-full">
+                  {
+                    sub_content.map(({ sub_text, sub_icon: Sub_Icon, sub_action }) => (
+                      <ContextMenuItem
+                        key={sub_text}
+                        onClick={sub_action}
+                        className="flex items-center justify-start gap-2"
+                      >
+                        <Sub_Icon size={18} />
+
+                        {sub_text}
+                      </ContextMenuItem>
+                    ))
+                  }
+                </ContextMenuSubContent>
+              </ContextMenuSub>
+            );
+          }
         )}
       </ContextMenuContent>
     </ContextMenu>

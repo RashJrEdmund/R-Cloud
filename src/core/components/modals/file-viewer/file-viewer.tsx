@@ -82,8 +82,6 @@ export default function FileViewer() {
       return;
     }
 
-    console.log({ open });
-
     setViewerOpen(true);
   };
 
