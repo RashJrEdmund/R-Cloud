@@ -20,9 +20,4 @@ interface StoragePlan {
   is_free: boolean;
 }
 
-export type {
-  StorageUnit,
-  StoragePlanIds,
-  StoragePlan,
-  StoragePlanLabels,
-};
+export type { StorageUnit, StoragePlanIds, StoragePlan, StoragePlanLabels };

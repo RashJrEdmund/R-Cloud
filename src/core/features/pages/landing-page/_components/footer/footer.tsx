@@ -26,7 +26,7 @@ const Socials = [
     username: "orashus",
     icon: X,
     url: "https://twitter.com/orashus",
-  }
+  },
 ];
 
 export default function Footer() {
@@ -34,7 +34,7 @@ export default function Footer() {
     copyToClipboard({
       data: APP_CONFIG.my_email,
       toast_header: "Email copied to clipboard",
-      toast_desc: "do write me 🤗"
+      toast_desc: "do write me 🤗",
     });
   };
 

@@ -46,7 +46,7 @@ export default function FilesFolderDisplay({}: Props) {
             <DivCard className="min-h-[60vh] w-full">
               <TextTag
                 as="h3"
-                className="text-[2rem] font-semibold text-app_text_grayed text-center"
+                className="text-center text-[2rem] font-semibold text-app_text_grayed"
               >
                 Folder Is Empty
               </TextTag>

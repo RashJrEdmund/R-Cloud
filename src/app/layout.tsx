@@ -81,7 +81,12 @@ export default function RootLayout({ children }: Props) {
                 richColors
                 pauseWhenPageIsHidden
                 icons={{
-                  loading: <LoaderCircle className="animate-spin text-app_blue" size={18} />
+                  loading: (
+                    <LoaderCircle
+                      className="animate-spin text-app_blue"
+                      size={18}
+                    />
+                  ),
                 }}
               />
 

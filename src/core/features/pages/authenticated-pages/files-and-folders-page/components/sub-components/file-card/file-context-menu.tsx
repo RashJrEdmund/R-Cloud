@@ -4,7 +4,7 @@ import type { Document } from "@/core/interfaces/entities";
 
 import { useMemo } from "react";
 import { useModalContext } from "@/providers/stores/context";
-import { useAppStore, useSelectionStore } from "@/providers/stores/zustand";
+import { useAppStore, useSelectionStore, useShareModalStore } from "@/providers/stores/zustand";
 import {
   BookOpen,
   SquareCheckBig,
@@ -28,7 +28,6 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { cn } from "@/core/lib/utils";
-import { toast } from "sonner";
 import { triggerFileDownload } from "@/core/utils/helpers";
 
 interface Props {
@@ -49,9 +48,12 @@ function FileContextMenu({ doc: file, children }: Props) {
     openEditDocumentModal,
 
     openDeleteDocumentModal,
+  } = useModalContext();
+
+  const {
     openShareModal,
     copyFileShareLink,
-  } = useModalContext();
+  } = useShareModalStore();
 
   const handleOpen = () => {
     if (selectionStart) return; // to prevent opening folders when selection has started
@@ -141,6 +143,7 @@ function FileContextMenu({ doc: file, children }: Props) {
       {
         text: "Share File",
         icon: FileLock2,
+        disabled: true,
         sub_content: [
           {
             sub_text: "Share",
@@ -180,30 +183,34 @@ function FileContextMenu({ doc: file, children }: Props) {
 
       <ContextMenuContent className="w-fit min-w-[min(180px,_97vw)] p-[10px] pb-8">
         {FILE_CONTEXT_MENU_CONTENT.map(
-          ({ text, action, icon: Icon, disabled, sub_content, }) => {
-            if (!sub_content) return (
-              <ContextMenuItem
-                key={text}
-                onClick={action}
-                disabled={!!disabled}
-                className="flex items-center justify-start gap-2"
-              >
-                <Icon size={18} />
+          ({ text, action, icon: Icon, disabled, sub_content }) => {
+            if (!sub_content)
+              return (
+                <ContextMenuItem
+                  key={text}
+                  onClick={action}
+                  disabled={!!disabled}
+                  className="flex items-center justify-start gap-2"
+                >
+                  <Icon size={18} />
 
-                {text}
-              </ContextMenuItem>
-            );
+                  {text}
+                </ContextMenuItem>
+              );
 
             return (
-              <ContextMenuSub>
-                <ContextMenuSubTrigger className="flex items-center justify-start gap-2">
+              <ContextMenuSub key={text}>
+                <ContextMenuSubTrigger
+                  disabled={!!disabled}
+                  className={cn("flex items-center justify-start gap-2", disabled ? " text-app_text_grayed" : "")}
+                >
                   <Icon size={18} />
 
                   {text}
                 </ContextMenuSubTrigger>
                 <ContextMenuSubContent className="w-full">
-                  {
-                    sub_content.map(({ sub_text, sub_icon: Sub_Icon, sub_action }) => (
+                  {sub_content.map(
+                    ({ sub_text, sub_icon: Sub_Icon, sub_action }) => (
                       <ContextMenuItem
                         key={sub_text}
                         onClick={sub_action}
@@ -213,8 +220,8 @@ function FileContextMenu({ doc: file, children }: Props) {
 
                         {sub_text}
                       </ContextMenuItem>
-                    ))
-                  }
+                    )
+                  )}
                 </ContextMenuSubContent>
               </ContextMenuSub>
             );

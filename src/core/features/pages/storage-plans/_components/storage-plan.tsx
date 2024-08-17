@@ -21,7 +21,6 @@ export default function StoragePlan({ plan }: Props) {
   console.log({ currentUser, userProfile });
 
   const handleNewSubscription = (plan: StoragePlan) => {
-
     if (!currentUser) {
       router.push("/login?next=" + window.location);
       toast.info("You need to be logged in first", {

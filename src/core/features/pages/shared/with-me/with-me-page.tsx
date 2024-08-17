@@ -6,11 +6,11 @@ export default function SharedWithMePage() {
       <DivCard className="w-primary_app_width">
         <TextTag
           as="h3"
-          className="text-[2rem] font-semibold text-app_text_grayed text-center"
+          className="text-center text-[2rem] font-semibold text-app_text_grayed"
         >
-          Someone Is Yet To Share Files With You
+          Someone is yet to share files with you
         </TextTag>
       </DivCard>
     </MainTag>
-  )
-};
+  );
+}

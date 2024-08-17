@@ -25,7 +25,7 @@ interface Document {
   updatedAt?: Date | string;
 }
 
-const Access =  {
+const Access = {
   READ: "READ",
   WRITE: "WRITE",
 } as const;
@@ -36,20 +36,12 @@ interface SharedDocument {
   doc_id: string;
   /**
    * sharer's email
-  */
+   */
   shared_by: string;
   access: DocumentAccess;
   type: DocumentType;
 }
 
-export {
-  Access,
-};
+export { Access };
 
-export type {
-  Document,
-  DocumentType,
-
-  DocumentAccess,
-  SharedDocument,
-};
+export type { Document, DocumentType, DocumentAccess, SharedDocument };

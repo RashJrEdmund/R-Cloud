@@ -1,5 +1,6 @@
-const withPWA = require('next-pwa')({ // see package https://www.npmjs.com/package/next-pwa
-  dest: 'public',
+const withPWA = require("next-pwa")({
+  // see package https://www.npmjs.com/package/next-pwa
+  dest: "public",
   cacheOnFrontEndNav: true,
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
@@ -13,7 +14,7 @@ const withPWA = require('next-pwa')({ // see package https://www.npmjs.com/packa
   dynamicStartUrlRedirect: true, // if your start url returns different HTML document under different state (such as logged in vs. not logged in), this should be set to true
   register: true,
   // scope: '/app',
-  sw: 'service-worker.js', // an alias for service worker file outputs.
+  sw: "service-worker.js", // an alias for service worker file outputs.
 });
 
 /** @type {import('next').NextConfig} */
@@ -25,10 +26,10 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: '**', // 'example.com' | TODO +=> configure this to only look up firebase download urls
-        port: '',
-        pathname: '**', // '/account123/**' | TODO +=> configure this to only look up firebase download urls
+        protocol: "https",
+        hostname: "**", // 'example.com' | TODO +=> configure this to only look up firebase download urls
+        port: "",
+        pathname: "**", // '/account123/**' | TODO +=> configure this to only look up firebase download urls
       },
     ],
   },

@@ -10,7 +10,7 @@ interface CopyProps {
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
-};
+}
 
 const copyToClipboard = (p: CopyProps) => {
   navigator.clipboard.writeText(p.data).then(() => {
@@ -18,9 +18,6 @@ const copyToClipboard = (p: CopyProps) => {
       description: p.toast_desc,
     });
   });
-}
+};
 
-export {
-  cn,
-  copyToClipboard,
-}
+export { cn, copyToClipboard };

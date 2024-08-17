@@ -77,7 +77,7 @@ export default function ProfileDropDown({}: Props) {
       });
 
       return _data;
-    };
+    }
 
     return data;
   }, [userProfile]);
@@ -119,4 +119,4 @@ export default function ProfileDropDown({}: Props) {
       ))}
     </DivCard>
   );
-};
+}

@@ -38,13 +38,6 @@ interface UserProfile {
   plan: UserPlan;
 }
 
-export {
-  Roles,
-};
+export { Roles };
 
-export type {
-  UserRoles,
-  User,
-  UserPlan,
-  UserProfile,
-};
+export type { UserRoles, User, UserPlan, UserProfile };

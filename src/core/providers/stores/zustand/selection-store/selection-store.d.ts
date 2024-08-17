@@ -1,4 +1,4 @@
-import { Document } from "@/core/interfaces/entities";
+import type { Document } from "@/core/interfaces/entities";
 
 interface SelectionStore {
   // selection

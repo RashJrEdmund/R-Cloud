@@ -34,14 +34,12 @@ const useSelectionStore = create<SelectionStore>((set) => ({
       if (prev.selectionStart) {
         // then we should stop selection
         return {
-          ...prev,
           selectionStart: false,
           selectedDocs: [],
         };
       }
 
       return {
-        ...prev,
         selectionStart: true,
       };
     }),

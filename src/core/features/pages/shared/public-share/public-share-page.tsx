@@ -9,8 +9,9 @@ export default function PublicSharePage() {
   return (
     <MainTag className="flex-col">
       public url with me
-
-      <p>doc id is <span className="font-semibold">{params.doc_id}</span></p>
+      <p>
+        doc id is <span className="font-semibold">{params.doc_id}</span>
+      </p>
     </MainTag>
-  )
-};
+  );
+}

@@ -69,9 +69,7 @@ function MainAndContextMenu({
   return (
     <ContextMenu>
       <ContextMenuTrigger className={className}>
-        <>
-          {children}
-        </>
+        <>{children}</>
       </ContextMenuTrigger>
 
       <ContextMenuContent className="w-fit min-w-[min(180px,_97vw)] p-[10px] pb-8">

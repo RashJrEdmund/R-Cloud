@@ -59,6 +59,6 @@ function RecordingsCard({
       )}
     </DivCard>
   );
-};
+}
 
 export { RecordingShimmer, RecordingsCard };
