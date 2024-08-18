@@ -22,6 +22,8 @@ export default function ShareModal({ }: Props) {
 
   const {
     fileToBeShared,
+    accessType,
+    viewerRole,
 
     shareModalOpen,
     setShareModalOpen,
