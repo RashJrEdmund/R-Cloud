@@ -1,33 +1,36 @@
 "use client";
 
 import { useState } from "react";
-import { useShareModalStore } from "@/providers/stores/zustand";
+import { useShareModalStore, useUserStore } from "@/providers/stores/zustand";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { ViewPermissions } from "./components";
-import UserEmailS from "./components/view-permissions/user-emails";
+import { ViewPermissions, UserEmailS, ShareModalFooter } from "./components";
+import { SharedDocument } from "@/core/interfaces/entities";
+import { shareDocument } from "@/core/config/firebase/fire-store";
+import { toast } from "sonner";
 
 interface Props {
   //
 }
 
 export default function ShareModal({ }: Props) {
-  const [isSharing, setIsSharing] = useState<boolean>(false);
+  const { currentUser } = useUserStore();
 
   const {
     fileToBeShared,
     accessType,
     viewerRole,
+    searching,
+    userEmails,
+
+    isSharing, setIsSharing,
 
     shareModalOpen,
     setShareModalOpen,
-    copyFileShareLink,
     cleanUpFunction,
   } = useShareModalStore();
 
@@ -35,7 +38,6 @@ export default function ShareModal({ }: Props) {
     if (!open) {
       cleanUpFunction();
       // meaning trying to close modal
-      setIsSharing(false);
       setShareModalOpen(false);
       return;
     }
@@ -43,13 +45,36 @@ export default function ShareModal({ }: Props) {
     setShareModalOpen(true);
   };
 
-  const handleShareFile = async () => {
-    //
+  const handleShareFile = () => {
+    setIsSharing(true);
+
+    const sharedDocument: SharedDocument = {
+      doc_id: fileToBeShared!.id,
+      type: "FILE",
+      shared_by: currentUser!.email,
+      accessType,
+      viewerRole,
+      sharedWith: [...userEmails],
+    };
+
+    shareDocument(sharedDocument, fileToBeShared!)
+      .then((msg) => {
+        // console.log(msg);
+        toast(msg);
+        handleModalClose(false);
+      }).catch((err) => {
+        toast.error("Something went wrong", { description: "please try again" });
+
+        // console.warn(err);
+      })
+      .finally(() => {
+        setIsSharing(false);
+      });
   };
 
   return (
     <Dialog
-      open={isSharing ? true : shareModalOpen}
+      open={isSharing || searching ? true : shareModalOpen}
       onOpenChange={handleModalClose}
     >
       <DialogContent className="w-primary_app_width">
@@ -61,29 +86,12 @@ export default function ShareModal({ }: Props) {
 
         <ViewPermissions />
 
-        <UserEmailS
-          isSharing={isSharing}
+        <UserEmailS />
+
+        <ShareModalFooter
           handleShareFile={handleShareFile}
+          handleModalClose={handleModalClose}
         />
-
-        <DialogFooter className="flex w-full items-center justify-end">
-          <Button
-            disabled={isSharing}
-            onClick={() => copyFileShareLink(fileToBeShared!)}
-            className="outline-none sm:w-fit"
-          >
-            Copy Link
-          </Button>
-
-          <Button
-            variant="blued"
-            disabled={isSharing}
-            onClick={handleShareFile}
-            className="min-w-[100px] sm:w-fit"
-          >
-            {isSharing ? "Updating..." : "Done"}
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

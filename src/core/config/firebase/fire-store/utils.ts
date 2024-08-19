@@ -12,18 +12,47 @@ import type {
   DocumentReference,
 } from "firebase/firestore";
 
+/**
+ * Must be an odd path
+*/
+const createFreeCollectionPath = <T = DocumentData>(path: string | string[]) => {
+  const _path = Array.isArray(path) ? path.join("/") : path;
+
+  return collection(fireStore, _path) as CollectionReference<T>;
+};
+
+/**
+ * Must be an even path
+*/
+const createFreeDocPath = <T = DocumentData>(path: string | string[]) => {
+  const _path = Array.isArray(path) ? path.join("/") : path;
+
+  return doc(fireStore, _path) as DocumentReference<T>;
+};
+
+/**
+ * Ends up as an odd path.
+ * Built on top of createFreeCollectionPath
+*/
 const createUserCollectionPath = <T = DocumentData>(
   email: string,
   _path: string
 ) => {
-  return collection(
-    fireStore,
-    `users/${email}` + _path
-  ) as CollectionReference<T>;
+  return createFreeCollectionPath<T>(`users/${email}` + _path);
 };
 
+/**
+ * Ends up as an even path.
+ * Built on top of createFreeDocPath
+*/
 const createUserDocPath = <T = DocumentData>(email: string, _path: string) => {
-  return doc(fireStore, `users/${email}` + _path) as DocumentReference<T>;
+  return createFreeDocPath<T>(`users/${email}` + _path);
 };
 
-export { createUserCollectionPath, createUserDocPath };
+export {
+  createFreeCollectionPath,
+  createFreeDocPath,
+
+  createUserCollectionPath,
+  createUserDocPath,
+};

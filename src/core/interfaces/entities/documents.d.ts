@@ -5,6 +5,10 @@
 
 type DocumentType = "FILE" | "FOLDER";
 
+type ViewerRoles = "VIEWER" | "EDITOR";
+
+type AccessType = "RESTRICTED" | "PUBLIC";
+
 interface Document {
   id: string;
   user_id: string;
@@ -23,25 +27,23 @@ interface Document {
   };
   createdAt?: Date | string;
   updatedAt?: Date | string;
-}
-
-const Access = {
-  READ: "READ",
-  WRITE: "WRITE",
-} as const;
-
-type DocumentAccess = keyof typeof Access;
+  sharedSate: {
+    accessType: AccessType;
+    viewerRole: ViewerRoles;
+    sharedWith: string[];
+  };
+};
 
 interface SharedDocument {
   doc_id: string;
   /**
    * sharer's email
-   */
-  shared_by: string;
-  access: DocumentAccess;
-  type: DocumentType;
-}
+  */
+ shared_by: string;
+ accessType: AccessType;
+ viewerRole: ViewerRoles;
+ type: DocumentType;
+ sharedWith: string[];
+};
 
-export { Access };
-
-export type { Document, DocumentType, DocumentAccess, SharedDocument };
+export type { Document, DocumentType, SharedDocument };

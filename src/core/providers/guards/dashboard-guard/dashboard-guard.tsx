@@ -39,7 +39,7 @@ export default function DashboardGuard({ children }: Props) {
     return <LoadingPage />;
   }
 
-  console.log({ userProfile });
+  // console.log({ userProfile });
 
   // getUserProfile(currentUser.email)
   //   .then(res => {

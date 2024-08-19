@@ -25,8 +25,15 @@ interface User {
   };
 }
 
+// interface Subscription extends StoragePlan {
+//   date_subscribed: Date | string;
+//   plan_id: string;
+// }
+
 interface UserPlan extends StoragePlan {
   used_bytes: number;
+  date_subscribed: Date | string;
+  // date_subscription_ends: Date | string;
 }
 
 interface UserProfile {

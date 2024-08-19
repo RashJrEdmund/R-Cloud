@@ -1,14 +1,24 @@
 import type { Document } from "@/core/interfaces/entities";
 
-interface ShareModalStore<A, V> {
+type ViewerRoles = "VIEWER" | "EDITOR";
+
+type AccessType = "RESTRICTED" | "PUBLIC";
+
+interface ShareModalStore {
+  searching: boolean,
+  setSearching: (_: boolean) => void,
+
+  isSharing: boolean,
+  setIsSharing: (_: boolean) => void,
+
   userEmails: string[];
   setUserEmails: (_: string[]) => void;
 
-  access: A;
-  setAccess: (_: A) => void;
+  accessType: AccessType;
+  setAccessType: (_: AccessType) => void;
 
-  viewerRole: V;
-  setViewerRole: (_: V) => void;
+  viewerRole: ViewerRoles;
+  setViewerRole: (_: ViewerRoles) => void;
 
   shareModalOpen: boolean;
   setShareModalOpen: (_: boolean) => void;
@@ -26,5 +36,7 @@ interface ShareModalStore<A, V> {
 }
 
 export type {
+  AccessType,
+  ViewerRoles,
   ShareModalStore,
 };

@@ -3,8 +3,8 @@
 |, i.e documents and collections.            |
 ================================//========= */
 
-import { setDoc, getDoc } from "firebase/firestore";
-import { createUserDocPath } from "./utils";
+import { setDoc, getDoc, getDocs, deleteDoc, addDoc } from "firebase/firestore";
+import { createFreeCollectionPath, createFreeDocPath, createUserCollectionPath, createUserDocPath } from "./utils";
 
 import type { UserProfile } from "@/core/interfaces/entities";
 import type { DocumentSnapshot } from "firebase/firestore";
@@ -15,7 +15,7 @@ import type { IUpdateAction } from "../interfaces";
 const getUserProfile = async (
   email: string
 ): Promise<DocumentSnapshot<UserProfile>> => {
-  const doc_path = createUserDocPath<UserProfile>(email || "", "/profile/me");
+  const doc_path = createFreeDocPath<UserProfile>(["users", email]);
 
   return getDoc(doc_path);
 };
@@ -23,10 +23,11 @@ const getUserProfile = async (
 // WRITE requests
 
 const createUserProfile = async (user: UserProfile) => {
-  const doc_path = createUserDocPath(user.email || "", "/profile/me");
+  const doc_path = createFreeDocPath<UserProfile>(["users", user.email]);
 
   const { ...userData } = user;
-  const docRef = await setDoc(
+
+  return setDoc(
     doc_path,
     {
       // addDoc doesn't allow customIds, setDoc does
@@ -34,8 +35,6 @@ const createUserProfile = async (user: UserProfile) => {
     },
     { merge: true }
   ); // so as to update if exits or create if not exits;
-
-  return docRef;
 };
 
 const updateUsedSpace = async (
@@ -44,7 +43,7 @@ const updateUsedSpace = async (
   action: IUpdateAction = "ADD"
 ) => {
   try {
-    const profile_path = createUserDocPath<UserProfile>(email, "/profile/me");
+    const profile_path = createFreeDocPath<UserProfile>(["users", email]);
 
     const profile = await getDoc(profile_path);
 
@@ -89,6 +88,53 @@ const updateUserAccountSettings = async (
 
   console.log("user document created", doc_path, settings);
 };
+
+(async () => {
+  const usersCollection = createFreeCollectionPath<{}>("/users");
+
+  const users = (await getDocs(usersCollection)).docs.map((doc) => ({ email: doc.id }));
+
+  console.clear();
+
+  for (const { email } of users) {
+    const userProfile = (await getUserProfile(email)).data()!;
+
+    const user_doc_path = createFreeDocPath(["users", email]);
+
+    const date_subscribed = new Date().toISOString();
+
+    await setDoc(
+      user_doc_path,
+      { ...userProfile, plan: { ...userProfile.plan, date_subscribed } },
+      {
+        merge: true,
+      }
+    );
+
+    const user_doc_path_2 = createUserCollectionPath(email, "/subscriptions");
+
+    await addDoc(
+      user_doc_path_2,
+      { ...userProfile.plan, date_subscribed }
+    );
+
+    console.log("done with email: ", email);
+  }
+
+  // for (const { email } of users) {
+  //   const userProfile = (await getUserProfile(email)).data()!;
+
+  //   const user_doc_path = createUserDocPath(email, "/profile/me");
+
+  //   await deleteDoc(
+  //     user_doc_path,
+  //   );
+
+  //   console.log("done with email: ", email);
+  // }
+
+  console.log({ users });
+});
 
 export {
   getUserProfile,

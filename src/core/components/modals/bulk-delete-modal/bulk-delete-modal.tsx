@@ -118,7 +118,7 @@ export default function BulkDeleteModal({}: Props) {
           </TextTag>
 
           <TextTag className="text-left">
-            Size,{" "}
+            Size{" "}
             {selectedDocDetails.has_folders ? (
               <TextTag className="text-left text-app_text_blue">
                 Excluding sub folders

@@ -2,4 +2,4 @@ export * from "./app-data";
 
 export * from "./user";
 
-export * from "./files";
+export * from "./docs";

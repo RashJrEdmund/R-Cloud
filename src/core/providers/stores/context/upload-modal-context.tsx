@@ -87,6 +87,8 @@ const UploadModalContextProvider = ({
     setProgress(null);
     setUploadTaskMinimized(false);
 
+    toast("Upload complete");
+
     const fileUploadField =
       document.querySelector<HTMLInputElement>("#file-upload-field");
 
@@ -111,7 +113,7 @@ const UploadModalContextProvider = ({
   };
 
   const minimizeTask = () => {
-    toast.custom((t) => <UploadProgress />, { duration: Infinity });
+    toast.custom((t) => <UploadProgress toastId={t} />, { duration: Infinity });
 
     setUploadTaskMinimized(true);
   };
@@ -156,6 +158,11 @@ const UploadModalContextProvider = ({
           },
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
+          sharedSate: {
+            accessType: "RESTRICTED",
+            viewerRole: "VIEWER",
+            sharedWith: []
+          }
         };
 
         await createFileDoc(currentUser.email, document as Document);

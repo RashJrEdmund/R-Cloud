@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useUploadModalContext } from "@/providers/stores/context";
-import { Minus } from "lucide-react";
 import { useMemo } from "react";
 import { UploadProgress } from "./upload-progress";
 
@@ -48,21 +47,8 @@ export default function UploadModal({}: Props) {
 
   return (
     <Dialog open={isDialogOpened} onOpenChange={setUploadDialogOpen}>
-      <DialogContent>
-        <span
-          title="minimize task"
-          className="absolute right-9 top-3 w-fit cursor-pointer text-app_text_grayed"
-          onClick={minimizeTask}
-        >
-          <Minus />
-        </span>
-
+      <DialogContent showMinimizeBtn={!!progress} onMinimize={minimizeTask}>
         <DialogHeader className="w-full">
-          <input
-            placeholder="Don't mind me, I'm just here to catch the auto focus on this modal"
-            hidden
-          />
-
           <DialogTitle className="text-app_text">
             Upload new content
           </DialogTitle>

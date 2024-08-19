@@ -3,7 +3,7 @@
 |, i.e documents and collections.            |
 ================================//========= */
 
-import { createUserCollectionPath, createUserDocPath } from "./utils";
+import { createUserCollectionPath, createUserDocPath } from "../utils";
 import {
   addDoc,
   setDoc,
@@ -16,8 +16,8 @@ import {
   sum,
 } from "firebase/firestore";
 import { getSizeFromBytes } from "@/core/utils/file-utils";
-import { deleteFile } from "..";
-import { updateUsedSpace } from ".";
+import { deleteFile } from "../..";
+import { updateUsedSpace } from "..";
 
 import type { Document } from "@/core/interfaces/entities";
 import type {
@@ -25,7 +25,7 @@ import type {
   AggregateQuerySnapshot,
   QuerySnapshot,
 } from "firebase/firestore";
-import type { IUpdateAction } from "../interfaces";
+import type { IUpdateAction } from "../../interfaces";
 
 // READ REQUESTS
 
@@ -79,7 +79,7 @@ const createFileDoc = async (email: string, document: Document) => {
   return docRef;
 };
 
-const renameDocument = async (email: string, doc_id: string, name: string) => {
+const updateDocument = async (email: string, doc_id: string, updates: Partial<Document>) => {
   const document_path = createUserDocPath<Document>(
     email,
     "/r-drive/" + doc_id
@@ -87,7 +87,7 @@ const renameDocument = async (email: string, doc_id: string, name: string) => {
 
   return setDoc(
     document_path,
-    { name },
+    { ...updates },
     { merge: true } // merge true so as to create if doesn't exist or only update specified fields if exits;
   );
 };
@@ -142,7 +142,7 @@ const updateFolderSize = async (
       size: getSizeFromBytes(new_bytes, 1).merged,
     };
 
-    console.log({ _update_capacity, updates, action });
+    // console.log({ _update_capacity, updates, action });
 
     return setDoc(
       document_path,
@@ -300,7 +300,7 @@ export {
   listFolderDocuments,
   getTotalUsedSize,
   createFileDoc,
-  renameDocument,
+  updateDocument,
   updateFolderSize,
 
   //deletion

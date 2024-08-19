@@ -18,7 +18,7 @@ export default function StoragePlan({ plan }: Props) {
   const { currentUser, userProfile } = useUserStore();
   const router = useRouter();
 
-  console.log({ currentUser, userProfile });
+  // console.log({ currentUser, userProfile });
 
   const handleNewSubscription = (plan: StoragePlan) => {
     if (!currentUser) {

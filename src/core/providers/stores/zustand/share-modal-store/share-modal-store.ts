@@ -1,56 +1,56 @@
+import type { AccessType, ShareModalStore, ViewerRoles } from "./share-modal-store.d";
+
 import { create } from "zustand";
-import { ShareModalStore } from "./share-modal-store.d";
 import { APP_CONFIG } from "@/core/config/app";
 import { copyToClipboard } from "@/core/lib/utils";
 import { Globe, Lock } from "lucide-react";
 
-const Access = [
+type ACCESS = { label: string; desc: string; icon: typeof Lock; type: AccessType; }
+
+type VIEWER = { label: string; desc: string; type: ViewerRoles };
+
+const Access: ACCESS[] = [
   {
     label: "Restricted",
     desc: "Permitted users",
     icon: Lock,
-    isPublic: false,
+    type: "RESTRICTED",
   },
   {
     label: "Public",
     desc: "Anyone with the link",
     icon: Globe,
-    isPublic: true,
+    type: "PUBLIC",
   },
-] as const;
+];
 
-const ViewerRoles = [
+const Viewers: VIEWER[] = [
   {
-    label: "Viewer",
+    label: "viewer",
     desc: "can only read file",
+    type: "VIEWER"
   },
   {
     label: "Editor",
     desc: "can read & write to file",
-  },
+    type: "EDITOR",
+  }
 ];
 
-type AccessType = (typeof Access)[number];
+const useShareModalStore = create<ShareModalStore>((set) => ({
+  searching: false,
+  setSearching: (searching) => set({ searching }),
 
-type ViewerType = (typeof ViewerRoles)[number];
+  isSharing: false,
+  setIsSharing: (isSharing) => set({ isSharing }),
 
-const useShareModalStore = create<ShareModalStore<AccessType, ViewerType>>((set) => ({
-  userEmails: [
-    "rash@gmail.com",
-    "arreyetta@gmail.com",
-    "orashusedmund@gmail.com",
-    "testuser@gmail.com",
-    "malone@gmail.com",
-    "mesmer@gmail.com",
-    "alaric@gmail.com",
-    "mr_gaston@gmail.com",
-  ],
+  userEmails: [],
   setUserEmails: (userEmails) => set({ userEmails }),
 
-  access: Access[0],
-  setAccess: (access) => set({ access }),
+  accessType: "RESTRICTED",
+  setAccessType: (accessType) => set({ accessType }),
 
-  viewerRole: ViewerRoles[0],
+  viewerRole: "VIEWER",
   setViewerRole: (viewerRole) => set({ viewerRole }),
 
   shareModalOpen: false,
@@ -73,15 +73,17 @@ const useShareModalStore = create<ShareModalStore<AccessType, ViewerType>>((set)
 
   cleanUpFunction: () => set({
     fileToBeShared: null,
-    access: Access[0],
-    viewerRole: ViewerRoles[0],
+    searching: false,
+    isSharing: false,
+    // access: Access[0],
+    // viewerRole: ViewerRoles[0],
     userEmails: [],
   }),
 }));
 
 const useShareModalAssets = {
   Access,
-  ViewerRoles,
+  Viewers,
 };
 
 export {

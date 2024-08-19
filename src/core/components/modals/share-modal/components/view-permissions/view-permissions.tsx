@@ -11,31 +11,52 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useEffect, useMemo } from "react";
 
 interface Props {
-  // onRestrictionChange: () => void;
+  //
 };
 
 export default function ViewPermissions({ }: Props) {
-  const { Access, ViewerRoles } = useShareModalAssets;
+  const { Access, Viewers } = useShareModalAssets;
 
   const {
-    access, setAccess,
+    fileToBeShared,
+    accessType, setAccessType,
     viewerRole, setViewerRole,
+
+    setUserEmails,
   } = useShareModalStore();
+
+  const selectedAccess = useMemo(() => {
+    return Access.find(({ type }) => type === accessType)!;
+  }, [accessType, Access]);
+
+  const selectedRole = useMemo(() => {
+    return Viewers.find(({ type }) => type === viewerRole)!;
+  }, [viewerRole, Viewers]);
+
+  useEffect(() => {
+    // setting defaults
+    setUserEmails(fileToBeShared!?.sharedSate?.sharedWith || []);
+    setAccessType(fileToBeShared!.sharedSate?.accessType || "RESTRICTED");
+    setViewerRole(fileToBeShared!.sharedSate?.viewerRole || "VIEWER");
+  }, []);
 
   return (
     <DivCard className="w-full flex-col items-start justify-start gap-2 sm:flex-row">
       <DivCard className="w-full items-start justify-start gap-2">
-        <DivCard className="size-7 rounded-full bg-app_bg_light">
-          <access.icon size={20} />
+        <DivCard className="size-7 rounded-full bg-app_bg_light text-app_text_grayed">
+          <selectedAccess.icon size={20} />
         </DivCard>
 
         <DivCard className="flex-col items-start">
           <DropdownMenu>
             <DropdownMenuTrigger className="outline-none">
               <TextTag className="justify-between text-sm font-semibold">
-                {access.label} <ChevronDown size={17} />
+                {selectedAccess.label}
+
+                <ChevronDown size={17} />
               </TextTag>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -47,7 +68,7 @@ export default function ViewPermissions({ }: Props) {
               {Access.map((a) => (
                 <DropdownMenuItem
                   key={a.label}
-                  onClick={() => setAccess(a)}
+                  onClick={() => setAccessType(a.type)}
                   className="min-w-[100px] text-sm"
                 >
                   <a.icon size={15} className="mr-1" /> {a.label}
@@ -57,7 +78,7 @@ export default function ViewPermissions({ }: Props) {
           </DropdownMenu>
 
           <TextTag className="text-sm text-app_text_grayed">
-            {`${access.desc} ${viewerRole.desc}`}
+            {`${selectedAccess.desc} ${selectedRole.desc}`}
           </TextTag>
         </DivCard>
       </DivCard>
@@ -70,7 +91,7 @@ export default function ViewPermissions({ }: Props) {
         <DropdownMenu>
           <DropdownMenuTrigger className="outline-none">
             <TextTag className="justify-between text-sm font-semibold">
-              {viewerRole.label} <ChevronDown size={17} />
+              {selectedRole.label} <ChevronDown size={17} />
             </TextTag>
           </DropdownMenuTrigger>
 
@@ -80,10 +101,10 @@ export default function ViewPermissions({ }: Props) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
 
-            {ViewerRoles.map((r) => (
+            {Viewers.map((r) => (
               <DropdownMenuItem
                 key={r.label}
-                onClick={() => setViewerRole(r)}
+                onClick={() => setViewerRole(r.type)}
                 className="min-w-[100px] text-sm"
               >
                 {r.label}
@@ -94,4 +115,4 @@ export default function ViewPermissions({ }: Props) {
       </DivCard>
     </DivCard>
   );
-}
+};

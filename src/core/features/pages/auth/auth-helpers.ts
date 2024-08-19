@@ -28,6 +28,8 @@ const handleCreateUserProfile: IHandleCreateUserProfile = async (
 
   const res = await getOneStoragePlan("0"); // 0 is Id of default storage plan;
 
+  // TODO +=> work on subscriptions, I mean add a subscriptions collection under each user/email/ and track their subscriptions
+
   if (!res.exists()) return;
 
   setFormStatus({
@@ -47,6 +49,7 @@ const handleCreateUserProfile: IHandleCreateUserProfile = async (
       id: res.id,
       ...plan,
       used_bytes: 0,
+      date_subscribed: new Date().toISOString(),
     },
   };
 

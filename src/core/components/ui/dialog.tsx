@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { X } from "lucide-react";
+import { Minus, X } from "lucide-react";
 
 import { cn } from "@/core/lib/utils";
 
@@ -32,9 +32,16 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
-    sxIcon?: string;
+    /**
+     * to catch the auto focus using the hidden input field
+    */
+    catchAutoFocus?: boolean;
+    sxCloseIcon?: string;
+    sxMinimize?: string;
+    showMinimizeBtn?: boolean;
+    onMinimize?: () => void;
   }
->(({ className, children, sxIcon, ...props }, ref) => (
+>(({ className, children, catchAutoFocus, sxCloseIcon, sxMinimize, onMinimize, showMinimizeBtn = false, ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
     <DialogPrimitive.Content
@@ -46,12 +53,36 @@ const DialogContent = React.forwardRef<
       )}
       {...props}
     >
-      {children}
-      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 outline-none ring-offset-background transition-opacity hover:opacity-100 focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-        <X className={cn("size-6", sxIcon)} />
+      {
+        catchAutoFocus && ( // TODO. work on this. remember, if input hidden is true, it completely has no effect and will not catch the auto focus
+          <input
+            tabIndex={0}
+            placeholder="Don't mind me, I'm just here to catch the auto focus on this modal"
+            hidden
+            onFocus={() => console.log("\nauto focus caught\n")}
+          />
+        )
+      }
 
-        <span className="sr-only">Close</span>
-      </DialogPrimitive.Close>
+      {children}
+
+      <div className=" absolute right-4 top-4 flex items-center justify-center gap-1 opacity-70  ring-offset-background  focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground p-0">
+        {
+          showMinimizeBtn && (
+            <div onClick={onMinimize} className="border rounded-sm transition-opacity hover:opacity-100">
+              <Minus className={cn("size-6 cursor-pointer", sxMinimize)} />
+
+              <span className="sr-only">minimize</span>
+            </div>
+          )
+        }
+
+        <DialogPrimitive.Close className="border rounded-sm outline-none transition-opacity hover:opacity-100 m-0">
+          <X className={cn("size-6", sxCloseIcon)} />
+
+          <span className="sr-only">Close</span>
+        </DialogPrimitive.Close>
+      </div>
     </DialogPrimitive.Content>
   </DialogPortal>
 ));

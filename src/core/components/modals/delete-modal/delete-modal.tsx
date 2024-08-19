@@ -72,13 +72,8 @@ export default function DeleteModal({ document }: Props) {
       open={isLoading ? true : deleteDialogOpen}
       onOpenChange={setDeleteDialogOpen}
     >
-      <DialogContent>
+      <DialogContent catchAutoFocus>
         <DialogHeader className="w-full">
-          <input
-            placeholder="Don't mind me, I'm just here to catch the auto focus on this modal"
-            hidden
-          />
-
           <DialogTitle className="text-app_text">Delete {doc_type}</DialogTitle>
           <DialogDescription>
             Are you sure you want to delete this {doc_type} <br />
@@ -92,7 +87,7 @@ export default function DeleteModal({ document }: Props) {
         </DialogHeader>
 
         <DivCard className="w-full flex-col items-start justify-start gap-3">
-          <TextTag className="text-left">
+          <TextTag className="text-left items-start">
             name:
             <TextTag className="text-app_text_blue">{document?.name}</TextTag>
           </TextTag>

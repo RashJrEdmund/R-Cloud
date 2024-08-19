@@ -200,10 +200,7 @@ function FileContextMenu({ doc: file, children }: Props) {
 
             return (
               <ContextMenuSub key={text}>
-                <ContextMenuSubTrigger
-                  disabled={!!disabled}
-                  className={cn("flex items-center justify-start gap-2", disabled ? " text-app_text_grayed" : "")}
-                >
+                <ContextMenuSubTrigger className="flex items-center justify-start gap-2">
                   <Icon size={18} />
 
                   {text}

@@ -7,7 +7,7 @@ import { useMemo, useEffect, useState } from "react";
 import { DivCard } from "@/components/atoms";
 import { InputField } from "@/components/molecules";
 import { useDocStore, useUserStore } from "@/providers/stores/zustand";
-import { renameDocument } from "@/core/config/firebase/fire-store";
+import { updateDocument } from "@/core/config/firebase/fire-store";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -52,10 +52,10 @@ export default function EditModal({ document }: Props) {
     try {
       setIsLoading(true);
 
-      await renameDocument(
+      await updateDocument(
         currentUser.email,
         String(document?.id),
-        docName
+        { name: docName }
       ).then(() => {
         // trying to reflect updates without toggling refetch.
 

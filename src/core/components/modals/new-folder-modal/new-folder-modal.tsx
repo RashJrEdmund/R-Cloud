@@ -73,6 +73,11 @@ export default function NewFolderModal({}: Props) {
         },
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
+        sharedSate: {
+          accessType: "RESTRICTED",
+          viewerRole: "VIEWER",
+          sharedWith: []
+        }
       };
 
       await createFileDoc(currentUser.email, new_folder as Document);
