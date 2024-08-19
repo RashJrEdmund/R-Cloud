@@ -65,6 +65,11 @@ export default function UserEmailS({ }: Props) {
       return;
     };
 
+    if (currentUser!.email === data) {
+      setMsg({ error: "really man?? 🙄", success: null });
+      return;
+    }
+
     setSearching(true);
 
     getUserProfile(data)
@@ -75,10 +80,6 @@ export default function UserEmailS({ }: Props) {
 
         if (userEmails.includes(res.data().email)) {
           throw new Error("email has already been added");
-        }
-
-        if (currentUser!.email === res.data().email) {
-          throw new Error("really man?? 🙄");
         }
 
         setMsg({ error: null, success: "add email" });

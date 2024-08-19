@@ -1,6 +1,6 @@
 import type { SharedDocument, Document } from "@/core/interfaces/entities";
-import { createFreeDocPath } from "../utils";
-import { deleteDoc, setDoc } from "firebase/firestore";
+import { createFreeCollectionPath, createFreeDocPath } from "../utils";
+import { deleteDoc, getDocs, query, setDoc, where } from "firebase/firestore";
 import { updateDocument } from "./docs";
 
 const removeAllSharedAccess = (email: string, doc_id: string) => {
@@ -37,7 +37,16 @@ const shareDocument = async (sharedDocument: SharedDocument, fileToBeShared: Doc
   ]).then(() => isFirstTimeSharing ? "file shared successfully" : "file share access updated");
 };
 
+const loadUserSharedFiles = (email: string) => {
+  const collection_path = createFreeCollectionPath<SharedDocument>("shared");
+  const q = query(collection_path, where("sharedWith", "array-contains", email));
+
+  return getDocs(q);
+};
+
 export {
   shareDocument,
   removeAllSharedAccess,
+
+  loadUserSharedFiles,
 };

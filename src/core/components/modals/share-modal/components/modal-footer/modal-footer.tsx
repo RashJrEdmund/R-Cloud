@@ -23,6 +23,8 @@ export default function ShareModalFooter({ handleShareFile, handleModalClose }: 
   const { currentUser } = useUserStore();
 
   const handleClearAllAccess = () => {
+    setIsSharing(true);
+
     removeAllSharedAccess(currentUser!.email, fileToBeShared!.id)
       .then((msg) => {
         toast(msg);
@@ -38,7 +40,7 @@ export default function ShareModalFooter({ handleShareFile, handleModalClose }: 
   return (
     <DialogFooter className="flex w-full items-center justify-end">
       {
-        fileToBeShared?.sharedSate?.sharedWith && (
+        fileToBeShared?.sharedSate?.sharedWith.length ? (
           <Button
             variant="error"
             disabled={isSharing || searching}
@@ -47,7 +49,7 @@ export default function ShareModalFooter({ handleShareFile, handleModalClose }: 
           >
             Clear all access
           </Button>
-        )
+        ) : null
       }
 
       {/* <Button

@@ -2,7 +2,7 @@
 
 import { DivCard, TextField } from "@/components/atoms";
 import { useEffect, useRef, useState } from "react";
-import type { ChangeEvent, FormEvent, LegacyRef } from "react";
+import type { ChangeEvent, FormEvent, ForwardedRef } from "react";
 
 interface Props {
   //
@@ -55,7 +55,7 @@ export default function Search({}: Props) {
         onSubmit={handleSubmit}
       >
         <TextField
-          ref={inputRef as LegacyRef<HTMLInputElement>}
+          ref={inputRef as ForwardedRef<HTMLInputElement>}
           placeholder={"Quick search - " + searchCombo}
           value={searchVal}
           onChange={handleChange}
