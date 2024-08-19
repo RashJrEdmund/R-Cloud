@@ -51,7 +51,7 @@ export default function Viewer({ fileInView }: { fileInView: Document }) {
       height="100%"
       // type={fileInView?.content_type || undefined} // this is for when using <object /> tag
       src={fileInView?.download_url || ""}
-      className="max-h-full"
+      className="max-h-full h-full"
     />
   );
 }

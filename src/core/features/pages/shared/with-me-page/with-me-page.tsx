@@ -3,11 +3,13 @@
 import { DivCard, MainTag, TextTag } from "@/components/atoms";
 import { loadUserSharedFiles } from "@/core/config/firebase/fire-store";
 import { SharedDocument } from "@/core/interfaces/entities";
+import { useUserStore } from "@/providers/stores/zustand";
 import { LoaderCircleIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function SharedWithMePage() {
   const [docs, setDocs] = useState<SharedDocument[]>([]);
+  const { currentUser } = useUserStore();
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -26,6 +28,15 @@ export default function SharedWithMePage() {
 
         {(() => {
 
+          if (!currentUser) return (
+            <TextTag
+              as="h3"
+              className="text-center text-[2rem] font-semibold text-app_text_grayed"
+            >
+              You need to be logged in first
+            </TextTag>
+          );
+
           if (loading) return <LoaderCircleIcon className="animate-spin" />;
 
           if (!docs.length) return (
@@ -38,7 +49,7 @@ export default function SharedWithMePage() {
           );
 
           return (
-            <pre className="">
+            <pre className="max-w-[min(90vw,_600px)] break-words break-all border overflow-auto">
               {JSON.stringify(docs, null, 4)}
             </pre>
           );

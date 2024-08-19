@@ -9,11 +9,13 @@ import { toast } from "sonner";
 interface Props {
   handleShareFile: () => void;
   handleModalClose: (open: boolean) => void;
+  reflectDocSharedStateToUi: (_: {isShared: boolean}) => void;
 }
 
-export default function ShareModalFooter({ handleShareFile, handleModalClose }: Props) {
+export default function ShareModalFooter({ handleShareFile, handleModalClose, reflectDocSharedStateToUi }: Props) {
   const {
     fileToBeShared,
+    accessType,
 
     searching, userEmails,
 
@@ -28,6 +30,7 @@ export default function ShareModalFooter({ handleShareFile, handleModalClose }: 
     removeAllSharedAccess(currentUser!.email, fileToBeShared!.id)
       .then((msg) => {
         toast(msg);
+        reflectDocSharedStateToUi({ isShared: false });
         handleModalClose(false);
       }).catch(() => {
         toast.error("Something went wrong", { description: "please try again" });
@@ -40,7 +43,7 @@ export default function ShareModalFooter({ handleShareFile, handleModalClose }: 
   return (
     <DialogFooter className="flex w-full items-center justify-end">
       {
-        fileToBeShared?.sharedSate?.sharedWith.length ? (
+        fileToBeShared?.sharedState?.sharedWith.length ? (
           <Button
             variant="error"
             disabled={isSharing || searching}
@@ -62,7 +65,7 @@ export default function ShareModalFooter({ handleShareFile, handleModalClose }: 
 
       <Button
         variant="blued"
-        disabled={isSharing || searching || !userEmails.length}
+        disabled={isSharing || searching || (!userEmails.length && accessType === "RESTRICTED")}
         onClick={handleShareFile}
         className="min-w-[100px] sm:w-fit"
       >

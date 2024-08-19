@@ -87,7 +87,10 @@ const updateDocument = async (email: string, doc_id: string, updates: Partial<Do
 
   return setDoc(
     document_path,
-    { ...updates },
+    {
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    },
     { merge: true } // merge true so as to create if doesn't exist or only update specified fields if exits;
   );
 };

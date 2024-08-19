@@ -27,23 +27,37 @@ interface Document {
   };
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  sharedSate: {
+  sharedState: {
+    isShared: boolean;
     accessType: AccessType;
     viewerRole: ViewerRoles;
     sharedWith: string[];
+    firstSharedAt: Date | string | null;
+    lastModified: Date | string | null;
   };
 };
 
 interface SharedDocument {
   doc_id: string;
+  download_url: string;
+  name: string;
+  content_type: string;
+  extension: string;
+  type: DocumentType;
+  extension: string | null; // file extension for when it's files;
+  capacity: {
+    size: string; // size in Mbs or Gbs
+    bytes: number; // actual bytes
+  };
   /**
    * sharer's email
   */
  shared_by: string;
  accessType: AccessType;
  viewerRole: ViewerRoles;
- type: DocumentType;
  sharedWith: string[];
+ firstSharedAt: Date | string;
+ lastModified: Date | string;
 };
 
 export type { Document, DocumentType, SharedDocument };

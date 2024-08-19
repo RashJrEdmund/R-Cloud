@@ -144,18 +144,27 @@ function FileContextMenu({ doc: file, children }: Props) {
         text: "Share File",
         icon: FileLock2,
         disabled: true,
-        sub_content: [
-          {
-            sub_text: "Share",
-            sub_icon: Users,
-            sub_action: () => openShareModal(file),
-          },
-          {
-            sub_text: "Copy link",
-            sub_icon: Link2,
-            sub_action: () => copyFileShareLink(file),
-          },
-        ],
+        sub_content: (() => {
+          const sub_list = [
+            {
+              sub_text: "Share",
+              sub_icon: Users,
+              sub_action: () => openShareModal(file),
+            },
+          ];
+
+          if (!file?.sharedState?.isShared) return sub_list;
+
+          const isPublic = file?.sharedState?.accessType === "PUBLIC";
+
+          return [
+            ...sub_list,
+            {
+              sub_text: `Copy ${isPublic ? "public" : "private"} link`,
+              sub_icon: Link2,
+              sub_action: () => copyFileShareLink(file, isPublic),
+            }];
+        })(),
       },
       {
         text: "Select File",
@@ -168,7 +177,7 @@ function FileContextMenu({ doc: file, children }: Props) {
         action: () => openDeleteDocumentModal(file),
       },
     ];
-  }, [selectionStart, selectedDocs]);
+  }, [selectionStart, selectedDocs, file]);
 
   return (
     <ContextMenu>

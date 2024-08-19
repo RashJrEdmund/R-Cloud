@@ -38,9 +38,9 @@ export default function ViewPermissions({ }: Props) {
 
   useEffect(() => {
     // setting defaults
-    setUserEmails(fileToBeShared!?.sharedSate?.sharedWith || []);
-    setAccessType(fileToBeShared!.sharedSate?.accessType || "RESTRICTED");
-    setViewerRole(fileToBeShared!.sharedSate?.viewerRole || "VIEWER");
+    setUserEmails(fileToBeShared!?.sharedState?.sharedWith || []);
+    setAccessType(fileToBeShared!.sharedState?.accessType || "RESTRICTED");
+    setViewerRole(fileToBeShared!.sharedState?.viewerRole || "VIEWER");
   }, []);
 
   return (

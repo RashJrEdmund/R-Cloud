@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useShareModalStore, useUserStore } from "@/providers/stores/zustand";
+import { useDocStore, useShareModalStore, useUserStore } from "@/providers/stores/zustand";
 import {
   Dialog,
   DialogContent,
@@ -19,6 +19,8 @@ interface Props {
 
 export default function ShareModal({ }: Props) {
   const { currentUser } = useUserStore();
+
+  const { documents, setDocuments } = useDocStore();
 
   const {
     fileToBeShared,
@@ -45,22 +47,54 @@ export default function ShareModal({ }: Props) {
     setShareModalOpen(true);
   };
 
+  const reflectDocSharedStateToUi = ({ isShared }: { isShared: boolean }) => {
+    const updateDocs = documents.map((doc) => {
+      if (doc.id !== fileToBeShared!.id) return doc;
+
+      const _update = { ...doc, sharedState: doc?.sharedState || {} };
+
+      _update.sharedState.isShared = isShared;
+      _update.sharedState.accessType = accessType;
+      _update.sharedState.viewerRole = viewerRole;
+
+      return _update;
+    });
+
+    console.log(updateDocs);
+
+    setDocuments(updateDocs);
+  };
+
   const handleShareFile = () => {
     setIsSharing(true);
+
+    const date = new Date().toISOString();
 
     const sharedDocument: SharedDocument = {
       doc_id: fileToBeShared!.id,
       type: "FILE",
+      download_url: fileToBeShared!.download_url!,
+      name: fileToBeShared!.name,
+      extension: fileToBeShared!.extension!,
+      content_type: fileToBeShared!.content_type!,
+      capacity: {
+        size: fileToBeShared!.capacity.size,
+        bytes: fileToBeShared!.capacity.bytes,
+      },
       shared_by: currentUser!.email,
       accessType,
       viewerRole,
       sharedWith: [...userEmails],
+      firstSharedAt: fileToBeShared!.sharedState?.firstSharedAt || date,
+      lastModified: date,
     };
 
     shareDocument(sharedDocument, fileToBeShared!)
       .then((msg) => {
         // console.log(msg);
         toast(msg);
+        reflectDocSharedStateToUi({ isShared: true });
+
         handleModalClose(false);
       }).catch((err) => {
         toast.error("Something went wrong", { description: "please try again" });
@@ -91,6 +125,7 @@ export default function ShareModal({ }: Props) {
         <ShareModalFooter
           handleShareFile={handleShareFile}
           handleModalClose={handleModalClose}
+          reflectDocSharedStateToUi={reflectDocSharedStateToUi}
         />
       </DialogContent>
     </Dialog>

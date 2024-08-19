@@ -158,10 +158,13 @@ const UploadModalContextProvider = ({
           },
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-          sharedSate: {
+          sharedState: {
+            isShared: false,
             accessType: "RESTRICTED",
             viewerRole: "VIEWER",
-            sharedWith: []
+            sharedWith: [],
+            firstSharedAt: null,
+            lastModified: null
           }
         };
 

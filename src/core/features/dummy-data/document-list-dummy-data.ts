@@ -20,10 +20,13 @@ export const dummyData: Document[] = [
       length: 3,
     },
     createdAt: new Date().toDateString(),
-    sharedSate: {
+    sharedState: {
       accessType: "RESTRICTED",
       viewerRole: "VIEWER",
-      sharedWith: []
+      sharedWith: [],
+      firstSharedAt: null,
+      lastModified: null,
+      isShared: false
     }
   },
   {
@@ -43,10 +46,13 @@ export const dummyData: Document[] = [
       length: 2,
     },
     createdAt: new Date().toDateString(),
-    sharedSate: {
+    sharedState: {
       accessType: "RESTRICTED",
       viewerRole: "VIEWER",
-      sharedWith: []
+      sharedWith: [],
+      firstSharedAt: null,
+      lastModified: null,
+      isShared: false
     }
   },
   {
@@ -66,10 +72,13 @@ export const dummyData: Document[] = [
       length: null,
     },
     createdAt: new Date().toDateString(),
-    sharedSate: {
+    sharedState: {
       accessType: "RESTRICTED",
       viewerRole: "VIEWER",
-      sharedWith: []
+      sharedWith: [],
+      firstSharedAt: null,
+      lastModified: null,
+      isShared: false
     }
   },
 ];

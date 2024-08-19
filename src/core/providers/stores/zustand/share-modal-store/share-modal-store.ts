@@ -65,7 +65,7 @@ const useShareModalStore = create<ShareModalStore>((set) => ({
   }),
 
   copyFileShareLink: (file, isPublic = false) => {
-    const url = `${APP_CONFIG.app_link}/shared/me/${file.id}`;
+    const url = `${APP_CONFIG.app_link}/shared/${isPublic ? "pub" : "me"}/${file.id}`;
     const msg = `${isPublic ? "Public" : "Private"} share url copied to clipboard`;
 
     copyToClipboard({ data: url, toast_header: msg });

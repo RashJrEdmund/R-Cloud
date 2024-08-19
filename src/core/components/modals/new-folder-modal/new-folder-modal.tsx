@@ -28,7 +28,7 @@ interface Props {
   //
 }
 
-export default function NewFolderModal({}: Props) {
+export default function NewFolderModal({ }: Props) {
   const [folderName, setFolderName] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -56,6 +56,8 @@ export default function NewFolderModal({}: Props) {
           ? ["root"]
           : [...currentFolder.ancestor_ids, currentFolder.id]; // inheriting the parent's ancestor ids and the parent's own id
 
+      const date = new Date().toISOString();
+
       const new_folder: Omit<Document, "id"> = {
         user_id: currentUser.id,
         name: folderName,
@@ -71,12 +73,15 @@ export default function NewFolderModal({}: Props) {
           bytes: 0,
           length: 0,
         },
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        sharedSate: {
+        createdAt: date,
+        updatedAt: date,
+        sharedState: {
+          isShared: false,
           accessType: "RESTRICTED",
           viewerRole: "VIEWER",
-          sharedWith: []
+          sharedWith: [],
+          firstSharedAt: null,
+          lastModified: null
         }
       };
 

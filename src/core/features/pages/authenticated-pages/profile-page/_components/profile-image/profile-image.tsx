@@ -19,7 +19,7 @@ export default function ProfileImage({}: Props) {
   const { currentUser, setCurrentUser } = useUserStore();
 
   const [profileUrl, setProfileUrl] = useState<string>(
-    currentUser?.photo_url ? currentUser?.photo_url : "/user_profile_icon.svg"
+    currentUser?.photo_url ? currentUser?.photo_url : "/default-profile-photo.jpg"
   );
 
   const [preview, setPreview] = useState<string | null>(null);
@@ -38,7 +38,7 @@ export default function ProfileImage({}: Props) {
   const handleCancel: MouseEventHandler<HTMLButtonElement> = () => {
     setPreview(null);
     setFile(null);
-    setProfileUrl(currentUser?.photo_url || "/user_profile_icon.svg");
+    setProfileUrl(currentUser?.photo_url || "/default-profile-photo.jpg");
   };
 
   const handleFileUpload: MouseEventHandler<HTMLButtonElement> = () => {

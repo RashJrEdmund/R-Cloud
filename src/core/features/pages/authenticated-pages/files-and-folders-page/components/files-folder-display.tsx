@@ -59,19 +59,19 @@ export default function FilesFolderDisplay({}: Props) {
           >
             {displayLayout === "GRID"
               ? documents.map((doc) =>
-                  doc.type === "FOLDER" ? (
-                    <GridFolderCard key={doc.id} doc={doc} />
-                  ) : (
-                    <GridFileCard key={doc.id} doc={doc} />
-                  )
+                doc.type === "FOLDER" ? (
+                  <GridFolderCard key={doc.id} doc={doc} />
+                ) : (
+                  <GridFileCard key={doc.id} doc={doc} />
                 )
+              )
               : documents.map((doc) =>
-                  doc.type === "FOLDER" ? (
-                    <ListFolderCard key={doc.id} doc={doc} />
-                  ) : (
-                    <ListFileCard key={doc.id} doc={doc} />
-                  )
-                )}
+                doc.type === "FOLDER" ? (
+                  <ListFolderCard key={doc.id} doc={doc} />
+                ) : (
+                  <ListFileCard key={doc.id} doc={doc} />
+                )
+              )}
           </StyledFileFolderDisplay>
         );
       })()}
