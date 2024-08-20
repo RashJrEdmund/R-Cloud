@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getOnePublicDocument } from "@/core/config/firebase/fire-store";
 import { LoaderCircle } from "lucide-react";
 import Viewer from "@/components/modals/file-viewer/viewer";
-import { useShareModalAssets } from "@/providers/stores/zustand";
+import { useShareModalAssets, useUserStore } from "@/providers/stores/zustand";
 
 interface Props {
   isPublicFilePage: boolean;
@@ -17,6 +17,9 @@ interface Props {
  * also using this component in /shared/me/[doc_id] dynamic route page
 */
 export default function SharedFilePage({ isPublicFilePage }: Props) {
+  const [isPrivateFilePage] = useState(!isPublicFilePage);
+  const { currentUser } = useUserStore();
+
   const { Access, Viewers } = useShareModalAssets;
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -40,17 +43,25 @@ export default function SharedFilePage({ isPublicFilePage }: Props) {
 
     getOnePublicDocument(params.doc_id)
       .then((res) => {
-        if (res.exists()) setSharedDoc(res.data());
+        if (res.exists()) {
+          const data = res.data();
+
+          if (isPublicFilePage && data.accessType === "PUBLIC") setSharedDoc(data);
+
+          if (isPrivateFilePage && currentUser && data.sharedWith?.includes(currentUser.email)) {
+            setSharedDoc(data);
+          }
+        };
       })
       .finally(() => {
         setLoading(false);
       });
-  }, [params]);
+  }, [params, currentUser]);
 
   return (
     <MainTag className="flex-col gap-8">
       <TextTag className="text-xl mt-6">
-        {isPublicFilePage ? "publicly" : ""} shared file
+        {isPublicFilePage ? "Publicly" : "Privately"} shared file
       </TextTag>
 
       {(() => {
@@ -62,7 +73,9 @@ export default function SharedFilePage({ isPublicFilePage }: Props) {
               you sure??
             </p>
 
-            <span className="font-semibold">{params.doc_id}</span> does not exist
+            <span className="font-semibold">
+              {params.doc_id}
+            </span> does not exist or has not be {isPublicFilePage ? "publicly" : "privately"} shared
           </DivCard>
         );
 

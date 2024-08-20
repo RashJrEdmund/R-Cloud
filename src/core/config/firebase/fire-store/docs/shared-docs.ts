@@ -51,7 +51,6 @@ const loadUserSharedFiles = (email: string) => {
 
 const getOnePublicDocument = (doc_id: string) => {
   const doc_path = createFreeDocPath<SharedDocument>(["shared", doc_id]);
-
   return getDoc(doc_path);
 };
 
