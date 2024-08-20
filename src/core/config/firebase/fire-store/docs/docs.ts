@@ -17,7 +17,7 @@ import {
 } from "firebase/firestore";
 import { getSizeFromBytes } from "@/core/utils/file-utils";
 import { deleteFile } from "../..";
-import { updateUsedSpace } from "..";
+import { removeAllSharedAccess, updateUsedSpace } from "..";
 
 import type { Document } from "@/core/interfaces/entities";
 import type {
@@ -180,7 +180,12 @@ const deleteFiles = async (
     const file_path = createUserDocPath<Document>(email, "/r-drive/" + file.id);
 
     await deleteFile(email, String(file.filename)) // delete file from storage
-      .then(() => deleteDoc(file_path));
+      .then(() => deleteDoc(file_path))
+      .then(() => {
+        if (file?.sharedState?.isShared) {
+          return removeAllSharedAccess(email, file.id);
+        }
+      });
 
     completed.bytes += file.capacity.bytes;
     completed.length += 1;
