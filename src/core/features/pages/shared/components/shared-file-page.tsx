@@ -38,6 +38,8 @@ export default function SharedFilePage({ isPublicFilePage }: Props) {
     return `${access?.desc} ${role?.desc}`;
   }, [Access, Viewers, sharedDoc]);
 
+  const isSharedByMe = useMemo(() => currentUser?.email === sharedDoc?.shared_by, [currentUser, sharedDoc]);
+
   useEffect(() => {
     setLoading(true);
 
@@ -82,7 +84,7 @@ export default function SharedFilePage({ isPublicFilePage }: Props) {
         return (
           <DivCard className="flex-col-reverse items-start 2xl:items-center 2xl:flex-row w-primary_app_width gap-3 border border-app_bg_light p-4">
             <DivCard className="w-full h-[min(90vh,_1000px)] xl:h-[min(80vh,_1300px)]">
-              <Viewer fileInView={sharedDoc as unknown as any} />
+              <Viewer fileInView={sharedDoc} />
             </DivCard>
 
             <DivCard className="min-w-[200px] md:min-w-fit flex-col gap-4 items-start">
@@ -94,8 +96,28 @@ export default function SharedFilePage({ isPublicFilePage }: Props) {
               </TextTag>
 
               <TextTag>
-                Shared by: <TextTag className="text-app_text_blue">{sharedDoc.shared_by}</TextTag>
+                Shared by: {" "}
+                <TextTag className="text-app_text_blue">
+                  {isSharedByMe ? "YOU" : sharedDoc.shared_by}
+                </TextTag>
               </TextTag>
+
+              {
+                isSharedByMe ? (
+                  <TextTag className="flex-col items-start">
+                    You shared with: {" "}
+                    {
+                      !sharedDoc.sharedWith.length ? (
+                        <TextTag className="text-app_text_blue">No One</TextTag>
+                      ) : sharedDoc.sharedWith.map((v) => (
+                        <TextTag className="text-app_text_blue" key={v}>
+                          {v}
+                        </TextTag>
+                      ))
+                    }
+                  </TextTag>
+                ) : null
+              }
 
               <TextTag className="items-start">
                 Size: <TextTag className="text-app_text_blue">{sharedDoc.capacity.size}</TextTag>

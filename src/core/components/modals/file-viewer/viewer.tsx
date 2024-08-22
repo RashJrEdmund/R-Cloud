@@ -1,6 +1,6 @@
-import type { Document } from "@/core/interfaces/entities";
+import type { Document, SharedDocument } from "@/core/interfaces/entities";
 
-export default function Viewer({ fileInView }: { fileInView: Document }) {
+export default function Viewer({ fileInView }: { fileInView: Document | SharedDocument }) {
   if (fileInView?.content_type?.includes("video")) {
     return (
       <video controls className="max-h-full w-fit max-w-[90%]">
