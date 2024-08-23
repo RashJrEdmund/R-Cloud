@@ -41,6 +41,7 @@ function FileContextMenu({ doc: file, children }: Props) {
   const pathname = usePathname();
 
   const { displayLayout } = useAppStore();
+
   const { selectionStart, handleDocumentSelection, selectedDocs } =
     useSelectionStore();
 

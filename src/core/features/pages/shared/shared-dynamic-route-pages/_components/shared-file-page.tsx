@@ -58,7 +58,7 @@ export default function SharedFilePage({ isPublicFilePage }: Props) {
       .finally(() => {
         setLoading(false);
       });
-  }, [params, currentUser]);
+  }, [params, currentUser, isPublicFilePage, isPrivateFilePage]);
 
   return (
     <MainTag className="flex-col gap-8">
@@ -67,7 +67,7 @@ export default function SharedFilePage({ isPublicFilePage }: Props) {
       </TextTag>
 
       {(() => {
-        if (loading) return <LoaderCircle className="animate-spin" />;
+        if (loading) return <LoaderCircle className="animate-spin text-app_blue" />;
 
         if (!sharedDoc) return (
           <DivCard className="flex-col text-2xl">

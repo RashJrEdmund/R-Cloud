@@ -1,5 +1,3 @@
-export { default as PublicSharePage } from "./public-share-page/public-share-page";
+export * from "./shared-dynamic-route-pages/shared-dynamic-route-pages";
 
 export { default as SharedWithMePage } from "./with-me-page/with-me-page";
-
-export { default as SharedWithMeDynamicPage } from "./with-me-dynamic-route-page/with-me-dynamic-route-page";

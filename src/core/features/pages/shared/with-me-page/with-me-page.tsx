@@ -1,33 +1,50 @@
 "use client";
 
+import type { SharedDocument } from "@/core/interfaces/entities";
+
 import { DivCard, MainTag, TextTag } from "@/components/atoms";
 import { loadUserSharedFiles } from "@/core/config/firebase/fire-store";
-import { SharedDocument } from "@/core/interfaces/entities";
 import { useUserStore } from "@/providers/stores/zustand";
 import { LoaderCircleIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { GridFileCard } from "../../authenticated-pages/files-and-folders-page/components/sub-components";
+import { ModalContextProvider } from "@/providers/stores/context";
 
 export default function SharedWithMePage() {
   const [docs, setDocs] = useState<SharedDocument[]>([]);
   const { currentUser } = useUserStore();
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const docData = useMemo(() => {
+    if (!docs || !docs.length) return [];
+
+    const data: Record<string, SharedDocument[]> = {};
+
+    docs.forEach(({ shared_by, ...restDoc }) => {
+      if (data[shared_by]) data[shared_by].push({ shared_by, ...restDoc });
+      else data[shared_by] = [{ shared_by, ...restDoc }];
+    });
+
+    console.log("page data", Object.entries(data));
+    return Object.entries(data);
+  }, [docs]);
 
   useEffect(() => {
+    if (!currentUser) return setLoading(false);
+
     setLoading(true);
 
-    loadUserSharedFiles("orashusedmund@gmail.com")
+    loadUserSharedFiles(currentUser.email)
       .then((res) => {
         setDocs(res.docs.map((d) => d.data()));
       }).finally(() => setLoading(false));
-  }, []);
+  }, [currentUser]);
 
   return (
-    <MainTag className="">
-      <DivCard className="w-primary_app_width flex-col">
-
+    <MainTag className="justify-start">
+      <DivCard className="w-primary_app_width flex-col min-h-[85vh] border">
         {(() => {
-
           if (!currentUser) return (
             <TextTag
               as="h3"
@@ -37,7 +54,7 @@ export default function SharedWithMePage() {
             </TextTag>
           );
 
-          if (loading) return <LoaderCircleIcon className="animate-spin" />;
+          if (loading) return <LoaderCircleIcon className="animate-spin text-app_blue" />;
 
           if (!docs.length) return (
             <TextTag
@@ -49,9 +66,29 @@ export default function SharedWithMePage() {
           );
 
           return (
-            <pre className="max-w-[min(90vw,_600px)] break-words break-all border overflow-auto">
-              {JSON.stringify(docs, null, 4)}
-            </pre>
+            <ModalContextProvider>
+              <DivCard className="w-full flex-col overflow-hidden">
+                {
+                  docData.map(([email, subDocs]) => (
+                    <DivCard key={email} className="flex-col">
+                      <TextTag>
+                        from <TextTag>{email}</TextTag>
+                      </TextTag>
+
+                      <DivCard className="w-full gap-3">
+                        {
+                          subDocs.map((doc) => (
+                            <DivCard key={doc.doc_id}>
+                              <GridFileCard doc={doc as any} />
+                            </DivCard>
+                          ))
+                        }
+                      </DivCard>
+                    </DivCard>
+                  ))
+                }
+              </DivCard>
+            </ModalContextProvider>
           );
         })()}
       </DivCard>

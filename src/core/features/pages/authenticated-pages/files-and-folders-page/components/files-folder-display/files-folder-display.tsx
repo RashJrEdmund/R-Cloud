@@ -8,17 +8,17 @@ import {
   GridFolderCard,
   ListFileCard,
   ListFolderCard,
-} from "./sub-components";
+} from "../sub-components";
 
-import FilesFolderShimmer from "./sub-components/files-folder-shimmer";
-import { MainAndTopSection } from "./main-and-top-section-tag/main-and-top-section-tag";
+import FilesFolderShimmer from "./files-folder-shimmer";
+import { MainAndTopSection } from "../main-and-top-section-tag/main-and-top-section-tag";
 import { LoaderCircle } from "lucide-react";
 
 interface Props {
   //
 }
 
-export default function FilesFolderDisplay({}: Props) {
+export default function FilesFolderDisplay({ }: Props) {
   const { documents, loadingDocs, currentFolder, loadingCurrentFolder } =
     useDocStore();
   const { displayLayout } = useAppStore();

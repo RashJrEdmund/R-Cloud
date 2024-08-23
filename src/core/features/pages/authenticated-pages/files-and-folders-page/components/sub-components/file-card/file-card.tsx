@@ -1,11 +1,10 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { GridCardContainer, ListCardContainer } from "../shared";
 import { DivCard, TextTag } from "@/components/atoms";
 import {
   deriveDocumentPreviewImage,
-  openFileUploadDialog,
   shortenText,
 } from "@/core/utils/helpers";
 import { FILE_FOLDER_MAX_NAME_LENGTH } from "@/core/utils/constants";
@@ -120,7 +119,6 @@ function FileCardHoc(
   | necessary computation, and then pass down props to each variation                |
   ================================================================//================*/
   return function Card({ doc: file }: Props) {
-    const fileRef = useRef<HTMLDivElement>();
     const pathname = usePathname();
     const router = useRouter();
 

@@ -50,9 +50,12 @@ function ProgressBar({
       )}
     >
       <DivCard
+        style={{
+          width: `${progress_in_percentage}%`
+        }}
         className={cn(
           "absolute left-0 top-0 h-full rounded-[10px]",
-          `w-[${progress_in_percentage}%] ${bgColor}` /* eg 95% */,
+          `${bgColor}` /* eg 95% */,
           "w-[20%]",
           sxInner
         )}

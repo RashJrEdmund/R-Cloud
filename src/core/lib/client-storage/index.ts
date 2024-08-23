@@ -6,8 +6,7 @@
 ========================================//============*/
 
 interface Options {
-  isString?: boolean;
-  doNotParse?: boolean; // for deliberately not using JSON.parse() on objects
+  isString: boolean;
 }
 
 class CLIENT_STORAGE {
@@ -25,17 +24,17 @@ class CLIENT_STORAGE {
     }
   }
 
-  save(key: string, val: any, options?: Options) {
-    if (typeof val === "string" || options?.isString)
+  save<T>(key: string, val: T) {
+    if (typeof val === "string")
       return this.myStorage.setItem(key, val); // if i stringiy a string, it'll have additional quotes to it.
 
     return this.myStorage.setItem(key, JSON.stringify(val));
   }
 
-  get<T = any>(key: string, options?: Options) {
+  get<T>(key: string, options: Required<Options>) {
     const val: T = this.myStorage.getItem(key) as T;
 
-    if (options?.isString || options?.doNotParse) return val;
+    if (options.isString) return val;
 
     return JSON.parse(val as any) as T;
   }
