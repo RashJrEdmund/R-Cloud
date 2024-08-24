@@ -28,6 +28,10 @@ class ShimmerCache {
     return this.cache();
   }
 
+  get defaultCacheCount() {
+    return this.defaultFolderVal;
+  }
+
   getFolderCache(folder_id: string) {
     return this.cache()[folder_id] || this.defaultFolderVal;
   };

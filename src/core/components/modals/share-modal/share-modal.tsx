@@ -60,7 +60,7 @@ export default function ShareModal({ }: Props) {
       return _update;
     });
 
-    console.log(updateDocs);
+    // console.log(updateDocs);
 
     setDocuments(updateDocs);
   };

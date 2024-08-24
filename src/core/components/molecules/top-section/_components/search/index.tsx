@@ -60,6 +60,7 @@ export default function Search({}: Props) {
           value={searchVal}
           onChange={handleChange}
           className="border-none"
+          disabled
           // onFocus={() => {
           //   window.removeEventListener('keydown', handleSearchKeyCombo);
           // }}

@@ -26,7 +26,7 @@ export default function SharedWithMePage() {
       else data[shared_by] = [{ shared_by, ...restDoc }];
     });
 
-    console.log("page data", Object.entries(data));
+    // console.log("page data", Object.entries(data));
     return Object.entries(data);
   }, [docs]);
 
@@ -45,6 +45,23 @@ export default function SharedWithMePage() {
     <MainTag className="justify-start">
       <DivCard className="w-primary_app_width flex-col min-h-[85vh] border">
         {(() => {
+          return (
+            <>
+              <TextTag
+                as="h3"
+                className="text-center text-[2rem] font-semibold text-app_text_grayed"
+              >
+                Rash Is still cooking this UI, will have it here soon.
+              </TextTag>
+              <TextTag
+                as="h3"
+                className="text-center text-[2rem] font-semibold text-app_text_grayed"
+              >
+                You&apos;ll get to see who shared files with you
+              </TextTag>
+            </>
+          );
+
           if (!currentUser) return (
             <TextTag
               as="h3"
