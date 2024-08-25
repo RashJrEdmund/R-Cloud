@@ -45,7 +45,7 @@ function ProgressBar({
   return (
     <DivCard
       className={cn(
-        "relative h-[20px] w-full rounded-[8px] bg-app_bg_grayed",
+        "relative h-[1rem] w-full rounded-[8px] bg-app_bg_grayed overflow-hidden",
         sx
       )}
     >
@@ -56,7 +56,7 @@ function ProgressBar({
         className={cn(
           "absolute left-0 top-0 h-full rounded-[10px]",
           `${bgColor}` /* eg 95% */,
-          "w-[20%]",
+          // "w-[20%]",
           sxInner
         )}
       />

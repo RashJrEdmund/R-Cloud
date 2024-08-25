@@ -74,7 +74,7 @@ function GridShimmerCard() {
 
 function ListShimmerCard() {
   return (
-    <Skeleton className="my-[2px] w-full flex-nowrap justify-start bg-app_bg_light px-[10px] py-[20px]" />
+    <Skeleton className="my-[2px] w-full flex-nowrap justify-start bg-app_bg_light px-[10px] py-[23px]" />
   );
 }
 
