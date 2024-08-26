@@ -1,7 +1,7 @@
 import { DivCard, MainTag, Separator, TextTag } from "@/components/atoms";
-import { Illustrations, CtaButtons, Recordings, Footer } from "./_components";
+import { Illustrations, CtaButtons, TrustedBy, Recordings, Footer } from "./_components";
 
-interface Props { }
+interface Props { };
 
 export default function LandingPage({ }: Props) {
   return (
@@ -22,6 +22,8 @@ export default function LandingPage({ }: Props) {
 
         <CtaButtons />
       </DivCard>
+
+      <TrustedBy />
 
       <Separator className="mb-16" />
 

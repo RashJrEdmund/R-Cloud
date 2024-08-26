@@ -9,7 +9,7 @@ interface Props {
 
 export default function Illustrations({}: Props) {
   return (
-    <DivCard className="w-full">
+    <DivCard className="w-full lg:gap-12">
       {LANDING_ILLUSTRATION_CONTENT.map(({ url, alt, description }, i) => (
         <DivCard
           key={alt}
