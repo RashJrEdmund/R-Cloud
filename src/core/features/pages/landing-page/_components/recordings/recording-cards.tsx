@@ -37,7 +37,7 @@ function RecordingsCard({
     <DivCard className="w-full flex-col gap-4">
       <TextTag
         as="h3"
-        className="w-full text-[0.8rem] font-semibold sm:text-xl"
+        className="w-full text-[0.7rem] font-semibold sm:text-xl"
       >
         {heading}
       </TextTag>
@@ -51,7 +51,9 @@ function RecordingsCard({
       ) : (
         <video
           controls
-          src={source}
+          src={`${source}#t=3.6`}
+          preload="metadata"
+          // poster="/icons/r-cloud-logo.svg"
           className="w-full bg-app_bg_light shadow-md shadow-app_blue md:shadow-lg md:shadow-app_blue"
         >
           <TextTag className="bg-red-500">Video not found</TextTag>

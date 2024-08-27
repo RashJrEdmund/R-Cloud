@@ -31,10 +31,10 @@ class CLIENT_STORAGE {
     return this.myStorage.setItem(key, JSON.stringify(val));
   }
 
-  get<T>(key: string, options: Required<Options>) {
-    const val: T = this.myStorage.getItem(key) as T;
+  get<T>(key: string, options: Required<Options>): T | null {
+    const val = this.myStorage.getItem(key) ?? null as T;
 
-    if (options.isString) return val;
+    if (options.isString) return val as T;
 
     return JSON.parse(val as any) as T;
   }

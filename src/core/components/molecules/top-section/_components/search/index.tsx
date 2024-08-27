@@ -1,6 +1,7 @@
 "use client";
 
 import { DivCard, TextField } from "@/components/atoms";
+import { SearchCheckIcon, SearchIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { ChangeEvent, FormEvent, ForwardedRef } from "react";
 
@@ -46,6 +47,8 @@ export default function Search({}: Props) {
     //   window.removeEventListener('keydown', handleSearchKeyCombo);
     // };
   }, []);
+
+  return <SearchIcon className="text-app_text_grayed size-7 cursor-pointer" />;
 
   return (
     <DivCard as="search" className="hidden sm:flex">

@@ -8,6 +8,9 @@ const useAppStore = create<AppStore>((set) => {
     setDisplayLayout: (new_layout) => {
       set({ displayLayout: new_layout });
     },
+
+    folderSeparation: "NONE",
+    setFolderSeparation: (folderSeparation) => set({ folderSeparation }),
   };
 });
 

@@ -14,7 +14,6 @@ const config = {
       center: true,
       padding: "2rem",
       screens: {
-        "ssm": "400px",
         "2xl": "1400px",
       },
     },
@@ -95,6 +94,7 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       screens: {
+        ssm: "400px",
         mdxl: "1000px",
       },
       spacing: {

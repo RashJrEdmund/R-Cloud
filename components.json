@@ -13,7 +13,6 @@
   "aliases": {
     "components": "@/core/components",
     "utils": "@/core/lib/utils",
-    "ui": "@/core/components/ui",
-    "magicui": "@/core/components/magicui"
+    "ui": "@/core/components/ui"
   }
 }

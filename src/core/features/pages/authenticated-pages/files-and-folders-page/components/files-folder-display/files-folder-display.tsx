@@ -1,6 +1,6 @@
 "use client";
 
-import { DivCard, TextTag } from "@/components/atoms";
+import { DivCard, Separator, TextTag } from "@/components/atoms";
 import StyledFileFolderDisplay from "./styled-file-folder-display";
 import { useDocStore, useAppStore } from "@/providers/stores/zustand";
 import {
@@ -13,15 +13,60 @@ import {
 import FilesFolderShimmer from "./files-folder-shimmer";
 import { MainAndTopSection } from "../main-and-top-section-tag/main-and-top-section-tag";
 import { LoaderCircle } from "lucide-react";
+import { useCallback, useMemo } from "react";
+import type { Document } from "@/core/interfaces/entities";
 
 interface Props {
   //
 }
 
-export default function FilesFolderDisplay({ }: Props) {
-  const { documents, loadingDocs, currentFolder, loadingCurrentFolder } =
-    useDocStore();
+function DocumentRenderer({ documents }: { documents: Document[] }) {
   const { displayLayout } = useAppStore();
+
+  return (
+    <StyledFileFolderDisplay
+      className={displayLayout.toLowerCase() + "-layout"} // e.g grid-layout or list-layout
+    >
+      {displayLayout === "GRID"
+        ? documents.map((doc) =>
+          doc.type === "FOLDER" ? (
+            <GridFolderCard key={doc.id} doc={doc} />
+          ) : (
+            <GridFileCard key={doc.id} doc={doc} />
+          )
+        )
+        : documents.map((doc) =>
+          doc.type === "FOLDER" ? (
+            <ListFolderCard key={doc.id} doc={doc} />
+          ) : (
+            <ListFileCard key={doc.id} doc={doc} />
+          )
+        )}
+    </StyledFileFolderDisplay>
+  );
+}
+
+export default function FilesFolderDisplay({ }: Props) {
+  const { documents: docs, loadingDocs, currentFolder, loadingCurrentFolder } =
+    useDocStore();
+  const { displayLayout, folderSeparation } = useAppStore();
+
+  const getFolders = useCallback(() => {
+    return docs.filter(({ type }) => type === "FOLDER")
+  }, [docs, folderSeparation]);
+
+  const getFiles = useCallback(() => {
+    return docs.filter(({ type }) => type === "FILE")
+  }, [docs, folderSeparation]);
+
+  const documents = useMemo(() => {
+    if (folderSeparation === "NONE") return docs;
+
+    return [
+      ...getFolders(),
+      ...getFiles(),
+    ];
+  }, [docs, folderSeparation,]);
 
   // return <FilesFolderShimmer displayLayout={displayLayout} />;
 
@@ -53,27 +98,27 @@ export default function FilesFolderDisplay({ }: Props) {
             </DivCard>
           );
 
-        return (
-          <StyledFileFolderDisplay
-            className={displayLayout.toLowerCase() + "-layout"} // e.g grid-layout or list-layout
-          >
-            {displayLayout === "GRID"
-              ? documents.map((doc) =>
-                doc.type === "FOLDER" ? (
-                  <GridFolderCard key={doc.id} doc={doc} />
-                ) : (
-                  <GridFileCard key={doc.id} doc={doc} />
-                )
+        return (!folderSeparation || ["NONE", "LOW"].includes(folderSeparation)) ? <DocumentRenderer documents={documents} /> : (
+          <>
+            {(() => {
+              const folders = getFolders();
+
+              return folders.length > 0 && (
+                <>
+                  <DocumentRenderer documents={folders} />
+
+                  <Separator />
+                </>
               )
-              : documents.map((doc) =>
-                doc.type === "FOLDER" ? (
-                  <ListFolderCard key={doc.id} doc={doc} />
-                ) : (
-                  <ListFileCard key={doc.id} doc={doc} />
-                )
-              )}
-          </StyledFileFolderDisplay>
-        );
+            })()}
+
+            {(() => {
+              const files = getFiles();
+
+              return files.length > 0 && <DocumentRenderer documents={files} />
+            })()}
+          </>
+        )
       })()}
     </MainAndTopSection>
   );

@@ -1,5 +1,5 @@
-import type { FC } from "react";
-
 type DisplayLayout = "GRID" | "LIST";
 
-export type { DisplayLayout };
+type FolderSeparation = "NONE" | "LOW" | "FULL";
+
+export type { DisplayLayout, FolderSeparation };

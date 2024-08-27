@@ -21,7 +21,7 @@ export default function DisplayLayout({}: Props) {
   useLayoutEffect(() => {
     const layout_type = localStorage.get<DisplayLayoutType>("layout_type", {
       isString: true,
-    });
+    })!;
 
     if (["GRID", "LIST"].includes(layout_type)) {
       if (layout_type === displayLayout) return;
@@ -34,7 +34,7 @@ export default function DisplayLayout({}: Props) {
   useEffect(() => {
     const layout_type = localStorage.get<DisplayLayoutType>("layout_type", {
       isString: true,
-    });
+    })!;
 
     if (["GRID", "LIST"].includes(layout_type) && layout_type === displayLayout)
       return;

@@ -1,5 +1,5 @@
 import { DivCard } from "@/components/atoms";
-import { Navigator, Search, DisplayLayout, MoreSection } from "./_components";
+import { Navigator, Search, DisplayLayout, MoreSection, Sort } from "./_components";
 
 interface Props {
   hide_search_section?: boolean;
@@ -13,6 +13,8 @@ export default function TopSection({ hide_search_section = false }: Props) {
       {hide_search_section ? null : (
         <DivCard className="gap-4">
           <Search />
+
+          <Sort />
 
           <DisplayLayout />
 

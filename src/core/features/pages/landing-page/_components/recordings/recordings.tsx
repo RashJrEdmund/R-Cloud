@@ -71,8 +71,8 @@ async function RecordingsDisplay() {
 
 export default function Recordings() {
   return (
-    <DivCard className="w-primary_app_width flex-col justify-start gap-8">
-      <TextTag as="h2" className="text-2xl font-semibold">
+    <DivCard className="w-primary_app_width min-h-screen flex-col gap-8">
+      <TextTag as="h2" className="text-2xl font-semibold underline">
         Video Guides
       </TextTag>
 

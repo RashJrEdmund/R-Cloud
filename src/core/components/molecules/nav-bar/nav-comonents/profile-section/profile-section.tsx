@@ -39,11 +39,11 @@ export default function ProfileSection({ }: Props) {
             />
 
             <TextTag className="hidden md:inline">
-              {currentUser?.username || "nobody"}
+              {currentUser?.username || "username"}
             </TextTag>
 
             <TextTag className="text-sm md:hidden">
-              {shortenText(currentUser?.username || "nobody", 17)}
+              {shortenText(currentUser?.username || "username", 17)}
             </TextTag>
           </TextTag>
         </DropdownMenuTrigger>

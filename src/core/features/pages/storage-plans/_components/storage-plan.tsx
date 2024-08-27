@@ -9,6 +9,8 @@ import type { StoragePlan } from "@/core/interfaces/entities";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { PlanBadge } from "./plan-badge";
+import { cn } from "@/core/lib/utils";
+import { useMemo } from "react";
 
 interface Props {
   plan: StoragePlan;
@@ -17,6 +19,10 @@ interface Props {
 export default function StoragePlan({ plan }: Props) {
   const { currentUser, userProfile } = useUserStore();
   const router = useRouter();
+
+  const isCurrentPlan = useMemo(() => {
+    return !!(currentUser && userProfile && userProfile.plan.id === plan.id);
+  }, [currentUser, userProfile, plan]);
 
   // console.log({ currentUser, userProfile });
 
@@ -55,7 +61,10 @@ export default function StoragePlan({ plan }: Props) {
   };
 
   return (
-    <DivCard className="relative mx-auto w-[min(100%,_85vw)] flex-col gap-4 overflow-hidden rounded-[5px] border border-app_border bg-app_white px-6 pb-12 pt-8 duration-300 hover:shadow">
+    <DivCard className={cn(
+      "relative mx-auto w-[min(100%,_85vw)] max-w-[420px] flex-col gap-4 sm:gap-6 mdxl:gap-12 overflow-hidden rounded-[5px] bg-app_white px-6 pb-12 pt-8 shadow hover:shadow-md transition-shadow duration-300",
+      plan.is_free || isCurrentPlan ? "shadow-black hover:shadow-black" : "shadow-app_blue hover:shadow-app_blue"
+    )}>
       <PlanBadge plan={plan} />
 
       <TextTag className="text-[1.5rem] font-semibold text-app_text_blue md:text-[1.75rem]">
@@ -66,8 +75,9 @@ export default function StoragePlan({ plan }: Props) {
         src={plan.icon_url}
         alt={plan.label + " icon"}
         title={plan.label}
-        width={200}
-        height={200}
+        width={300}
+        height={300}
+        className="size-[200px] ssm:size-[250px] lg:size-[300px]"
       />
 
       <DivCard className="w-full flex-col gap-[10px]">
@@ -76,10 +86,10 @@ export default function StoragePlan({ plan }: Props) {
         <TextTag className="text-[0.9rem]">{plan.rate}</TextTag>
       </DivCard>
 
-      {currentUser && userProfile && userProfile.plan.id === plan.id ? (
+      {isCurrentPlan ? (
         <Button
           variant={plan.is_free ? "black" : "blued"}
-          className="w-full p-[10px]"
+          className="w-full p-[10px] sm:p-5 mdxl:p-7 mdxl:text-[1.2rem]"
           title={"subscribe to plan: " + plan.label}
           onClick={() => {
             toast.warning("Already subscribed to this plan");
@@ -90,7 +100,7 @@ export default function StoragePlan({ plan }: Props) {
       ) : (
         <Button
           variant={plan.is_free ? "black" : "blued"}
-          className="w-full p-[10px]"
+          className="w-full p-[10px] sm:p-5 mdxl:p-7 mdxl:text-[1.2rem]"
           title={"subscribe to plan: " + plan.label}
           onClick={() => handleNewSubscription(plan)}
         >
