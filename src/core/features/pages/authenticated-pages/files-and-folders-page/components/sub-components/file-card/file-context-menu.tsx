@@ -16,6 +16,7 @@ import {
   FileLock2,
   Users,
   Link2,
+  Cog,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -139,6 +140,12 @@ function FileContextMenu({ doc: file, children }: Props) {
         text: "Copy File",
         icon: Copy,
         // action: copyFileFromUrlToClipboard,
+        disabled: true,
+      },
+      {
+        text: "File Details",
+        icon: Cog,
+        // action: () =>,
         disabled: true,
       },
       {

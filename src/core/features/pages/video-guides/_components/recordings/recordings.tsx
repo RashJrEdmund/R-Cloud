@@ -25,6 +25,10 @@ const DemoData: RecordingData[] = [
     source: "/recordings/r-cloud-organize-files-recording.webm",
   },
   {
+    heading: "Change Document Layouts",
+    source: "/recordings/r-cloud-layout-shift.webm",
+  },
+  {
     heading: "View and Download Files",
     source: "/recordings/r-cloud-view-and-download-files-recording.webm",
   },
@@ -71,14 +75,10 @@ async function RecordingsDisplay() {
 
 export default function Recordings() {
   return (
-    <DivCard className="w-primary_app_width min-h-screen flex-col gap-8">
-      <TextTag as="h2" className="text-2xl font-semibold underline">
-        Video Guides
-      </TextTag>
-
+    <div className="w-primary_app_width flex items-center justify-center">
       <Suspense fallback={<RecordingShimmer />}>
         <RecordingsDisplay />
       </Suspense>
-    </DivCard>
+    </div>
   );
 }

@@ -14,6 +14,7 @@ import {
   Folder,
   Trash2,
   Upload,
+  Cog,
 } from "lucide-react";
 import { useSelectionStore } from "@/providers/stores/zustand";
 import { openFileUploadDialog } from "@/core/utils/helpers";
@@ -59,6 +60,12 @@ function MainAndContextMenu({
         action: openFileUploadDialog,
       },
       {
+        text: "Current Folder Details",
+        icon: Cog,
+        // action: () =>,
+        disabled: true,
+      },
+      {
         text: "Start Selection",
         icon: SquareCheckBig,
         action: toggleDocumentSelection,
@@ -73,10 +80,11 @@ function MainAndContextMenu({
       </ContextMenuTrigger>
 
       <ContextMenuContent className="w-fit min-w-[min(180px,_97vw)] p-[10px] pb-8">
-        {CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon }) => (
+        {CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon, disabled }) => (
           <ContextMenuItem
             key={text}
             onClick={action}
+            disabled={!!disabled}
             className="lex items-center justify-start gap-2 bg-app_bg"
           >
             <Icon size={18} />

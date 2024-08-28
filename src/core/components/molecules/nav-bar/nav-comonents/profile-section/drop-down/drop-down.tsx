@@ -17,6 +17,7 @@ import {
   LogIn,
   Stamp,
   User,
+  Signpost,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -66,6 +67,11 @@ export default function ProfileDropDown({ }: Props) {
         text: "Storage Plans",
         icon: Stamp,
       },
+      {
+        href: "/video-guides",
+        text: "Video Guides",
+        icon: Signpost,
+      },
     ];
 
     if (userProfile && ["ADMIN", "SUPER_ADMIN"].includes(userProfile.role)) {
@@ -102,6 +108,11 @@ export default function ProfileDropDown({ }: Props) {
         href: "/storage-plans",
         text: "Storage Plans",
         icon: Stamp,
+      },
+      {
+        href: "/video-guides",
+        text: "Video Guides",
+        icon: Signpost,
       },
     ], []);
 

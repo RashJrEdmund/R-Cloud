@@ -18,7 +18,7 @@ function RecordingShimmer({
      */
     <Skeleton
       className={cn(
-        "flex min-h-[calc((var(--primary\\_app\\_width)_/_2))] w-full items-end p-4 shadow-md shadow-app_blue md:shadow-lg md:shadow-app_blue",
+        "flex min-h-[calc((var(--primary\\_app\\_width)_/_2))] w-full max-w-primary_app_width items-end p-4 shadow-md shadow-app_blue md:shadow-lg md:shadow-app_blue",
         className
       )}
     >
@@ -34,7 +34,7 @@ function RecordingsCard({
   data: RecordingData;
 }) {
   return (
-    <DivCard className="w-full flex-col gap-4">
+    <DivCard className="w-full max-w-primary_app_width flex-col gap-4">
       <TextTag
         as="h3"
         className="w-full text-[0.7rem] font-semibold sm:text-xl"
@@ -51,9 +51,10 @@ function RecordingsCard({
       ) : (
         <video
           controls
-          src={`${source}#t=3.6`}
-          preload="metadata"
-          // poster="/icons/r-cloud-logo.svg"
+          src={`${source}`}
+          // src={`${source}#t=3.6`}
+          // preload="metadata"
+          poster="/landing/video-thumbnail.svg"
           className="w-full bg-app_bg_light shadow-md shadow-app_blue md:shadow-lg md:shadow-app_blue"
         >
           <TextTag className="bg-red-500">Video not found</TextTag>

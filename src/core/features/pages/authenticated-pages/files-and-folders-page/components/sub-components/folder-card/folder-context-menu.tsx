@@ -19,6 +19,7 @@ import {
   Trash2,
   BoxSelectIcon,
   FileArchive,
+  Cog,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/core/lib/utils";
@@ -82,6 +83,12 @@ function FolderContextMenu({ doc: folder, children }: Props) {
         text: "Create Achieve",
         icon: FileArchive,
         // action: () => null,
+        disabled: true,
+      },
+      {
+        text: "Folder Details",
+        icon: Cog,
+        // action: () =>,
         disabled: true,
       },
       {

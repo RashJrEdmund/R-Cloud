@@ -1,5 +1,5 @@
 import { DivCard, MainTag, Separator, TextTag } from "@/components/atoms";
-import { Illustrations, CtaButtons, TrustedBy, Recordings, Footer } from "./_components";
+import { Illustrations, CtaButtons, TrustedBy, ToVideoGuides, Footer } from "./_components";
 
 function Hero() {
   return (
@@ -20,7 +20,7 @@ function Hero() {
       <CtaButtons />
     </DivCard>
   );
-}
+};
 
 interface Props { };
 
@@ -31,7 +31,7 @@ export default function LandingPage({ }: Props) {
 
       <TrustedBy />
 
-      <Recordings />
+      <ToVideoGuides />
 
       <Separator className="my-16" />
 

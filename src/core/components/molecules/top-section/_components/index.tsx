@@ -1,5 +1,7 @@
 export { default as Navigator } from "./navigator";
 
+export { default as SelectAll } from "./select-all/";
+
 export { default as Search } from "./search";
 
 export { default as Sort } from "./sort";

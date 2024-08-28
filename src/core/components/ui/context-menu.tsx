@@ -6,7 +6,7 @@ import { Check, ChevronRight, Circle } from "lucide-react";
 
 import { cn } from "@/core/lib/utils";
 
-const ContextMenu = ContextMenuPrimitive.Root;
+const DefaultContextMenu = ContextMenuPrimitive.Root;
 
 const ContextMenuTrigger = ContextMenuPrimitive.Trigger;
 
@@ -17,6 +17,73 @@ const ContextMenuPortal = ContextMenuPrimitive.Portal;
 const ContextMenuSub = ContextMenuPrimitive.Sub;
 
 const ContextMenuRadioGroup = ContextMenuPrimitive.RadioGroup;
+
+// const ContextMenuTrigger: typeof DefaultContextMenuTrigger = (props) => {
+//   const divRef = React.useRef<HTMLDivElement>();
+
+//   React.useEffect(() => {
+//     if (divRef.current) divRef.current.addEventListener("contextmenu", (e) => {
+//       // if (e.BUBBLING_PHASE) {
+//       //   e.stopPropagation();
+//       // }
+//       // if (e.CAPTURING_PHASE) {
+//       //   e.stopPropagation();
+//       // }
+
+//       // e.stopPropagation();
+
+//       console.log({ phase: e.eventPhase, bubbles: e.BUBBLING_PHASE, capturing: e.CAPTURING_PHASE});
+//     }, true);
+
+//     return () => {
+//       // divRef.current?.removeEventListener("contextmenu");
+//     }
+//   }, []);
+
+//   return (
+//     <div
+//       ref={divRef as any}
+//       onContextMenu={(e) => e.stopPropagation()}
+//       // onContextMenuCapture={(e) => e.stopPropagation()}
+//     >
+//       <DefaultContextMenuTrigger {...props} onContextMenu={(e) => e.stopPropagation()} />
+//     </div>
+//   );
+// };
+
+const ContextMenu: typeof DefaultContextMenu = (props) => {
+  const divRef = React.useRef<HTMLDivElement>();
+
+  React.useEffect(() => {
+    if (divRef.current) divRef.current.addEventListener("contextmenu", (e) => {
+      // if (e.BUBBLING_PHASE) {
+      //   e.stopPropagation();
+      // }
+      // if (e.CAPTURING_PHASE) {
+      //   e.stopPropagation();
+      // }
+
+      // e.stopPropagation();
+
+      console.log({ phase: e.eventPhase, bubbles: e.BUBBLING_PHASE, capturing: e.CAPTURING_PHASE});
+    });
+
+    return () => {
+      // divRef.current?.removeEventListener("contextmenu");
+    };
+  }, []);
+
+  return (
+    <div
+      ref={divRef as any}
+      // onContextMenu={(e) => e.stopPropagation()}
+      // onContextMenuCapture={(e) => e.stopPropagation()}
+      className="w-full"
+    >
+      <DefaultContextMenu {...props as any} />
+    </div>
+  );
+};
 
 const ContextMenuSubTrigger = React.forwardRef<
   React.ElementRef<typeof ContextMenuPrimitive.SubTrigger>,

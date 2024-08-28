@@ -5,7 +5,7 @@ import { TextTag } from "@/components/atoms";
 import { openFileUploadDialog } from "@/core/utils/helpers";
 import { useModalContext } from "@/providers/stores/context";
 import { useSelectionStore } from "@/providers/stores/zustand";
-import { MoreVertical } from "lucide-react";
+import { Cog, MoreVertical } from "lucide-react";
 import {
   BoxSelectIcon,
   SquareCheckBig,
@@ -24,7 +24,7 @@ interface Props {
   //
 }
 
-export default function MoreSection({}: Props) {
+export default function MoreSection({ }: Props) {
   const { setNewFolderDialogOpen, setBulkDeleteDialogOpen } = useModalContext();
 
   const {
@@ -38,34 +38,40 @@ export default function MoreSection({}: Props) {
     () =>
       selectionStart
         ? [
-            {
-              text: "Delete Selected",
-              icon: Trash2,
-              action: () => setBulkDeleteDialogOpen(!!selectedDocs.length),
-            },
-            {
-              text: "Stop Selection",
-              icon: BoxSelectIcon,
-              action: toggleDocumentSelection,
-            },
-          ]
+          {
+            text: "Delete Selected",
+            icon: Trash2,
+            action: () => setBulkDeleteDialogOpen(!!selectedDocs.length),
+          },
+          {
+            text: "Stop Selection",
+            icon: BoxSelectIcon,
+            action: toggleDocumentSelection,
+          },
+        ]
         : [
-            {
-              text: "New Folder",
-              icon: Folder,
-              action: () => setNewFolderDialogOpen(true),
-            },
-            {
-              text: "Upload File(s)",
-              icon: Upload,
-              action: openFileUploadDialog,
-            },
-            {
-              text: "Start Selection",
-              icon: SquareCheckBig,
-              action: toggleDocumentSelection,
-            },
-          ],
+          {
+            text: "New Folder",
+            icon: Folder,
+            action: () => setNewFolderDialogOpen(true),
+          },
+          {
+            text: "Upload File(s)",
+            icon: Upload,
+            action: openFileUploadDialog,
+          },
+          {
+            text: "Current Folder Details",
+            icon: Cog,
+            // action: () =>,
+            disabled: true,
+          },
+          {
+            text: "Start Selection",
+            icon: SquareCheckBig,
+            action: toggleDocumentSelection,
+          },
+        ],
     [selectionStart, selectedDocs]
   );
 
@@ -79,10 +85,11 @@ export default function MoreSection({}: Props) {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-fit min-w-[min(180px,_97vw)] p-[10px] pb-8">
-        {MORE_CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon }) => (
+        {MORE_CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon, disabled }) => (
           <DropdownMenuItem
             key={text}
             onClick={action}
+            disabled={!!disabled}
             className="lex items-center justify-start gap-2 bg-app_bg"
           >
             <Icon size={18} />

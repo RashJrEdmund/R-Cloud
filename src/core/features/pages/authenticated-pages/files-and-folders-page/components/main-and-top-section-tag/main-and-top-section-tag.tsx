@@ -53,7 +53,7 @@ function MainAndTopSection({
       if (!files) return;
       readyUploadModal(files);
     },
-    []
+    [],
   );
 
   useEffect(() => {
@@ -82,7 +82,7 @@ function MainAndTopSection({
     <MainAndContextMenu className="">
       <MainTag
         {...(restProps as {})}
-        className={cn("justify-start", className)}
+        className={cn("justify-start select-none", className)}
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
