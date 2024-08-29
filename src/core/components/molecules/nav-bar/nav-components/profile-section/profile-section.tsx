@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useUserStore } from "@/providers/stores/zustand";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { TextTag } from "@/components/atoms";
 import { ProfileDropDown } from "./drop-down";
 import {
@@ -16,7 +16,6 @@ interface Props { }
 
 export default function ProfileSection({ }: Props) {
   const { currentUser } = useUserStore();
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
   const profile_url = useMemo(() => {
     return currentUser && currentUser.photo_url
@@ -26,7 +25,7 @@ export default function ProfileSection({ }: Props) {
 
   return (
     <div className="flex w-fit items-center justify-center [&_a]:flex [&_a]:w-fit [&_a]:items-center [&_a]:justify-center [&_a]:gap-[7px]">
-      <DropdownMenu onOpenChange={setShowDropDown} open={showDropDown}>
+      <DropdownMenu>
         <DropdownMenuTrigger className="outline-none">
           <TextTag className="flex-col md:flex-row">
             <Image

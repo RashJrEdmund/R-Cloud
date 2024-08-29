@@ -1,7 +1,7 @@
 "use client";
 
 import { TextLogo } from "@/components/atoms";
-import { BreadCrumbs, NavTitle, ProfileSection } from "./nav-comonents";
+import { BreadCrumbs, NavTitle, ProfileSection } from "./nav-components";
 import Link from "next/link";
 
 interface Props {}

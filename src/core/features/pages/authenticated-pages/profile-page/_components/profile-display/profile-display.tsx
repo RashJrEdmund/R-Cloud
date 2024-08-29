@@ -7,7 +7,6 @@ import { useEffect, useMemo, useState } from "react";
 import StyledProfileDisplay from "./styled-profile-display";
 import { ProfileImage } from "..";
 import { useRouter } from "next/navigation";
-import { logOut } from "@/core/config/firebase";
 import { getUserProfile } from "@/core/config/firebase/fire-store";
 import { UsedSpaceDisplay } from "@/components/molecules";
 import { cn } from "@/core/lib/utils";
@@ -16,14 +15,14 @@ interface Props {
   //
 }
 
-export default function ProfileDisplay({}: Props) {
-  const { currentUser, setCurrentUser, userProfile, setUserProfile } =
-    useUserStore();
+export default function ProfileDisplay({ }: Props) {
+  const {
+    currentUser,
+    userProfile,
+    setUserProfile,
+    setLogOutDialogOpen,
+  } = useUserStore();
 
-  const [logOutState, setLogOutState] = useState<{
-    isLoading: boolean;
-    message: string;
-  } | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const router = useRouter();
@@ -32,22 +31,6 @@ export default function ProfileDisplay({}: Props) {
     () => new Date(currentUser?.metadata?.lastSignInTime as any).toDateString(),
     [currentUser]
   );
-
-  const handleLogOut = () => {
-    setLogOutState({
-      isLoading: true,
-      message: "Login out",
-    });
-
-    logOut()
-      .then(() => {
-        setCurrentUser(null);
-        router.replace("/");
-      })
-      .finally(() => {
-        setLogOutState(null);
-      });
-  };
 
   useEffect(() => {
     if (!currentUser) return;
@@ -161,10 +144,9 @@ export default function ProfileDisplay({}: Props) {
             "min-w-[320px]",
             loading ? "cursor-not-allowed" : "cursor-pointer"
           )}
-          disabled={logOutState?.isLoading}
-          onClick={handleLogOut}
+          onClick={() => setLogOutDialogOpen(true)}
         >
-          {logOutState?.isLoading ? logOutState?.message : "Log out"}
+          Log out
         </Button>
       </DivCard>
     </StyledProfileDisplay>

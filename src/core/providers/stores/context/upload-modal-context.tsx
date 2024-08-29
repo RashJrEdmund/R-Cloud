@@ -8,7 +8,7 @@ import type { Dispatch, SetStateAction } from "react";
 import type { Document } from "@/core/interfaces/entities";
 
 import { createContext, useContext, useState, useCallback } from "react";
-import { UploadModal } from "@/components/modals";
+import { LogoutModal, UploadModal } from "@/components/modals";
 import { uploadFile } from "@/core/config/firebase";
 import { useDocStore, useUserStore } from "../zustand";
 import {
@@ -216,6 +216,8 @@ const UploadModalContextProvider = ({
     >
       <>
         <UploadModal />
+
+        <LogoutModal />
 
         {children}
       </>
