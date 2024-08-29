@@ -6,7 +6,7 @@ interface Props { };
 
 export default function VideoGuidesPage({ }: Props) {
   return (
-    <MainTag className="gap-0">
+    <MainTag className="gap-0 justify-start">
       <TopSection hide_search_section />
 
       <DivCard className="flex-col gap-8 mb-4">
@@ -18,6 +18,7 @@ export default function VideoGuidesPage({ }: Props) {
           How To ?
         </TextTag>
       </DivCard>
+
       <Recordings />
     </MainTag>
   );

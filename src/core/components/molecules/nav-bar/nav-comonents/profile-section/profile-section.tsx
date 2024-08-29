@@ -21,7 +21,7 @@ export default function ProfileSection({ }: Props) {
   const profile_url = useMemo(() => {
     return currentUser && currentUser.photo_url
       ? currentUser.photo_url
-      : "/default-profile-photo.jpg";
+      : "/auth-images/default-profile-photo.jpg";
   }, [currentUser]);
 
   return (
@@ -35,7 +35,7 @@ export default function ProfileSection({ }: Props) {
               width={50}
               height={50}
               draggable={false}
-              className="h-[35px] w-[35px] rounded-full border border-gray-500 object-cover md:h-[38px] md:w-[38px]"
+              className="size-[35px] rounded-full border border-gray-500 object-cover md:size-[38px]"
             />
 
             <TextTag className="hidden md:inline">

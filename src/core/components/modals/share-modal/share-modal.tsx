@@ -111,7 +111,7 @@ export default function ShareModal({ }: Props) {
       open={isSharing || searching ? true : shareModalOpen}
       onOpenChange={handleModalClose}
     >
-      <DialogContent className="w-primary_app_width">
+      <DialogContent className="w-primary_app_w">
         <DialogHeader className="w-full">
           <DialogTitle className="text-app_text">
             Share: {fileToBeShared?.name}

@@ -15,7 +15,7 @@ const StyledNavBar = styled.nav`
   height: fit-content;
 
   .nav_holder {
-    width: ${DIMENSIONS.primary_app_width};
+    width: ${DIMENSIONS.primary_app_w};
     margin: 0 auto;
     padding: 10px 1rem;
     ${flex_template}

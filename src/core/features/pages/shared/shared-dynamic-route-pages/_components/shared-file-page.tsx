@@ -82,7 +82,7 @@ export default function SharedFilePage({ isPublicFilePage }: Props) {
         );
 
         return (
-          <DivCard className="flex-col-reverse items-start 2xl:items-center 2xl:flex-row w-primary_app_width gap-3 border border-app_bg_light p-4">
+          <DivCard className="flex-col-reverse items-start 2xl:items-center 2xl:flex-row w-primary_app_w gap-3 border border-app_bg_light p-4">
             <DivCard className="w-full h-[min(90vh,_1000px)] xl:h-[min(80vh,_1300px)]">
               <Viewer fileInView={sharedDoc} />
             </DivCard>

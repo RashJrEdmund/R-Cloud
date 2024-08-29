@@ -1,5 +1,7 @@
 export * from "./progress-bar/progress-bar";
 
+export * from "./dashboard";
+
 export { default as NavBar } from "./nav-bar/nav-bar";
 
 export { default as InputField } from "./input-field/InputField";

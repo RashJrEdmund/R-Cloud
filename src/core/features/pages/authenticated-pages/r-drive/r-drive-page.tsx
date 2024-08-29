@@ -6,7 +6,7 @@ interface Props {}
 
 export default function RDrivePage({}: Props) {
   return (
-    <MainTag className="w-primary_app_width justify-start">
+    <MainTag className="w-primary_app_w justify-start">
       <TopSection hide_search_section />
 
       <TextTag as="h2" className="mb-4 whitespace-nowrap font-semibold">

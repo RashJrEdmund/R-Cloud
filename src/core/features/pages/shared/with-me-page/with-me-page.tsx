@@ -43,7 +43,7 @@ export default function SharedWithMePage() {
 
   return (
     <MainTag className="justify-start">
-      <DivCard className="w-primary_app_width flex-col min-h-[85vh] border">
+      <DivCard className="w-primary_app_w flex-col min-h-[85vh] border">
         {(() => {
           return (
             <>

@@ -7,7 +7,6 @@
 | strict auth-guard                               |
 =====================================//==========*/
 
-import { _onAuthStateChange } from "@/core/config/firebase";
 import { LoadingPage } from "@/features/next-primitive-pages";
 import { useUserStore } from "@/providers/stores/zustand";
 import { useRouter } from "next/navigation";
@@ -29,5 +28,9 @@ export default function AuthGuard({ children }: Props) {
     return <LoadingPage />;
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+    </>
+  );
 }

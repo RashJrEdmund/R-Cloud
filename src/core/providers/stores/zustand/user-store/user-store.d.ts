@@ -15,13 +15,16 @@ interface UserStore {
    * Use Profile
    */
   userProfile: UserProfile | null;
-  setUserProfile: (profile: UserProfile) => void;
+  setUserProfile: (profile: UserProfile | null) => void;
 
   refetchUserProfile: boolean;
   toggleRefetchUserProfile: () => void;
 
   userProfileLoading: boolean;
   setUserProfileLoading: (state: boolean) => void;
+
+  logOutDialogOpen: boolean;
+  setLogOutDialogOpen: (state: boolean) => void;
 }
 
 export type { UserStore };

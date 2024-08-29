@@ -5,8 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { logOut } from "@/core/config/firebase";
-import { useDocStore, useUserStore } from "@/providers/stores/zustand";
+import { useUserStore } from "@/providers/stores/zustand";
 import {
   Blend,
   FolderRoot,
@@ -20,7 +19,6 @@ import {
   Signpost,
 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 
 interface Props {
@@ -28,17 +26,7 @@ interface Props {
 }
 
 export default function ProfileDropDown({ }: Props) {
-  const { currentUser, setCurrentUser, userProfile } = useUserStore();
-  const { setDocuments } = useDocStore();
-  const router = useRouter();
-
-  const handleLogOut = () => {
-    logOut().then(() => {
-      setCurrentUser(null);
-      setDocuments([]);
-      router.replace("/");
-    });
-  };
+  const { currentUser, userProfile, setLogOutDialogOpen } = useUserStore();
 
   const DROP_DOWN_CONTENT_1 = useMemo(() => {
     const data = [
@@ -92,12 +80,12 @@ export default function ProfileDropDown({ }: Props) {
   const DROP_DOWN_CONTENT_2 = useMemo(
     () => [
       {
-        action: handleLogOut,
+        action: () => setLogOutDialogOpen(true),
         text: "Log Out",
         icon: LogOut,
       },
     ],
-    [handleLogOut]
+    [],
   );
 
   // NO USER CONTENT

@@ -43,7 +43,7 @@ export default function Footer() {
       as="footer"
       className="flex min-h-[400px] w-full flex-col items-center justify-center gap-8"
     >
-      <DivCard className="w-primary_app_width flex-col items-start justify-between gap-6 md:flex-row">
+      <DivCard className="w-primary_app_w flex-col items-start justify-between gap-6 md:flex-row">
         <DivCard className="flex-col items-start font-semibold">
           <TextTag
             as="h3"
@@ -101,7 +101,7 @@ export default function Footer() {
         </DivCard>
       </DivCard>
 
-      <DivCard className="w-primary_app_width text-center text-sm text-app_text_grayed">
+      <DivCard className="w-primary_app_w text-center text-sm text-app_text_grayed">
         &copy; {new Date().getFullYear()} | R - Cloud From r - apps
         <br />
         All Rights Reserved

@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function ToVideoGuides() {
   return (
-    <DivCard className="w-primary_app_width min-h-screen flex-col sm:flex-row sm:gap-5 my-8">
+    <DivCard className="w-primary_app_w min-h-screen flex-col sm:flex-row sm:gap-5 my-8">
       <DivCard className="w-full flex-col gap-5">
         <Image
           width={500}

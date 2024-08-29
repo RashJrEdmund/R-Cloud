@@ -12,13 +12,13 @@ function RecordingShimmer({
 }) {
   return (
     /**
-     * h-[calc((var(--primary\_app\_width)_/_2)_+_15px)] to give height: calc((var(--primary_app_width) / 2));
+     * h-[calc((var(--primary\_app\_width)_/_2)_+_15px)] to give height: calc((var(--primary_app_w) / 2));
      * I've noticed that the height of the video tag is dependent on it's width, and i've approximated it to be half the width plus a small negligible constant
      * I think freely placed images follow the same principle with their dimensions
      */
     <Skeleton
       className={cn(
-        "flex min-h-[calc((var(--primary\\_app\\_width)_/_2))] w-full max-w-primary_app_width items-end p-4 shadow-md shadow-app_blue md:shadow-lg md:shadow-app_blue",
+        "flex min-h-[calc((var(--primary\\_app\\_width)_/_2))] w-full max-w-primary_app_w items-end p-4 shadow-md shadow-app_blue md:shadow-lg md:shadow-app_blue",
         className
       )}
     >
@@ -34,7 +34,7 @@ function RecordingsCard({
   data: RecordingData;
 }) {
   return (
-    <DivCard className="w-full max-w-primary_app_width flex-col gap-4">
+    <DivCard className="w-full max-w-primary_app_w flex-col gap-4">
       <TextTag
         as="h3"
         className="w-full text-[0.7rem] font-semibold sm:text-xl"

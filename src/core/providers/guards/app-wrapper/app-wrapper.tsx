@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { LoadingPage } from "@/features/next-primitive-pages";
 import { useUserStore } from "@/providers/stores/zustand";
 import { extractUserDetailsFromFirebaseAuth } from "./app-wrapper.service";
+import { LogoutModal } from "@/components/modals";
 
 interface Props {
   children: React.ReactNode;
@@ -56,5 +57,11 @@ export default function AppWrapper({ children }: Props) {
 
   if (currentUserLoading) return <LoadingPage />;
 
-  return <>{children}</>;
+  return (
+    <>
+      {/* {typeof window !== "undefined" ? <LogoutModal /> : null} */}
+
+      {children}
+    </>
+  );
 }

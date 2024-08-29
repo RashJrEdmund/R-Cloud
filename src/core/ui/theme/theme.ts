@@ -25,10 +25,10 @@ interface IColorPalette {
 }
 
 interface IDimensions {
-  primary_app_width: string;
-  secondary_app_width: string;
-  tertiary_app_width: string;
-  main_min_height: string;
+  primary_app_w: string;
+  secondary_app_w: string;
+  tertiary_app_w: string;
+  main_min_h: string;
 }
 
 interface IEffects {
@@ -70,10 +70,10 @@ const THEME_PALETTE: {
   },
 
   dimensions: {
-    primary_app_width: "var(--primary_app_width)",
-    secondary_app_width: "var(--secondary_app_width)",
-    tertiary_app_width: "var(--tertiary_app_width)",
-    main_min_height: "var(--main_min_height)",
+    primary_app_w: "var(--primary_app_w)",
+    secondary_app_w: "var(--secondary_app_w)",
+    tertiary_app_w: "var(--tertiary_app_w)",
+    main_min_h: "var(--main_min_h)",
   },
 
   effects: {

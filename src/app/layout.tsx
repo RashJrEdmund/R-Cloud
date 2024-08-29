@@ -1,7 +1,6 @@
 import "./globals.css";
 import { inter } from "@/core/ui/fonts";
 import { Metadata } from "next";
-import { NavBar } from "@/components/molecules";
 import { ReactQueryClientProvider } from "@/features/react-query";
 import { Toaster } from "sonner";
 import { AppWrapper } from "@/providers/guards";
@@ -92,8 +91,6 @@ export default function RootLayout({ children }: Props) {
                   ),
                 }}
               />
-
-              <NavBar />
 
               <>{children}</>
             </UploadModalContextProvider>

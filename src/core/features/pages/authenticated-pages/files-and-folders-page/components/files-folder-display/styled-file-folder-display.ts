@@ -11,7 +11,7 @@ const StyledFileFolderDisplay = styled.section`
   row-gap: 0;
   align-items: start;
   justify-content: flex-start;
-  width: ${DIMENSIONS.primary_app_width};
+  width: ${DIMENSIONS.primary_app_w};
   /* width: min(97vw, 100%); */
   height: fit-content;
 

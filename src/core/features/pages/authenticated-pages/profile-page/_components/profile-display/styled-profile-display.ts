@@ -11,7 +11,7 @@ const StyledProfileDisplay = styled.section`
   align-items: start;
   justify-content: flex-start;
   gap: 1rem;
-  width: ${DIMENSIONS.secondary_app_width};
+  width: ${DIMENSIONS.secondary_app_w};
   height: fit-content;
   padding: 2rem 0;
 

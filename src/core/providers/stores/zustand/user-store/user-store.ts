@@ -30,6 +30,9 @@ const useUserStore = create<UserStore>((set) => ({
 
   userProfileLoading: true,
   setUserProfileLoading: (userProfileLoading) => set({ userProfileLoading }),
+
+  logOutDialogOpen: false,
+  setLogOutDialogOpen: (logOutDialogOpen) => set({ logOutDialogOpen }),
 }));
 
 export { useUserStore };

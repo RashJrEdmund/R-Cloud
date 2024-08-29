@@ -19,17 +19,20 @@ interface Props {
 
 export default function DashboardGuard({ children }: Props) {
   const router = useRouter();
-  const { currentUser } = useUserStore();
+  const { currentUser, setUserProfile } = useUserStore();
 
   const { data: userProfile, isLoading } = useQuery({
     queryKey: ["user-profile", currentUser!.id],
-    queryFn: () => getUserProfile(currentUser!.email),
+    queryFn: () => getUserProfile(currentUser!.email).then((user) => {
+      setUserProfile(user.exists() ? user.data() : null);
+      return user;
+    }),
   });
 
   if (isLoading) return <LoadingPage />;
 
   if (!userProfile?.exists()) {
-    router.replace("/login?next=" + window.location);
+    router.replace("/login?next=" + window.location.toString());
 
     return <LoadingPage />;
   }
@@ -38,18 +41,6 @@ export default function DashboardGuard({ children }: Props) {
     router.replace("/r-drive");
     return <LoadingPage />;
   }
-
-  // console.log({ userProfile });
-
-  // getUserProfile(currentUser.email)
-  //   .then(res => {
-  //     if (!res.exists()) return;
-
-  //     const profile = res.data();
-  //     setUserProfile(profile);
-  //   })
-  //   .catch(() => router.push('/r-drive'))
-  //   .finally(() => setLoading(false));
 
   return <>{children}</>;
 }

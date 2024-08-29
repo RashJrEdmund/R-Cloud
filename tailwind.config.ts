@@ -98,11 +98,12 @@ const config = {
         mdxl: "1000px",
       },
       spacing: {
-        primary_app_width: "var(--primary_app_width)",
-        secondary_app_width: "var(--secondary_app_width)",
-        tertiary_app_width: "var(--tertiary_app_width)",
+        default_app_max_w: "var(--default_app_max_w)",
+        primary_app_w: "var(--primary_app_w)",
+        secondary_app_w: "var(--secondary_app_w)",
+        tertiary_app_w: "var(--tertiary_app_w)",
 
-        main_min_height: "var(--main_min_height)",
+        main_min_h: "var(--main_min_h)",
       },
     },
   },

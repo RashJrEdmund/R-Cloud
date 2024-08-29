@@ -7,7 +7,7 @@ interface Props {
 
 export default function NotFoundPage({}: Props) {
   return (
-    <main className="order flex min-h-main_min_height w-full items-center justify-center gap-1 md:gap-4">
+    <main className="order flex min-h-main_min_h w-full items-center justify-center gap-1 md:gap-4">
       <p className="text-[4.5rem] font-semibold text-app_blue md:text-[8rem] md:font-bold">
         404
       </p>

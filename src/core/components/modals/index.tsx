@@ -11,3 +11,5 @@ export { default as BulkDeleteModal } from "./bulk-delete-modal/bulk-delete-moda
 export { default as FileViewer } from "./file-viewer/file-viewer";
 
 export { default as ShareModal } from "./share-modal/share-modal";
+
+export { default as LogoutModal } from "./logout-modal/logout-modal";
