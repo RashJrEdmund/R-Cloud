@@ -7,3 +7,5 @@ export * from "./app-store/app-store";
 export * from "./selection-store/selection-store";
 
 export * from "./share-modal-store/share-modal-store";
+
+export * from "./dashboard-store/dashboard-store";

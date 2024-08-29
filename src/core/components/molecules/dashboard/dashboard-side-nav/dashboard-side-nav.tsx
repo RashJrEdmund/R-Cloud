@@ -8,13 +8,11 @@ import {
   LayoutDashboard,
   LogOut,
   Map,
-  Menu,
   Users,
   X
 } from "lucide-react";
 
-import { useState } from "react";
-import { useUserStore } from "@/providers/stores/zustand";
+import { useDashboardStore, useUserStore } from "@/providers/stores/zustand";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 
@@ -25,36 +23,30 @@ const SideNavContent = [
 ];
 
 export default function DashboardSideNav() {
-  const [open, setOpen] = useState<boolean>(false);
+  const { sideBarOpen, setSideBarOpen } = useDashboardStore();
   const { setLogOutDialogOpen } = useUserStore();
 
   const pathname = usePathname();
 
   const closeSideNav = () => {
-    setOpen(false);
+    setSideBarOpen(false);
   };
 
   return (
     <>
-      <Menu
-        onClick={() => setOpen(true)}
-        size={30}
-        className={cn(
-          open ? "hidden" : "fixed top-0 left-0 m-4 shadow-sm shadow-app_blue bg-app_white cursor-pointer"
-        )}
-      />
+      <DivCard className="hidden w-full sm:flex sm:max-w-[350px]" />
 
       <DivCard
         as="nav"
         className={cn(
           "w-full sm:max-w-[350px] h-screen flex-col justify-between overflow-y-auto bg-app_white p-4 shadow",
-          "fixed top-0 left-0 sm:static transition-transform duration-300",
-          open ? "translate-x-0" : "translate-x-[-110%] sm:translate-x-0"
+          "fixed top-0 left-0 z-20 transition-transform duration-300",
+          sideBarOpen ? "translate-x-0" : "translate-x-[-110%] sm:translate-x-0"
         )}
       >
         <DivCard className="w-full flex-col gap-3">
           <DivCard className="w-full gap-4 justify-between mb-8">
-            <Link href="/" className={cn("cursor-pointer w-fit", open ? "mx-0 sm:mx-auto" : "sm:mx-auto")}>
+            <Link href="/" className={cn("cursor-pointer w-fit", sideBarOpen ? "mx-0 sm:mx-auto" : "sm:mx-auto")}>
               <Image
                 src="/icons/r-cloud-logo.svg"
                 width={50}

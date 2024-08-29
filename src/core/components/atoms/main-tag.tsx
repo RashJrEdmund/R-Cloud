@@ -10,7 +10,7 @@ function MainTag({ className, as: Main = "main", ...restProps }: MainProps) {
     <Main
       {...(restProps as {})}
       className={cn(
-        "mx-auto flex min-h-main_min_h w-full flex-col items-center justify-center rounded-[4px] pb-[2rem] pt-[6rem] md:pt-[5rem]",
+        "mx-auto flex min-h-main_min_h w-full flex-col items-center justify-center rounded-[4px] pb-[2rem] pt-[5rem]",
         className
       )}
     />

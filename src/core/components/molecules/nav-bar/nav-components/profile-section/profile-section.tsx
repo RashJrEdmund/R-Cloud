@@ -27,7 +27,7 @@ export default function ProfileSection({ }: Props) {
     <div className="flex w-fit items-center justify-center [&_a]:flex [&_a]:w-fit [&_a]:items-center [&_a]:justify-center [&_a]:gap-[7px]">
       <DropdownMenu>
         <DropdownMenuTrigger className="outline-none">
-          <TextTag className="flex-col md:flex-row">
+          <TextTag className="flex-col sm:flex-row">
             <Image
               src={profile_url}
               alt="user profile image icon"
@@ -37,11 +37,7 @@ export default function ProfileSection({ }: Props) {
               className="size-[35px] rounded-full border border-gray-500 object-cover md:size-[38px]"
             />
 
-            <TextTag className="hidden md:inline">
-              {currentUser?.username || "username"}
-            </TextTag>
-
-            <TextTag className="text-sm md:hidden">
+            <TextTag className="hidden sm:inline">
               {shortenText(currentUser?.username || "username", 17)}
             </TextTag>
           </TextTag>

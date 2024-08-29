@@ -12,7 +12,7 @@ export default function NavBar({}: Props) {
       <section className="relative mx-auto flex w-primary_app_w items-center justify-between py-[10px]">
         <section className="flex items-center justify-center">
           <Link href="/" className="w-fit">
-            <TextLogo showLogo sxTextClassName="hidden sm:inline" />
+            <TextLogo showLogo />
           </Link>
 
           <BreadCrumbs />

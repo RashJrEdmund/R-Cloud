@@ -3,8 +3,10 @@
 import { DivCard } from "@/components/atoms";
 import {
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { shortenText } from "@/core/utils/helpers";
 import { useUserStore } from "@/providers/stores/zustand";
 import {
   Blend,
@@ -116,7 +118,13 @@ export default function ProfileDropDown({ }: Props) {
   );
 
   return (
-    <DivCard className="min-w-[150px] flex-col items-start gap-1 rounded-[8px] bg-app_white p-[1rem_1rem_10px_10px]">
+    <DivCard className="min-w-[200px] sm:min-w-[220px] flex-col items-start gap-1 rounded-[8px] bg-app_white p-[10px]">
+      <DropdownMenuLabel>
+        {shortenText(currentUser?.username || "username", 26)}
+      </DropdownMenuLabel>
+
+      <DropdownMenuSeparator className="w-full bg-app_bg_light" />
+
       {(function () {
         if (currentUser) {
           return DROP_DOWN_CONTENT_1.map(({ text, href, icon: Icon }) => (

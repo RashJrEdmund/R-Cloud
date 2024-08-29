@@ -42,7 +42,7 @@ export default function DashboardLayout({
           <DivCard className="w-full flex-col items-start">
             <DashboardTopNav />
 
-            <DivCard as="main" className="w-full max-w-default_app_max_w mx-auto min-h-[90vh] items-stretch px-2 py-2">
+            <DivCard as="main" className="w-full max-w-default_app_max_w mx-auto min-h-[90vh] items-stretch px-2 pb-2 pt-[4.3rem]">
               {children}
             </DivCard>
           </DivCard>
