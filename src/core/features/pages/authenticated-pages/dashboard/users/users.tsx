@@ -14,9 +14,33 @@ export default function DashboardUsersPage() {
     <DivCard className="w-full h-auto bg-slate-400 flex-col justify-start">
       <TextTag>dashboard users page</TextTag>
 
-      <pre className="max-w-default_app_max_w overflow-auto">
+      <TextTag>
+        total: {data?.docs.length}
+      </TextTag>
+
+      <table className="overflow-auto border">
+        <tr className="w-full">
+          <th>Email</th>
+          <th>Plan</th>
+          <th>Role</th>
+          <th>Used Bytes</th>
+        </tr>
+
+        {
+          data?.docs.map((user) => (
+            <tr key={user.id} className="w-full">
+              <td>{user.data().email}</td>
+              <td>{user.data().plan.label}</td>
+              <td>{user.data().role}</td>
+              <td>{user.data().plan.used_bytes}</td>
+            </tr>
+          ))
+        }
+      </table>
+
+      {/* <pre className="max-w-default_app_max_w overflow-auto">
         {JSON.stringify(data?.docs.map(user => ({ ...user.data(), id: user.id, metadata: user.metadata })), null, 4)}
-      </pre>
+      </pre> */}
     </DivCard>
   );
 }

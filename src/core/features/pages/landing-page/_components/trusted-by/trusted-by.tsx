@@ -10,7 +10,7 @@ export default function TrustedBy({ }: Props) {
     <DivCard className="w-primary_app_w min-h-screen mx-auto flex-col sm:flex-row lg:gap-10 py-12 my-8">
       <DivCard className="gap-2 max-w-full">
         <TextTag className="text-7xl ssm:text-8xl lg:text-9xl font-semibold flex items-center justify-center">
-          15
+          17
         </TextTag>
 
         <DivCard className="flex-col items-start">

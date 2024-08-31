@@ -8,7 +8,7 @@ import { UploadModalContextProvider } from "@/providers/stores/context";
 import { LoaderCircle } from "lucide-react";
 
 const appDescription =
-  "Cloud storage web application. Upload, organize, manage and download files";
+  "Cloud storage provider and progressive web application. Upload, store, organize, manage and download files";
 
 export const metadata: Metadata = {
   title: {
