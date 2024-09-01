@@ -98,50 +98,42 @@ const updateUserAccountSettings = async (
   console.log("user document created", doc_path, settings);
 };
 
-(async () => {
-  const usersCollection = createFreeCollectionPath<{}>("/users");
+// (async () => {
+//   const usersCollection = createFreeCollectionPath<{}>("/users");
 
-  const users = (await getDocs(usersCollection)).docs.map((doc) => ({ email: doc.id }));
+//   const users = (await getDocs(usersCollection)).docs.map((doc) => ({ email: doc.id }));
 
-  console.clear();
+//   console.clear();
 
-  for (const { email } of users) {
-    const userProfile = (await getUserProfile(email)).data()!;
+//   for (const { email } of users) {
+//     const userProfile = (await getUserProfile(email)).data()!;
 
-    const user_doc_path = createFreeDocPath(["users", email]);
+//     const subscription_col_path = createFreeCollectionPath<UserPlan>(["users", email, "subscriptions"]);
 
-    const date_subscribed = new Date().toISOString();
+//     const subs = await getDocs(subscription_col_path);
 
-    await setDoc(
-      user_doc_path,
-      { ...userProfile, plan: { ...userProfile.plan, date_subscribed } },
-      {
-        merge: true,
-      }
-    );
+//     if (subs.empty) {
+//       await createNewPlanSubscription(email, {
+//         ...userProfile.plan,
+//       });
+//       console.log("empty", subs.empty, "but created his sub");
+//     } else {
+//       const doc = subs.docs[0];
 
-    await createNewPlanSubscription(email, {
-      ...userProfile.plan,
-      date_subscribed
-    });
+//       console.log({
+//         has_plan_id: !!doc.data().plan_id,
+//         user_profile_too: !!userProfile.plan.plan_id,
+//         email: userProfile.email,
+//         // ...doc.data(),
+//         // id: doc.id,
+//       });
+//     };
 
-    console.log("done with email: ", email);
-  }
+//     const date_subscribed = new Date().toISOString();
 
-  // for (const { email } of users) {
-  //   const userProfile = (await getUserProfile(email)).data()!;
-
-  //   const user_doc_path = createUserDocPath(email, "/profile/me");
-
-  //   await deleteDoc(
-  //     user_doc_path,
-  //   );
-
-  //   console.log("done with email: ", email);
-  // }
-
-  console.log({ users });
-});
+//     // console.log("done with email: ", email);
+//   }
+// });
 
 export {
   getUserProfile,

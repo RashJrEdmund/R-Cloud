@@ -21,7 +21,7 @@ export default function StoragePlan({ plan }: Props) {
   const router = useRouter();
 
   const isCurrentPlan = useMemo(() => {
-    return !!(currentUser && userProfile && userProfile.plan.id === plan.id);
+    return !!(currentUser && userProfile && userProfile.plan.plan_id === plan.id);
   }, [currentUser, userProfile, plan]);
 
   // console.log({ currentUser, userProfile });
@@ -89,7 +89,7 @@ export default function StoragePlan({ plan }: Props) {
       {isCurrentPlan ? (
         <Button
           variant={plan.is_free ? "black" : "blued"}
-          className="w-full p-[10px] sm:p-5 mdxl:p-7 mdxl:text-[1.2rem]"
+          className="w-full p-[10px] sm:p-5 md:p-6 mdxl:p-7 mdxl:text-[1.2rem]"
           title={"subscribe to plan: " + plan.label}
           onClick={() => {
             toast.warning("Already subscribed to this plan");
@@ -100,7 +100,7 @@ export default function StoragePlan({ plan }: Props) {
       ) : (
         <Button
           variant={plan.is_free ? "black" : "blued"}
-          className="w-full p-[10px] sm:p-5 mdxl:p-7 mdxl:text-[1.2rem]"
+          className="w-full p-[10px] sm:p-5 md:p-6 mdxl:p-7 mdxl:text-[1.2rem]"
           title={"subscribe to plan: " + plan.label}
           onClick={() => handleNewSubscription(plan)}
         >

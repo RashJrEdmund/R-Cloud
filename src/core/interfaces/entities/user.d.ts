@@ -31,6 +31,7 @@ interface User {
 // }
 
 interface UserPlan extends StoragePlan {
+  plan_id: string;
   used_bytes: number;
   date_subscribed: Date | string;
   // date_subscription_ends: Date | string;

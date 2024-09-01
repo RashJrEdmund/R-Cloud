@@ -49,7 +49,7 @@ const handleCreateUserProfile: IHandleCreateUserProfile = async (
     phone_number: "", // extra_data?.phone_number, // TODO +=> ADD phone_number: extra_data
     role: "USER",
     plan: {
-      id: res.id,
+      plan_id: res.id,
       ...plan,
       used_bytes: 0,
       date_subscribed: date,
