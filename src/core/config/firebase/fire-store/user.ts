@@ -6,7 +6,7 @@
 import { setDoc, getDoc, getDocs, deleteDoc, addDoc } from "firebase/firestore";
 import { createFreeCollectionPath, createFreeDocPath, createUserCollectionPath, createUserDocPath } from "./utils";
 
-import type { UserProfile } from "@/core/interfaces/entities";
+import type { UserPlan, UserProfile } from "@/core/interfaces/entities";
 import type { DocumentSnapshot } from "firebase/firestore";
 import type { IUpdateAction } from "../interfaces";
 
@@ -35,6 +35,15 @@ const createUserProfile = async (user: UserProfile) => {
     },
     { merge: true }
   ); // so as to update if exits or create if not exits;
+};
+
+const createNewPlanSubscription = async (email: string, userPlan: UserPlan) => {
+  const subscription_col_path = createUserCollectionPath(email, "/subscriptions");
+
+  await addDoc(
+    subscription_col_path,
+    { ...userPlan }
+  );
 };
 
 const updateUsedSpace = async (
@@ -111,12 +120,10 @@ const updateUserAccountSettings = async (
       }
     );
 
-    const user_doc_path_2 = createUserCollectionPath(email, "/subscriptions");
-
-    await addDoc(
-      user_doc_path_2,
-      { ...userProfile.plan, date_subscribed }
-    );
+    await createNewPlanSubscription(email, {
+      ...userProfile.plan,
+      date_subscribed
+    });
 
     console.log("done with email: ", email);
   }
@@ -139,6 +146,7 @@ const updateUserAccountSettings = async (
 export {
   getUserProfile,
   createUserProfile,
+  createNewPlanSubscription,
   updateUsedSpace,
   updateUserAccountSettings,
 };

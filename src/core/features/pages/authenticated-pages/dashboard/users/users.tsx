@@ -24,6 +24,7 @@ export default function DashboardUsersPage() {
           <th>Plan</th>
           <th>Role</th>
           <th>Used Bytes</th>
+          <th>Date Created</th>
         </tr>
 
         {
@@ -33,6 +34,7 @@ export default function DashboardUsersPage() {
               <td>{user.data().plan.label}</td>
               <td>{user.data().role}</td>
               <td>{user.data().plan.used_bytes}</td>
+              <td>{new Date(user.data().date_created).toDateString()}</td>
             </tr>
           ))
         }

@@ -1,4 +1,5 @@
 import {
+  createNewPlanSubscription,
   createUserProfile,
   getOneStoragePlan,
 } from "@/core/config/firebase/fire-store";
@@ -39,6 +40,8 @@ const handleCreateUserProfile: IHandleCreateUserProfile = async (
 
   const plan = res.data();
 
+  const date = new Date().toISOString();
+
   const userProfile: UserProfile = {
     id: user?.uid || "",
     email: user?.email || "",
@@ -49,11 +52,15 @@ const handleCreateUserProfile: IHandleCreateUserProfile = async (
       id: res.id,
       ...plan,
       used_bytes: 0,
-      date_subscribed: new Date().toISOString(),
+      date_subscribed: date,
     },
+    date_created: date,
   };
 
-  await createUserProfile(userProfile);
+  await createUserProfile(userProfile)
+    .then(() => {
+      return createNewPlanSubscription(userProfile.email, { ...userProfile.plan }); // setting up as new subscription
+    });
 
   setFormStatus({
     status: 200,

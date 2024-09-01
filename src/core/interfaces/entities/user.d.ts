@@ -43,6 +43,7 @@ interface UserProfile {
   role: UserRoles;
   phone_number: string;
   plan: UserPlan;
+  date_created: string;
 }
 
 export { Roles };
