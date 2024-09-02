@@ -65,7 +65,7 @@ const ContextMenu: typeof DefaultContextMenu = (props) => {
 
       // e.stopPropagation();
 
-      // console.log({ phase: e.eventPhase, bubbles: e.BUBBLING_PHASE, capturing: e.CAPTURING_PHASE});
+      console.log({ phase: e.eventPhase, bubbles: e.BUBBLING_PHASE, capturing: e.CAPTURING_PHASE});
     });
 
     return () => {
