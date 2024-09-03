@@ -30,10 +30,14 @@ import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { useMutation } from "@tanstack/react-query";
 
 function UserRoleDropDown({ children, profile }: { children: React.ReactNode; profile: UserProfile }) {
-  const { mutate, isPending } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationKey: ["users", profile.id],
     mutationFn: updateUserProfile
   });
+
+  const refreshUsersQueryCache = () => {
+    // refresh the "users" query caches
+  };
 
   return (
     <DropdownMenu>
@@ -51,7 +55,10 @@ function UserRoleDropDown({ children, profile }: { children: React.ReactNode; pr
               key={role}
               disabled={isPending || profile.role === role}
               className={cn(profile.role === role ? "font-semibold text-app_text_blue" : "")}
-              onClick={() => mutate({ email: profile.email, updates: { role } })}
+              onClick={() => {
+                mutateAsync({ email: profile.email, updates: { role } })
+                  .finally(() => refreshUsersQueryCache());
+              }}
             >
               {role}
             </DropdownMenuItem>
@@ -98,7 +105,7 @@ function UserTable({ userProfiles, isLoading }: { userProfiles: QuerySnapshot<Us
             <TableCell>{new Date(profile.data().date_created).toDateString()}</TableCell>
 
             <TableCell>
-              <Link href={`/dashboard/users/${profile.id}`}>
+              <Link href={`/dashboard/users/${encodeURIComponent(profile.id)}`}>
                 <SquareArrowRight className="cursor-pointer" />
               </Link>
             </TableCell>
