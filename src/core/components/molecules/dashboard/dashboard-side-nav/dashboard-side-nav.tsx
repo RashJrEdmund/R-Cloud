@@ -4,13 +4,7 @@ import { DivCard, TextTag } from "@/components/atoms";
 import { cn } from "@/core/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  LayoutDashboard,
-  LogOut,
-  Map,
-  Users,
-  X
-} from "lucide-react";
+import { LayoutDashboard, LogOut, Map, Users, X } from "lucide-react";
 
 import { useDashboardStore, useUserStore } from "@/providers/stores/zustand";
 import { Button } from "@/components/ui/button";
@@ -39,14 +33,20 @@ export default function DashboardSideNav() {
       <DivCard
         as="nav"
         className={cn(
-          "w-full sm:max-w-[350px] h-screen flex-col justify-between overflow-y-auto bg-app_white p-4 shadow",
-          "fixed top-0 left-0 z-20 transition-transform duration-300",
+          "h-screen w-full flex-col justify-between overflow-y-auto bg-app_white p-4 shadow sm:max-w-[350px]",
+          "fixed left-0 top-0 z-20 transition-transform duration-300",
           sideBarOpen ? "translate-x-0" : "translate-x-[-110%] sm:translate-x-0"
         )}
       >
         <DivCard className="w-full flex-col gap-3">
-          <DivCard className="w-full gap-4 justify-between mb-8">
-            <Link href="/" className={cn("cursor-pointer w-fit", sideBarOpen ? "mx-0 sm:mx-auto" : "sm:mx-auto")}>
+          <DivCard className="mb-8 w-full justify-between gap-4">
+            <Link
+              href="/"
+              className={cn(
+                "w-fit cursor-pointer",
+                sideBarOpen ? "mx-0 sm:mx-auto" : "sm:mx-auto"
+              )}
+            >
               <Image
                 src="/icons/r-cloud-logo.svg"
                 width={50}
@@ -56,37 +56,35 @@ export default function DashboardSideNav() {
               />
             </Link>
 
-            <X
-              size={30}
-              className="sm:hidden"
-              onClick={closeSideNav}
-            />
+            <X size={30} className="sm:hidden" onClick={closeSideNav} />
           </DivCard>
 
-          {
-            SideNavContent.map(({ text, path, icon: Icon }) => (
-              <Link
-                key={text}
-                href={path}
-                onClick={closeSideNav}
-                className={cn(path === pathname ? "bg-slate-400" : "", "w-full p-3 border rounded-lg duration-300 hover:shadow hover:shadow-app_blue")}
-              >
-                <TextTag
-                  className="w-full justify-between"
-                >
-                  {text}
+          {SideNavContent.map(({ text, path, icon: Icon }) => (
+            <Link
+              key={text}
+              href={path}
+              onClick={closeSideNav}
+              className={cn(
+                path === pathname ? "bg-slate-400" : "",
+                "w-full rounded-lg border p-3 duration-300 hover:shadow hover:shadow-app_blue"
+              )}
+            >
+              <TextTag className="w-full justify-between">
+                {text}
 
-                  <Icon />
-                </TextTag>
-              </Link>
-            ))
-          }
+                <Icon />
+              </TextTag>
+            </Link>
+          ))}
         </DivCard>
 
         <Button asChild>
           <TextTag
-            className="border w-full p-3 cursor-pointer justify-between rounded-lg py-5 duration-300 text-base"
-            onClick={() => { closeSideNav(); setLogOutDialogOpen(true); }}
+            className="w-full cursor-pointer justify-between rounded-lg border p-3 py-5 text-base duration-300"
+            onClick={() => {
+              closeSideNav();
+              setLogOutDialogOpen(true);
+            }}
           >
             Logout
             <LogOut />
@@ -95,4 +93,4 @@ export default function DashboardSideNav() {
       </DivCard>
     </>
   );
-};
+}

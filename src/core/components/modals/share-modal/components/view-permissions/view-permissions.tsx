@@ -1,6 +1,9 @@
 "use client";
 import { DivCard, TextTag } from "@/components/atoms";
-import { useShareModalAssets, useShareModalStore } from "@/providers/stores/zustand";
+import {
+  useShareModalAssets,
+  useShareModalStore,
+} from "@/providers/stores/zustand";
 import { ChevronDown, ShieldCheck } from "lucide-react";
 
 import {
@@ -15,15 +18,17 @@ import { useEffect, useMemo } from "react";
 
 interface Props {
   //
-};
+}
 
-export default function ViewPermissions({ }: Props) {
+export default function ViewPermissions({}: Props) {
   const { Access, Viewers } = useShareModalAssets;
 
   const {
     fileToBeShared,
-    accessType, setAccessType,
-    viewerRole, setViewerRole,
+    accessType,
+    setAccessType,
+    viewerRole,
+    setViewerRole,
 
     setUserEmails,
   } = useShareModalStore();
@@ -115,4 +120,4 @@ export default function ViewPermissions({ }: Props) {
       </DivCard>
     </DivCard>
   );
-};
+}

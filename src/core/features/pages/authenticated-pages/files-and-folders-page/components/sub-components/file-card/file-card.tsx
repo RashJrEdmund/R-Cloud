@@ -3,10 +3,7 @@
 import { useMemo, useState } from "react";
 import { GridCardContainer, ListCardContainer } from "../shared";
 import { DivCard, TextTag } from "@/components/atoms";
-import {
-  deriveDocumentPreviewImage,
-  shortenText,
-} from "@/core/utils/helpers";
+import { deriveDocumentPreviewImage, shortenText } from "@/core/utils/helpers";
 import { FILE_FOLDER_MAX_NAME_LENGTH } from "@/core/utils/constants";
 import { useAppStore, useSelectionStore } from "@/providers/stores/zustand";
 import { MEDIA_ICONS } from "@/core/ui/icons";

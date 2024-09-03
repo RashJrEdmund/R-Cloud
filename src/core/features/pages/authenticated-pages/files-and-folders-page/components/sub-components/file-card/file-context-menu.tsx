@@ -4,7 +4,11 @@ import type { Document } from "@/core/interfaces/entities";
 
 import { useMemo } from "react";
 import { useModalContext } from "@/providers/stores/context";
-import { useAppStore, useSelectionStore, useShareModalStore } from "@/providers/stores/zustand";
+import {
+  useAppStore,
+  useSelectionStore,
+  useShareModalStore,
+} from "@/providers/stores/zustand";
 import {
   BookOpen,
   SquareCheckBig,
@@ -52,10 +56,7 @@ function FileContextMenu({ doc: file, children }: Props) {
     openDeleteDocumentModal,
   } = useModalContext();
 
-  const {
-    openShareModal,
-    copyFileShareLink,
-  } = useShareModalStore();
+  const { openShareModal, copyFileShareLink } = useShareModalStore();
 
   const handleOpen = () => {
     if (selectionStart) return; // to prevent opening folders when selection has started
@@ -171,7 +172,8 @@ function FileContextMenu({ doc: file, children }: Props) {
               sub_text: `Copy ${isPublic ? "public" : "private"} link`,
               sub_icon: Link2,
               sub_action: () => copyFileShareLink(file, isPublic),
-            }];
+            },
+          ];
         })(),
       },
       {

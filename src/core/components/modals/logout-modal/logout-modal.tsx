@@ -20,7 +20,7 @@ interface Props {
   //
 }
 
-export default function LogoutModal({ }: Props) {
+export default function LogoutModal({}: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
@@ -46,10 +46,10 @@ export default function LogoutModal({ }: Props) {
 
       setCurrentUser(null);
       setUserProfile(null);
-      setDocuments([]);;
+      setDocuments([]);
 
       toast("Logout successful !", {
-        description: "You'll have to login to use some parts of the app!"
+        description: "You'll have to login to use some parts of the app!",
       });
 
       router.replace("/");
@@ -72,8 +72,8 @@ export default function LogoutModal({ }: Props) {
           </DialogTitle>
 
           <DialogDescription>
-            Logging out will clear your current session and take your out of the app.
-            are you sure?
+            Logging out will clear your current session and take your out of the
+            app. are you sure?
           </DialogDescription>
         </DialogHeader>
 

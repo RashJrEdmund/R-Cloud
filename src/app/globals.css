@@ -37,7 +37,7 @@
   --secondary_app_w: min(97vw, 1200px);
   --tertiary_app_w: min(100%, 1000px);
   /* Mainly used in the storage plans section */
-  --main_min_h: min(/* 1500px,  */100vh);
+  --main_min_h: min(/* 1500px,  */ 100vh);
 }
 
 @layer base {
@@ -96,7 +96,6 @@
     --chart-5: 340 75% 55%;
   }
 }
-
 
 @layer base {
   * {

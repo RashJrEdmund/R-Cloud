@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function ToVideoGuides() {
   return (
-    <DivCard className="w-primary_app_w min-h-screen flex-col sm:flex-row sm:gap-5 my-8">
+    <DivCard className="my-8 min-h-screen w-primary_app_w flex-col sm:flex-row sm:gap-5">
       <DivCard className="w-full flex-col gap-5">
         <Image
           width={500}
@@ -19,7 +19,7 @@ export default function ToVideoGuides() {
 
       <DivCard className="w-full flex-col gap-5">
         <DivCard className="flex-col gap-2 text-center">
-          <TextTag className="text-3xl md:text-5xl font-semibold">
+          <TextTag className="text-3xl font-semibold md:text-5xl">
             New to the app ?
           </TextTag>
 
@@ -35,7 +35,6 @@ export default function ToVideoGuides() {
         >
           <Link href="/video-guides" className="text-2xl font-semibold">
             View video guides
-
             <Milestone className="ml-3" />
           </Link>
         </Button>

@@ -52,11 +52,9 @@ export default function EditModal({ document }: Props) {
     try {
       setIsLoading(true);
 
-      await updateDocument(
-        currentUser.email,
-        String(document?.id),
-        { name: docName }
-      ).then(() => {
+      await updateDocument(currentUser.email, String(document?.id), {
+        name: docName,
+      }).then(() => {
         // trying to reflect updates without toggling refetch.
 
         const update = documents?.map((doc) => {

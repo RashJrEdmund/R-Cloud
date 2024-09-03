@@ -20,7 +20,7 @@ const StyledStoragePlanDisplay = styled.section`
   /* border: 1px solid grey; */
 
   @media only screen and (max-width: 1000px) {
-   gap: 1rem;
+    gap: 1rem;
   }
 `;
 

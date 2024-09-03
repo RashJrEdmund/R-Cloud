@@ -22,12 +22,13 @@ const StyledBreadCrumbs = styled.div`
   }
 `;
 
-export default function BreadCrumbs({ }: Props) {
+export default function BreadCrumbs({}: Props) {
   const pathname = usePathname();
 
   const { currentFolder, loadingCurrentFolder } = useDocStore();
 
-  if (pathname === "/") return <TextTag className="ml-1 cursor-pointer">/ Home</TextTag>
+  if (pathname === "/")
+    return <TextTag className="ml-1 cursor-pointer">/ Home</TextTag>;
 
   if (loadingCurrentFolder && currentFolder !== "root")
     return (

@@ -15,13 +15,9 @@ interface Props {
   //
 }
 
-export default function ProfileDisplay({ }: Props) {
-  const {
-    currentUser,
-    userProfile,
-    setUserProfile,
-    setLogOutDialogOpen,
-  } = useUserStore();
+export default function ProfileDisplay({}: Props) {
+  const { currentUser, userProfile, setUserProfile, setLogOutDialogOpen } =
+    useUserStore();
 
   const [loading, setLoading] = useState<boolean>(true);
 

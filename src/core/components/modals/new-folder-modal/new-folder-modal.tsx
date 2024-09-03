@@ -28,7 +28,7 @@ interface Props {
   //
 }
 
-export default function NewFolderModal({ }: Props) {
+export default function NewFolderModal({}: Props) {
   const [folderName, setFolderName] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -81,8 +81,8 @@ export default function NewFolderModal({ }: Props) {
           viewerRole: "VIEWER",
           sharedWith: [],
           firstSharedAt: null,
-          lastModified: null
-        }
+          lastModified: null,
+        },
       };
 
       await createFileDoc(currentUser.email, new_folder as Document);

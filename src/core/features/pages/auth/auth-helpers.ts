@@ -55,12 +55,14 @@ const handleCreateUserProfile: IHandleCreateUserProfile = async (
       date_subscribed: date,
     },
     date_created: date,
+    date_updated: null,
   };
 
-  await createUserProfile(userProfile)
-    .then(() => {
-      return createNewPlanSubscription(userProfile.email, { ...userProfile.plan }); // setting up as new subscription
-    });
+  await createUserProfile(userProfile).then(() => {
+    return createNewPlanSubscription(userProfile.email, {
+      ...userProfile.plan,
+    }); // setting up as new subscription
+  });
 
   setFormStatus({
     status: 200,

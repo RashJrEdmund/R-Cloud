@@ -17,11 +17,11 @@ export default function FilesFolderShimmer({
     >
       {displayLayout === "GRID"
         ? Array.from({ length: cardCount }, (_, i) => i).map((i) => (
-          <GridShimmerCard key={i} />
-        ))
+            <GridShimmerCard key={i} />
+          ))
         : Array.from({ length: cardCount }, (_, i) => i).map((i) => (
-          <ListShimmerCard key={i} />
-        ))}
+            <ListShimmerCard key={i} />
+          ))}
     </StyledFileFolderDisplay>
   );
 }

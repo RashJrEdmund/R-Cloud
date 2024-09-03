@@ -9,22 +9,22 @@ export default function DashboardTopNav() {
   const { setSideBarOpen } = useDashboardStore();
 
   return (
-    <DivCard className="fixed top-0 left-0 z-10 w-full bg-app_white shadow">
+    <DivCard className="fixed left-0 top-0 z-10 w-full bg-app_white shadow">
       <DivCard className="w-full max-w-default_app_max_w justify-between py-[10px] sm:px-4">
         <DivCard onClick={() => setSideBarOpen(true)}>
           <Menu
             size={32}
-            className="sm:hidden shadow-sm shadow-app_blue bg-app_white cursor-pointer"
+            className="cursor-pointer bg-app_white shadow-sm shadow-app_blue sm:hidden"
           />
           <TextLogo className="ml-2" />
         </DivCard>
 
         <DivCard className="w-full justify-end gap-4">
-          <BellDot className="text-app_blue cursor-pointer" />
+          <BellDot className="cursor-pointer text-app_blue" />
 
           <ProfileSection />
         </DivCard>
       </DivCard>
     </DivCard>
   );
-};
+}

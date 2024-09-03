@@ -62,11 +62,16 @@ export default function InputField({
   };
 
   return (
-    <fieldset className={cn("relative flex items-center justify-center w-full h-fit my-[10px] mx-0 border border-app_bg_light rounded-[10px]", sxFieldSet)}>
+    <fieldset
+      className={cn(
+        "relative mx-0 my-[10px] flex h-fit w-full items-center justify-center rounded-[10px] border border-app_bg_light",
+        sxFieldSet
+      )}
+    >
       <TextTag
         className={cn(
-          "absolute left-0 top-1/2 translate-x-[10px] -translate-y-1/2 rounded-[3px] px-0 py-[5px] text-[1rem] cursor-text duration-300",
-          active ? "bg-app_bg top-0 text-[0.75rem]" : "",
+          "absolute left-0 top-1/2 -translate-y-1/2 translate-x-[10px] cursor-text rounded-[3px] px-0 py-[5px] text-[1rem] duration-300",
+          active ? "top-0 bg-app_bg text-[0.75rem]" : "",
           sxTitle
         )}
         onClick={() => inputRef.current?.focus()}
@@ -76,7 +81,10 @@ export default function InputField({
 
       {!isLoading && error ? (
         <TextTag
-          className={cn("absolute right-[10px] top-full text-[12px] cursor-text text-app_error", sxError)}
+          className={cn(
+            "absolute right-[10px] top-full cursor-text text-[12px] text-app_error",
+            sxError
+          )}
         >
           {error}
         </TextTag>
@@ -84,7 +92,10 @@ export default function InputField({
 
       {!isLoading && success ? (
         <TextTag
-          className={cn("absolute left-[10px] top-full text-[12px] cursor-text text-app_text_blue", sxSuccess)}
+          className={cn(
+            "absolute left-[10px] top-full cursor-text text-[12px] text-app_text_blue",
+            sxSuccess
+          )}
         >
           {success}
         </TextTag>
@@ -92,7 +103,10 @@ export default function InputField({
 
       {isLoading ? (
         <TextTag
-          className={cn("absolute left-[10px] top-full text-[12px] cursor-text text-app_text_blue mt-[2.5px]", sxSuccess)}
+          className={cn(
+            "absolute left-[10px] top-full mt-[2.5px] cursor-text text-[12px] text-app_text_blue",
+            sxSuccess
+          )}
         >
           <LoaderCircle size={14} className="animate-spin text-app_blue" />
         </TextTag>

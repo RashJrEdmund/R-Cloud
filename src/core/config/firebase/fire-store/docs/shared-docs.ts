@@ -1,6 +1,13 @@
 import type { SharedDocument, Document } from "@/core/interfaces/entities";
 import { createFreeCollectionPath, createFreeDocPath } from "../utils";
-import { deleteDoc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore";
+import {
+  deleteDoc,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import { updateDocument } from "./docs";
 
 const removeAllSharedAccess = (email: string, doc_id: string) => {
@@ -20,7 +27,10 @@ const removeAllSharedAccess = (email: string, doc_id: string) => {
   ]).then(() => "this file is no longer shared");
 };
 
-const shareDocument = async (sharedDocument: SharedDocument, fileToBeShared: Document) => {
+const shareDocument = async (
+  sharedDocument: SharedDocument,
+  fileToBeShared: Document
+) => {
   const doc_path = createFreeDocPath(["shared", sharedDocument.doc_id]);
 
   const isFirstTimeSharing = !!fileToBeShared?.sharedState?.sharedWith.length;
@@ -37,14 +47,21 @@ const shareDocument = async (sharedDocument: SharedDocument, fileToBeShared: Doc
         sharedWith: sharedDocument.sharedWith,
         firstSharedAt: sharedDocument.firstSharedAt,
         lastModified: sharedDocument.lastModified,
-      }
-    })
-  ]).then(() => isFirstTimeSharing ? "file shared successfully" : "file share access updated");
+      },
+    }),
+  ]).then(() =>
+    isFirstTimeSharing
+      ? "file shared successfully"
+      : "file share access updated"
+  );
 };
 
 const loadUserSharedFiles = (email: string) => {
   const collection_path = createFreeCollectionPath<SharedDocument>("shared");
-  const q = query(collection_path, where("sharedWith", "array-contains", email));
+  const q = query(
+    collection_path,
+    where("sharedWith", "array-contains", email)
+  );
 
   return getDocs(q);
 };
@@ -57,7 +74,6 @@ const getOnePublicDocument = (doc_id: string) => {
 export {
   shareDocument,
   removeAllSharedAccess,
-
   loadUserSharedFiles,
   getOnePublicDocument,
 };

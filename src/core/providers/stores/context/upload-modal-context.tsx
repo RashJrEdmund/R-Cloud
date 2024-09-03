@@ -164,8 +164,8 @@ const UploadModalContextProvider = ({
             viewerRole: "VIEWER",
             sharedWith: [],
             firstSharedAt: null,
-            lastModified: null
-          }
+            lastModified: null,
+          },
         };
 
         await createFileDoc(currentUser.email, document as Document);

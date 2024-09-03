@@ -55,18 +55,23 @@ const ContextMenu: typeof DefaultContextMenu = (props) => {
   const divRef = React.useRef<HTMLDivElement>();
 
   React.useEffect(() => {
-    if (divRef.current) divRef.current.addEventListener("contextmenu", (e) => {
-      // if (e.BUBBLING_PHASE) {
-      //   e.stopPropagation();
-      // }
-      // if (e.CAPTURING_PHASE) {
-      //   e.stopPropagation();
-      // }
+    if (divRef.current)
+      divRef.current.addEventListener("contextmenu", (e) => {
+        // if (e.BUBBLING_PHASE) {
+        //   e.stopPropagation();
+        // }
+        // if (e.CAPTURING_PHASE) {
+        //   e.stopPropagation();
+        // }
 
-      // e.stopPropagation();
+        // e.stopPropagation();
 
-      console.log({ phase: e.eventPhase, bubbles: e.BUBBLING_PHASE, capturing: e.CAPTURING_PHASE});
-    });
+        console.log({
+          phase: e.eventPhase,
+          bubbles: e.BUBBLING_PHASE,
+          capturing: e.CAPTURING_PHASE,
+        });
+      });
 
     return () => {
       // divRef.current?.removeEventListener("contextmenu");
@@ -80,7 +85,7 @@ const ContextMenu: typeof DefaultContextMenu = (props) => {
       // onContextMenuCapture={(e) => e.stopPropagation()}
       className="w-full"
     >
-      <DefaultContextMenu {...props as any} />
+      <DefaultContextMenu {...(props as any)} />
     </div>
   );
 };

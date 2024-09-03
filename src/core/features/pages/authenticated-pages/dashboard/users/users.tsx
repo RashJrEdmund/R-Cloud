@@ -3,42 +3,40 @@
 import { DivCard, TextTag } from "@/components/atoms";
 import { getUsers } from "./api/users.endpoints";
 import { useQuery } from "@tanstack/react-query";
+import { UserTable } from "./components";
+import { LoaderCircle, RotateCw } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function DashboardUsersPage() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: ["users"],
-    queryFn: getUsers
+    queryFn: getUsers,
   });
 
   return (
-    <DivCard className="w-full h-auto bg-slate-400 flex-col justify-start">
-      <TextTag>dashboard users page</TextTag>
+    <DivCard className="h-auto w-full flex-col justify-start">
+      {/* <TextTag>dashboard users page</TextTag> */}
 
-      <TextTag>
-        total: {data?.docs.length}
-      </TextTag>
+      <DivCard className="w-full border gap-12 justify-start p-4">
+        <Button
+          asChild
+          className="w-fit size-[22px] p-0 rounded-full bg-transparent hover:bg-transparent text-app_black"
+          title="reload list"
+          onClick={() => refetch()}
+        >
+          <RotateCw size={20} className="cursor-pointer" />
+        </Button>
 
-      <table className="overflow-auto border">
-        <tr className="w-full">
-          <th>Email</th>
-          <th>Plan</th>
-          <th>Role</th>
-          <th>Used Bytes</th>
-          <th>Date Created</th>
-        </tr>
+        <TextTag className="self-start">total: {data?.docs.length}</TextTag>
 
         {
-          data?.docs.map((user) => (
-            <tr key={user.id} className="w-full">
-              <td>{user.data().email}</td>
-              <td>{user.data().plan.label}</td>
-              <td>{user.data().role}</td>
-              <td>{user.data().plan.used_bytes}</td>
-              <td>{new Date(user.data().date_created).toDateString()}</td>
-            </tr>
-          ))
+          isFetching ? (
+            <LoaderCircle className="ml-12 animate-spin text-app_blue" />
+          ) : null
         }
-      </table>
+      </DivCard>
+
+      <UserTable userProfiles={data!} isLoading={isLoading} />
 
       {/* <pre className="max-w-default_app_max_w overflow-auto">
         {JSON.stringify(data?.docs.map(user => ({ ...user.data(), id: user.id, metadata: user.metadata })), null, 4)}

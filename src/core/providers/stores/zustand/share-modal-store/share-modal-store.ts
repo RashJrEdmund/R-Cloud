@@ -1,11 +1,20 @@
-import type { AccessType, ShareModalStore, ViewerRoles } from "./share-modal-store.d";
+import type {
+  AccessType,
+  ShareModalStore,
+  ViewerRoles,
+} from "./share-modal-store.d";
 
 import { create } from "zustand";
 import { APP_CONFIG } from "@/core/config/app";
 import { copyToClipboard } from "@/core/lib/utils";
 import { Globe, Lock } from "lucide-react";
 
-type ACCESS = { label: string; desc: string; icon: typeof Lock; type: AccessType; }
+type ACCESS = {
+  label: string;
+  desc: string;
+  icon: typeof Lock;
+  type: AccessType;
+};
 
 type VIEWER = { label: string; desc: string; type: ViewerRoles };
 
@@ -28,13 +37,13 @@ const Viewers: VIEWER[] = [
   {
     label: "viewer",
     desc: "can only read file",
-    type: "VIEWER"
+    type: "VIEWER",
   },
   {
     label: "Editor",
     desc: "can read & write to file",
     type: "EDITOR",
-  }
+  },
 ];
 
 const useShareModalStore = create<ShareModalStore>((set) => ({
@@ -59,10 +68,11 @@ const useShareModalStore = create<ShareModalStore>((set) => ({
   fileToBeShared: null,
   setFileToBeShared: (fileToBeShared) => set({ fileToBeShared }),
 
-  openShareModal: (file) => set({
-    fileToBeShared: file,
-    shareModalOpen: true,
-  }),
+  openShareModal: (file) =>
+    set({
+      fileToBeShared: file,
+      shareModalOpen: true,
+    }),
 
   copyFileShareLink: (file, isPublic = false) => {
     const url = `${APP_CONFIG.app_link}/shared/${isPublic ? "pub" : "me"}/${file.id}`;
@@ -71,14 +81,15 @@ const useShareModalStore = create<ShareModalStore>((set) => ({
     copyToClipboard({ data: url, toast_header: msg });
   },
 
-  cleanUpFunction: () => set({
-    fileToBeShared: null,
-    searching: false,
-    isSharing: false,
-    // access: Access[0],
-    // viewerRole: ViewerRoles[0],
-    userEmails: [],
-  }),
+  cleanUpFunction: () =>
+    set({
+      fileToBeShared: null,
+      searching: false,
+      isSharing: false,
+      // access: Access[0],
+      // viewerRole: ViewerRoles[0],
+      userEmails: [],
+    }),
 }));
 
 const useShareModalAssets = {
@@ -86,7 +97,4 @@ const useShareModalAssets = {
   Viewers,
 };
 
-export {
-  useShareModalStore,
-  useShareModalAssets,
-};
+export { useShareModalStore, useShareModalAssets };

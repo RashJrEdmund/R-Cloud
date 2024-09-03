@@ -27,7 +27,7 @@ interface Props {
   //
 }
 
-export default function ProfileDropDown({ }: Props) {
+export default function ProfileDropDown({}: Props) {
   const { currentUser, userProfile, setLogOutDialogOpen } = useUserStore();
 
   const DROP_DOWN_CONTENT_1 = useMemo(() => {
@@ -87,13 +87,13 @@ export default function ProfileDropDown({ }: Props) {
         icon: LogOut,
       },
     ],
-    [],
+    []
   );
 
   // NO USER CONTENT
 
-  const NO_USER_DROP_DOWN_CONTENT_1 = useMemo(() =>
-    [
+  const NO_USER_DROP_DOWN_CONTENT_1 = useMemo(
+    () => [
       {
         href: "/storage-plans",
         text: "Storage Plans",
@@ -104,7 +104,9 @@ export default function ProfileDropDown({ }: Props) {
         text: "Video Guides",
         icon: Signpost,
       },
-    ], []);
+    ],
+    []
+  );
 
   const NO_USER_DROP_DOWN_CONTENT_2 = useMemo(
     () => [
@@ -118,7 +120,7 @@ export default function ProfileDropDown({ }: Props) {
   );
 
   return (
-    <DivCard className="min-w-[200px] sm:min-w-[220px] flex-col items-start gap-1 rounded-[8px] bg-app_white p-[10px]">
+    <DivCard className="min-w-[200px] flex-col items-start gap-1 rounded-[8px] bg-app_white p-[10px] sm:min-w-[220px]">
       <DropdownMenuLabel>
         {shortenText(currentUser?.username || "username", 26)}
       </DropdownMenuLabel>

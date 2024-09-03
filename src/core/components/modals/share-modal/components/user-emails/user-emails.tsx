@@ -15,21 +15,17 @@ interface Props {
   //
 }
 
-export default function UserEmailS({ }: Props) {
+export default function UserEmailS({}: Props) {
   const [email, setEmail] = useState<string>("");
   const [msg, setMsg] = useState<Record<"error" | "success", string | null>>({
     error: null,
-    success: null
+    success: null,
   });
 
   const { currentUser } = useUserStore();
 
-  const {
-    isSharing,
-    searching, setSearching,
-    userEmails,
-    setUserEmails,
-  } = useShareModalStore();
+  const { isSharing, searching, setSearching, userEmails, setUserEmails } =
+    useShareModalStore();
 
   const removeEmail = (email: string) => {
     const prev = [...userEmails];
@@ -42,7 +38,7 @@ export default function UserEmailS({ }: Props) {
     if (!email) {
       setMsg({ error: "search and add recipient emails", success: null });
       return;
-    };
+    }
 
     if (isSharing || searching || !!msg.error) return;
 
@@ -56,14 +52,14 @@ export default function UserEmailS({ }: Props) {
     if (!email) {
       setMsg({ error: null, success: null });
       return;
-    };
+    }
 
     const { success, data } = z.string().email().safeParse(email);
 
     if (!success) {
       setMsg({ error: "invalid email", success: null });
       return;
-    };
+    }
 
     if (currentUser!.email === data) {
       setMsg({ error: "really man?? 🙄", success: null });

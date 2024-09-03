@@ -28,9 +28,5 @@ export default function AuthGuard({ children }: Props) {
     return <LoadingPage />;
   }
 
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

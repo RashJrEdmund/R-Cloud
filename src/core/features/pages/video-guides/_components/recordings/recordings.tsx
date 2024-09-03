@@ -75,7 +75,7 @@ async function RecordingsDisplay() {
 
 export default function Recordings() {
   return (
-    <div className="w-primary_app_w flex items-center justify-center">
+    <div className="flex w-primary_app_w items-center justify-center">
       <Suspense fallback={<RecordingShimmer />}>
         <RecordingsDisplay />
       </Suspense>

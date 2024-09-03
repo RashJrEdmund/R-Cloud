@@ -1,6 +1,10 @@
 import type { Document, SharedDocument } from "@/core/interfaces/entities";
 
-export default function Viewer({ fileInView }: { fileInView: Document | SharedDocument }) {
+export default function Viewer({
+  fileInView,
+}: {
+  fileInView: Document | SharedDocument;
+}) {
   if (fileInView?.content_type?.includes("video")) {
     return (
       <video controls className="max-h-full w-fit max-w-[90%]">
@@ -51,7 +55,7 @@ export default function Viewer({ fileInView }: { fileInView: Document | SharedDo
       height="100%"
       // type={fileInView?.content_type || undefined} // this is for when using <object /> tag
       src={fileInView?.download_url || ""}
-      className="max-h-full h-full"
+      className="h-full max-h-full"
     />
   );
 }

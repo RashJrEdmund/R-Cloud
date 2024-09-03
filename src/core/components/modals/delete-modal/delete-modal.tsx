@@ -78,16 +78,16 @@ export default function DeleteModal({ document }: Props) {
           <DialogDescription>
             Are you sure you want to delete this {doc_type} <br />
             {document?.type === "FOLDER" &&
-              Number(document?.capacity.bytes) > 0 ? (
-                <TextTag className="text-left text-app_error">
+            Number(document?.capacity.bytes) > 0 ? (
+              <TextTag className="text-left text-app_error">
                 Deleting this folder will delete all it&apos;s content
-                </TextTag>
-              ) : null}
+              </TextTag>
+            ) : null}
           </DialogDescription>
         </DialogHeader>
 
         <DivCard className="w-full flex-col items-start justify-start gap-3">
-          <TextTag className="text-left items-start">
+          <TextTag className="items-start text-left">
             name:
             <TextTag className="text-app_text_blue">{document?.name}</TextTag>
           </TextTag>

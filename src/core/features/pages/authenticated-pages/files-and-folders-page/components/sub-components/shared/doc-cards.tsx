@@ -25,7 +25,7 @@ function GridCardContainer({
     <div
       {...restProps}
       className={cn(
-        "relative mx-auto my-[10px] flex min-h-[150px] w-full max-w-[130px] cursor-pointer flex-col items-center justify-between overflow-hidden rounded-[4px] border border-app_border p-[10px] duration-300 hover:bg-app_bg_light sm:w-[120px] lg:w-[130px] select-none",
+        "relative mx-auto my-[10px] flex min-h-[150px] w-full max-w-[130px] cursor-pointer select-none flex-col items-center justify-between overflow-hidden rounded-[4px] border border-app_border p-[10px] duration-300 hover:bg-app_bg_light sm:w-[120px] lg:w-[130px]",
         className
       )}
     >
@@ -46,7 +46,7 @@ function ListCardContainer({
     <div
       {...restProps}
       className={cn(
-        "relative flex w-full cursor-pointer flex-nowrap justify-start border p-[12px_10px] duration-200 md:gap-1 select-none",
+        "relative flex w-full cursor-pointer select-none flex-nowrap justify-start border p-[12px_10px] duration-200 md:gap-1",
         className
       )}
     >
@@ -61,7 +61,7 @@ function ListCardContainer({
 
 function GridShimmerCard() {
   return (
-    <div className="mx-auto my-[10px] flex h-fit min-h-[150px] w-[110px] flex-col items-start justify-between overflow-hidden py-[10px] px-[4px] sm:w-[120px] sm:overflow-auto">
+    <div className="mx-auto my-[10px] flex h-fit min-h-[150px] w-[110px] flex-col items-start justify-between overflow-hidden px-[4px] py-[10px] sm:w-[120px] sm:overflow-auto">
       <Skeleton className="min-h-[80px] w-full" />
 
       <div className="flex w-full flex-col gap-2">

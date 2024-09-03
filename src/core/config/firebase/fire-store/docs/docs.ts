@@ -79,7 +79,11 @@ const createFileDoc = async (email: string, document: Document) => {
   return docRef;
 };
 
-const updateDocument = async (email: string, doc_id: string, updates: Partial<Document>) => {
+const updateDocument = async (
+  email: string,
+  doc_id: string,
+  updates: Partial<Document>
+) => {
   const document_path = createUserDocPath<Document>(
     email,
     "/r-drive/" + doc_id

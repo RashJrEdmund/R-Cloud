@@ -35,7 +35,7 @@ interface Document {
     firstSharedAt: Date | string | null;
     lastModified: Date | string | null;
   };
-};
+}
 
 interface SharedDocument {
   doc_id: string;
@@ -51,13 +51,13 @@ interface SharedDocument {
   };
   /**
    * sharer's email
-  */
- shared_by: string;
- accessType: AccessType;
- viewerRole: ViewerRoles;
- sharedWith: string[];
- firstSharedAt: Date | string;
- lastModified: Date | string;
-};
+   */
+  shared_by: string;
+  accessType: AccessType;
+  viewerRole: ViewerRoles;
+  sharedWith: string[];
+  firstSharedAt: Date | string;
+  lastModified: Date | string;
+}
 
 export type { Document, DocumentType, SharedDocument };

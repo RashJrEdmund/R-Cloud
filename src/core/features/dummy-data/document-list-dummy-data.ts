@@ -26,8 +26,8 @@ export const dummyData: Document[] = [
       sharedWith: [],
       firstSharedAt: null,
       lastModified: null,
-      isShared: false
-    }
+      isShared: false,
+    },
   },
   {
     id: "abc",
@@ -52,8 +52,8 @@ export const dummyData: Document[] = [
       sharedWith: [],
       firstSharedAt: null,
       lastModified: null,
-      isShared: false
-    }
+      isShared: false,
+    },
   },
   {
     id: "jkl",
@@ -64,7 +64,8 @@ export const dummyData: Document[] = [
     filename: "Elephant.png",
     type: "FILE",
     content_type: "image/png",
-    download_url: "https://www.referenseo.com/wp-content/uploads/2019/03/image-attractive-960x540.jpg",
+    download_url:
+      "https://www.referenseo.com/wp-content/uploads/2019/03/image-attractive-960x540.jpg",
     extension: ".png",
     capacity: {
       size: "15 Mb",
@@ -78,7 +79,7 @@ export const dummyData: Document[] = [
       sharedWith: [],
       firstSharedAt: null,
       lastModified: null,
-      isShared: false
-    }
+      isShared: false,
+    },
   },
 ];

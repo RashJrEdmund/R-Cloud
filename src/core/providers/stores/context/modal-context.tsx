@@ -97,7 +97,7 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
 
         {/**
          * using zustand store for this modal
-        */}
+         */}
         <ShareModal />
 
         <FileViewer />

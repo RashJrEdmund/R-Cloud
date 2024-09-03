@@ -9,17 +9,23 @@ import { toast } from "sonner";
 interface Props {
   handleShareFile: () => void;
   handleModalClose: (open: boolean) => void;
-  reflectDocSharedStateToUi: (_: {isShared: boolean}) => void;
+  reflectDocSharedStateToUi: (_: { isShared: boolean }) => void;
 }
 
-export default function ShareModalFooter({ handleShareFile, handleModalClose, reflectDocSharedStateToUi }: Props) {
+export default function ShareModalFooter({
+  handleShareFile,
+  handleModalClose,
+  reflectDocSharedStateToUi,
+}: Props) {
   const {
     fileToBeShared,
     accessType,
 
-    searching, userEmails,
+    searching,
+    userEmails,
 
-    isSharing, setIsSharing,
+    isSharing,
+    setIsSharing,
   } = useShareModalStore();
 
   const { currentUser } = useUserStore();
@@ -32,8 +38,11 @@ export default function ShareModalFooter({ handleShareFile, handleModalClose, re
         toast(msg);
         reflectDocSharedStateToUi({ isShared: false });
         handleModalClose(false);
-      }).catch(() => {
-        toast.error("Something went wrong", { description: "please try again" });
+      })
+      .catch(() => {
+        toast.error("Something went wrong", {
+          description: "please try again",
+        });
       })
       .finally(() => {
         setIsSharing(false);
@@ -42,18 +51,16 @@ export default function ShareModalFooter({ handleShareFile, handleModalClose, re
 
   return (
     <DialogFooter className="flex w-full items-center justify-end">
-      {
-        fileToBeShared?.sharedState?.sharedWith.length ? (
-          <Button
-            variant="error"
-            disabled={isSharing || searching}
-            onClick={handleClearAllAccess}
-            className="outline-none sm:w-fit"
-          >
-            Clear all access
-          </Button>
-        ) : null
-      }
+      {fileToBeShared?.sharedState?.sharedWith.length ? (
+        <Button
+          variant="error"
+          disabled={isSharing || searching}
+          onClick={handleClearAllAccess}
+          className="outline-none sm:w-fit"
+        >
+          Clear all access
+        </Button>
+      ) : null}
 
       {/* <Button
             disabled={isSharing || searching}
@@ -65,7 +72,11 @@ export default function ShareModalFooter({ handleShareFile, handleModalClose, re
 
       <Button
         variant="blued"
-        disabled={isSharing || searching || (!userEmails.length && accessType === "RESTRICTED")}
+        disabled={
+          isSharing ||
+          searching ||
+          (!userEmails.length && accessType === "RESTRICTED")
+        }
         onClick={handleShareFile}
         className="min-w-[100px] sm:w-fit"
       >
@@ -73,4 +84,4 @@ export default function ShareModalFooter({ handleShareFile, handleModalClose, re
       </Button>
     </DialogFooter>
   );
-};
+}

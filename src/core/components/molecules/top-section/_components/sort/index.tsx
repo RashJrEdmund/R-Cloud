@@ -1,6 +1,6 @@
 "use client";
 
-import {  useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useAppStore } from "@/providers/stores/zustand";
 import { CLIENT_STORAGE } from "@/core/lib";
 import { TableColumnsSplit } from "lucide-react";
@@ -9,11 +9,11 @@ import { FolderSeparation } from "@/core/interfaces/app";
 
 interface Props {
   //
-};
+}
 
 const localStorage = new CLIENT_STORAGE("local");
 
-export default function Sort({ }: Props) {
+export default function Sort({}: Props) {
   const { folderSeparation, setFolderSeparation } = useAppStore();
 
   const toggleFolderSeparation = () => {
@@ -21,27 +21,32 @@ export default function Sort({ }: Props) {
       localStorage.save("separate_folders", val);
     };
 
-    setFolderSeparation((() => {
-      switch (folderSeparation) {
-      case "NONE":
-        saveToStorage("LOW");
-        return "LOW";
-      case "LOW":
-        saveToStorage("FULL");
-        return "FULL";
-      case "FULL":
-        saveToStorage("NONE");
-        return "NONE";
-      default:
-        return "NONE";
-      }
-    })());
+    setFolderSeparation(
+      (() => {
+        switch (folderSeparation) {
+          case "NONE":
+            saveToStorage("LOW");
+            return "LOW";
+          case "LOW":
+            saveToStorage("FULL");
+            return "FULL";
+          case "FULL":
+            saveToStorage("NONE");
+            return "NONE";
+          default:
+            return "NONE";
+        }
+      })()
+    );
   };
 
   useLayoutEffect(() => {
-    const separate_folders = localStorage.get<FolderSeparation>("separate_folders", {
-      isString: true
-    })!;
+    const separate_folders = localStorage.get<FolderSeparation>(
+      "separate_folders",
+      {
+        isString: true,
+      }
+    )!;
 
     if (["NONE", "LOW", "FULL"].includes(separate_folders)) {
       if (separate_folders === folderSeparation) return;
@@ -58,7 +63,7 @@ export default function Sort({ }: Props) {
         className={cn(
           "cursor-pointer transition-transform duration-300",
           ["LOW", "FULL"].includes(folderSeparation) ? "text-app_blue" : "",
-          folderSeparation === "FULL" ? "rotate-90" : "",
+          folderSeparation === "FULL" ? "rotate-90" : ""
         )}
       />
     </>

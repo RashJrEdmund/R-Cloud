@@ -16,13 +16,17 @@ class ShimmerCache {
     this.sessionStorage = new CLIENT_STORAGE("session");
 
     this.cache = () => {
-      const cache = this.sessionStorage.get<Record<string, number>>(this.cacheKey, { isString: false });
+      const cache = this.sessionStorage.get<Record<string, number>>(
+        this.cacheKey,
+        { isString: false }
+      );
 
-      if (!cache || typeof cache !== "object" || Array.isArray(cache)) return {}; // "if statement" is checking if line 14 returns an object
+      if (!cache || typeof cache !== "object" || Array.isArray(cache))
+        return {}; // "if statement" is checking if line 14 returns an object
 
       return cache;
     };
-  };
+  }
 
   get cacheVal() {
     return this.cache();
@@ -34,9 +38,13 @@ class ShimmerCache {
 
   getFolderCache(folder_id: string) {
     return this.cache()[folder_id] || this.defaultFolderVal;
-  };
+  }
 
-  updateShimmerCache(folder_id: string, folder_length: number, options?: UpdateOptions) {
+  updateShimmerCache(
+    folder_id: string,
+    folder_length: number,
+    options?: UpdateOptions
+  ) {
     const shimmerCache = { ...this.cache() };
 
     if (!shimmerCache[folder_id] || options?.update) {
@@ -49,6 +57,6 @@ class ShimmerCache {
   clearCache() {
     return this.sessionStorage.remove(this.cacheKey);
   }
-};
+}
 
 export { ShimmerCache };

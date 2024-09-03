@@ -60,8 +60,8 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "3pw-3jzAM3jeEsoTHZoweK_3Kg05EKuTHrkclUUSvTs" // got it from here https://search.google.com/search-console/welcome?utm_source=about-page
-  }
+    google: "3pw-3jzAM3jeEsoTHZoweK_3Kg05EKuTHrkclUUSvTs", // got it from here https://search.google.com/search-console/welcome?utm_source=about-page
+  },
 };
 
 interface Props {

@@ -1,7 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useDocStore, useShareModalStore, useUserStore } from "@/providers/stores/zustand";
+import {
+  useDocStore,
+  useShareModalStore,
+  useUserStore,
+} from "@/providers/stores/zustand";
 import {
   Dialog,
   DialogContent,
@@ -17,7 +21,7 @@ interface Props {
   //
 }
 
-export default function ShareModal({ }: Props) {
+export default function ShareModal({}: Props) {
   const { currentUser } = useUserStore();
 
   const { documents, setDocuments } = useDocStore();
@@ -29,7 +33,8 @@ export default function ShareModal({ }: Props) {
     searching,
     userEmails,
 
-    isSharing, setIsSharing,
+    isSharing,
+    setIsSharing,
 
     shareModalOpen,
     setShareModalOpen,
@@ -96,8 +101,11 @@ export default function ShareModal({ }: Props) {
         reflectDocSharedStateToUi({ isShared: true });
 
         handleModalClose(false);
-      }).catch((err) => {
-        toast.error("Something went wrong", { description: "please try again" });
+      })
+      .catch((err) => {
+        toast.error("Something went wrong", {
+          description: "please try again",
+        });
 
         // console.warn(err);
       })

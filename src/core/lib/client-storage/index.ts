@@ -25,14 +25,13 @@ class CLIENT_STORAGE {
   }
 
   save<T>(key: string, val: T) {
-    if (typeof val === "string")
-      return this.myStorage.setItem(key, val); // if i stringiy a string, it'll have additional quotes to it.
+    if (typeof val === "string") return this.myStorage.setItem(key, val); // if i stringiy a string, it'll have additional quotes to it.
 
     return this.myStorage.setItem(key, JSON.stringify(val));
   }
 
   get<T>(key: string, options: Required<Options>): T | null {
-    const val = this.myStorage.getItem(key) ?? null as T;
+    const val = this.myStorage.getItem(key) ?? (null as T);
 
     if (options.isString) return val as T;
 

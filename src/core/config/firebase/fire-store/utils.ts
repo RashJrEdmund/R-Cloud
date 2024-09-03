@@ -14,8 +14,10 @@ import type {
 
 /**
  * Must be an odd path
-*/
-const createFreeCollectionPath = <T = DocumentData>(path: string | string[]) => {
+ */
+const createFreeCollectionPath = <T = DocumentData>(
+  path: string | string[]
+) => {
   const _path = Array.isArray(path) ? path.join("/") : path;
 
   return collection(fireStore, _path) as CollectionReference<T>;
@@ -23,7 +25,7 @@ const createFreeCollectionPath = <T = DocumentData>(path: string | string[]) => 
 
 /**
  * Must be an even path
-*/
+ */
 const createFreeDocPath = <T = DocumentData>(path: string | string[]) => {
   const _path = Array.isArray(path) ? path.join("/") : path;
 
@@ -33,7 +35,7 @@ const createFreeDocPath = <T = DocumentData>(path: string | string[]) => {
 /**
  * Ends up as an odd path.
  * Built on top of createFreeCollectionPath
-*/
+ */
 const createUserCollectionPath = <T = DocumentData>(
   email: string,
   _path: string
@@ -44,7 +46,7 @@ const createUserCollectionPath = <T = DocumentData>(
 /**
  * Ends up as an even path.
  * Built on top of createFreeDocPath
-*/
+ */
 const createUserDocPath = <T = DocumentData>(email: string, _path: string) => {
   return createFreeDocPath<T>(`users/${email}` + _path);
 };
@@ -52,7 +54,6 @@ const createUserDocPath = <T = DocumentData>(email: string, _path: string) => {
 export {
   createFreeCollectionPath,
   createFreeDocPath,
-
   createUserCollectionPath,
   createUserDocPath,
 };

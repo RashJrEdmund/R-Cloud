@@ -4,7 +4,12 @@
 ================================//========= */
 
 import { setDoc, getDoc, getDocs, deleteDoc, addDoc } from "firebase/firestore";
-import { createFreeCollectionPath, createFreeDocPath, createUserCollectionPath, createUserDocPath } from "./utils";
+import {
+  createFreeCollectionPath,
+  createFreeDocPath,
+  createUserCollectionPath,
+  createUserDocPath,
+} from "./utils";
 
 import type { UserPlan, UserProfile } from "@/core/interfaces/entities";
 import type { DocumentSnapshot } from "firebase/firestore";
@@ -37,13 +42,29 @@ const createUserProfile = async (user: UserProfile) => {
   ); // so as to update if exits or create if not exits;
 };
 
-const createNewPlanSubscription = async (email: string, userPlan: UserPlan) => {
-  const subscription_col_path = createUserCollectionPath(email, "/subscriptions");
+const updateUserProfile = async ({ email, updates }: {
+  email: string,
+  updates: Partial<UserProfile>
+}) => {
+  const user_document_path = createFreeDocPath<UserProfile>(["users", email]);
 
-  await addDoc(
-    subscription_col_path,
-    { ...userPlan }
+  return setDoc(
+    user_document_path,
+    {
+      ...updates,
+      date_updated: new Date().toISOString(),
+    },
+    { merge: true } // merge true so as to create if doesn't exist or only update specified fields if exits;
   );
+};
+
+const createNewPlanSubscription = async (email: string, userPlan: UserPlan) => {
+  const subscription_col_path = createUserCollectionPath(
+    email,
+    "/subscriptions"
+  );
+
+  await addDoc(subscription_col_path, { ...userPlan });
 };
 
 const updateUsedSpace = async (
@@ -138,6 +159,7 @@ const updateUserAccountSettings = async (
 export {
   getUserProfile,
   createUserProfile,
+  updateUserProfile,
   createNewPlanSubscription,
   updateUsedSpace,
   updateUserAccountSettings,

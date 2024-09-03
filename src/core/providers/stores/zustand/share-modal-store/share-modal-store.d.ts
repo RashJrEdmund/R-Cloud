@@ -5,11 +5,11 @@ type ViewerRoles = "VIEWER" | "EDITOR";
 type AccessType = "RESTRICTED" | "PUBLIC";
 
 interface ShareModalStore {
-  searching: boolean,
-  setSearching: (_: boolean) => void,
+  searching: boolean;
+  setSearching: (_: boolean) => void;
 
-  isSharing: boolean,
-  setIsSharing: (_: boolean) => void,
+  isSharing: boolean;
+  setIsSharing: (_: boolean) => void;
 
   userEmails: string[];
   setUserEmails: (_: string[]) => void;
@@ -35,8 +35,4 @@ interface ShareModalStore {
   cleanUpFunction: () => void;
 }
 
-export type {
-  AccessType,
-  ViewerRoles,
-  ShareModalStore,
-};
+export type { AccessType, ViewerRoles, ShareModalStore };

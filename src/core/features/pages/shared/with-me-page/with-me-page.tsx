@@ -38,12 +38,13 @@ export default function SharedWithMePage() {
     loadUserSharedFiles(currentUser.email)
       .then((res) => {
         setDocs(res.docs.map((d) => d.data()));
-      }).finally(() => setLoading(false));
+      })
+      .finally(() => setLoading(false));
   }, [currentUser]);
 
   return (
     <MainTag className="justify-start">
-      <DivCard className="w-primary_app_w flex-col min-h-[85vh] border">
+      <DivCard className="min-h-[85vh] w-primary_app_w flex-col border">
         {(() => {
           return (
             <>
@@ -62,48 +63,47 @@ export default function SharedWithMePage() {
             </>
           );
 
-          if (!currentUser) return (
-            <TextTag
-              as="h3"
-              className="text-center text-[2rem] font-semibold text-app_text_grayed"
-            >
-              You need to be logged in first
-            </TextTag>
-          );
+          if (!currentUser)
+            return (
+              <TextTag
+                as="h3"
+                className="text-center text-[2rem] font-semibold text-app_text_grayed"
+              >
+                You need to be logged in first
+              </TextTag>
+            );
 
-          if (loading) return <LoaderCircleIcon className="animate-spin text-app_blue" />;
+          if (loading)
+            return <LoaderCircleIcon className="animate-spin text-app_blue" />;
 
-          if (!docs.length) return (
-            <TextTag
-              as="h3"
-              className="text-center text-[2rem] font-semibold text-app_text_grayed"
-            >
-              Someone is yet to share files with you
-            </TextTag>
-          );
+          if (!docs.length)
+            return (
+              <TextTag
+                as="h3"
+                className="text-center text-[2rem] font-semibold text-app_text_grayed"
+              >
+                Someone is yet to share files with you
+              </TextTag>
+            );
 
           return (
             <ModalContextProvider>
               <DivCard className="w-full flex-col overflow-hidden">
-                {
-                  docData.map(([email, subDocs]) => (
-                    <DivCard key={email} className="flex-col">
-                      <TextTag>
-                        from <TextTag>{email}</TextTag>
-                      </TextTag>
+                {docData.map(([email, subDocs]) => (
+                  <DivCard key={email} className="flex-col">
+                    <TextTag>
+                      from <TextTag>{email}</TextTag>
+                    </TextTag>
 
-                      <DivCard className="w-full gap-3">
-                        {
-                          subDocs.map((doc) => (
-                            <DivCard key={doc.doc_id}>
-                              <GridFileCard doc={doc as any} />
-                            </DivCard>
-                          ))
-                        }
-                      </DivCard>
+                    <DivCard className="w-full gap-3">
+                      {subDocs.map((doc) => (
+                        <DivCard key={doc.doc_id}>
+                          <GridFileCard doc={doc as any} />
+                        </DivCard>
+                      ))}
                     </DivCard>
-                  ))
-                }
+                  </DivCard>
+                ))}
               </DivCard>
             </ModalContextProvider>
           );

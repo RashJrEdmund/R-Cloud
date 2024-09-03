@@ -2,15 +2,15 @@ import { DivCard, MainTag, TextTag } from "@/components/atoms";
 import { Recordings } from "./_components";
 import { TopSection } from "@/components/molecules";
 
-interface Props { };
+interface Props {}
 
-export default function VideoGuidesPage({ }: Props) {
+export default function VideoGuidesPage({}: Props) {
   return (
-    <MainTag className="gap-0 justify-start">
+    <MainTag className="justify-start gap-0">
       <TopSection hide_search_section />
 
-      <DivCard className="flex-col gap-8 mb-4">
-        <TextTag className="text-app_text_grayed text-center max-w-[400px]">
+      <DivCard className="mb-4 flex-col gap-8">
+        <TextTag className="max-w-[400px] text-center text-app_text_grayed">
           Video guides on how to use my cloud storage provider
         </TextTag>
 

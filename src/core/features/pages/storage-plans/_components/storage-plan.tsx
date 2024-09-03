@@ -21,7 +21,11 @@ export default function StoragePlan({ plan }: Props) {
   const router = useRouter();
 
   const isCurrentPlan = useMemo(() => {
-    return !!(currentUser && userProfile && userProfile.plan.plan_id === plan.id);
+    return !!(
+      currentUser &&
+      userProfile &&
+      userProfile.plan.plan_id === plan.id
+    );
   }, [currentUser, userProfile, plan]);
 
   // console.log({ currentUser, userProfile });
@@ -61,10 +65,14 @@ export default function StoragePlan({ plan }: Props) {
   };
 
   return (
-    <DivCard className={cn(
-      "relative mx-auto w-[min(100%,_85vw)] max-w-[420px] flex-col gap-4 sm:gap-6 mdxl:gap-12 overflow-hidden rounded-[5px] bg-app_white px-6 pb-12 pt-8 shadow hover:shadow-md transition-shadow duration-300",
-      plan.is_free || isCurrentPlan ? "shadow-black hover:shadow-black" : "shadow-app_blue hover:shadow-app_blue"
-    )}>
+    <DivCard
+      className={cn(
+        "relative mx-auto w-[min(100%,_85vw)] max-w-[420px] flex-col gap-4 overflow-hidden rounded-[5px] bg-app_white px-6 pb-12 pt-8 shadow transition-shadow duration-300 hover:shadow-md sm:gap-6 mdxl:gap-12",
+        plan.is_free || isCurrentPlan
+          ? "shadow-black hover:shadow-black"
+          : "shadow-app_blue hover:shadow-app_blue"
+      )}
+    >
       <PlanBadge plan={plan} />
 
       <TextTag className="text-[1.5rem] font-semibold text-app_text_blue md:text-[1.75rem]">

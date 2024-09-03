@@ -7,10 +7,13 @@ import { ChevronDown } from "lucide-react";
 import { ChangeEventHandler, useEffect, useRef } from "react";
 
 export default function SelectAll() {
-  const { selectionStart, setSelectionStart, setSelectedDocs } = useSelectionStore();
+  const { selectionStart, setSelectionStart, setSelectedDocs } =
+    useSelectionStore();
   const { documents, loadingCurrentFolder } = useDocStore();
 
-  const handleSelection: ChangeEventHandler<HTMLInputElement> = ({ target: { checked: shouldCheck } }) => {
+  const handleSelection: ChangeEventHandler<HTMLInputElement> = ({
+    target: { checked: shouldCheck },
+  }) => {
     if (shouldCheck) {
       setSelectedDocs(documents);
       setSelectionStart(true);
@@ -23,14 +26,15 @@ export default function SelectAll() {
   const inputRef = useRef<HTMLInputElement>();
 
   useEffect(() => {
-    if (!selectionStart && inputRef.current?.checked) inputRef.current!.checked = false;
+    if (!selectionStart && inputRef.current?.checked)
+      inputRef.current!.checked = false;
   }, [selectionStart]);
 
   return loadingCurrentFolder || !documents.length ? null : (
     <label
       htmlFor="select-all"
       title="select all"
-      className="flex items-center justify-center gap-2 flex-nowrap cursor-pointer"
+      className="flex cursor-pointer flex-nowrap items-center justify-center gap-2"
     >
       <input
         ref={inputRef as LegacyRef<HTMLInputElement>}
@@ -44,4 +48,4 @@ export default function SelectAll() {
       <ChevronDown size={15} />
     </label>
   );
-};
+}

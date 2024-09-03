@@ -5,20 +5,18 @@ interface Props {
   //
 }
 
-export default function TrustedBy({ }: Props) {
+export default function TrustedBy({}: Props) {
   return (
-    <DivCard className="w-primary_app_w min-h-screen mx-auto flex-col sm:flex-row lg:gap-10 py-12 my-8">
-      <DivCard className="gap-2 max-w-full">
-        <TextTag className="text-7xl ssm:text-8xl lg:text-9xl font-semibold flex items-center justify-center">
+    <DivCard className="mx-auto my-8 min-h-screen w-primary_app_w flex-col py-12 sm:flex-row lg:gap-10">
+      <DivCard className="max-w-full gap-2">
+        <TextTag className="flex items-center justify-center text-7xl font-semibold ssm:text-8xl lg:text-9xl">
           17
         </TextTag>
 
         <DivCard className="flex-col items-start">
-          <TextTag className="w-fit whitespace-nowrap">
-            Active Monthly
-          </TextTag>
+          <TextTag className="w-fit whitespace-nowrap">Active Monthly</TextTag>
 
-          <TextTag className="text-3xl md:text-5xl whitespace-nowrap">
+          <TextTag className="whitespace-nowrap text-3xl md:text-5xl">
             Users 😌
           </TextTag>
         </DivCard>

@@ -50,7 +50,7 @@ export default function Search({}: Props) {
 
   return null;
 
-  return <SearchIcon className="text-app_text_grayed size-7 cursor-pointer" />;
+  return <SearchIcon className="size-7 cursor-pointer text-app_text_grayed" />;
 
   return (
     <DivCard as="search" className="hidden sm:flex">

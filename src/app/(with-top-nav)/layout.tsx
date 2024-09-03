@@ -1,6 +1,10 @@
 import { NavBar } from "@/components/molecules";
 
-export default function WithNavLayout({ children }: { children: React.ReactNode; }) {
+export default function WithNavLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <NavBar />
@@ -8,4 +12,4 @@ export default function WithNavLayout({ children }: { children: React.ReactNode;
       {children}
     </>
   );
-};
+}

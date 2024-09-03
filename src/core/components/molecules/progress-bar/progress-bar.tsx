@@ -45,13 +45,13 @@ function ProgressBar({
   return (
     <DivCard
       className={cn(
-        "relative h-[1rem] w-full rounded-[8px] bg-app_bg_grayed overflow-hidden",
+        "relative h-[1rem] w-full overflow-hidden rounded-[8px] bg-app_bg_grayed",
         sx
       )}
     >
       <DivCard
         style={{
-          width: `${progress_in_percentage}%`
+          width: `${progress_in_percentage}%`,
         }}
         className={cn(
           "absolute left-0 top-0 h-full rounded-[10px]",

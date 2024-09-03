@@ -3,11 +3,11 @@ import StyledStoragePlanDisplay from "../../../dummy-data/styled-storage-plan-di
 import { DivCard } from "@/components/atoms";
 import { cn } from "@/core/lib/utils";
 
-function PlanBadgeShimmer({ }: {}) {
+function PlanBadgeShimmer({}: {}) {
   return (
     <Skeleton
       className={cn(
-        "absolute left-[-45%] top-0 m-[15px] w-full h-[1.15rem] rotate-[-45deg] text-[0.9rem] text-app_text_white",
+        "absolute left-[-45%] top-0 m-[15px] h-[1.15rem] w-full rotate-[-45deg] text-[0.9rem] text-app_text_white"
       )}
     />
   );
@@ -19,7 +19,7 @@ export default function PlanDisplayShimmer() {
       {Array.from({ length: 6 }, (_, i) => i).map((indx) => (
         <Skeleton
           key={indx}
-          className="relative overflow-hidden mx-auto flex w-[min(100%,_85vw)] flex-col items-center gap-4 rounded-[5px] bg-app_white px-6 pb-12 pt-8 shadow"
+          className="relative mx-auto flex w-[min(100%,_85vw)] flex-col items-center gap-4 overflow-hidden rounded-[5px] bg-app_white px-6 pb-12 pt-8 shadow"
         >
           <PlanBadgeShimmer />
 

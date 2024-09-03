@@ -36,13 +36,16 @@ export default function DashboardLayout({
   return (
     <AuthGuard>
       <DashboardGuard>
-        <DivCard className="w-full justify-start items-start">
+        <DivCard className="w-full items-start justify-start">
           <DashboardSideNav />
 
           <DivCard className="w-full flex-col items-start">
             <DashboardTopNav />
 
-            <DivCard as="main" className="w-full max-w-default_app_max_w mx-auto min-h-[90vh] items-stretch px-2 pb-2 pt-[4.3rem]">
+            <DivCard
+              as="main"
+              className="mx-auto min-h-[90vh] w-full max-w-default_app_max_w items-stretch px-2 pb-2 pt-[4.3rem]"
+            >
               {children}
             </DivCard>
           </DivCard>

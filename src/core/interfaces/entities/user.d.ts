@@ -45,6 +45,7 @@ interface UserProfile {
   phone_number: string;
   plan: UserPlan;
   date_created: string;
+  date_updated: string | null;
 }
 
 export { Roles };

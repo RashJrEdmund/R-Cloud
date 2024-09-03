@@ -23,10 +23,11 @@ export default function DashboardGuard({ children }: Props) {
 
   const { data: userProfile, isLoading } = useQuery({
     queryKey: ["user-profile", currentUser!.id],
-    queryFn: () => getUserProfile(currentUser!.email).then((user) => {
-      setUserProfile(user.exists() ? user.data() : null);
-      return user;
-    }),
+    queryFn: () =>
+      getUserProfile(currentUser!.email).then((user) => {
+        setUserProfile(user.exists() ? user.data() : null);
+        return user;
+      }),
   });
 
   if (isLoading) return <LoadingPage />;

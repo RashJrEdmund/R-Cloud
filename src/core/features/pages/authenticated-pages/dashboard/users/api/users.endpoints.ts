@@ -9,6 +9,4 @@ const getUsers = async () => {
   return getDocs(usersCollection);
 };
 
-export {
-  getUsers,
-};
+export { getUsers };

@@ -29,44 +29,45 @@ function DocumentRenderer({ documents }: { documents: Document[] }) {
     >
       {displayLayout === "GRID"
         ? documents.map((doc) =>
-          doc.type === "FOLDER" ? (
-            <GridFolderCard key={doc.id} doc={doc} />
-          ) : (
-            <GridFileCard key={doc.id} doc={doc} />
+            doc.type === "FOLDER" ? (
+              <GridFolderCard key={doc.id} doc={doc} />
+            ) : (
+              <GridFileCard key={doc.id} doc={doc} />
+            )
           )
-        )
         : documents.map((doc) =>
-          doc.type === "FOLDER" ? (
-            <ListFolderCard key={doc.id} doc={doc} />
-          ) : (
-            <ListFileCard key={doc.id} doc={doc} />
-          )
-        )}
+            doc.type === "FOLDER" ? (
+              <ListFolderCard key={doc.id} doc={doc} />
+            ) : (
+              <ListFileCard key={doc.id} doc={doc} />
+            )
+          )}
     </StyledFileFolderDisplay>
   );
 }
 
-export default function FilesFolderDisplay({ }: Props) {
-  const { documents: docs, loadingDocs, currentFolder, loadingCurrentFolder } =
-    useDocStore();
+export default function FilesFolderDisplay({}: Props) {
+  const {
+    documents: docs,
+    loadingDocs,
+    currentFolder,
+    loadingCurrentFolder,
+  } = useDocStore();
   const { displayLayout, folderSeparation } = useAppStore();
 
   const getFolders = useCallback(() => {
-    return docs.filter(({ type }) => type === "FOLDER")
+    return docs.filter(({ type }) => type === "FOLDER");
   }, [docs, folderSeparation]);
 
   const getFiles = useCallback(() => {
-    return docs.filter(({ type }) => type === "FILE")
+    return docs.filter(({ type }) => type === "FILE");
   }, [docs, folderSeparation]);
 
   const documents = useMemo(() => {
     if (folderSeparation === "NONE") return docs;
 
-    return [
-      ...getFolders(),
-      ...getFiles(),
-    ];
-  }, [docs, folderSeparation,]);
+    return [...getFolders(), ...getFiles()];
+  }, [docs, folderSeparation]);
 
   // return <FilesFolderShimmer displayLayout={displayLayout} />;
 
@@ -98,27 +99,32 @@ export default function FilesFolderDisplay({ }: Props) {
             </DivCard>
           );
 
-        return (!folderSeparation || ["NONE", "LOW"].includes(folderSeparation)) ? <DocumentRenderer documents={documents} /> : (
+        return !folderSeparation ||
+          ["NONE", "LOW"].includes(folderSeparation) ? (
+          <DocumentRenderer documents={documents} />
+        ) : (
           <>
             {(() => {
               const folders = getFolders();
 
-              return folders.length > 0 && (
-                <>
-                  <DocumentRenderer documents={folders} />
+              return (
+                folders.length > 0 && (
+                  <>
+                    <DocumentRenderer documents={folders} />
 
-                  <Separator />
-                </>
-              )
+                    <Separator />
+                  </>
+                )
+              );
             })()}
 
             {(() => {
               const files = getFiles();
 
-              return files.length > 0 && <DocumentRenderer documents={files} />
+              return files.length > 0 && <DocumentRenderer documents={files} />;
             })()}
           </>
-        )
+        );
       })()}
     </MainAndTopSection>
   );
