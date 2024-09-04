@@ -42,9 +42,12 @@ const createUserProfile = async (user: UserProfile) => {
   ); // so as to update if exits or create if not exits;
 };
 
-const updateUserProfile = async ({ email, updates }: {
-  email: string,
-  updates: Partial<UserProfile>
+const updateUserProfile = async ({
+  email,
+  updates,
+}: {
+  email: string;
+  updates: Partial<UserProfile>;
 }) => {
   const user_document_path = createFreeDocPath<UserProfile>(["users", email]);
 

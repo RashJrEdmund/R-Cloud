@@ -17,10 +17,10 @@ export default function DashboardUsersPage() {
     <DivCard className="h-auto w-full flex-col justify-start">
       {/* <TextTag>dashboard users page</TextTag> */}
 
-      <DivCard className="w-full border gap-12 justify-start p-4">
+      <DivCard className="w-full justify-start gap-12 border p-4">
         <Button
           asChild
-          className="w-fit size-[22px] p-0 rounded-full bg-transparent hover:bg-transparent text-app_black"
+          className="size-[22px] w-fit rounded-full bg-transparent p-0 text-app_black hover:bg-transparent"
           title="reload list"
           onClick={() => refetch()}
         >
@@ -29,11 +29,9 @@ export default function DashboardUsersPage() {
 
         <TextTag className="self-start">total: {data?.docs.length}</TextTag>
 
-        {
-          isFetching ? (
-            <LoaderCircle className="ml-12 animate-spin text-app_blue" />
-          ) : null
-        }
+        {isFetching ? (
+          <LoaderCircle className="ml-12 animate-spin text-app_blue" />
+        ) : null}
       </DivCard>
 
       <UserTable userProfiles={data!} isLoading={isLoading} />

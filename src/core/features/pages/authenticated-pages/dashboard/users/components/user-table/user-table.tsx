@@ -6,7 +6,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import {
   Table,
@@ -17,10 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  ChevronDown,
-  SquareArrowRight
-} from "lucide-react";
+import { ChevronDown, SquareArrowRight } from "lucide-react";
 import { TextTag } from "@/components/atoms";
 import Link from "next/link";
 
@@ -29,10 +26,16 @@ import { cn } from "@/core/lib/utils";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { useMutation } from "@tanstack/react-query";
 
-function UserRoleDropDown({ children, profile }: { children: React.ReactNode; profile: UserProfile }) {
+function UserRoleDropDown({
+  children,
+  profile,
+}: {
+  children: React.ReactNode;
+  profile: UserProfile;
+}) {
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["users", profile.id],
-    mutationFn: updateUserProfile
+    mutationFn: updateUserProfile,
   });
 
   const refreshUsersQueryCache = () => {
@@ -45,43 +48,51 @@ function UserRoleDropDown({ children, profile }: { children: React.ReactNode; pr
         {children}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="">
-        <DropdownMenuLabel className="text-sm font-light">Change Role</DropdownMenuLabel>
+        <DropdownMenuLabel className="text-sm font-light">
+          Change Role
+        </DropdownMenuLabel>
 
         <DropdownMenuSeparator />
 
-        {
-          (["USER", "ADMIN"] as UserRoles[]).map((role) => (
-            <DropdownMenuItem
-              key={role}
-              disabled={isPending || profile.role === role}
-              className={cn(profile.role === role ? "font-semibold text-app_text_blue" : "")}
-              onClick={() => {
-                mutateAsync({ email: profile.email, updates: { role } })
-                  .finally(() => refreshUsersQueryCache());
-              }}
-            >
-              {role}
-            </DropdownMenuItem>
-          ))
-        }
+        {(["USER", "ADMIN"] as UserRoles[]).map((role) => (
+          <DropdownMenuItem
+            key={role}
+            disabled={isPending || profile.role === role}
+            className={cn(
+              profile.role === role ? "font-semibold text-app_text_blue" : ""
+            )}
+            onClick={() => {
+              mutateAsync({ email: profile.email, updates: { role } }).finally(
+                () => refreshUsersQueryCache()
+              );
+            }}
+          >
+            {role}
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
-};
+}
 
-function UserTable({ userProfiles, isLoading }: { userProfiles: QuerySnapshot<UserProfile>, isLoading: boolean; }) {
+function UserTable({
+  userProfiles,
+  isLoading,
+}: {
+  userProfiles: QuerySnapshot<UserProfile>;
+  isLoading: boolean;
+}) {
   return (
     <Table>
       <TableCaption>R - Cloud Users.</TableCaption>
 
       <TableHeader>
         <TableRow>
-          {
-            ["Email", "Plan", "Role", "Used Bytes", "Date Joined"]
-              .map((header) => (
-                <TableHead key={header}>{header}</TableHead>
-              ))
-          }
+          {["Email", "Plan", "Role", "Used Bytes", "Date Joined"].map(
+            (header) => (
+              <TableHead key={header}>{header}</TableHead>
+            )
+          )}
         </TableRow>
       </TableHeader>
 
@@ -93,7 +104,11 @@ function UserTable({ userProfiles, isLoading }: { userProfiles: QuerySnapshot<Us
 
             <TableCell>
               <UserRoleDropDown profile={{ ...profile.data(), id: profile.id }}>
-                <TextTag className={cn(profile.data().role === "ADMIN" ? "text-app_text_blue" : "")}>
+                <TextTag
+                  className={cn(
+                    profile.data().role === "ADMIN" ? "text-app_text_blue" : ""
+                  )}
+                >
                   {profile.data().role}
                 </TextTag>
 
@@ -102,7 +117,9 @@ function UserTable({ userProfiles, isLoading }: { userProfiles: QuerySnapshot<Us
             </TableCell>
 
             <TableCell>{profile.data().plan.used_bytes}</TableCell>
-            <TableCell>{new Date(profile.data().date_created).toDateString()}</TableCell>
+            <TableCell>
+              {new Date(profile.data().date_created).toDateString()}
+            </TableCell>
 
             <TableCell>
               <Link href={`/dashboard/users/${encodeURIComponent(profile.id)}`}>

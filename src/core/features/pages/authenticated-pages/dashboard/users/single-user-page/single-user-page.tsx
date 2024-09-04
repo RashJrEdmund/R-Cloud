@@ -11,4 +11,4 @@ export default function DashboardSingleUsePage() {
       welcome reading user {decodeURIComponent(params.user_id)}
     </DivCard>
   );
-};
+}
