@@ -4,9 +4,14 @@ import { getStoragePlans } from "@/core/config/firebase/fire-store/app-data";
 
 import type { StoragePlan as StoragePlanType } from "@/core/interfaces/entities";
 
-interface Props {}
+interface Props {
+  /**
+   * to know weather or not to allow editing as if in dashboard.
+  */
+  isInDashboard?: boolean;
+}
 
-export default async function PlanDisplay({}: Props) {
+export default async function PlanDisplay({ isInDashboard = false }: Props) {
   const STORAGE_PLANS: Array<StoragePlanType> | undefined =
     await getStoragePlans()
       .then((snapShot) => {
@@ -21,7 +26,11 @@ export default async function PlanDisplay({}: Props) {
   return (
     <StyledStoragePlanDisplay>
       {STORAGE_PLANS?.map((plan) => (
-        <StoragePlan key={plan.label} plan={plan} />
+        <StoragePlan
+          isInDashboard={!!isInDashboard}
+          key={plan.label}
+          plan={plan}
+        />
       ))}
     </StyledStoragePlanDisplay>
   );

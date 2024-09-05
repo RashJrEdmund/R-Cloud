@@ -27,7 +27,7 @@ export default function DashboardUsersPage() {
           <RotateCw size={20} className="cursor-pointer" />
         </Button>
 
-        <TextTag className="self-start">total: {data?.docs.length}</TextTag>
+        <TextTag className="self-start">total: {data?.length}</TextTag>
 
         {isFetching ? (
           <LoaderCircle className="ml-12 animate-spin text-app_blue" />
@@ -37,7 +37,7 @@ export default function DashboardUsersPage() {
       <UserTable userProfiles={data!} isLoading={isLoading} />
 
       {/* <pre className="max-w-default_app_max_w overflow-auto">
-        {JSON.stringify(data?.docs.map(user => ({ ...user.data(), id: user.id, metadata: user.metadata })), null, 4)}
+        {JSON.stringify(data, null, 4)}
       </pre> */}
     </DivCard>
   );

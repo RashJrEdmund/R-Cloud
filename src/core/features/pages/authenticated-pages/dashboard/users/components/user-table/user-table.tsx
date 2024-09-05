@@ -1,5 +1,4 @@
 import type { UserProfile, UserRoles } from "@/core/interfaces/entities";
-import type { QuerySnapshot } from "firebase/firestore";
 
 import {
   DropdownMenu,
@@ -24,7 +23,7 @@ import Link from "next/link";
 import { updateUserProfile } from "@/core/config/firebase/fire-store";
 import { cn } from "@/core/lib/utils";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 function UserRoleDropDown({
   children,
@@ -33,14 +32,35 @@ function UserRoleDropDown({
   children: React.ReactNode;
   profile: UserProfile;
 }) {
-  const { mutateAsync, isPending } = useMutation({
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending } = useMutation({
     mutationKey: ["users", profile.id],
     mutationFn: updateUserProfile,
-  });
+    onMutate: async (update) => {
+      const { email, updates: { role } } = update;
+      // optimistic updates
+      await queryClient.cancelQueries({ queryKey: ["users"] });
 
-  const refreshUsersQueryCache = () => {
-    // refresh the "users" query caches
-  };
+      const prevUsers = queryClient.getQueryData(["users"]) as UserProfile[];
+
+      queryClient.setQueryData(["users"], () => prevUsers.map((user) => {
+        if (user.email !== email) return user;
+
+        // optimistically update user
+        return { ...user, role };
+      }));
+
+      return { prevUsers };
+    },
+    onError: (err, updateUser, context) => {
+      // rolling-back logic if function fails;
+      queryClient.setQueryData(["users"], context?.prevUsers);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    }
+  });
 
   return (
     <DropdownMenu>
@@ -59,13 +79,10 @@ function UserRoleDropDown({
             key={role}
             disabled={isPending || profile.role === role}
             className={cn(
+              "outline-none",
               profile.role === role ? "font-semibold text-app_text_blue" : ""
             )}
-            onClick={() => {
-              mutateAsync({ email: profile.email, updates: { role } }).finally(
-                () => refreshUsersQueryCache()
-              );
-            }}
+            onClick={() => mutate({ email: profile.email, updates: { role } })}
           >
             {role}
           </DropdownMenuItem>
@@ -79,7 +96,7 @@ function UserTable({
   userProfiles,
   isLoading,
 }: {
-  userProfiles: QuerySnapshot<UserProfile>;
+  userProfiles: UserProfile[];
   isLoading: boolean;
 }) {
   return (
@@ -97,28 +114,29 @@ function UserTable({
       </TableHeader>
 
       <TableBody>
-        {userProfiles?.docs.map((profile) => (
+        {userProfiles?.map((profile) => (
           <TableRow key={profile.id}>
-            <TableCell>{profile.data().email}</TableCell>
-            <TableCell>{profile.data().plan.label}</TableCell>
+            <TableCell>{profile.email}</TableCell>
+            <TableCell>{profile.plan.label}</TableCell>
 
             <TableCell>
-              <UserRoleDropDown profile={{ ...profile.data(), id: profile.id }}>
+              <UserRoleDropDown profile={{ ...profile, id: profile.id }}>
                 <TextTag
                   className={cn(
-                    profile.data().role === "ADMIN" ? "text-app_text_blue" : ""
+                    profile.role === "ADMIN" ? "text-app_text_blue" : ""
                   )}
                 >
-                  {profile.data().role}
+                  {profile.role}
                 </TextTag>
 
                 <ChevronDown size={15} />
               </UserRoleDropDown>
             </TableCell>
 
-            <TableCell>{profile.data().plan.used_bytes}</TableCell>
+            <TableCell>{profile.plan.used_bytes}</TableCell>
+
             <TableCell>
-              {new Date(profile.data().date_created).toDateString()}
+              {new Date(profile.date_created).toDateString()}
             </TableCell>
 
             <TableCell>

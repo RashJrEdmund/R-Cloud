@@ -14,9 +14,14 @@ import { useMemo } from "react";
 
 interface Props {
   plan: StoragePlan;
+
+  /**
+   * to know weather or not to allow editing as if in dashboard.
+  */
+  isInDashboard?: boolean;
 }
 
-export default function StoragePlan({ plan }: Props) {
+export default function StoragePlan({ plan, isInDashboard }: Props) {
   const { currentUser, userProfile } = useUserStore();
   const router = useRouter();
 
