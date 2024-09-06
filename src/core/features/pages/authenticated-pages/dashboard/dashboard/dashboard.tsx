@@ -9,11 +9,11 @@ export default function DashboardPage() {
       </TextTag>
 
       <DivCard className="size-full h-auto w-full gap-3">
-        <Skeleton className="size-full max-h-[400px] max-w-[400px]" />
+        <Skeleton className="size-full max-h-[400px] max-w-[400px] bg-slate-700" />
 
-        <Skeleton className="size-full max-h-[400px] max-w-[400px]" />
+        <Skeleton className="size-full max-h-[400px] max-w-[400px] bg-slate-700" />
 
-        <Skeleton className="size-full max-h-[400px] max-w-[400px]" />
+        <Skeleton className="size-full max-h-[400px] max-w-[400px] bg-slate-700" />
       </DivCard>
     </DivCard>
   );

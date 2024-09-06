@@ -22,7 +22,7 @@ class ShimmerCache {
       );
 
       if (!cache || typeof cache !== "object" || Array.isArray(cache))
-        return {}; // "if statement" is checking if line 14 returns an object
+        return {}; // "if statement" is checking if line 19 returns an object
 
       return cache;
     };
@@ -57,6 +57,6 @@ class ShimmerCache {
   clearCache() {
     return this.sessionStorage.remove(this.cacheKey);
   }
-}
+};
 
 export { ShimmerCache };

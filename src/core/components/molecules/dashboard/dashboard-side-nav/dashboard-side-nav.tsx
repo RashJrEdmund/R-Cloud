@@ -59,28 +59,32 @@ export default function DashboardSideNav() {
             <X size={30} className="sm:hidden" onClick={closeSideNav} />
           </DivCard>
 
-          {SideNavContent.map(({ text, path, icon: Icon }) => (
-            <Link
-              key={text}
-              href={path}
-              onClick={closeSideNav}
-              className={cn(
-                path === pathname ? "bg-slate-400" : "",
-                "w-full rounded-lg border p-3 duration-300 hover:shadow hover:shadow-app_blue"
-              )}
-            >
-              <TextTag className="w-full justify-between">
-                {text}
+          {SideNavContent.map(({ text, path, icon: Icon }) => {
+            const shouldHighlight = path === pathname;
 
-                <Icon />
-              </TextTag>
-            </Link>
-          ))}
+            return (
+              <Link
+                key={text}
+                href={path}
+                onClick={closeSideNav}
+                className={cn(
+                  shouldHighlight ? "bg-app_black" : "",
+                  "w-full rounded-lg border p-3 duration-300 hover:shadow hover:shadow-app_blue"
+                )}
+              >
+                <TextTag className={cn("w-full justify-between", shouldHighlight ? "text-app_text_invert" : "")}>
+                  {text}
+
+                  <Icon />
+                </TextTag>
+              </Link>
+            )
+          })}
         </DivCard>
 
-        <Button asChild>
+        <Button asChild variant={"black"}>
           <TextTag
-            className="w-full cursor-pointer justify-between rounded-lg border p-3 py-5 text-base duration-300"
+            className="w-full cursor-pointer justify-between rounded-lg border p-3 py-[1.3rem] text-base duration-300"
             onClick={() => {
               closeSideNav();
               setLogOutDialogOpen(true);

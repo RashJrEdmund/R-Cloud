@@ -6,20 +6,9 @@ import PlanDisplayShimmer from "@/features/pages/storage-plans/_components/plan-
 export default function DashboardStoragePlansPage() {
   return (
     <DivCard className="h-auto w-full flex-col justify-start">
-      {/* <TextTag>dashboard storage plans page</TextTag> */}
-
       <Suspense fallback={<PlanDisplayShimmer />}>
         <PlanDisplay isInDashboard />
       </Suspense>
-
-      {/* <pre>
-        <code>
-          {JSON.stringify(data?.docs.map((plan) => ({
-            ...plan.data(),
-            id: plan.id,
-          })), null, 4)}
-        </code>
-      </pre> */}
     </DivCard>
   );
 }

@@ -24,13 +24,14 @@ import { updateUserProfile } from "@/core/config/firebase/fire-store";
 import { cn } from "@/core/lib/utils";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRights } from "@/providers/hooks";
 
 function UserRoleDropDown({
-  children,
-  profile,
+  children, profile, isSuperAdmin
 }: {
   children: React.ReactNode;
   profile: UserProfile;
+  isSuperAdmin: boolean;
 }) {
   const queryClient = useQueryClient();
 
@@ -64,7 +65,7 @@ function UserRoleDropDown({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center justify-start gap-4">
+      <DropdownMenuTrigger disabled={profile.role === "SUPER_ADMIN" || !isSuperAdmin} className="flex items-center justify-start gap-4">
         {children}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="">
@@ -84,7 +85,7 @@ function UserRoleDropDown({
             )}
             onClick={() => mutate({ email: profile.email, updates: { role } })}
           >
-            {role}
+            {role.replace("_", " ")}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
@@ -99,55 +100,63 @@ function UserTable({
   userProfiles: UserProfile[];
   isLoading: boolean;
 }) {
+  const isSuperAdmin = useRights(["SUPER_ADMIN"]);
+
   return (
-    <Table>
-      <TableCaption>R - Cloud Users.</TableCaption>
-
-      <TableHeader>
-        <TableRow>
-          {["Email", "Plan", "Role", "Used Bytes", "Date Joined"].map(
-            (header) => (
-              <TableHead key={header}>{header}</TableHead>
-            )
-          )}
-        </TableRow>
-      </TableHeader>
-
-      <TableBody>
-        {userProfiles?.map((profile) => (
-          <TableRow key={profile.id}>
-            <TableCell>{profile.email}</TableCell>
-            <TableCell>{profile.plan.label}</TableCell>
-
-            <TableCell>
-              <UserRoleDropDown profile={{ ...profile, id: profile.id }}>
-                <TextTag
-                  className={cn(
-                    profile.role === "ADMIN" ? "text-app_text_blue" : ""
-                  )}
-                >
-                  {profile.role}
-                </TextTag>
-
-                <ChevronDown size={15} />
-              </UserRoleDropDown>
-            </TableCell>
-
-            <TableCell>{profile.plan.used_bytes}</TableCell>
-
-            <TableCell>
-              {new Date(profile.date_created).toDateString()}
-            </TableCell>
-
-            <TableCell>
-              <Link href={`/dashboard/users/${encodeURIComponent(profile.id)}`}>
-                <SquareArrowRight className="cursor-pointer" />
-              </Link>
-            </TableCell>
+    <>
+      <Table className="mt-4 mx-0 w-full">
+        <TableHeader className="border">
+          <TableRow>
+            {["Email", "Plan", "Role", "Used Bytes", "Date Joined"].map(
+              (header) => (
+                <TableHead key={header} className="whitespace-nowrap border font-bold">{header}</TableHead>
+              )
+            )}
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+
+        <TableBody className="border">
+          {userProfiles?.map((profile) => (
+            <TableRow key={profile.id}>
+              <TableCell className="whitespace-nowrap border">{profile.email}</TableCell>
+
+              <TableCell className="border">{profile.plan.label}</TableCell>
+
+              <TableCell className="border">
+                <UserRoleDropDown
+                  profile={{ ...profile, id: profile.id }}
+                  isSuperAdmin={isSuperAdmin}
+                >
+                  <TextTag
+                    className={cn(
+                      ["ADMIN", "SUPER_ADMIN"].includes(profile.role) ? "text-app_text_blue" : ""
+                    )}
+                  >
+                    {profile.role.replace("_", " ")}
+                  </TextTag>
+
+                  {isSuperAdmin && profile.role !== "SUPER_ADMIN" ? <ChevronDown size={15} /> : null}
+                </UserRoleDropDown>
+              </TableCell>
+
+              <TableCell className="whitespace-nowrap border">{profile.plan.used_bytes}</TableCell>
+
+              <TableCell className="whitespace-nowrap border">
+                {new Date(profile.date_created).toDateString()}
+              </TableCell>
+
+              <TableCell className="border">
+                <Link href={`/dashboard/users/${encodeURIComponent(profile.id)}`}>
+                  <SquareArrowRight className="cursor-pointer opacity-50" />
+                </Link>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+
+      <TableCaption>R - Cloud Users.</TableCaption>
+    </>
   );
 }
 

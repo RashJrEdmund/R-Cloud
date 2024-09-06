@@ -9,8 +9,8 @@ export default function VideoGuidesPage({}: Props) {
     <MainTag className="justify-start gap-0">
       <TopSection hide_search_section />
 
-      <DivCard className="mb-4 flex-col gap-8">
-        <TextTag className="max-w-[400px] text-center text-app_text_grayed">
+      <DivCard className="w-primary_app_w mb-4 flex-col gap-8">
+        <TextTag className="w-full max-w-[400px] text-center text-app_text_grayed">
           Video guides on how to use my cloud storage provider
         </TextTag>
 

@@ -17,7 +17,7 @@ export default function TrustedBy({}: Props) {
           <TextTag className="w-fit whitespace-nowrap">Active Monthly</TextTag>
 
           <TextTag className="whitespace-nowrap text-3xl md:text-5xl">
-            Users 😌
+            Users 🚀
           </TextTag>
         </DivCard>
       </DivCard>
