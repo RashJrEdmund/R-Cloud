@@ -28,9 +28,13 @@ export const storage = getStorage(app);
 
 export const fireStore = getFirestore(app);
 
-// export const analytics = getAnalytics(app);
+let analytics: any;
 
-// logEvent(analytics, "analytic logging");
+if (typeof window !== "undefined") {
+  analytics = getAnalytics(app);
+}
+
+logEvent(analytics, "analytic logging");
 
 // auth providers
 
@@ -39,3 +43,5 @@ export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
   login_hint: "user@example.com",
 });
+
+export { analytics };
