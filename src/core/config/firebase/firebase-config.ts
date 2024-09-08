@@ -7,7 +7,7 @@ import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider, getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import { getAnalytics, logEvent } from "firebase/analytics";
+import { type Analytics, getAnalytics, logEvent } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -28,13 +28,14 @@ export const storage = getStorage(app);
 
 export const fireStore = getFirestore(app);
 
-let analytics: any;
+let analytics: Analytics | undefined;
 
 if (typeof window !== "undefined") {
   analytics = getAnalytics(app);
-}
 
-logEvent(analytics, "analytic logging");
+  logEvent(analytics, "analytic_logging");
+  console.log(" in analytics ", analytics);
+}
 
 // auth providers
 

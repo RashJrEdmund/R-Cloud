@@ -9,7 +9,30 @@ import type { Document } from "@/core/interfaces/entities";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ComponentProps } from "react";
 import { cn } from "@/core/lib/utils";
+import { Globe, Lock } from "lucide-react";
 import SelectCheckbox from "./select-checkbox";
+import { useAppStore, useSelectionStore } from "@/providers/stores/zustand";
+
+function SharedMark({ doc }: { doc: Document }) {
+  const { displayLayout } = useAppStore();
+  const { selectionStart } = useSelectionStore();
+
+  if (!doc?.sharedState?.isShared) return null;
+
+  return doc.sharedState.accessType === "PUBLIC" ? (
+    <Globe
+      className={cn(
+        "absolute rounded-full bg-app_bg_light text-app_text_grayed",
+        displayLayout === "GRID" ? "size-5 top-[3px] right-[3px]" : selectionStart ? "size-3 bottom-0 m-2 left-[17px]" : "size-3 bottom-0 left-0 m-2",
+      )} />
+  ) : (
+    <Lock
+      className={cn(
+        "absolute rounded-full bg-app_bg_light text-app_text_grayed",
+        displayLayout === "GRID" ? "size-5 top-[3px] right-[3px]" : selectionStart ? "size-3 bottom-0 m-2 left-[17px]" : "size-3 bottom-0 left-0 m-2",
+      )} />
+  );
+}
 
 interface CardContainerProps extends ComponentProps<"div"> {
   document: Document;
@@ -29,6 +52,8 @@ function GridCardContainer({
         className
       )}
     >
+      <SharedMark doc={document} />
+
       <SelectCheckbox className="absolute m-[10px]" document={document} />
 
       <>{children}</>
@@ -50,6 +75,8 @@ function ListCardContainer({
         className
       )}
     >
+      <SharedMark doc={document} />
+
       <SelectCheckbox className="mr-[5px]" document={document} />
 
       <>{children}</>
