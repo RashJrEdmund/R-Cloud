@@ -12,9 +12,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { shortenText } from "@/core/utils/helpers";
 
-interface Props {}
+interface Props { }
 
-export default function ProfileSection({}: Props) {
+export default function ProfileSection({ }: Props) {
   const { currentUser } = useUserStore();
 
   const profile_url = useMemo(() => {
@@ -27,7 +27,11 @@ export default function ProfileSection({}: Props) {
     <div className="flex w-fit items-center justify-center [&_a]:flex [&_a]:w-fit [&_a]:items-center [&_a]:justify-center [&_a]:gap-[7px]">
       <DropdownMenu>
         <DropdownMenuTrigger className="outline-none">
-          <TextTag className="flex-col sm:flex-row">
+          <TextTag className="flex-col sm:flex-row gap-3">
+            <TextTag className="hidden sm:inline">
+              {shortenText(currentUser?.username || "username", 17)}
+            </TextTag>
+
             <Image
               src={profile_url}
               alt="user profile image icon"
@@ -36,10 +40,6 @@ export default function ProfileSection({}: Props) {
               draggable={false}
               className="size-[35px] rounded-full border border-gray-500 object-cover md:size-[38px]"
             />
-
-            <TextTag className="hidden sm:inline">
-              {shortenText(currentUser?.username || "username", 17)}
-            </TextTag>
           </TextTag>
         </DropdownMenuTrigger>
 

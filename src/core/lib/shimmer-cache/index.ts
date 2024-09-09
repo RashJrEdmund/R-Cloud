@@ -57,6 +57,6 @@ class ShimmerCache {
   clearCache() {
     return this.sessionStorage.remove(this.cacheKey);
   }
-};
+}
 
 export { ShimmerCache };

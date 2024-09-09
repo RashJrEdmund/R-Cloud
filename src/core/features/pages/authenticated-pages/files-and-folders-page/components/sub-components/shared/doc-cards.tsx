@@ -23,14 +23,24 @@ function SharedMark({ doc }: { doc: Document }) {
     <Globe
       className={cn(
         "absolute rounded-full bg-app_bg_light text-app_text_grayed",
-        displayLayout === "GRID" ? "size-5 top-[3px] right-[3px]" : selectionStart ? "size-3 bottom-0 m-2 left-[17px]" : "size-3 bottom-0 left-0 m-2",
-      )} />
+        displayLayout === "GRID"
+          ? "right-[3px] top-[3px] size-5"
+          : selectionStart
+            ? "bottom-0 left-[17px] m-2 size-3"
+            : "bottom-0 left-0 m-2 size-3"
+      )}
+    />
   ) : (
     <Lock
       className={cn(
         "absolute rounded-full bg-app_bg_light text-app_text_grayed",
-        displayLayout === "GRID" ? "size-5 top-[3px] right-[3px]" : selectionStart ? "size-3 bottom-0 m-2 left-[17px]" : "size-3 bottom-0 left-0 m-2",
-      )} />
+        displayLayout === "GRID"
+          ? "right-[3px] top-[3px] size-5"
+          : selectionStart
+            ? "bottom-0 left-[17px] m-2 size-3"
+            : "bottom-0 left-0 m-2 size-3"
+      )}
+    />
   );
 }
 

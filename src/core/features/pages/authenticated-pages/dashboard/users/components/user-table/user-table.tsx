@@ -27,7 +27,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRights } from "@/providers/hooks";
 
 function UserRoleDropDown({
-  children, profile, isSuperAdmin
+  children,
+  profile,
+  isSuperAdmin,
 }: {
   children: React.ReactNode;
   profile: UserProfile;
@@ -39,18 +41,23 @@ function UserRoleDropDown({
     mutationKey: ["users", profile.id],
     mutationFn: updateUserProfile,
     onMutate: async (update) => {
-      const { email, updates: { role } } = update;
+      const {
+        email,
+        updates: { role },
+      } = update;
       // optimistic updates
       await queryClient.cancelQueries({ queryKey: ["users"] });
 
       const prevUsers = queryClient.getQueryData(["users"]) as UserProfile[];
 
-      queryClient.setQueryData(["users"], () => prevUsers.map((user) => {
-        if (user.email !== email) return user;
+      queryClient.setQueryData(["users"], () =>
+        prevUsers.map((user) => {
+          if (user.email !== email) return user;
 
-        // optimistically update user
-        return { ...user, role };
-      }));
+          // optimistically update user
+          return { ...user, role };
+        })
+      );
 
       return { prevUsers };
     },
@@ -60,12 +67,15 @@ function UserRoleDropDown({
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
-    }
+    },
   });
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger disabled={profile.role === "SUPER_ADMIN" || !isSuperAdmin} className="flex items-center justify-start gap-4">
+      <DropdownMenuTrigger
+        disabled={profile.role === "SUPER_ADMIN" || !isSuperAdmin}
+        className="flex items-center justify-start gap-4"
+      >
         {children}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="">
@@ -104,12 +114,17 @@ function UserTable({
 
   return (
     <>
-      <Table className="mt-4 mx-0 w-full">
+      <Table className="mx-0 mt-4 w-full">
         <TableHeader className="border">
           <TableRow>
             {["Email", "Plan", "Role", "Used Bytes", "Date Joined"].map(
               (header) => (
-                <TableHead key={header} className="whitespace-nowrap border font-bold">{header}</TableHead>
+                <TableHead
+                  key={header}
+                  className="whitespace-nowrap border font-bold"
+                >
+                  {header}
+                </TableHead>
               )
             )}
           </TableRow>
@@ -118,7 +133,9 @@ function UserTable({
         <TableBody className="border">
           {userProfiles?.map((profile) => (
             <TableRow key={profile.id}>
-              <TableCell className="whitespace-nowrap border">{profile.email}</TableCell>
+              <TableCell className="whitespace-nowrap border">
+                {profile.email}
+              </TableCell>
 
               <TableCell className="border">{profile.plan.label}</TableCell>
 
@@ -129,24 +146,32 @@ function UserTable({
                 >
                   <TextTag
                     className={cn(
-                      ["ADMIN", "SUPER_ADMIN"].includes(profile.role) ? "text-app_text_blue" : ""
+                      ["ADMIN", "SUPER_ADMIN"].includes(profile.role)
+                        ? "text-app_text_blue"
+                        : ""
                     )}
                   >
                     {profile.role.replace("_", " ")}
                   </TextTag>
 
-                  {isSuperAdmin && profile.role !== "SUPER_ADMIN" ? <ChevronDown size={15} /> : null}
+                  {isSuperAdmin && profile.role !== "SUPER_ADMIN" ? (
+                    <ChevronDown size={15} />
+                  ) : null}
                 </UserRoleDropDown>
               </TableCell>
 
-              <TableCell className="whitespace-nowrap border">{profile.plan.used_bytes}</TableCell>
+              <TableCell className="whitespace-nowrap border">
+                {profile.plan.used_bytes}
+              </TableCell>
 
               <TableCell className="whitespace-nowrap border">
                 {new Date(profile.date_created).toDateString()}
               </TableCell>
 
               <TableCell className="border">
-                <Link href={`/dashboard/users/${encodeURIComponent(profile.id)}`}>
+                <Link
+                  href={`/dashboard/users/${encodeURIComponent(profile.id)}`}
+                >
                   <SquareArrowRight className="cursor-pointer opacity-50" />
                 </Link>
               </TableCell>

@@ -44,7 +44,7 @@ export default function DashboardLayout({
 
             <DivCard
               as="main"
-              className="mx-auto min-h-[90vh] w-full max-w-default_app_max_w items-stretch sm:px-2 pb-8 pt-[4.3rem]"
+              className="mx-auto min-h-[90vh] w-full max-w-default_app_max_w items-stretch pb-8 pt-[4.3rem] sm:px-2"
             >
               {children}
             </DivCard>

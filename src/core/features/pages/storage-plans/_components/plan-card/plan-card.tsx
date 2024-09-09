@@ -15,7 +15,7 @@ interface Props {
 
   /**
    * to know weather or not to allow editing as if in dashboard.
-  */
+   */
   isInDashboard?: boolean;
 }
 
@@ -69,4 +69,4 @@ export default function PlanCard({ plan, isInDashboard }: Props) {
       />
     </DivCard>
   );
-};
+}

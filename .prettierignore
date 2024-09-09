@@ -1,6 +1,6 @@
 .next
 .cache
-package-lock.json
+package*.json
 public
 node_modules
 next-env.d.ts

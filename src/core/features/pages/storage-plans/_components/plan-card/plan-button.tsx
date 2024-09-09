@@ -13,17 +13,16 @@ interface Props {
   isInDashboard: boolean;
   isCurrentPlan: boolean;
   plan: StoragePlan;
-};
+}
 
 function PlanButton({ isInDashboard, isCurrentPlan, plan }: Props) {
   const { currentUser } = useUserStore();
   const router = useRouter();
 
-  if (isInDashboard) return (
-    <DivCard
-      className="bg-app_bg_grayed w-full p-[10px] sm:p-5 md:p-6 mdxl:p-7 mdxl:text-[1.2rem] rounded-md"
-    />
-  );
+  if (isInDashboard)
+    return (
+      <DivCard className="w-full rounded-md bg-app_bg_grayed p-[10px] sm:p-5 md:p-6 mdxl:p-7 mdxl:text-[1.2rem]" />
+    );
 
   const handleNewSubscription = (plan: StoragePlan) => {
     if (!currentUser) {
@@ -80,6 +79,6 @@ function PlanButton({ isInDashboard, isCurrentPlan, plan }: Props) {
       {plan.is_free ? "Free Plan" : "Buy Plan"}
     </Button>
   );
-};
+}
 
 export { PlanButton };

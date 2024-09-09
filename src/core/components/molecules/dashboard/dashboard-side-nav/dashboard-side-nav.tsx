@@ -72,13 +72,18 @@ export default function DashboardSideNav() {
                   "w-full rounded-lg border p-3 duration-300 hover:shadow hover:shadow-app_blue"
                 )}
               >
-                <TextTag className={cn("w-full justify-between", shouldHighlight ? "text-app_text_invert" : "")}>
+                <TextTag
+                  className={cn(
+                    "w-full justify-between",
+                    shouldHighlight ? "text-app_text_invert" : ""
+                  )}
+                >
                   {text}
 
                   <Icon />
                 </TextTag>
               </Link>
-            )
+            );
           })}
         </DivCard>
 

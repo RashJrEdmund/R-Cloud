@@ -7,4 +7,4 @@ export default function useRights(roles: UserRoles[]) {
   if (!userProfile) return false;
 
   return roles.includes(userProfile?.role);
-};
+}

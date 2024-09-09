@@ -41,4 +41,4 @@ export default function useFilesFolderShimmerCache() {
   }, [documents, params, pathname, currentFolder]);
 
   return { cardCount };
-};
+}

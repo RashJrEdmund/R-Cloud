@@ -11,7 +11,7 @@ const config = {
   prefix: "",
   theme: {
     container: {
-      center: true,
+      center: "true",
       padding: "2rem",
       screens: {
         "2xl": "1400px",
@@ -52,11 +52,9 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-
         app_blue: "var(--app_blue)",
         app_text_blue: "var(--app_text_blue)",
         overlay_gradient: "var(--app_overlay_gradient)",
-
         app_text: "var(--app_text)",
         app_text_grayed: "var(--app_text_grayed)",
         app_text_invert: "var(--app_text_invert)",
@@ -65,7 +63,6 @@ const config = {
         app_border: "var(--app_border)",
         app_border_thick: "var(--app_border_thick)",
         app_error: "var(--app_error)",
-
         app_bg: "var(--app_bg)",
         app_bg_light: "var(--app_bg_light)",
         app_bg_grayed: "var(--app_bg_grayed)",
@@ -81,15 +78,41 @@ const config = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
         },
         "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
+        },
+        "accordion-down": {
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
+        },
+        "accordion-up": {
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
         },
       },
       animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
@@ -102,7 +125,6 @@ const config = {
         primary_app_w: "var(--primary_app_w)",
         secondary_app_w: "var(--secondary_app_w)",
         tertiary_app_w: "var(--tertiary_app_w)",
-
         main_min_h: "var(--main_min_h)",
       },
     },

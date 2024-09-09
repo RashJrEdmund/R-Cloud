@@ -8,7 +8,10 @@ const getUsers = async () => {
 
   // only doing this so I can be able to update the firebase cache for this query.
   // just userCollection.docs is a complex object to mutate in the useMutation optimistic update.
-  return (await getDocs(usersCollection)).docs.map((user) => ({ ...user.data(), id: user.id }));
+  return (await getDocs(usersCollection)).docs.map((user) => ({
+    ...user.data(),
+    id: user.id,
+  }));
 };
 
 export { getUsers };
