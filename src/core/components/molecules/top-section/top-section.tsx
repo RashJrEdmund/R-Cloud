@@ -6,7 +6,7 @@ import {
   DisplayLayout,
   MoreSection,
   Sort,
-} from "./_components";
+} from "./components";
 
 interface Props {
   hide_search_section?: boolean;

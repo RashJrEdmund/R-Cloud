@@ -1,7 +1,7 @@
 "use client";
 
 import type { SharedDocument } from "@/core/interfaces/entities";
-import { DivCard, MainTag, TextTag } from "@/components/atoms";
+import { DivCard, TextTag } from "@/components/atoms";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { getOnePublicDocument } from "@/core/config/firebase/fire-store";
@@ -69,8 +69,8 @@ export default function SharedFilePage({ isPublicFilePage }: Props) {
   }, [params, currentUser, isPublicFilePage, isPrivateFilePage]);
 
   return (
-    <MainTag className="flex-col gap-8">
-      <TextTag className="mt-6 text-xl">
+    <>
+      <TextTag className="mb-4 text-xl">
         {isPublicFilePage ? "Publicly" : "Privately"} shared file
       </TextTag>
 
@@ -151,6 +151,6 @@ export default function SharedFilePage({ isPublicFilePage }: Props) {
           </DivCard>
         );
       })()}
-    </MainTag>
+    </>
   );
 }
