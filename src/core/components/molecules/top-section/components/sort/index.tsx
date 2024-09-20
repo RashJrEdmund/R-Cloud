@@ -2,7 +2,7 @@
 
 import { useLayoutEffect } from "react";
 import { useAppStore } from "@/providers/stores/zustand";
-import { CLIENT_STORAGE } from "@/core/lib";
+import { CLIENT_STORAGE } from "@orashus/client-storage";
 import { TableColumnsSplit } from "lucide-react";
 import { cn } from "@/core/lib/utils";
 import { FolderSeparation } from "@/core/interfaces/app";
@@ -41,12 +41,7 @@ export default function Sort({}: Props) {
   };
 
   useLayoutEffect(() => {
-    const separate_folders = localStorage.get<FolderSeparation>(
-      "separate_folders",
-      {
-        isString: true,
-      }
-    )!;
+    const separate_folders = localStorage.get<FolderSeparation>("separate_folders")! as FolderSeparation;
 
     if (["NONE", "LOW", "FULL"].includes(separate_folders)) {
       if (separate_folders === folderSeparation) return;

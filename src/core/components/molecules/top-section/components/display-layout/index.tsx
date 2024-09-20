@@ -5,7 +5,7 @@ import type { DisplayLayout as DisplayLayoutType } from "@/core/interfaces/app";
 import { useLayoutEffect } from "react";
 import { DivCard } from "@/components/atoms";
 import { useAppStore } from "@/providers/stores/zustand";
-import { CLIENT_STORAGE } from "@/core/lib";
+import { CLIENT_STORAGE } from "@orashus/client-storage";
 import { cn } from "@/core/lib/utils";
 import { LayoutGrid, List } from "lucide-react";
 
@@ -15,7 +15,7 @@ interface Props {
 
 const localStorage = new CLIENT_STORAGE("local");
 
-export default function DisplayLayout({}: Props) {
+export default function DisplayLayout({ }: Props) {
   const { displayLayout, setDisplayLayout } = useAppStore();
 
   const toggleDisplayLayout = (layout: DisplayLayoutType) => {
@@ -40,9 +40,7 @@ export default function DisplayLayout({}: Props) {
   };
 
   useLayoutEffect(() => {
-    const layout_type = localStorage.get<DisplayLayoutType>("layout_type", {
-      isString: true,
-    })!;
+    const layout_type = localStorage.get<DisplayLayoutType>("layout_type")! as DisplayLayoutType;
 
     if (["GRID", "LIST"].includes(layout_type)) {
       if (layout_type === displayLayout) return;

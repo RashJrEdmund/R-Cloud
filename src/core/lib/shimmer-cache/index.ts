@@ -1,4 +1,4 @@
-import { CLIENT_STORAGE } from "../client-storage";
+import { CLIENT_STORAGE } from "@orashus/client-storage";
 
 interface UpdateOptions {
   /** Weather or not to update the shimmer cache if files in document have changed  */
@@ -18,7 +18,7 @@ class ShimmerCache {
     this.cache = () => {
       const cache = this.sessionStorage.get<Record<string, number>>(
         this.cacheKey,
-        { isString: false }
+        { parse: true }
       );
 
       if (!cache || typeof cache !== "object" || Array.isArray(cache))
