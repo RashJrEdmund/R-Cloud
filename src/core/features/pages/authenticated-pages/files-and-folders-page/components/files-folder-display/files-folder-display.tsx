@@ -53,6 +53,7 @@ export default function FilesFolderDisplay({}: Props) {
     currentFolder,
     loadingCurrentFolder,
   } = useDocStore();
+
   const { displayLayout, folderSeparation } = useAppStore();
 
   const getFolders = useCallback(() => {
@@ -68,8 +69,6 @@ export default function FilesFolderDisplay({}: Props) {
 
     return [...getFolders(), ...getFiles()];
   }, [docs, folderSeparation]);
-
-  // return <FilesFolderShimmer displayLayout={displayLayout} />;
 
   return (
     <MainAndTopSection>

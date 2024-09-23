@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { shortenText } from "@/core/utils/helpers";
-import { useGetUserProfile } from "../../api/drive.queries";
+import { useGetCurrentUserProfile } from "@/features/pages/auth/api/auth.queries";
 
 interface Props { };
 
@@ -24,7 +24,7 @@ export default function ProfileSection({ }: Props) {
       : "/auth-images/default-profile-photo.jpg";
   }, [currentUser]);
 
-  useGetUserProfile();
+  useGetCurrentUserProfile();
 
   return (
     <div className="flex w-fit items-center justify-center [&_a]:flex [&_a]:w-fit [&_a]:items-center [&_a]:justify-center [&_a]:gap-[7px]">

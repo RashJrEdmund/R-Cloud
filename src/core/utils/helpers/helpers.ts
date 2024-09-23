@@ -1,12 +1,17 @@
-/* TODO +=> =======================================
-| Implement implement simple app utility functions |
-================================================ */
-
 const shortenText = (text: string, max_length: number): string => {
   const isLong = text.length > max_length;
 
   return isLong ? text.substring(0, max_length - 3).trim() + "..." : text;
 };
+
+const isValidUrl = (url: string) => {
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 const calculatePercentage = (
   a: number,
@@ -19,14 +24,13 @@ const calculatePercentage = (
   };
 };
 
+/**
+ /* This function simulates a click on the file-upload input field in the FilesFolderDisplayPage
+ /* component in app/(strictly-protected)/r-drive/_components/files-folder-display-page/
+ /* this is so as to open the file select dialog. It has been used as the action function in the
+ /* content of context Menus that have an Upload file(s) option
+*/
 const openFileUploadDialog = () => {
-  /* FUNC_DESC +=> ==============================================================================
-  | This function simulates a click on the file-upload input field in the FilesFolderDisplayPage |
-  | component in app/(strictly-protected)/r-drive/_components/files-folder-display-page/         |
-  | this is so as to open the file select dialog. It has been used as the action function in the |
-  | content of context Menus that have an Upload file(s) option                                  |
-  ===============================================================================//=============*/
-
   const fileUploadField =
     document.querySelector<HTMLInputElement>("#file-upload-field");
 
@@ -53,6 +57,7 @@ const triggerFileDownload = (url: string, filename: string) => {
 
 export {
   shortenText,
+  isValidUrl,
   calculatePercentage,
   openFileUploadDialog,
   triggerFileDownload,

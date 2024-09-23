@@ -7,7 +7,7 @@ import {
 import type { UserProfile } from "@/core/interfaces/entities";
 import type { User } from "firebase/auth";
 
-type IHandleCreateUserProfile = (
+type HandleCreateUserProfile = (
   user: User | undefined,
   extra_data: { [key: string]: string } | null,
   set_state_actions: {
@@ -17,7 +17,7 @@ type IHandleCreateUserProfile = (
   }
 ) => Promise<void>;
 
-const handleCreateUserProfile: IHandleCreateUserProfile = async (
+const handleCreateUserProfile: HandleCreateUserProfile = async (
   user,
   extra_data,
   { setFormStatus }

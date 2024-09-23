@@ -20,7 +20,7 @@ interface Props {
   //
 }
 
-export default function LogoutModal({}: Props) {
+export default function LogoutModal({ }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
@@ -44,15 +44,22 @@ export default function LogoutModal({}: Props) {
     try {
       await logOut();
 
-      setCurrentUser(null);
-      setUserProfile(null);
-      setDocuments([]);
+      // setCurrentUser(null);
+      // setUserProfile(null);
+      // setDocuments([]);
 
       toast("Logout successful !", {
         description: "You'll have to login to use some parts of the app!",
       });
 
-      router.replace("/");
+      (async () => {
+        router.replace("/");
+      })().then(() => {
+        setCurrentUser(null);
+        setUserProfile(null);
+        setDocuments([]);
+      });
+
     } catch (error) {
       //
     } finally {

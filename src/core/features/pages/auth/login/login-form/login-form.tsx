@@ -11,8 +11,8 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { handleCreateUserProfile } from "../../auth-helpers";
+import { useRouter, useSearchParams } from "next/navigation";
+import { handleCreateUserProfile } from "../../api/auth-helpers";
 
 import { validateLoginForm } from "../../services/form-validations";
 import type { MouseEventHandler } from "react";
@@ -21,6 +21,7 @@ import { cn } from "@/core/lib/utils";
 import { useUserStore } from "@/providers/stores/zustand";
 import { extractUserDetailsFromFirebaseAuth } from "@/providers/guards/app-wrapper/app-wrapper.service";
 import { useQueryClient } from "@tanstack/react-query";
+import { isValidUrl } from "@/core/utils/helpers";
 
 interface Props {
   //
@@ -37,8 +38,19 @@ export default function LoginForm({ }: Props) {
   const { setCurrentUser } = useUserStore();
 
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const queryClient = useQueryClient();
+
+  const verifyNextPath = () => {
+    // const nextPath = searchParams.get("next");
+
+    // if (nextPath?.trim() && isValidUrl(nextPath.trim())) {
+    //   return router.push(nextPath);
+    // }
+
+    router.push("/r-drive");
+  };
 
   const handleGoogleLogin: MouseEventHandler<HTMLButtonElement> = () => {
     signInOrUpWithGooglePopup().then(async (res) => {
@@ -51,7 +63,7 @@ export default function LoginForm({ }: Props) {
 
       setCurrentUser(_user);
 
-      queryClient.refetchQueries({ queryKey: ["user-profile"] });
+      queryClient.refetchQueries({ queryKey: ["current-user-profile"] });
 
       if (tokenRes.isNewUser) {
         await handleCreateUserProfile(user, null, { setFormStatus });
@@ -62,7 +74,7 @@ export default function LoginForm({ }: Props) {
         });
       }
 
-      router.push("/r-drive");
+      verifyNextPath();
     });
   };
 
@@ -91,13 +103,14 @@ export default function LoginForm({ }: Props) {
         const _user = await extractUserDetailsFromFirebaseAuth(user!);
 
         setCurrentUser(_user);
-        queryClient.refetchQueries({ queryKey: ["user-profile"] });
+        queryClient.refetchQueries({ queryKey: ["current-user-profile"] });
 
         setFormStatus({
           status: 200,
           message: `welcome back ${user?.displayName || user?.email?.split("@").shift() || "user"}`,
         });
-        router.push("/r-drive");
+
+        verifyNextPath();
       })
       .catch(() => {
         setFormStatus({

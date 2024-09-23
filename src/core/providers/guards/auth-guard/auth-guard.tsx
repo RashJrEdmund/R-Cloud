@@ -1,29 +1,25 @@
 "use client";
 
-/* FILE_DESC +=> ==================================
-| This is the loose auth-guard, will only attempt |
-| load a currently logged in user and update the  |
-| currentUser zustand state variable unlike the   |
-| strict auth-guard                               |
-=====================================//==========*/
-
 import { LoadingPage } from "@/features/next-primitive-pages";
 import { useUserStore } from "@/providers/stores/zustand";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 interface Props {
   children: React.ReactNode;
 }
 
 export default function AuthGuard({ children }: Props) {
-  const { currentUser, currentUserLoading } = useUserStore();
+  const { currentUser } = useUserStore();
 
   const router = useRouter();
 
-  if (currentUserLoading) return <LoadingPage />;
-
   if (!currentUser) {
-    router.replace("/login?next=" + window.location);
+    (async () => {
+      toast("You must be logged in to access this page!");
+    })().then(() => {
+      router.replace("/login?next=" + window.location.toString());
+    });
 
     return <LoadingPage />;
   }

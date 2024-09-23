@@ -12,8 +12,8 @@ import {
   signInOrUpWithGooglePopup,
   signUpWithCredentials,
 } from "@/core/config/firebase";
-import { useRouter } from "next/navigation";
-import { handleCreateUserProfile } from "../../auth-helpers";
+import { useRouter, useSearchParams } from "next/navigation";
+import { handleCreateUserProfile } from "../../api/auth-helpers";
 
 import type { MouseEventHandler } from "react";
 import type { FieldErrors } from "../../services/form-validations/form-interfaces";
@@ -22,6 +22,7 @@ import { extractUserDetailsFromFirebaseAuth } from "@/providers/guards/app-wrapp
 import { useUserStore } from "@/providers/stores/zustand";
 import { useQueryClient } from "@tanstack/react-query";
 import { User as FirebaseUser } from "firebase/auth";
+import { isValidUrl } from "@/core/utils/helpers";
 
 interface Props {
   //
@@ -35,17 +36,24 @@ export default function SignUpForm({ }: Props) {
     message: string;
   } | null>(null);
 
-  const queryClient = useQueryClient();
-
   const { setCurrentUser } = useUserStore();
-  const router = useRouter();
 
-  const finish = async (user: FirebaseUser) => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const finishAndVerifyNextPath = async (user: FirebaseUser) => {
     const _user = await extractUserDetailsFromFirebaseAuth(user);
 
     setCurrentUser(_user);
 
-    queryClient.refetchQueries({ queryKey: ["user-profile"] });
+    queryClient.refetchQueries({ queryKey: ["current-user-profile"] });
+
+    // const nextPath = searchParams.get("next");
+
+    // if (nextPath?.trim() && isValidUrl(nextPath.trim())) {
+    //   return router.push(nextPath);
+    // }
 
     router.push("/r-drive");
   };
@@ -56,7 +64,7 @@ export default function SignUpForm({ }: Props) {
         setFormStatus,
       });
 
-      finish(res!.user);
+      finishAndVerifyNextPath(res!.user);
     });
   };
 
@@ -94,7 +102,7 @@ export default function SignUpForm({ }: Props) {
           { setFormStatus }
         );
 
-        finish(user!);
+        finishAndVerifyNextPath(user!);
       })
       .catch((er) => {
         setFormStatus({
