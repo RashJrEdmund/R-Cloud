@@ -8,33 +8,29 @@ import {
 import { ProgressBar } from "..";
 import { useMemo } from "react";
 
-import type { UserProfile } from "@/core/interfaces/entities";
 import { cn } from "@/core/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
-
-interface Props {
-  userProfile: UserProfile | null;
-  className?: string;
-}
+import { useUserStore } from "@/providers/stores/zustand";
 
 function UsedSpaceShimmer() {
   return (
     <div className="flex w-[min(100%,_500px)] flex-col items-start justify-start gap-1">
       <Skeleton className="h-[1.2rem] w-full max-w-[120px]" />
 
-      {/* <Skeleton className="h-[1.3rem] w-full rounded-[10px]" /> */}
       <Skeleton className="h-[150px] w-full rounded-[10px]" />
     </div>
   );
-}
+};
 
-export default function UsedSpaceDisplay({ userProfile, className }: Props) {
+export default function UsedSpaceDisplay({ className = "" }: { className?: string }) {
+  const { userProfile, userProfileLoading } = useUserStore();
+
   const usedSpaceVisualRep = useMemo<number>(
     () => getUsedSpaceVisualRepresentation(userProfile),
     [userProfile]
   );
 
-  return !userProfile ? (
+  return (!userProfile || userProfileLoading) ? (
     <UsedSpaceShimmer />
   ) : (
     <DivCard

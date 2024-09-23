@@ -3,7 +3,7 @@ import type { UserProfile } from "@/core/interfaces/entities";
 import { createFreeCollectionPath } from "@/core/config/firebase/fire-store/utils";
 import { getDocs } from "firebase/firestore";
 
-const getUsers = async () => {
+const getUsers = async (): Promise<UserProfile[]> => {
   const usersCollection = createFreeCollectionPath<UserProfile>("/users");
 
   // only doing this so I can be able to update the firebase cache for this query.

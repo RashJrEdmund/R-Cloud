@@ -1,7 +1,5 @@
-"use client";
-
 import { TextLogo } from "@/components/atoms";
-import { BreadCrumbs, NavTitle, ProfileSection } from "./nav-components";
+import { BreadCrumbs, ProfileSection } from "./nav-components";
 import Link from "next/link";
 
 interface Props {}
@@ -17,8 +15,6 @@ export default function NavBar({}: Props) {
 
           <BreadCrumbs />
         </section>
-
-        {/* <NavTitle /> */}
 
         <ProfileSection />
       </section>

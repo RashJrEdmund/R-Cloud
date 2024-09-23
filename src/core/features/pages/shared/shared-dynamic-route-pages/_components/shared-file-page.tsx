@@ -8,6 +8,7 @@ import { getOnePublicDocument } from "@/core/config/firebase/fire-store";
 import { LoaderCircle } from "lucide-react";
 import Viewer from "@/components/modals/file-viewer/viewer";
 import { useShareModalAssets, useUserStore } from "@/providers/stores/zustand";
+import Image from "next/image";
 
 interface Props {
   isPublicFilePage: boolean;
@@ -80,11 +81,21 @@ export default function SharedFilePage({ isPublicFilePage }: Props) {
 
         if (!sharedDoc)
           return (
-            <DivCard className="flex-col text-2xl">
-              <p className="">you sure??</p>
-              <span className="font-semibold">{params.doc_id}</span> does not
-              exist or has not be {isPublicFilePage ? "publicly" : "privately"}{" "}
-              shared
+            <DivCard className="flex-col text-2xl max-w-primary_app_w">
+              <TextTag className="text-xl">
+                Sorry File does not exist
+              </TextTag>
+
+              <Image
+                src="/files/file-not-found.svg"
+                alt="file not found"
+                width={500}
+                height={500}
+              />
+
+              <TextTag className="text-center">
+                file does not exist or has not be {isPublicFilePage ? "publicly" : "privately"} shared
+              </TextTag>
             </DivCard>
           );
 

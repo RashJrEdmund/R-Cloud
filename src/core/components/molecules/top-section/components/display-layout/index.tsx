@@ -26,14 +26,14 @@ export default function DisplayLayout({ }: Props) {
     setDisplayLayout(
       (() => {
         switch (layout) {
-          case "GRID":
-            saveToStorage("GRID");
-            return "GRID";
-          case "LIST":
-            saveToStorage("LIST");
-            return "LIST";
-          default:
-            return "GRID";
+        case "GRID":
+          saveToStorage("GRID");
+          return "GRID";
+        case "LIST":
+          saveToStorage("LIST");
+          return "LIST";
+        default:
+          return "GRID";
         }
       })()
     );
@@ -52,28 +52,6 @@ export default function DisplayLayout({ }: Props) {
 
   return (
     <DivCard className="rounded-[10px] border border-app_border font-bold">
-      {/* <LayoutGrid
-        size={35}
-        className={cn(
-          "cursor-pointer rounded-[7px_0_0_7px] p-[4px_5px]",
-          displayLayout === "GRID"
-            ? "border border-app_blue bg-app_blue text-app_text_invert shadow"
-            : "bg-transparent"
-        )}
-        onClick={() => toggleDisplayLayout("GRID")}
-      /> */}
-
-      {/* <List
-        size={35}
-        className={cn(
-          "cursor-pointer rounded-[0_7px_7px_0] p-[4px_5px]",
-          displayLayout === "LIST"
-            ? "border border-app_blue bg-app_blue text-app_text_invert shadow"
-            : "bg-transparent"
-        )}
-        onClick={() => toggleDisplayLayout("LIST")}
-      /> */}
-
       {[
         {
           icon: LayoutGrid,

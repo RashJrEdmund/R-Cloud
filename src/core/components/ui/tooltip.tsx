@@ -42,7 +42,7 @@ function Tooltip({ title, children, className = "", titleSx = "", ...restProps }
         <TooltipTrigger className={className} {...restProps}>
           {children}
         </TooltipTrigger>
-        <TooltipContent className={cn("z-30 border-none bg-app-dark-200 text-white", titleSx)}>
+        <TooltipContent className={cn("z-30 border-none bg-app_bg_invert text-white", titleSx)}>
           {title}
         </TooltipContent>
       </_Tooltip>

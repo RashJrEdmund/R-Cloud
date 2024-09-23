@@ -20,11 +20,10 @@ import { ChevronDown, SquareArrowRight } from "lucide-react";
 import { TextTag } from "@/components/atoms";
 import Link from "next/link";
 
-import { updateUserProfile } from "@/core/config/firebase/fire-store";
 import { cn } from "@/core/lib/utils";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRights } from "@/providers/hooks";
+import { useUpdateUserProfile } from "../../api/users.mutations";
 
 function UserRoleDropDown({
   children,
@@ -35,40 +34,7 @@ function UserRoleDropDown({
   profile: UserProfile;
   isSuperAdmin: boolean;
 }) {
-  const queryClient = useQueryClient();
-
-  const { mutate, isPending } = useMutation({
-    mutationKey: ["users", profile.id],
-    mutationFn: updateUserProfile,
-    onMutate: async (update) => {
-      const {
-        email,
-        updates: { role },
-      } = update;
-      // optimistic updates
-      await queryClient.cancelQueries({ queryKey: ["users"] });
-
-      const prevUsers = queryClient.getQueryData(["users"]) as UserProfile[];
-
-      queryClient.setQueryData(["users"], () =>
-        prevUsers.map((user) => {
-          if (user.email !== email) return user;
-
-          // optimistically update user
-          return { ...user, role };
-        })
-      );
-
-      return { prevUsers };
-    },
-    onError: (err, updateUser, context) => {
-      // rolling-back logic if function fails;
-      queryClient.setQueryData(["users"], context?.prevUsers);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
-    },
-  });
+  const { mutateAsync, isPending } = useUpdateUserProfile(profile);
 
   return (
     <DropdownMenu>
@@ -93,7 +59,7 @@ function UserRoleDropDown({
               "outline-none",
               profile.role === role ? "font-semibold text-app_text_blue" : ""
             )}
-            onClick={() => mutate({ email: profile.email, updates: { role } })}
+            onClick={() => mutateAsync({ email: profile.email, updates: { role } })}
           >
             {role.replace("_", " ")}
           </DropdownMenuItem>

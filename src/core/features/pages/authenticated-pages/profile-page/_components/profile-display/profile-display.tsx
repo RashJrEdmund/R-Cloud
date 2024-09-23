@@ -3,24 +3,26 @@
 import { DivCard, TextTag } from "@/components/atoms";
 import { Button } from "@/components/ui/button";
 import { useUserStore } from "@/providers/stores/zustand";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import StyledProfileDisplay from "./styled-profile-display";
 import { ProfileImage } from "..";
 import { useRouter } from "next/navigation";
-import { getUserProfile } from "@/core/config/firebase/fire-store";
 import { UsedSpaceDisplay } from "@/components/molecules";
-import { cn } from "@/core/lib/utils";
 
 interface Props {
   //
 }
 
-export default function ProfileDisplay({}: Props) {
-  const { currentUser, userProfile, setUserProfile, setLogOutDialogOpen } =
-    useUserStore();
+export default function ProfileDisplay({ }: Props) {
+  const {
+    currentUser,
+    currentUserLoading,
 
-  const [loading, setLoading] = useState<boolean>(true);
+    userProfile,
+    userProfileLoading,
 
+    setLogOutDialogOpen
+  } = useUserStore();
   const router = useRouter();
 
   const LastLogin = useMemo(
@@ -29,20 +31,8 @@ export default function ProfileDisplay({}: Props) {
   );
 
   useEffect(() => {
-    if (!currentUser) return;
-    if (!currentUser) return;
-    if (!currentUser) return;
-    if (!currentUser) return;
-    getUserProfile(currentUser.email)
-      .then((res) => {
-        if (!res.exists()) return;
-
-        const profile = res.data();
-        setUserProfile(profile);
-      })
-      .catch(() => router.push("/r-drive"))
-      .finally(() => setLoading(false));
-  }, []);
+    if (!currentUser && !userProfile) router.push("/r-drive");
+  }, [currentUser, router, userProfile]);
 
   // console.log('user bytes', userProfile && calculatePercentage(userProfile?.plan.used_bytes, userProfile?.plan.bytes));
 
@@ -53,12 +43,13 @@ export default function ProfileDisplay({}: Props) {
 
         <DivCard className="flex-col items-start gap-4">
           <DivCard className="w-full flex-wrap justify-start gap-4">
-            {!loading || currentUser ? (
+            {!currentUserLoading ? (
               <>
                 <div className="flex flex-col">
                   <TextTag className="whitespace-nowrap text-[0.9rem]">
                     Logged In as:
                   </TextTag>
+
                   <TextTag className="text-app_text_blue">
                     {currentUser?.username}
                   </TextTag>
@@ -97,11 +88,7 @@ export default function ProfileDisplay({}: Props) {
             )}
           </DivCard>
 
-          {/* <pre>
-  {JSON.stringify(userProfile, null, 4)}
-</pre> */}
-
-          <UsedSpaceDisplay userProfile={userProfile} />
+          <UsedSpaceDisplay />
 
           <DivCard className="w-full flex-col items-start justify-start">
             <TextTag className="text-[0.9rem]">
@@ -136,10 +123,7 @@ export default function ProfileDisplay({}: Props) {
       <DivCard className="w-full items-start justify-start">
         <Button
           variant="error"
-          className={cn(
-            "min-w-[320px]",
-            loading ? "cursor-not-allowed" : "cursor-pointer"
-          )}
+          className="min-w-[320px] cursor-pointer"
           onClick={() => setLogOutDialogOpen(true)}
         >
           Log out

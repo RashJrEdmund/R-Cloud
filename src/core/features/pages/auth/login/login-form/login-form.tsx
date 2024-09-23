@@ -20,12 +20,13 @@ import type { FieldErrors } from "../../services/form-validations/form-interface
 import { cn } from "@/core/lib/utils";
 import { useUserStore } from "@/providers/stores/zustand";
 import { extractUserDetailsFromFirebaseAuth } from "@/providers/guards/app-wrapper/app-wrapper.service";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   //
 }
 
-export default function LoginForm({}: Props) {
+export default function LoginForm({ }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<FieldErrors | null>(null);
   const [formStatus, setFormStatus] = useState<{
@@ -37,6 +38,8 @@ export default function LoginForm({}: Props) {
 
   const router = useRouter();
 
+  const queryClient = useQueryClient();
+
   const handleGoogleLogin: MouseEventHandler<HTMLButtonElement> = () => {
     signInOrUpWithGooglePopup().then(async (res) => {
       const user = res?.user;
@@ -47,6 +50,8 @@ export default function LoginForm({}: Props) {
       const _user = await extractUserDetailsFromFirebaseAuth(user!);
 
       setCurrentUser(_user);
+
+      queryClient.refetchQueries({ queryKey: ["user-profile"] });
 
       if (tokenRes.isNewUser) {
         await handleCreateUserProfile(user, null, { setFormStatus });
@@ -86,6 +91,7 @@ export default function LoginForm({}: Props) {
         const _user = await extractUserDetailsFromFirebaseAuth(user!);
 
         setCurrentUser(_user);
+        queryClient.refetchQueries({ queryKey: ["user-profile"] });
 
         setFormStatus({
           status: 200,

@@ -20,12 +20,14 @@ import type { FieldErrors } from "../../services/form-validations/form-interface
 import { cn } from "@/core/lib/utils";
 import { extractUserDetailsFromFirebaseAuth } from "@/providers/guards/app-wrapper/app-wrapper.service";
 import { useUserStore } from "@/providers/stores/zustand";
+import { useQueryClient } from "@tanstack/react-query";
+import { User as FirebaseUser } from "firebase/auth";
 
 interface Props {
   //
 }
 
-export default function SignUpForm({}: Props) {
+export default function SignUpForm({ }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<FieldErrors | null>(null);
   const [formStatus, setFormStatus] = useState<{
@@ -33,8 +35,20 @@ export default function SignUpForm({}: Props) {
     message: string;
   } | null>(null);
 
+  const queryClient = useQueryClient();
+
   const { setCurrentUser } = useUserStore();
   const router = useRouter();
+
+  const finish = async (user: FirebaseUser) => {
+    const _user = await extractUserDetailsFromFirebaseAuth(user);
+
+    setCurrentUser(_user);
+
+    queryClient.refetchQueries({ queryKey: ["user-profile"] });
+
+    router.push("/r-drive");
+  };
 
   const handleGoogleSignUp: MouseEventHandler<HTMLButtonElement> = () => {
     signInOrUpWithGooglePopup().then(async (res) => {
@@ -42,11 +56,7 @@ export default function SignUpForm({}: Props) {
         setFormStatus,
       });
 
-      const _user = await extractUserDetailsFromFirebaseAuth(res!.user);
-
-      setCurrentUser(_user);
-
-      router.push("/r-drive");
+      finish(res!.user);
     });
   };
 
@@ -84,11 +94,7 @@ export default function SignUpForm({}: Props) {
           { setFormStatus }
         );
 
-        const _user = await extractUserDetailsFromFirebaseAuth(user!);
-
-        setCurrentUser(_user);
-
-        router.push("/r-drive");
+        finish(user!);
       })
       .catch((er) => {
         setFormStatus({

@@ -11,10 +11,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { shortenText } from "@/core/utils/helpers";
+import { useGetUserProfile } from "../../api/drive.queries";
 
-interface Props {}
+interface Props { };
 
-export default function ProfileSection({}: Props) {
+export default function ProfileSection({ }: Props) {
   const { currentUser } = useUserStore();
 
   const profile_url = useMemo(() => {
@@ -22,6 +23,8 @@ export default function ProfileSection({}: Props) {
       ? currentUser.photo_url
       : "/auth-images/default-profile-photo.jpg";
   }, [currentUser]);
+
+  useGetUserProfile();
 
   return (
     <div className="flex w-fit items-center justify-center [&_a]:flex [&_a]:w-fit [&_a]:items-center [&_a]:justify-center [&_a]:gap-[7px]">

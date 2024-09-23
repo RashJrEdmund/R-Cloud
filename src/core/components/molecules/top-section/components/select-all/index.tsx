@@ -5,6 +5,7 @@ import type { LegacyRef } from "react";
 import { useDocStore, useSelectionStore } from "@/providers/stores/zustand";
 import { ChevronDown } from "lucide-react";
 import { ChangeEventHandler, useEffect, useRef } from "react";
+import { Tooltip } from "@/components/ui/tooltip";
 
 export default function SelectAll() {
   const { selectionStart, setSelectionStart, setSelectedDocs } =
@@ -31,21 +32,22 @@ export default function SelectAll() {
   }, [selectionStart]);
 
   return loadingCurrentFolder || !documents.length ? null : (
-    <label
-      htmlFor="select-all"
-      title="select all"
-      className="flex cursor-pointer flex-nowrap items-center justify-center gap-2"
-    >
-      <input
-        ref={inputRef as LegacyRef<HTMLInputElement>}
-        id="select-all"
-        type="checkbox"
-        placeholder="select all"
-        className="cursor-pointer"
-        onChange={handleSelection}
-      />
+    <Tooltip title="select all">
+      <label
+        htmlFor="select-all"
+        className="flex cursor-pointer flex-nowrap items-center justify-center gap-2"
+      >
+        <input
+          ref={inputRef as LegacyRef<HTMLInputElement>}
+          id="select-all"
+          type="checkbox"
+          placeholder="select all"
+          className="cursor-pointer"
+          onChange={handleSelection}
+        />
 
-      <ChevronDown size={15} />
-    </label>
+        <ChevronDown size={15} />
+      </label>
+    </Tooltip>
   );
 }
