@@ -28,7 +28,8 @@ export default function DashboardGuard({ children }: Props) {
   if (!["ADMIN", "SUPER_ADMIN"].includes(userProfile.role)) {
     (async () => {
       toast("Un authorized user!", {
-        description: "You do not have the rights/privileges of accessing this page"
+        description:
+          "You do not have the rights/privileges of accessing this page",
       });
     })().then(() => {
       router.replace("/r-drive");

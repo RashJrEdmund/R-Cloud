@@ -20,9 +20,13 @@ function UsedSpaceShimmer() {
       <Skeleton className="h-[150px] w-full rounded-[10px]" />
     </div>
   );
-};
+}
 
-export default function UsedSpaceDisplay({ className = "" }: { className?: string }) {
+export default function UsedSpaceDisplay({
+  className = "",
+}: {
+  className?: string;
+}) {
   const { userProfile, userProfileLoading } = useUserStore();
 
   const usedSpaceVisualRep = useMemo<number>(
@@ -30,7 +34,7 @@ export default function UsedSpaceDisplay({ className = "" }: { className?: strin
     [userProfile]
   );
 
-  return (!userProfile || userProfileLoading) ? (
+  return !userProfile || userProfileLoading ? (
     <UsedSpaceShimmer />
   ) : (
     <DivCard

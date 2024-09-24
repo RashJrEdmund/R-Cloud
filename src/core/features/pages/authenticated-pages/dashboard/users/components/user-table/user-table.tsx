@@ -59,7 +59,9 @@ function UserRoleDropDown({
               "outline-none",
               profile.role === role ? "font-semibold text-app_text_blue" : ""
             )}
-            onClick={() => mutateAsync({ email: profile.email, updates: { role } })}
+            onClick={() =>
+              mutateAsync({ email: profile.email, updates: { role } })
+            }
           >
             {role.replace("_", " ")}
           </DropdownMenuItem>

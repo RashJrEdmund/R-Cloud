@@ -20,7 +20,7 @@ interface Props {
   //
 }
 
-export default function LogoutModal({ }: Props) {
+export default function LogoutModal({}: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
@@ -59,7 +59,6 @@ export default function LogoutModal({ }: Props) {
         setUserProfile(null);
         setDocuments([]);
       });
-
     } catch (error) {
       //
     } finally {

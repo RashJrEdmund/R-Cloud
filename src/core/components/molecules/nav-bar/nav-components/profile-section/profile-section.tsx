@@ -13,9 +13,9 @@ import {
 import { shortenText } from "@/core/utils/helpers";
 import { useGetCurrentUserProfile } from "@/features/pages/auth/api/auth.queries";
 
-interface Props { };
+interface Props {}
 
-export default function ProfileSection({ }: Props) {
+export default function ProfileSection({}: Props) {
   const { currentUser } = useUserStore();
 
   const profile_url = useMemo(() => {

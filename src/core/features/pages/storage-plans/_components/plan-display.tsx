@@ -9,7 +9,7 @@ interface Props {
    * to know weather or not to allow editing as if in dashboard.
    */
   isInDashboard?: boolean;
-};
+}
 
 export default async function PlanDisplay({ isInDashboard = false }: Props) {
   const STORAGE_PLANS: Array<StoragePlan> | undefined = await getStoragePlans()

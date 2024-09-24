@@ -25,19 +25,23 @@ function DocumentRenderer({ documents }: { documents: SharedDocument[] }) {
     >
       {displayLayout === "GRID"
         ? documents.map((doc) => (
-          <WithMeGridFileCard key={doc.doc_id} file={doc} />
-        ))
+            <WithMeGridFileCard key={doc.doc_id} file={doc} />
+          ))
         : documents.map((doc) => (
-          <WithMeListFileCard key={doc.doc_id} file={doc} />
-        ))}
+            <WithMeListFileCard key={doc.doc_id} file={doc} />
+          ))}
     </StyledFileFolderDisplay>
   );
-};
+}
 
 export default function WithMeContent() {
   const { currentUser } = useUserStore();
 
-  const { data: docData, refetch, isFetching } = useLoadUserSharedFiles(currentUser);
+  const {
+    data: docData,
+    refetch,
+    isFetching,
+  } = useLoadUserSharedFiles(currentUser);
 
   return (
     <DivCard className="min-h-[60vh] w-primary_app_w flex-col justify-start">

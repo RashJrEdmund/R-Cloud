@@ -41,7 +41,9 @@ export default function Sort({}: Props) {
   };
 
   useLayoutEffect(() => {
-    const separate_folders = localStorage.get<FolderSeparation>("separate_folders")! as FolderSeparation;
+    const separate_folders = localStorage.get<FolderSeparation>(
+      "separate_folders"
+    )! as FolderSeparation;
 
     if (["NONE", "LOW", "FULL"].includes(separate_folders)) {
       if (separate_folders === folderSeparation) return;

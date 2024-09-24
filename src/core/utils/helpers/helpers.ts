@@ -11,7 +11,7 @@ const isValidUrl = (url: string) => {
   } catch {
     return false;
   }
-}
+};
 
 const calculatePercentage = (
   a: number,

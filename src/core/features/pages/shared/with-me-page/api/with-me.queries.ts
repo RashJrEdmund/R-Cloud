@@ -8,21 +8,22 @@ import { useQuery } from "@tanstack/react-query";
 const useLoadUserSharedFiles = (currentUser: User | null) => {
   return useQuery({
     queryKey: ["shared-with-me"],
-    queryFn: () => loadUserSharedFiles(currentUser!.email).then(res => {
-      if (res.empty) return [];
+    queryFn: () =>
+      loadUserSharedFiles(currentUser!.email).then((res) => {
+        if (res.empty) return [];
 
-      const docs = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        const docs = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 
-      const data: Record<string, SharedDocument[]> = {};
+        const data: Record<string, SharedDocument[]> = {};
 
-      docs.forEach(({ shared_by, ...restDoc }) => {
-        if (data[shared_by]) data[shared_by].push({ shared_by, ...restDoc });
-        else data[shared_by] = [{ shared_by, ...restDoc }];
-      });
+        docs.forEach(({ shared_by, ...restDoc }) => {
+          if (data[shared_by]) data[shared_by].push({ shared_by, ...restDoc });
+          else data[shared_by] = [{ shared_by, ...restDoc }];
+        });
 
-      // console.log("page data", Object.entries(data));
-      return Object.entries(data);
-    }),
+        // console.log("page data", Object.entries(data));
+        return Object.entries(data);
+      }),
   });
 };
 

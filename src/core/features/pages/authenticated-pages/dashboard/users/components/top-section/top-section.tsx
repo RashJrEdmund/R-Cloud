@@ -6,7 +6,13 @@ import { LoaderCircle, RotateCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { UserProfile } from "@/core/interfaces/entities";
 
-export default function TopSection({ isFetching, data }: { isFetching: boolean; data?: Array<UserProfile> }) {
+export default function TopSection({
+  isFetching,
+  data,
+}: {
+  isFetching: boolean;
+  data?: Array<UserProfile>;
+}) {
   const queryClient = useQueryClient();
 
   const refetch = () => {

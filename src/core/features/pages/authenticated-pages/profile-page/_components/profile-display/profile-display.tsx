@@ -13,7 +13,7 @@ interface Props {
   //
 }
 
-export default function ProfileDisplay({ }: Props) {
+export default function ProfileDisplay({}: Props) {
   const {
     currentUser,
     currentUserLoading,
@@ -21,7 +21,7 @@ export default function ProfileDisplay({ }: Props) {
     userProfile,
     userProfileLoading,
 
-    setLogOutDialogOpen
+    setLogOutDialogOpen,
   } = useUserStore();
   const router = useRouter();
 

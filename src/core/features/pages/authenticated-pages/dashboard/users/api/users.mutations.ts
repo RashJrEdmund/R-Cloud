@@ -17,7 +17,10 @@ const useUpdateUserProfile = (profile: UserProfile) => {
       // optimistic updates
       await queryClient.cancelQueries({ queryKey: ["users"] });
 
-      const prevUsers = queryClient.getQueryData(["dashboard", "users"]) as UserProfile[];
+      const prevUsers = queryClient.getQueryData([
+        "dashboard",
+        "users",
+      ]) as UserProfile[];
 
       queryClient.setQueryData(["dashboard", "users"], () =>
         prevUsers.map((user) => {
@@ -40,6 +43,4 @@ const useUpdateUserProfile = (profile: UserProfile) => {
   });
 };
 
-export {
-  useUpdateUserProfile,
-};
+export { useUpdateUserProfile };

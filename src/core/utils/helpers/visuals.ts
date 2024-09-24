@@ -7,11 +7,10 @@ import type { DisplayLayout } from "@/core/interfaces/app";
 /**
  * Used in the for get a nice percentage to beautifully represent the
  * percentage used in the progress bars that show percentage usage
-*/
+ */
 const getUsedSpaceVisualRepresentation = (
   userProfile: UserProfile | null
 ): number => {
-
   if (!userProfile) return 0;
   const min_return = 3;
 
@@ -28,12 +27,11 @@ const getUsedSpaceVisualRepresentation = (
 /**
  * used to derive the icon to represent the file documents on the DOM
  * used in file-card
-*/
+ */
 const deriveDocumentPreviewImage = (
   file: Document,
   displayLayout: DisplayLayout
 ): { img: string; isCustom?: boolean } => {
-
   if (displayLayout === "LIST") {
     if (file.content_type?.includes("image")) {
       return { img: MEDIA_ICONS.img };

@@ -27,7 +27,7 @@ interface Props {
   //
 }
 
-export default function LoginForm({ }: Props) {
+export default function LoginForm({}: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<FieldErrors | null>(null);
   const [formStatus, setFormStatus] = useState<{

@@ -81,10 +81,8 @@ export default function SharedFilePage({ isPublicFilePage }: Props) {
 
         if (!sharedDoc)
           return (
-            <DivCard className="flex-col text-2xl max-w-primary_app_w">
-              <TextTag className="text-xl">
-                Sorry File does not exist
-              </TextTag>
+            <DivCard className="max-w-primary_app_w flex-col text-2xl">
+              <TextTag className="text-xl">Sorry File does not exist</TextTag>
 
               <Image
                 src="/files/file-not-found.svg"
@@ -94,7 +92,8 @@ export default function SharedFilePage({ isPublicFilePage }: Props) {
               />
 
               <TextTag className="text-center">
-                file does not exist or has not be {isPublicFilePage ? "publicly" : "privately"} shared
+                file does not exist or has not be{" "}
+                {isPublicFilePage ? "publicly" : "privately"} shared
               </TextTag>
             </DivCard>
           );

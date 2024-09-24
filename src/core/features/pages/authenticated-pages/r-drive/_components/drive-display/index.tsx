@@ -4,9 +4,9 @@ import { UsedSpaceDisplay } from "@/components/molecules";
 import Link from "next/link";
 import Image from "next/image";
 
-interface Props { }
+interface Props {}
 
-export default function DriveDisplay({ }: Props) {
+export default function DriveDisplay({}: Props) {
   return (
     <DivCard className="w-full flex-col gap-4">
       <DivCard className="w-full flex-col gap-4">
