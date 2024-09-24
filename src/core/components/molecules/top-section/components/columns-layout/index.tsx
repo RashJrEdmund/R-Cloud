@@ -6,11 +6,12 @@ import { CLIENT_STORAGE } from "@orashus/client-storage";
 import { Columns3 } from "lucide-react";
 import { cn } from "@/core/lib/utils";
 import { ColumnSeparation } from "@/core/interfaces/app";
+import { Tooltip } from "@/components/ui/tooltip";
 
 const localStorage = new CLIENT_STORAGE("local");
 
-export default function Columns() {
-  const { columnSeparation, setColumnSeparation } = useAppStore();
+export default function ColumnLayout() {
+  const { columnSeparation, setColumnSeparation, setDisplayLayout } = useAppStore();
 
   const toggleColumnSeparation = () => {
     const saveToStorage = (val: ColumnSeparation) => {
@@ -24,6 +25,8 @@ export default function Columns() {
             saveToStorage("OFF");
             return "OFF";
           case "OFF":
+            localStorage.save("layout_type", "LIST");
+            setDisplayLayout("LIST");
             saveToStorage("ON");
             return "ON";
           default:
@@ -47,12 +50,14 @@ export default function Columns() {
   }, []);
 
   return (
-    <Columns3
-      onClick={toggleColumnSeparation}
-      className={cn(
-        "cursor-pointer transition-transform duration-300",
-        columnSeparation === "ON" ? "rotate-180 text-app_blue" : ""
-      )}
-    />
+    <Tooltip title={`column separation is ${columnSeparation.toLowerCase()}`} className="hidden sm:flex">
+      <Columns3
+        onClick={toggleColumnSeparation}
+        className={cn(
+          "cursor-pointer transition-transform duration-300",
+          columnSeparation === "ON" ? "rotate-180 text-app_blue" : ""
+        )}
+      />
+    </Tooltip>
   );
 }

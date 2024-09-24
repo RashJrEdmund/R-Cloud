@@ -12,6 +12,14 @@ interface DocStore {
   refetchDocs: boolean;
   toggleRefetchDocs: () => void;
 
+  docDetailsData: Document | "root" | null;
+  setDocDetailsData: (_: Document | "root" | null) => void;
+
+  docDetailsModalOpen: boolean;
+  setDocDetailsModalOpen: (_: boolean) => void;
+
+  openDocDetailsModal: (_: Document | "root") => void;
+
   // API LOADING STATES
   /**
    * to show that documents are loading on the dom

@@ -13,6 +13,10 @@ const isValidUrl = (url: string) => {
   }
 };
 
+const isValidDate = (str: string) => {
+  return !isNaN(new Date(str) as unknown as number);
+};
+
 const calculatePercentage = (
   a: number,
   b: number
@@ -58,6 +62,7 @@ const triggerFileDownload = (url: string, filename: string) => {
 export {
   shortenText,
   isValidUrl,
+  isValidDate,
   calculatePercentage,
   openFileUploadDialog,
   triggerFileDownload,

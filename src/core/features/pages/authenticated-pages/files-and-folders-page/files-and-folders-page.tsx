@@ -1,4 +1,4 @@
-import { FilesFolderDisplay } from "./components";
+import { DocDetailsSheet, FilesFolderDisplay } from "./components";
 import { PathWrapper } from "@/providers/guards";
 
 import { ModalContextProvider } from "@/providers/stores/context";
@@ -11,6 +11,8 @@ export default function FilesFolderDisplayPage() {
         <input hidden multiple type="file" id="file-upload-field" />
 
         <FilesFolderDisplay />
+
+        <DocDetailsSheet />
       </ModalContextProvider>
     </PathWrapper>
   );

@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { TextTag } from "@/components/atoms";
 import { openFileUploadDialog } from "@/core/utils/helpers";
 import { useModalContext } from "@/providers/stores/context";
-import { useSelectionStore } from "@/providers/stores/zustand";
+import { useDocStore, useSelectionStore } from "@/providers/stores/zustand";
 import { Cog, MoreVertical } from "lucide-react";
 import {
   BoxSelectIcon,
@@ -26,6 +26,7 @@ interface Props {
 
 export default function MoreSection({}: Props) {
   const { setNewFolderDialogOpen, setBulkDeleteDialogOpen } = useModalContext();
+  const { openDocDetailsModal, currentFolder } = useDocStore();
 
   const {
     selectedDocs,
@@ -63,8 +64,7 @@ export default function MoreSection({}: Props) {
             {
               text: "Current Folder Details",
               icon: Cog,
-              // action: () =>,
-              disabled: true,
+              action: () => openDocDetailsModal(currentFolder),
             },
             {
               text: "Start Selection",
@@ -72,33 +72,30 @@ export default function MoreSection({}: Props) {
               action: toggleDocumentSelection,
             },
           ],
-    [selectionStart, selectedDocs]
+    [selectionStart, selectedDocs, currentFolder]
   );
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none">
-        <TextTag className="cursor-pointer">
+        <TextTag className="cursor-pointer p-0">
           <MoreVertical size={20} />
           More
         </TextTag>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-fit min-w-[min(180px,_97vw)] p-[10px] pb-8">
-        {MORE_CONTEXT_MENU_CONTENT.map(
-          ({ text, action, icon: Icon, disabled }) => (
-            <DropdownMenuItem
-              key={text}
-              onClick={action}
-              disabled={!!disabled}
-              className="lex items-center justify-start gap-2 bg-app_bg"
-            >
-              <Icon size={18} />
+        {MORE_CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon }) => (
+          <DropdownMenuItem
+            key={text}
+            onClick={action}
+            className="lex items-center justify-start gap-2 bg-app_bg"
+          >
+            <Icon size={18} />
 
-              {text}
-            </DropdownMenuItem>
-          )
-        )}
+            {text}
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );

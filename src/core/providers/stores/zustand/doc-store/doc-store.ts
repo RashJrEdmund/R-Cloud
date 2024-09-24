@@ -16,6 +16,19 @@ export const useDocStore = create<DocStore>((set) => ({
       refetchDocs: !prev.refetchDocs,
     })),
 
+  docDetailsData: null,
+  setDocDetailsData: (docDetailsData) => set({ docDetailsData }),
+
+  openDocDetailsModal: (doc) => {
+    set({
+      docDetailsData: doc,
+      docDetailsModalOpen: true,
+    });
+  },
+
+  docDetailsModalOpen: false,
+  setDocDetailsModalOpen: (docDetailsModalOpen) => set({ docDetailsModalOpen }),
+
   loadingDocs: true,
   setLoadingDocs: (loadingDocs) => set({ loadingDocs }),
 

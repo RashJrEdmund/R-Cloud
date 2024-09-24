@@ -8,11 +8,12 @@ import { useAppStore } from "@/providers/stores/zustand";
 import { CLIENT_STORAGE } from "@orashus/client-storage";
 import { cn } from "@/core/lib/utils";
 import { LayoutGrid, List } from "lucide-react";
+import { Tooltip } from "@/components/ui/tooltip";
 
 const localStorage = new CLIENT_STORAGE("local");
 
 export default function DisplayLayout() {
-  const { displayLayout, setDisplayLayout } = useAppStore();
+  const { displayLayout, setDisplayLayout, setColumnSeparation } = useAppStore();
 
   const toggleDisplayLayout = (layout: DisplayLayoutType) => {
     const saveToStorage = (val: DisplayLayoutType) => {
@@ -26,6 +27,8 @@ export default function DisplayLayout() {
             saveToStorage("LIST");
             return "LIST";
           case "GRID":
+            localStorage.save("column_separation", "OFF");
+            setColumnSeparation("OFF");
             saveToStorage("GRID");
             return "GRID";
           default:
@@ -49,32 +52,34 @@ export default function DisplayLayout() {
   }, []);
 
   return (
-    <DivCard className="rounded-[10px] border border-app_border font-bold">
-      {[
-        {
-          icon: List,
-          layout_type: "LIST" as DisplayLayoutType,
-        },
-        {
-          icon: LayoutGrid,
-          layout_type: "GRID" as DisplayLayoutType,
-        }
-      ].map(({ icon: Icon, layout_type }) => (
-        <Icon
-          key={layout_type}
-          size={35}
-          className={cn(
-            "cursor-pointer p-[4px_5px]",
-            layout_type === "LIST"
-              ? "rounded-[7px_0_0_7px]"
-              : "rounded-[0_7px_7px_0]",
-            displayLayout === layout_type
-              ? "border border-app_blue bg-app_blue text-app_text_invert shadow"
-              : "bg-transparent"
-          )}
-          onClick={() => toggleDisplayLayout(layout_type)}
-        />
-      ))}
-    </DivCard>
+    <Tooltip title={`layout shift set to ${displayLayout.toLowerCase()}`}>
+      <DivCard className="rounded-[10px] border border-app_border font-bold">
+        {[
+          {
+            icon: List,
+            layout_type: "LIST" as DisplayLayoutType,
+          },
+          {
+            icon: LayoutGrid,
+            layout_type: "GRID" as DisplayLayoutType,
+          },
+        ].map(({ icon: Icon, layout_type }) => (
+          <Icon
+            key={layout_type}
+            size={30}
+            className={cn(
+              "cursor-pointer p-[4px_5px]",
+              layout_type === "LIST"
+                ? "rounded-[7px_0_0_7px]"
+                : "rounded-[0_7px_7px_0]",
+              displayLayout === layout_type
+                ? "border border-app_blue bg-app_blue text-app_text_invert shadow"
+                : "bg-transparent"
+            )}
+            onClick={() => toggleDisplayLayout(layout_type)}
+          />
+        ))}
+      </DivCard>
+    </Tooltip>
   );
 }

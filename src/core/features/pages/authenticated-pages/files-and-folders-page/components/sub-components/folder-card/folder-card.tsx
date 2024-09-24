@@ -1,6 +1,10 @@
 "use client";
 
-import { DocNameWithToolTip, GridCardContainer, ListCardContainer } from "../shared";
+import {
+  DocNameWithToolTip,
+  GridCardContainer,
+  ListCardContainer,
+} from "../shared";
 import { DivCard, TextTag } from "@/core/components/atoms";
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
@@ -36,6 +40,7 @@ function _GridFolderCard({
         alt="file icon"
         width={100}
         height={100}
+        className="w-full"
       />
 
       <DivCard className="w-full flex-col items-start">
@@ -82,9 +87,7 @@ function _ListFolderCard({
 
         <DivCard className="w-full justify-between">
           <DocNameWithToolTip title={folder.name}>
-            <TextTag
-              className="m-0 inline-block w-full max-w-[calc(100%_-_100px)] overflow-hidden text-ellipsis whitespace-nowrap text-left text-[0.8rem] font-[500] sm:text-[0.9rem]"
-            >
+            <TextTag className="m-0 inline-block w-full max-w-[calc(100%_-_100px)] overflow-hidden text-ellipsis whitespace-nowrap text-left text-[0.8rem] font-[500] sm:text-[0.9rem]">
               {folder.name}
             </TextTag>
           </DocNameWithToolTip>

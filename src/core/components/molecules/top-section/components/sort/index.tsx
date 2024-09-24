@@ -6,6 +6,7 @@ import { CLIENT_STORAGE } from "@orashus/client-storage";
 import { TableColumnsSplit } from "lucide-react";
 import { cn } from "@/core/lib/utils";
 import { FolderSeparation } from "@/core/interfaces/app";
+import { Tooltip } from "@/components/ui/tooltip";
 
 const localStorage = new CLIENT_STORAGE("local");
 
@@ -50,7 +51,7 @@ export default function Sort() {
   }, []);
 
   return (
-    <>
+    <Tooltip title="file-folder separation">
       <TableColumnsSplit
         onClick={toggleFolderSeparation}
         className={cn(
@@ -59,6 +60,6 @@ export default function Sort() {
           folderSeparation === "FULL" ? "rotate-90" : ""
         )}
       />
-    </>
+    </Tooltip>
   );
 }

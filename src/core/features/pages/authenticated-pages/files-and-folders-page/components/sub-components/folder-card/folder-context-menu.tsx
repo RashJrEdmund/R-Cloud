@@ -11,7 +11,11 @@ import {
 } from "@/components/ui/context-menu";
 
 import { useModalContext } from "@/providers/stores/context";
-import { useAppStore, useSelectionStore } from "@/providers/stores/zustand";
+import {
+  useAppStore,
+  useSelectionStore,
+  useDocStore,
+} from "@/providers/stores/zustand";
 import {
   SquareCheckBig,
   FolderOpen,
@@ -36,6 +40,8 @@ function FolderContextMenu({ doc: folder, children }: Props) {
   const { selectionStart, selectedDocs, handleDocumentSelection } =
     useSelectionStore();
   const { displayLayout } = useAppStore();
+
+  const { openDocDetailsModal } = useDocStore();
 
   const {
     openEditDocumentModal,
@@ -88,8 +94,7 @@ function FolderContextMenu({ doc: folder, children }: Props) {
       {
         text: "Folder Details",
         icon: Cog,
-        // action: () =>,
-        disabled: true,
+        action: () => openDocDetailsModal(folder),
       },
       {
         text: "Select Folder",

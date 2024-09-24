@@ -16,7 +16,7 @@ import {
   Upload,
   Cog,
 } from "lucide-react";
-import { useSelectionStore } from "@/providers/stores/zustand";
+import { useDocStore, useSelectionStore } from "@/providers/stores/zustand";
 import { openFileUploadDialog } from "@/core/utils/helpers";
 
 interface MainAndTopContextMenuProps {
@@ -32,6 +32,8 @@ function MainAndContextMenu({
 
   const { selectionStart, selectedDocs, toggleDocumentSelection } =
     useSelectionStore();
+
+  const { openDocDetailsModal, currentFolder } = useDocStore();
 
   const CONTEXT_MENU_CONTENT = useMemo(() => {
     if (selectionStart)
@@ -62,8 +64,7 @@ function MainAndContextMenu({
       {
         text: "Current Folder Details",
         icon: Cog,
-        // action: () =>,
-        disabled: true,
+        action: () => openDocDetailsModal(currentFolder),
       },
       {
         text: "Start Selection",
@@ -71,7 +72,7 @@ function MainAndContextMenu({
         action: toggleDocumentSelection,
       },
     ];
-  }, [selectionStart, selectedDocs]);
+  }, [selectionStart, selectedDocs, currentFolder]);
 
   return (
     <ContextMenu>
@@ -80,11 +81,10 @@ function MainAndContextMenu({
       </ContextMenuTrigger>
 
       <ContextMenuContent className="w-fit min-w-[min(180px,_97vw)] p-[10px] pb-8">
-        {CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon, disabled }) => (
+        {CONTEXT_MENU_CONTENT.map(({ text, action, icon: Icon }) => (
           <ContextMenuItem
             key={text}
             onClick={action}
-            disabled={!!disabled}
             className="lex items-center justify-start gap-2 bg-app_bg"
           >
             <Icon size={18} />

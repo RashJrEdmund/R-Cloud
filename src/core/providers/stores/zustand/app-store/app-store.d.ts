@@ -1,6 +1,10 @@
 /* eslint-disable no-unused-vars */
 
-import type { DisplayLayout, FolderSeparation, ColumnSeparation } from "@/core/interfaces/app";
+import type {
+  DisplayLayout,
+  FolderSeparation,
+  ColumnSeparation,
+} from "@/core/interfaces/app";
 
 interface AppStore {
   displayLayout: DisplayLayout;

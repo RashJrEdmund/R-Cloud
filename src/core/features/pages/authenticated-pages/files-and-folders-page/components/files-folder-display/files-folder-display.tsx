@@ -23,19 +23,19 @@ function DocumentRenderer({ documents }: { documents: Document[] }) {
     <FileFolderDisplayContainer>
       {displayLayout === "GRID"
         ? documents.map((doc) =>
-          doc.type === "FOLDER" ? (
-            <GridFolderCard key={doc.id} doc={doc} />
-          ) : (
-            <GridFileCard key={doc.id} doc={doc} />
+            doc.type === "FOLDER" ? (
+              <GridFolderCard key={doc.id} doc={doc} />
+            ) : (
+              <GridFileCard key={doc.id} doc={doc} />
+            )
           )
-        )
         : documents.map((doc) =>
-          doc.type === "FOLDER" ? (
-            <ListFolderCard key={doc.id} doc={doc} />
-          ) : (
-            <ListFileCard key={doc.id} doc={doc} />
-          )
-        )}
+            doc.type === "FOLDER" ? (
+              <ListFolderCard key={doc.id} doc={doc} />
+            ) : (
+              <ListFileCard key={doc.id} doc={doc} />
+            )
+          )}
     </FileFolderDisplayContainer>
   );
 }
@@ -44,7 +44,7 @@ interface Props {
   //
 }
 
-export default function FilesFolderDisplay({ }: Props) {
+export default function FilesFolderDisplay({}: Props) {
   const {
     documents: docs,
     loadingDocs,
@@ -70,7 +70,7 @@ export default function FilesFolderDisplay({ }: Props) {
 
   return (
     <MainAndTopSection>
-      <TextTag className="break-all text-app_text_grayed">
+      <TextTag className="mb-2 break-all text-app_text_grayed">
         {(() => {
           if (loadingCurrentFolder)
             return <LoaderCircle size={20} className="animate-spin" />;
@@ -81,8 +81,7 @@ export default function FilesFolderDisplay({ }: Props) {
 
       {(function () {
         // anonymous component
-        if (loadingDocs)
-          return <FilesFolderShimmer />;
+        if (loadingDocs) return <FilesFolderShimmer />;
 
         if (!documents?.length)
           return (

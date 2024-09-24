@@ -1,9 +1,10 @@
 import { DivCard } from "@/components/atoms";
 import {
   Navigator,
+  Refetch,
   SelectAll,
   Search,
-  Columns,
+  ColumnLayout,
   Sort,
   DisplayLayout,
   MoreSection,
@@ -16,10 +17,16 @@ interface Props {
 export default function TopSection({ hide_search_section = false }: Props) {
   return (
     <DivCard className="mx-auto mb-4 h-fit w-primary_app_w justify-between p-[10px]">
-      <DivCard className="gap-4 sm:gap-8">
+      <DivCard className="gap-2 sm:gap-8">
         <Navigator />
 
-        {hide_search_section ? null : <SelectAll />}
+        {hide_search_section ? null : (
+          <>
+            <SelectAll />
+
+            <Refetch />
+          </>
+        )}
       </DivCard>
 
       {hide_search_section ? null : (
@@ -28,7 +35,7 @@ export default function TopSection({ hide_search_section = false }: Props) {
 
           <Sort />
 
-          <Columns />
+          <ColumnLayout />
 
           <DisplayLayout />
 

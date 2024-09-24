@@ -1,9 +1,3 @@
-/* FILE_DESC +=> ==================================
-| Since file and folder cards have a common style, |
-| i've written the shared style here and extended  |
-| it in each component that uses it                |
-================================================= */
-
 import type { Document } from "@/core/interfaces/entities";
 
 import { Skeleton } from "@/components/ui/skeleton";
@@ -49,9 +43,15 @@ interface CardContainerProps extends ComponentProps<"div"> {
   document: Document;
 }
 
-function DocNameWithToolTip({ title, children }: { title: string; children: React.ReactNode; }) {
+function DocNameWithToolTip({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
-    <Tooltip title={title} className="w-full flex items-center justify-start">
+    <Tooltip title={title} className="flex w-full items-center justify-start">
       {children}
     </Tooltip>
   );
@@ -69,10 +69,10 @@ function GridCardContainer({
     <div
       {...restProps}
       className={cn(
-        "relative mx-auto my-[10px] flex cursor-pointer select-none flex-col items-center justify-between overflow-hidden rounded-[4px] border border-app_border p-[10px] duration-300 hover:bg-app_bg_light",
-        columnSeparation === "OFF" ? "min-h-[150px] w-full max-w-[130px] sm:w-[120px] lg:w-[130px]" : "min-h-[300px] w-full",
+        "relative mx-auto my-[10px] min-h-[150px] w-full max-w-[130px] sm:w-[120px] lg:w-[130px] flex cursor-pointer select-none flex-col items-center justify-between overflow-hidden rounded-[4px] border border-app_border p-[10px] duration-300 hover:bg-app_bg_light",
         className
       )}
+      draggable="true"
     >
       <SharedAccessTypeMark doc={document} />
 
@@ -96,6 +96,7 @@ function ListCardContainer({
         "relative flex w-full cursor-pointer select-none flex-nowrap justify-start border p-[12px_10px] duration-200 md:gap-1",
         className
       )}
+      draggable="true"
     >
       <SharedAccessTypeMark doc={document} />
 

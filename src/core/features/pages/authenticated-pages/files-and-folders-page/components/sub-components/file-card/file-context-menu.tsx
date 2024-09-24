@@ -6,6 +6,7 @@ import { useMemo } from "react";
 import { useModalContext } from "@/providers/stores/context";
 import {
   useAppStore,
+  useDocStore,
   useSelectionStore,
   useShareModalStore,
 } from "@/providers/stores/zustand";
@@ -49,6 +50,8 @@ function FileContextMenu({ doc: file, children }: Props) {
 
   const { selectionStart, handleDocumentSelection, selectedDocs } =
     useSelectionStore();
+
+  const { openDocDetailsModal } = useDocStore();
 
   const {
     openEditDocumentModal,
@@ -146,8 +149,7 @@ function FileContextMenu({ doc: file, children }: Props) {
       {
         text: "File Details",
         icon: Cog,
-        // action: () =>,
-        disabled: true,
+        action: () => openDocDetailsModal(file),
       },
       {
         text: "Share File",

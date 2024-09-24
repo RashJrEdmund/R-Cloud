@@ -23,11 +23,11 @@ function DocumentRenderer({ documents }: { documents: SharedDocument[] }) {
     <FileFolderDisplayContainer>
       {displayLayout === "GRID"
         ? documents.map((doc) => (
-          <WithMeGridFileCard key={doc.doc_id} file={doc} />
-        ))
+            <WithMeGridFileCard key={doc.doc_id} file={doc} />
+          ))
         : documents.map((doc) => (
-          <WithMeListFileCard key={doc.doc_id} file={doc} />
-        ))}
+            <WithMeListFileCard key={doc.doc_id} file={doc} />
+          ))}
     </FileFolderDisplayContainer>
   );
 }
