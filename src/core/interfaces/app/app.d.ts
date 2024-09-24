@@ -1,5 +1,7 @@
-type DisplayLayout = "GRID" | "LIST";
+type DisplayLayout = "LIST" | "GRID";
 
 type FolderSeparation = "NONE" | "LOW" | "FULL";
 
-export type { DisplayLayout, FolderSeparation };
+type ColumnSeparation = "ON" | "OFF";
+
+export type { DisplayLayout, FolderSeparation, ColumnSeparation };

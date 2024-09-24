@@ -1,7 +1,7 @@
 "use client";
 
 import { DivCard, Separator, TextTag } from "@/components/atoms";
-import StyledFileFolderDisplay from "./styled-file-folder-display";
+import FileFolderDisplayContainer from "./sub/file-folder-display-container";
 import { useDocStore, useAppStore } from "@/providers/stores/zustand";
 import {
   GridFileCard,
@@ -10,7 +10,7 @@ import {
   ListFolderCard,
 } from "../sub-components";
 
-import FilesFolderShimmer from "./files-folder-shimmer";
+import FilesFolderShimmer from "./sub/files-folder-shimmer";
 import { MainAndTopSection } from "../main-and-top-section-tag/main-and-top-section-tag";
 import { LoaderCircle } from "lucide-react";
 import { useCallback, useMemo } from "react";
@@ -20,25 +20,23 @@ function DocumentRenderer({ documents }: { documents: Document[] }) {
   const { displayLayout } = useAppStore();
 
   return (
-    <StyledFileFolderDisplay
-      className={displayLayout.toLowerCase() + "-layout"} // e.g grid-layout or list-layout
-    >
+    <FileFolderDisplayContainer>
       {displayLayout === "GRID"
         ? documents.map((doc) =>
-            doc.type === "FOLDER" ? (
-              <GridFolderCard key={doc.id} doc={doc} />
-            ) : (
-              <GridFileCard key={doc.id} doc={doc} />
-            )
+          doc.type === "FOLDER" ? (
+            <GridFolderCard key={doc.id} doc={doc} />
+          ) : (
+            <GridFileCard key={doc.id} doc={doc} />
           )
+        )
         : documents.map((doc) =>
-            doc.type === "FOLDER" ? (
-              <ListFolderCard key={doc.id} doc={doc} />
-            ) : (
-              <ListFileCard key={doc.id} doc={doc} />
-            )
-          )}
-    </StyledFileFolderDisplay>
+          doc.type === "FOLDER" ? (
+            <ListFolderCard key={doc.id} doc={doc} />
+          ) : (
+            <ListFileCard key={doc.id} doc={doc} />
+          )
+        )}
+    </FileFolderDisplayContainer>
   );
 }
 
@@ -46,7 +44,7 @@ interface Props {
   //
 }
 
-export default function FilesFolderDisplay({}: Props) {
+export default function FilesFolderDisplay({ }: Props) {
   const {
     documents: docs,
     loadingDocs,
@@ -54,7 +52,7 @@ export default function FilesFolderDisplay({}: Props) {
     loadingCurrentFolder,
   } = useDocStore();
 
-  const { displayLayout, folderSeparation } = useAppStore();
+  const { folderSeparation } = useAppStore();
 
   const getFolders = useCallback(() => {
     return docs.filter(({ type }) => type === "FOLDER");
@@ -84,7 +82,7 @@ export default function FilesFolderDisplay({}: Props) {
       {(function () {
         // anonymous component
         if (loadingDocs)
-          return <FilesFolderShimmer displayLayout={displayLayout} />;
+          return <FilesFolderShimmer />;
 
         if (!documents?.length)
           return (

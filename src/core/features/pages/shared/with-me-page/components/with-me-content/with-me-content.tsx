@@ -6,7 +6,7 @@ import { DivCard, TextTag } from "@/components/atoms";
 import { useAppStore, useUserStore } from "@/providers/stores/zustand";
 import { LoaderCircleIcon } from "lucide-react";
 import { WithMeGridFileCard, WithMeListFileCard } from "./sub-components";
-import StyledFileFolderDisplay from "../../../../authenticated-pages/files-and-folders-page/components/files-folder-display/styled-file-folder-display";
+import FileFolderDisplayContainer from "../../../../authenticated-pages/files-and-folders-page/components/files-folder-display/sub/file-folder-display-container";
 import {
   Accordion,
   AccordionContent,
@@ -20,17 +20,15 @@ function DocumentRenderer({ documents }: { documents: SharedDocument[] }) {
   const { displayLayout } = useAppStore();
 
   return (
-    <StyledFileFolderDisplay
-      className={displayLayout.toLowerCase() + "-layout"} // e.g grid-layout or list-layout
-    >
+    <FileFolderDisplayContainer>
       {displayLayout === "GRID"
         ? documents.map((doc) => (
-            <WithMeGridFileCard key={doc.doc_id} file={doc} />
-          ))
+          <WithMeGridFileCard key={doc.doc_id} file={doc} />
+        ))
         : documents.map((doc) => (
-            <WithMeListFileCard key={doc.doc_id} file={doc} />
-          ))}
-    </StyledFileFolderDisplay>
+          <WithMeListFileCard key={doc.doc_id} file={doc} />
+        ))}
+    </FileFolderDisplayContainer>
   );
 }
 

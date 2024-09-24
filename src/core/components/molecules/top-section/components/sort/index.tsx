@@ -7,13 +7,9 @@ import { TableColumnsSplit } from "lucide-react";
 import { cn } from "@/core/lib/utils";
 import { FolderSeparation } from "@/core/interfaces/app";
 
-interface Props {
-  //
-}
-
 const localStorage = new CLIENT_STORAGE("local");
 
-export default function Sort({}: Props) {
+export default function Sort() {
   const { folderSeparation, setFolderSeparation } = useAppStore();
 
   const toggleFolderSeparation = () => {

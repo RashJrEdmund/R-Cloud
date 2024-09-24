@@ -3,9 +3,10 @@ import {
   Navigator,
   SelectAll,
   Search,
+  Columns,
+  Sort,
   DisplayLayout,
   MoreSection,
-  Sort,
 } from "./components";
 
 interface Props {
@@ -22,10 +23,12 @@ export default function TopSection({ hide_search_section = false }: Props) {
       </DivCard>
 
       {hide_search_section ? null : (
-        <DivCard className="gap-4">
+        <DivCard className="gap-2 md:gap-4">
           <Search />
 
           <Sort />
+
+          <Columns />
 
           <DisplayLayout />
 

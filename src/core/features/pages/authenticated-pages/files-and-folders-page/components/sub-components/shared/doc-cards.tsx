@@ -12,8 +12,9 @@ import { cn } from "@/core/lib/utils";
 import { Globe, Lock } from "lucide-react";
 import SelectCheckbox from "./select-checkbox";
 import { useAppStore, useSelectionStore } from "@/providers/stores/zustand";
+import { Tooltip } from "@/components/ui/tooltip";
 
-function SharedMark({ doc }: { doc: Document }) {
+function SharedAccessTypeMark({ doc }: { doc: Document }) {
   const { displayLayout } = useAppStore();
   const { selectionStart } = useSelectionStore();
 
@@ -48,21 +49,32 @@ interface CardContainerProps extends ComponentProps<"div"> {
   document: Document;
 }
 
+function DocNameWithToolTip({ title, children }: { title: string; children: React.ReactNode; }) {
+  return (
+    <Tooltip title={title} className="w-full flex items-center justify-start">
+      {children}
+    </Tooltip>
+  );
+}
+
 function GridCardContainer({
   className,
   children,
   document,
   ...restProps
 }: CardContainerProps) {
+  const { columnSeparation } = useAppStore();
+
   return (
     <div
       {...restProps}
       className={cn(
-        "relative mx-auto my-[10px] flex min-h-[150px] w-full max-w-[130px] cursor-pointer select-none flex-col items-center justify-between overflow-hidden rounded-[4px] border border-app_border p-[10px] duration-300 hover:bg-app_bg_light sm:w-[120px] lg:w-[130px]",
+        "relative mx-auto my-[10px] flex cursor-pointer select-none flex-col items-center justify-between overflow-hidden rounded-[4px] border border-app_border p-[10px] duration-300 hover:bg-app_bg_light",
+        columnSeparation === "OFF" ? "min-h-[150px] w-full max-w-[130px] sm:w-[120px] lg:w-[130px]" : "min-h-[300px] w-full",
         className
       )}
     >
-      <SharedMark doc={document} />
+      <SharedAccessTypeMark doc={document} />
 
       <SelectCheckbox className="absolute m-[10px]" document={document} />
 
@@ -85,7 +97,7 @@ function ListCardContainer({
         className
       )}
     >
-      <SharedMark doc={document} />
+      <SharedAccessTypeMark doc={document} />
 
       <SelectCheckbox className="mr-[5px]" document={document} />
 
@@ -116,8 +128,9 @@ function ListShimmerCard() {
 }
 
 export {
-  // StyledDisplayCard,
+  DocNameWithToolTip,
 
+  // StyledDisplayCard,
   GridCardContainer,
   ListCardContainer,
   GridShimmerCard,

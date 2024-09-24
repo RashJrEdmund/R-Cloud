@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { GridCardContainer, ListCardContainer } from "../shared";
+import { DocNameWithToolTip, GridCardContainer, ListCardContainer } from "../shared";
 import { DivCard, TextTag } from "@/components/atoms";
 import { deriveDocumentPreviewImage, shortenText } from "@/core/utils/helpers";
 import { FILE_FOLDER_MAX_NAME_LENGTH } from "@/core/utils/constants";
@@ -50,12 +50,13 @@ function _GridFileCard({
 
       <DivCard className="flex-col items-start">
         <DivCard className="mt-[5px]">
-          <TextTag
-            title={file.name}
-            className="m-0 whitespace-nowrap text-[0.9rem] font-[500]"
-          >
-            {shortenText(file.name, FILE_FOLDER_MAX_NAME_LENGTH)}
-          </TextTag>
+          <DocNameWithToolTip title={file.name}>
+            <TextTag
+              className="m-0 whitespace-nowrap text-[0.9rem] font-[500]"
+            >
+              {shortenText(file.name, FILE_FOLDER_MAX_NAME_LENGTH)}
+            </TextTag>
+          </DocNameWithToolTip>
         </DivCard>
 
         <DivCard className="mt-[10px] w-full gap-[5px]">
@@ -84,12 +85,13 @@ function _ListFileCard({
       </span>
 
       <DivCard className="w-full justify-between">
-        <TextTag
-          title={file.name}
-          className="m-0 inline-block w-full max-w-[calc(100%_-_100px)] overflow-hidden text-ellipsis whitespace-nowrap text-left text-[0.8rem] font-[500] sm:text-[0.9rem]"
-        >
-          {file.name}
-        </TextTag>
+        <DocNameWithToolTip title={file.name}>
+          <TextTag
+            className="m-0 inline-block w-full max-w-[calc(100%_-_100px)] overflow-hidden text-ellipsis whitespace-nowrap text-left text-[0.8rem] font-[500] sm:text-[0.9rem]"
+          >
+            {file.name}
+          </TextTag>
+        </DocNameWithToolTip>
 
         <DivCard className="w-fit min-w-[90px] justify-between gap-[5px]">
           <TextTag className="whitespace-nowrap text-[0.75rem] text-app_text_grayed">
