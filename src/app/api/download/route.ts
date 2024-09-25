@@ -18,4 +18,4 @@ export async function GET(request: Request, response: Response) {
 
   // // console.log({ url, searchParams, download_url });
   return NextResponse.json({ message: "All good" }, { status: 200 });
-};
+}

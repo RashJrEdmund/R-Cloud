@@ -13,7 +13,8 @@ import { Tooltip } from "@/components/ui/tooltip";
 const localStorage = new CLIENT_STORAGE("local");
 
 export default function DisplayLayout() {
-  const { displayLayout, setDisplayLayout, setColumnSeparation } = useAppStore();
+  const { displayLayout, setDisplayLayout, setColumnSeparation } =
+    useAppStore();
 
   const toggleDisplayLayout = (layout: DisplayLayoutType) => {
     const saveToStorage = (val: DisplayLayoutType) => {

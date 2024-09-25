@@ -72,9 +72,9 @@ export default function PathWrapper({ children }: Props) {
           setLoadingDocs(false);
         });
     },
-    [params.folder_id],
+    [params.folder_id]
   );
-  
+
   useEffect(() => {
     setLoadingDocs(true);
     setLoadingCurrentFolder(true);

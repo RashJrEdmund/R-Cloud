@@ -11,7 +11,8 @@ import { Tooltip } from "@/components/ui/tooltip";
 const localStorage = new CLIENT_STORAGE("local");
 
 export default function ColumnLayout() {
-  const { columnSeparation, setColumnSeparation, setDisplayLayout } = useAppStore();
+  const { columnSeparation, setColumnSeparation, setDisplayLayout } =
+    useAppStore();
 
   const toggleColumnSeparation = () => {
     const saveToStorage = (val: ColumnSeparation) => {
@@ -50,7 +51,10 @@ export default function ColumnLayout() {
   }, []);
 
   return (
-    <Tooltip title={`column separation is ${columnSeparation.toLowerCase()}`} className="hidden sm:flex">
+    <Tooltip
+      title={`column separation is ${columnSeparation.toLowerCase()}`}
+      className="hidden sm:flex"
+    >
       <Columns3
         onClick={toggleColumnSeparation}
         className={cn(

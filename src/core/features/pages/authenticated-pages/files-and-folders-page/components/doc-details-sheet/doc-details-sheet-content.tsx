@@ -46,27 +46,27 @@ function DocDetailsSheetContent({ doc }: Props) {
 
     return isFolder
       ? [
-        ..._,
-        {
-          field: "Length",
-          value: _doc?.capacity.length,
-        },
-      ]
+          ..._,
+          {
+            field: "Length",
+            value: _doc?.capacity.length,
+          },
+        ]
       : [
-        ..._,
-        {
-          field: "Original filename",
-          value: _doc?.filename,
-        },
-        {
-          field: "Ext",
-          value: _doc?.extension,
-        },
-        {
-          field: "Content Type",
-          value: _doc?.content_type,
-        },
-      ];
+          ..._,
+          {
+            field: "Original filename",
+            value: _doc?.filename,
+          },
+          {
+            field: "Ext",
+            value: _doc?.extension,
+          },
+          {
+            field: "Content Type",
+            value: _doc?.content_type,
+          },
+        ];
   };
 
   return (
@@ -80,7 +80,10 @@ function DocDetailsSheetContent({ doc }: Props) {
           <>
             <DivCard className="min-h-[min(500px,_70vh)] w-full flex-col justify-start">
               {getData(doc).map(({ field, value }) => (
-                <DivCard key={field} className="my-1 w-full items-start justify-start gap-2">
+                <DivCard
+                  key={field}
+                  className="my-1 w-full items-start justify-start gap-2"
+                >
                   <TextTag className="whitespace-nowrap">{field} :</TextTag>
 
                   <TextTag className="break-all text-app_blue">{value}</TextTag>

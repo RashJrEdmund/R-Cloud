@@ -69,7 +69,7 @@ function GridCardContainer({
     <div
       {...restProps}
       className={cn(
-        "relative mx-auto my-[10px] min-h-[150px] w-full max-w-[130px] sm:w-[120px] lg:w-[130px] flex cursor-pointer select-none flex-col items-center justify-between overflow-hidden rounded-[4px] border border-app_border p-[10px] duration-300 hover:bg-app_bg_light",
+        "relative mx-auto my-[10px] flex min-h-[150px] w-full max-w-[130px] cursor-pointer select-none flex-col items-center justify-between overflow-hidden rounded-[4px] border border-app_border p-[10px] duration-300 hover:bg-app_bg_light sm:w-[120px] lg:w-[130px]",
         className
       )}
       draggable="true"
