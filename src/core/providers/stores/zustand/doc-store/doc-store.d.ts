@@ -20,7 +20,6 @@ interface DocStore {
 
   openDocDetailsModal: (_: Document | "root") => void;
 
-  // API LOADING STATES
   /**
    * to show that documents are loading on the dom
    */
