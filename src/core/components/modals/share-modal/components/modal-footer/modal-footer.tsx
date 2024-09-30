@@ -5,6 +5,7 @@ import { DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { removeAllSharedAccess } from "@/core/config/firebase/fire-store";
 import { toast } from "sonner";
+import { ClearAllAccessBtn } from "./clear-all-access-btn";
 
 interface Props {
   handleShareFile: () => void;
@@ -26,6 +27,8 @@ export default function ShareModalFooter({
 
     isSharing,
     setIsSharing,
+
+    copyFileShareLink,
   } = useShareModalStore();
 
   const { currentUser } = useUserStore();
@@ -51,24 +54,28 @@ export default function ShareModalFooter({
 
   return (
     <DialogFooter className="flex w-full items-center justify-end">
-      {fileToBeShared?.sharedState?.sharedWith.length ? (
-        <Button
-          variant="error"
-          disabled={isSharing || searching}
-          onClick={handleClearAllAccess}
-          className="outline-none sm:w-fit"
-        >
-          Clear all access
-        </Button>
+      {fileToBeShared?.sharedState?.isShared ? (
+        <ClearAllAccessBtn
+          isSharing={isSharing}
+          searching={searching}
+          handleClearAllAccess={handleClearAllAccess}
+        />
       ) : null}
 
-      {/* <Button
-            disabled={isSharing || searching}
-            onClick={() => copyFileShareLink(fileToBeShared!)}
-            className="outline-none sm:w-fit"
-          >
-            Copy Link
-          </Button> */}
+      {fileToBeShared?.sharedState?.isShared ? (
+        <Button
+          disabled={isSharing || searching}
+          onClick={() =>
+            copyFileShareLink(
+              fileToBeShared!,
+              fileToBeShared?.sharedState?.accessType === "PUBLIC"
+            )
+          }
+          className="outline-none sm:w-fit"
+        >
+          Copy Link
+        </Button>
+      ) : null}
 
       <Button
         variant="blued"

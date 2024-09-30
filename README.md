@@ -8,6 +8,8 @@
 
 ![landing-preview](./readme-assets/landing-preview.png)
 
-![home-preview](./readme-assets/home-preview.png)
+![r-drive-preview](./readme-assets/r-drive-preview.png)
 
 ![root-preview](./readme-assets/root-preview.png)
+
+![layout-shift-preview](./readme-assets/layout-shift-preview.png)

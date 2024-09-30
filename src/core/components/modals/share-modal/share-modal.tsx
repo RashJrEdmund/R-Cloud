@@ -61,11 +61,10 @@ export default function ShareModal({}: Props) {
       _update.sharedState.isShared = isShared;
       _update.sharedState.accessType = accessType;
       _update.sharedState.viewerRole = viewerRole;
+      _update.sharedState.sharedWith = isShared ? [...userEmails] : [];
 
       return _update;
     });
-
-    // console.log(updateDocs);
 
     setDocuments(updateDocs);
   };

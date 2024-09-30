@@ -1,6 +1,5 @@
 import type { RecordingData } from "./types";
 
-import { DivCard, TextTag } from "@/components/atoms";
 import { Suspense } from "react";
 import { RecordingShimmer, RecordingsCard } from "./recording-cards";
 import {
@@ -14,32 +13,31 @@ import {
 const DemoData: RecordingData[] = [
   {
     heading: "Get Authenticated",
-    source: "/recordings/r-cloud-get-authenticated-recording.webm",
+    source: "/recordings/get-authenticated.webm",
   },
   {
     heading: "Update Profile",
-    source: "/recordings/r-cloud-update-profile-recording.webm",
+    source: "/recordings/update-profile.webm",
   },
   {
     heading: "Organize & Save Files",
-    source: "/recordings/r-cloud-organize-files-recording.webm",
+    source: "/recordings/organize-files.webm",
   },
   {
     heading: "Change Document Layouts",
-    source: "/recordings/r-cloud-layout-shift.webm",
+    source: "/recordings/layout-shift.webm",
   },
   {
     heading: "View and Download Files",
-    source: "/recordings/r-cloud-view-and-download-files-recording.webm",
+    source: "/recordings/view-and-download-files.webm",
   },
   {
     heading: "Modify and Delete Files",
-    source: "/recordings/r-cloud-modify-and-delete-files-recording.webm",
+    source: "/recordings/modify-and-delete-files.webm",
   },
   {
     heading: "Share Files and set View Permissions",
-    source: "/recordings/r-cloud-get-authenticated-recording.webm",
-    comingSoon: true,
+    source: "/recordings/share-files.webm",
   },
   {
     heading: "Create Achieves from Folders",
@@ -62,7 +60,13 @@ async function RecordingsDisplay() {
             key={heading}
             className={i + 1 === arr.length ? "sm:mr-[10px]" : ""}
           >
-            <RecordingsCard data={{ heading, source, comingSoon }} />
+            <RecordingsCard
+              data={{
+                heading: `${heading} - (${i + 1}/${arr.length})`,
+                source,
+                comingSoon,
+              }}
+            />
           </CarouselItem>
         ))}
       </CarouselContent>

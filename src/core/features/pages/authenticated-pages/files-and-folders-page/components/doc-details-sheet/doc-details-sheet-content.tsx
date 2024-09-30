@@ -9,6 +9,11 @@ interface Props {
   doc: Document | "root" | null;
 }
 
+interface SubContent {
+  sub_field: string;
+  sub_value: string;
+}
+
 const validateDate = (str: string) => {
   if (!isValidDate(str)) return "Date could not be retrieved";
 
@@ -41,6 +46,19 @@ function DocDetailsSheetContent({ doc }: Props) {
       {
         field: "Is Shared",
         value: String(!!_doc?.sharedState?.isShared),
+        sub_content: (() =>
+          _doc?.sharedState?.isShared
+            ? [
+                {
+                  sub_field: "Access Type",
+                  sub_value: _doc?.sharedState?.accessType,
+                },
+                {
+                  sub_field: "Viewer Roles",
+                  sub_value: _doc?.sharedState?.viewerRole,
+                },
+              ]
+            : [])() as SubContent[],
       },
     ];
 
@@ -79,14 +97,41 @@ function DocDetailsSheetContent({ doc }: Props) {
         return (
           <>
             <DivCard className="min-h-[min(500px,_70vh)] w-full flex-col justify-start">
-              {getData(doc).map(({ field, value }) => (
+              {(
+                getData(doc) as {
+                  field: string;
+                  value: string;
+                  sub_content?: SubContent[];
+                }[]
+              ).map(({ field, value, sub_content }) => (
                 <DivCard
                   key={field}
-                  className="my-1 w-full items-start justify-start gap-2"
+                  className="my-1 w-full flex-col items-start justify-start gap-2"
                 >
-                  <TextTag className="whitespace-nowrap">{field} :</TextTag>
+                  <DivCard className="w-full items-start justify-start gap-2">
+                    <TextTag className="whitespace-nowrap">{field} :</TextTag>
 
-                  <TextTag className="break-all text-app_blue">{value}</TextTag>
+                    <TextTag className="break-all text-app_blue">
+                      {value}
+                    </TextTag>
+                  </DivCard>
+
+                  <DivCard className="w-full flex-col items-start justify-start gap-2 pl-4">
+                    {sub_content?.map(({ sub_field, sub_value }) => (
+                      <DivCard
+                        key={sub_field}
+                        className="items-start justify-start gap-2"
+                      >
+                        <TextTag className="whitespace-nowrap">
+                          {sub_field} :
+                        </TextTag>
+
+                        <TextTag className="break-all text-app_blue">
+                          {sub_value}
+                        </TextTag>
+                      </DivCard>
+                    ))}
+                  </DivCard>
                 </DivCard>
               ))}
             </DivCard>
