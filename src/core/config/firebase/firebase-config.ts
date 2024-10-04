@@ -33,8 +33,8 @@ let analytics: Analytics | undefined;
 if (typeof window !== "undefined") {
   analytics = getAnalytics(app);
 
-  logEvent(analytics, "analytic_logging");
-  console.log(" in analytics ", analytics);
+  // logEvent(analytics, "analytic_logging");
+  // console.log(" in analytics ", analytics);
 }
 
 // auth providers
